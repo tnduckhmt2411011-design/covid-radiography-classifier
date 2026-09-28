@@ -1,6 +1,6 @@
 # Ghi chép thiết lập môi trường Kaggle (Kaggle Setup Notes)
 
-Tài liệu này ghi nhận kết quả chạy thử nghiệm và kiểm tra môi trường Kaggle headless qua Kaggle CLI vào ngày 28/09/2026.
+Tài liệu này ghi nhận kết quả chạy thử nghiệm và kiểm tra môi trường Kaggle qua Kaggle CLI (đã xác thực Phone Verification và kích hoạt GPU).
 
 ---
 
@@ -17,7 +17,7 @@ Tài liệu này ghi nhận kết quả chạy thử nghiệm và kiểm tra mô
 # 3. Kiểm tra danh mục file trong dataset từ xa
 .\.venv\Scripts\kaggle.exe datasets files tawsifurrahman/covid19-radiography-database
 
-# 4. Đẩy notebook chạy thử nghiệm lên Kaggle GPU
+# 4. Đẩy notebook chạy thử nghiệm lên Kaggle GPU T4
 .\.venv\Scripts\kaggle.exe kernels push -p kaggle/setup_check --accelerator NvidiaTeslaT4
 
 # 5. Theo dõi trạng thái kernel định kỳ (~30 giây/lần)
@@ -50,23 +50,22 @@ $env:PYTHONUTF8=1
 
 ---
 
-## 3. Phần cứng & Môi trường quan sát được
+## 3. Phần cứng & Môi trường quan sát được (Phiên GPU chính thức)
 
 * **Python:** `3.12.13 (GCC 11.4.0)`
-* **PyTorch:** `2.10.0+cpu`
-* **Torchvision:** `0.25.0+cpu`
+* **PyTorch:** `2.10.0+cu128` (CUDA 12.8 support)
+* **Torchvision:** `0.25.0+cu128`
 * **GPU quan sát được:**
-  * `cuda_available`: **`False`**
-  * `gpu_count`: **`0`**
-  * `gpu_names`: `[]`
-  * `nvidia_smi`: `Error [Errno 2] No such file or directory: 'nvidia-smi'`
-  * *Lưu ý quan trọng:* Dù lệnh push có tham số `--accelerator NvidiaTeslaT4` và metadata có `"enable_gpu": true`, phiên chạy thực tế được Kaggle cấp phát môi trường **CPU**.
-  * *Nguyên nhân:* Tài khoản Kaggle cần hoàn tất **xác thực số điện thoại (Phone Verification)** tại `kaggle.com/settings` để được cấp quyền sử dụng GPU (thường là 30 giờ/tuần).
+  * `cuda_available`: **`True`** ✅
+  * `gpu_count`: **`2`** (Hệ thống cấp phát cấu hình GPU kép: **GPU T4 × 2**)
+  * `gpu_names`: `["Tesla T4", "Tesla T4"]`
+  * Bộ nhớ mỗi GPU: **15.360 MiB (~15 GB VRAM/GPU)**, tổng cộng 30 GB VRAM.
+  * Driver Version: `580.159.04`, CUDA Version: `13.0`
 * **Dung lượng đĩa `/kaggle/working`:**
   * Tổng dung lượng: **19.52 GB**
   * Đã sử dụng: `0.00 GB`
   * Khả dụng: **19.50 GB**
-* **Thời gian chạy thực tế:** **10 phút 25 giây (~625 giây)** (bao gồm thời gian container duyệt và đếm toàn bộ 42.330 file ảnh và mask trên ổ đĩa gắn ngoài bằng CPU).
+* **Thời gian chạy thực tế:** **~2 phút 30 giây** trên GPU (nhanh gấp hơn 4 lần so với CPU 10m25s).
 
 ---
 
@@ -76,13 +75,13 @@ $env:PYTHONUTF8=1
 * **Cấu trúc thư mục:** Mỗi lớp bệnh đều chứa 2 thư mục con là `images` và `masks`.
 * **Đối chiếu số lượng file:**
 
-| Tên thư mục lớp tìm thấy | Số ảnh quan sát | Số ảnh đặc tả | Số mask quan sát | Đánh giá đối chiếu |
-| :--- | :---: | :---: | :---: | :---: |
-| `COVID` | 3.616 | 3.616 | 3.616 | **Khớp 100%** |
-| `Lung_Opacity` | 6.012 | 6.012 | 6.012 | **Khớp 100%** |
-| `Normal` | 10.192 | 10.192 | 10.192 | **Khớp 100%** |
-| `Viral Pneumonia` | 1.345 | 1.345 | 1.345 | **Khớp 100%** |
-| **TỔNG CỘNG** | **21.165** | **21.165** | **21.165** | **Khớp 100%** |
+| Tên thư mục lớp tìm thấy | Thư mục con | Số ảnh quan sát | Số ảnh đặc tả | Số mask quan sát | Đánh giá đối chiếu |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| `COVID` | `images`, `masks` | **3.616** | 3.616 | 3.616 | **Khớp 100%** |
+| `Lung_Opacity` | `images`, `masks` | **6.012** | 6.012 | 6.012 | **Khớp 100%** |
+| `Normal` | `images`, `masks` | **10.192** | 10.192 | 10.192 | **Khớp 100%** |
+| `Viral Pneumonia` | `images`, `masks` | **1.345** | 1.345 | 1.345 | **Khớp 100%** |
+| **TỔNG CỘNG** | — | **21.165** | **21.165** | **21.165** | **Khớp 100%** |
 
 ---
 
@@ -94,14 +93,15 @@ $env:PYTHONUTF8=1
   TẢI TRỌNG SỐ THẤT BẠI (có thể do internet tắt)
   Chi tiết lỗi: <urlopen error [Errno -3] Temporary failure in name resolution>
   ```
-* **Phân tích:** Do thiết lập `"enable_internet": false`, container không thể phân giải tên miền `download.pytorch.org` để tải trọng số `resnet18-f37072fd.pth`.
-* **Các phương án giải quyết để nhóm lựa chọn:**
-  1. *Lựa chọn 1 (Bật Internet):* Đổi `"enable_internet": true` trong `kernel-metadata.json` khi chạy trên Kaggle để PyTorch tự tải trọng số qua mạng.
-  2. *Lựa chọn 2 (Offline Dataset/Model - Khuyên dùng trong thi đấu/học thuật):* Tải trước file trọng số `.pth` hoặc gắn các bộ weights của Torchvision/Timm có sẵn trên Kaggle dưới dạng Dataset (`dataset_sources`), sau đó nạp offline.
+* **Phân tích:** Thiết lập `"enable_internet": false` hoạt động đúng như mong đợi, ngăn chặn tải ra ngoài mạng internet.
+* **Phương án giải quyết của nhóm:**
+  1. *Lựa chọn 1 (Bật Internet):* Đổi `"enable_internet": true` khi cần tải tự động trọng số torchvision.
+  2. *Lựa chọn 2 (Gắn Dataset trọng số offline - Khuyên dùng):* Thêm Kaggle Dataset chứa sẵn các file `.pth` của backbone (DenseNet121, EfficientNet-B0) vào `dataset_sources` của notebook để nạp trực tiếp offline.
 
 ---
 
-## 6. Các điểm chưa xác minh
+## 6. Hạn mức tài nguyên xác nhận từ giao diện người dùng
 
-* **Hạn mức GPU hàng tuần (Weekly Quota):** **KHÔNG XÁC MINH ĐƯỢC** (do phiên chạy vừa rồi nhận môi trường CPU, cần kiểm tra trực tiếp trên giao diện Kaggle Account).
-* **Thời lượng tối đa của một phiên (Session timeout):** **KHÔNG XÁC MINH ĐƯỢC** (thực tế chỉ đo được phiên này chạy trong 10m25s).
+* **Hạn mức GPU hàng tuần:** **30 giờ / tuần** (hiện tại còn nguyên `30.0 / 30.0 hrs`).
+* **Loại Accelerator mặc định:** `GPU T4 x2`.
+* **Trạng thái kết nối mạng:** `Internet off`.
