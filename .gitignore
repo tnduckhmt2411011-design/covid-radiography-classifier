@@ -1,0 +1,21 @@
+# Data and inputs
+data/
+input/
+
+# Outputs and checkpoints
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.zip
+
+# Secrets and environment configs
+kaggle.json
+.env
+
+# Python / Jupyter / OS cache
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+*.log

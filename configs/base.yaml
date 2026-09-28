@@ -1,0 +1,13 @@
+# giá trị mặc định, nhóm chỉnh sau baseline
+
+img_size: 224
+
+seeds:
+  - 42
+  - 43
+  - 44
+
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
