@@ -43,9 +43,13 @@ Dữ liệu sử dụng: [COVID-19 Radiography Database](https://www.kaggle.com/
 └── requirements.txt              # Danh sách thư viện phụ thuộc
 ```
 
+## 2. Theo dõi tiến độ đồ án
+
+Toàn bộ tiến độ thực hiện đồ án 12 tuần được theo dõi chi tiết theo mô hình Scrum rút gọn (6 sprint, trạng thái và bằng chứng kiểm chứng) tại tài liệu [docs/roadmap.md](docs/roadmap.md). Mọi thành viên có thể mở tài liệu này để nắm bắt sprint hiện tại, các việc đã hoàn thành và các vướng mắc đang mở.
+
 ---
 
-## 2. Thứ tự thực thi Notebooks
+## 3. Thứ tự thực thi Notebooks
 
 Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đến bước 11:
 
@@ -66,7 +70,7 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 
 ---
 
-## 3. Hướng dẫn chạy trên Kaggle / Google Colab
+## 4. Hướng dẫn chạy trên Kaggle / Google Colab
 
 > [!NOTE]
 > **TODO sau khi chạy 00_setup_check**: Hướng dẫn chi tiết thiết lập môi trường, mount dataset Kaggle và lưu checkpoint/log sẽ được cập nhật cụ thể sau khi hoàn thành chạy notebook `notebooks/00_setup_check.ipynb`.
