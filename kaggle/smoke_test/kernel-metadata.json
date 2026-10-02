@@ -1,0 +1,19 @@
+{
+  "id": "ductrannguyen/cxr-smoke-test-train",
+  "title": "cxr-smoke-test-train",
+  "code_file": "03_smoke_test_train.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "tawsifurrahman/covid19-radiography-database"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "ductrannguyen/cxr-duplicates-and-split"
+  ],
+  "model_sources": []
+}
