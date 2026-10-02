@@ -61,3 +61,17 @@ Trong đó:
 - `baseline_densenet121_frozen_none_s42`
 - `rq1_efficientnet_b0_finetune_none_s43`
 - `rq2_densenet121_finetune_focal_s42`
+
+---
+
+## 6. Cập nhật tiến độ dự án (Roadmap & Scrum)
+
+Toàn bộ tiến độ công việc được theo dõi tập trung tại bảng `docs/roadmap.md`. Các thành viên tuân thủ các nguyên tắc cập nhật sau:
+
+- **Cập nhật trong chính Pull Request:** Khi thành viên hoàn thành công việc hoặc đưa lên review, người làm việc nào thì cập nhật dòng trạng thái của việc đó trong `docs/roadmap.md` nằm trong **CHÍNH Pull Request** của công việc đó (kèm theo link PR/commit/bằng chứng).
+- **Ý nghĩa 5 trạng thái:**
+  - **Chưa làm:** Trạng thái mặc định khi công việc chưa bắt đầu hoặc chưa có bằng chứng kiểm chứng.
+  - **Đang làm:** Đang mở nhánh `feat/<ten>-<viec>` trên Git để thực hiện công việc.
+  - **Chờ duyệt:** Đã mở Pull Request trên GitHub, đang chờ thành viên trong cặp duyệt chéo.
+  - **Xong:** Pull Request đã được merge vào `main` VÀ thỏa mãn đầy đủ Definition of Done (kèm bằng chứng cụ thể). Với việc phi kỹ thuật (hỏi giảng viên), cần leader xác nhận.
+  - **Bị chặn:** Không thể tiếp tục do vướng mắc kỹ thuật hoặc phụ thuộc bên ngoài; bắt buộc ghi rõ nguyên nhân vào Mục 5 của `docs/roadmap.md`.
