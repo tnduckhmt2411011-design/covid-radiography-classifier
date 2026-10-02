@@ -1,0 +1,19 @@
+{
+  "id": "ductrannguyen/cxr-duplicates-and-split",
+  "title": "cxr-duplicates-and-split",
+  "code_file": "02_duplicates_and_split.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "tawsifurrahman/covid19-radiography-database"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [
+    "ductrannguyen/cxr-eda-manifest"
+  ],
+  "model_sources": []
+}
