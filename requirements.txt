@@ -1,17 +1,17 @@
 # Danh sách các thư viện yêu cầu cho dự án
 # Ghi chú: ghim phiên bản sau khi chạy 00_setup_check trên Kaggle
-torch
-torchvision
-numpy
-pandas
-scikit-learn
-matplotlib
-seaborn
-pillow
-opencv-python-headless
-imagehash
-grad-cam
-tqdm
-pyyaml
-gradio
+torch==2.10.0
+torchvision==0.25.0
+numpy  # chưa đo
+pandas  # chưa đo
+scikit-learn  # chưa đo
+matplotlib  # chưa đo
+seaborn  # chưa đo
+pillow  # chưa đo
+opencv-python-headless  # chưa đo
+imagehash  # chưa đo
+grad-cam  # chưa đo
+tqdm  # chưa đo
+pyyaml  # chưa đo
+gradio  # chưa đo
 pytest
