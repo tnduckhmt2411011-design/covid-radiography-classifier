@@ -1,249 +1,250 @@
-# Ke hoach va Bang theo doi tien do do an (Scrum rut gon)
+# Kế hoạch và Bảng theo dõi tiến độ đồ án (Scrum rút gọn)
 
-Tai lieu theo doi tien do thuc hien do an mon Hoc may trong 12 tuan, ap dung mo hinh Scrum rut gon danh cho nhom 6 sinh vien beginner. Toan bo tien do duoc dong bo voi trang thai thuc te tren GitHub repository.
+Tài liệu theo dõi tiến độ thực hiện đồ án môn Học máy trong 12 tuần, áp dụng mô hình Scrum rút gọn dành cho nhóm 6 sinh viên beginner. Toàn bộ tiến độ được đồng bộ với trạng thái thực tế trên GitHub repository.
 
 ---
 
-## Muc 1. Cach doc tai lieu
+## Mục 1. Cách đọc tài liệu
 
-### 1.1. He thong 5 trang thai cong viec
+### 1.1. Hệ thống 5 trạng thái công việc
 
-Moi cong viec trong backlog chi nhan dung 1 trong 5 trang thai sau, gan chat voi hoat dong tren GitHub:
+Mỗi công việc trong backlog chỉ nhận đúng 1 trong 5 trạng thái sau, gắn chặt với hoạt động trên GitHub:
 
-- **Chua lam:** Mac dinh cho tat ca cac cong viec chua bat dau hoac chua tim thay bang chung xac thuc tren GitHub/repo.
-- **Dang lam:** Co nhanh tinh nang `feat/<ten>-<viec>` dang mo tren repo, dang duoc phat trien va chua tao Pull Request.
-- **Cho duyet:** Da mo Pull Request tren GitHub, dang trong qua trinh kiem tra va cho thanh vien trong cap duyet (Approve), chua merge vao main.
-- **Xong:** Pull Request da duoc merge vao nhanh main VA dat day du tieu chi nghiem thu cua viec do. Doi voi cac viec khong qua Pull Request (vi du: gui cau hoi cho giang vien), bat buoc can leader xac nhan bang van ban.
-- **Bi chan:** Cong viec khong the tiep tuc do vuong mac ve ky thuat, thieu thong tin, hoac phu thuoc chua hoan thanh. Bat buoc phai co dong giai thich nguyen nhan tai Muc 5.
+- **Chưa làm:** Mặc định cho tất cả các công việc chưa bắt đầu hoặc chưa tìm thấy bằng chứng xác thực trên GitHub/repo.
+- **Đang làm:** Có nhánh tính năng `feat/<ten>-<viec>` đang mở trên repo, đang được phát triển và chưa tạo Pull Request.
+- **Chờ duyệt:** Đã mở Pull Request trên GitHub, đang trong quá trình kiểm tra và chờ thành viên trong cặp duyệt (Approve), chưa merge vào `main`.
+- **Xong:** Pull Request đã được merge vào nhánh `main` VÀ đạt đầy đủ tiêu chí nghiệm thu của việc đó. Đối với các việc không qua Pull Request (ví dụ: gửi câu hỏi cho giảng viên), bắt buộc cần leader xác nhận bằng văn bản.
+- **Bị chặn:** Công việc không thể tiếp tục do vướng mắc về kỹ thuật, thiếu thông tin, hoặc phụ thuộc chưa hoàn thành. Bắt buộc phải có dòng giải thích nguyên nhân tại Mục 5.
 
-### 1.2. Quy uoc uoc luong do lon (Size)
+### 1.2. Quy ước ước lượng độ lớn (Size)
 
-Do lon cong viec duoc uoc luong tho theo gio lam viec thuc te de nhom sinh vien de phan bo thoi gian (nhom co the tinh chinh o buoi Sprint Planning):
+Độ lớn công việc được ước lượng thô theo giờ làm việc thực tế để nhóm sinh viên dễ phân bổ thời gian (nhóm có thể tinh chỉnh ở buổi Sprint Planning):
 
-- **S (Small):** Nho hon hoac bang 2 gio lam viec.
-- **M (Medium):** Tu 3 den 5 gio lam viec.
-- **L (Large):** Tu 6 den 10 gio lam viec.
+- **S (Small):** Nhỏ hơn hoặc bằng 2 giờ làm việc.
+- **M (Medium):** Từ 3 đến 5 giờ làm việc.
+- **L (Large):** Từ 6 đến 10 giờ làm việc.
 
-### 1.3. Cot Bang chung
+### 1.3. Cột Bằng chứng
 
-Moi cong viec o trang thai "Xong" hoac "Cho duyet" bat buoc phai ghi ro nguon xac thuc:
-- Duong dan hoac ma so Pull Request tren GitHub (vi du: PR #1, PR #2).
-- Ma commit, duong dan file trong repository (vi du: splits/manifest.csv).
-- Ten kernel va run id tren Kaggle (doi voi kernel chay private).
-- Hoac dong chu "leader xac nhan" doi voi cong viec ngoai le khong co code tren Git.
+Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc phải ghi rõ nguồn xác thực:
+- Đường dẫn hoặc mã số Pull Request trên GitHub (ví dụ: PR #1, PR #2).
+- Mã commit, đường dẫn file trong repository (ví dụ: `splits/manifest.csv`).
+- Tên kernel và run id trên Kaggle (đối với kernel chạy private).
+- Hoặc dòng chữ "leader xác nhận" đối với công việc ngoại lệ không có code trên Git.
 
-### 1.4. Bang thuat ngu rut gon cho nguoi moi
+### 1.4. Bảng thuật ngữ rút gọn cho người mới
 
-| Thuat ngu | Y nghia don gian trong do an |
+| Thuật ngữ | Ý nghĩa đơn giản trong đồ án |
 | :--- | :--- |
-| **Sprint** | Chu ky lam viec co dinh dai 2 tuan de hoan thanh mot nhom muc tieu nhat dinh. |
-| **Sprint Goal** | Muc tieu cot loi nhat ma ca nhom phai dat duoc khi ket thuc mot sprint. |
-| **Backlog** | Danh sach tat ca cac cong viec can lam trong du an, duoc chia nho theo tung sprint. |
-| **Definition of Done** | Bo tieu chuan bat buoc de mot cong viec duoc cong nhan la hoan thanh thuc su. |
-| **Sprint Review** | Buoi hop nganh cuoi sprint de trinh bay va kiem tra cac san pham da hoan thanh. |
-| **Retrospective** | Buoi hop rut kinh nghiem cuoi sprint de cai tien cach phoi hop va sua loi cho sprint tiep theo. |
+| **Sprint** | Chu kỳ làm việc cố định dài 2 tuần để hoàn thành một nhóm mục tiêu nhất định. |
+| **Sprint Goal** | Mục tiêu cốt lõi nhất mà cả nhóm phải đạt được khi kết thúc một sprint. |
+| **Backlog** | Danh sách tất cả các công việc cần làm trong dự án, được chia nhỏ theo từng sprint. |
+| **Definition of Done** | Bộ tiêu chuẩn bắt buộc để một công việc được công nhận là hoàn thành thực sự. |
+| **Sprint Review** | Buổi họp ngắn cuối sprint để trình bày và kiểm tra các sản phẩm đã hoàn thành. |
+| **Retrospective** | Buổi họp rút kinh nghiệm cuối sprint để cải tiến cách phối hợp và sửa lỗi cho sprint tiếp theo. |
 
-### 1.5. Nhip lam viec de xuat cho nhom
+### 1.5. Nhịp làm việc đề xuất cho nhóm
 
-- **Sprint Planning (Dau sprint, khoang 30 phut):** Nhom hop online/offline, leader giao viec theo phan cong trong docs/OWNERS.md, cac cap uoc luong lai Size neu can.
-- **Cap nhat tien do hang tuan (Cuoi tuan):** Nguoi phu trach cap nhat trang thai cong viec cua minh ngay trong chinh Pull Request hoac commit cua viec do.
-- **Sprint Review va Retrospective (Cuoi sprint, khoang 45 phut):** Danh gia san pham sprint, ghi nhan vao Muc 7 va chot ke hoach sprint tiep theo.
+- **Sprint Planning (Đầu sprint, khoảng 30 phút):** Nhóm họp online/offline, leader giao việc theo phân công trong `docs/OWNERS.md`, các cặp ước lượng lại Size nếu cần.
+- **Cập nhật tiến độ hàng tuần (Cuối tuần):** Người phụ trách cập nhật trạng thái công việc của mình ngay trong chính Pull Request hoặc commit của việc đó.
+- **Sprint Review và Retrospective (Cuối sprint, khoảng 45 phút):** Đánh giá sản phẩm sprint, ghi nhận vào Mục 7 và chốt kế hoạch sprint tiếp theo.
 
 ---
 
-## Muc 2. Tong quan tien do
+## Mục 2. Tổng quan tiến độ
 
-Cap nhat lan cuoi: 03/10/2026
+Cập nhật lần cuối: 03/10/2026
 
-| Sprint | Tuan | Muc tieu sprint | So viec Xong/Tong | Trang thai sprint | Ghi chu |
+| Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Tổng | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
-| **S1** | T1-2 | Moi truong chay duoc va hieu du lieu | 5/7 | Dang lam | Da xong setup Kaggle, EDA va manifest; cho leader xac nhan T1-03 va T1-04 |
-| **S2** | T3-4 | Khoa test, khung huan luyen chay duoc, co baseline va nguong chap nhan | 5/8 | Dang lam | Hoan tat 100% Tuan 3 (Track A & Track B, khoa test, GPU smoke test pass); chuan bi Tuan 4 baseline |
-| **S3** | T5-6 | Hoan tat RQ1 (so sanh backbone va chien luoc fine-tune) | 0/6 | Chua lam | So sanh DenseNet121 va EfficientNet-B0 |
-| **S4** | T7-8 | Hoan tat RQ2 (mat can bang lop), chot cau hinh cuoi, Grad-CAM, phan tich loi, bo anh che | 0/7 | Chua lam | Thu nghiem Weighted Loss, Focal Loss, tao mask anh |
-| **S5** | T9-10 | RQ3 (shortcut learning), danh gia test MOT lan, notebook suy luan | 0/6 | Chua lam | Danh gia anh che va mo khoa tap test duy nhat mot lan |
-| **S6** | T11-12 | Bao cao, slide, demo, du phong, nop, tap bao ve | 0/6 | Chua lam | Hoan thien bao cao tong ket va ung dung Gradio |
-| **Tong** | **T1-12** | **Toan bo 6 sprint cua do an** | **10/40** | **Dang trien khai** | **Dat 25.0% tong khoi luong cong viec** |
+| **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong setup Kaggle, EDA và manifest; chờ leader xác nhận T1-03 và T1-04 |
+| **S2** | T3-4 | Khóa test, khung huấn luyện chạy được, có baseline và ngưỡng chấp nhận | 5/8 | Đang làm | Hoàn tất 100% Tuần 3 (Track A & Track B, khóa test, GPU smoke test pass); chuẩn bị Tuần 4 baseline |
+| **S3** | T5-6 | Hoàn tất RQ1 (so sánh backbone và chiến lược fine-tune) | 0/6 | Chưa làm | So sánh DenseNet121 và EfficientNet-B0 |
+| **S4** | T7-8 | Hoàn tất RQ2 (mất cân bằng lớp), chốt cấu hình cuối, Grad-CAM, phân tích lỗi, bộ ảnh che | 0/7 | Chưa làm | Thử nghiệm Weighted Loss, Focal Loss, tạo mask ảnh |
+| **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần |
+| **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết và ứng dụng Gradio |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **10/40** | **Đang triển khai** | **Đạt 25.0% tổng khối lượng công việc** |
 
 ---
 
-## Muc 3. Backlog chi tiet theo sprint
+## Mục 3. Backlog chi tiết theo sprint
 
-### Sprint 1 (Tuan 1 - 2): Moi truong chay duoc va hieu du lieu
-**Sprint Goal:** Chung minh moi truong tinh toan Kaggle GPU hoat dong on dinh, xac minh tap du lieu 21.165 anh tren 4 lop, xuat file manifest.csv day du mask va phan tich nguy co shortcut learning.
+### Sprint 1 (Tuần 1 - 2): Môi trường chạy được và hiểu dữ liệu
+**Sprint Goal:** Chứng minh môi trường tính toán Kaggle GPU hoạt động ổn định, xác minh tập dữ liệu 21.165 ảnh trên 4 lớp, xuất file `manifest.csv` đầy đủ mask và phân tích nguy cơ shortcut learning.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S1-01 | T1 | Kiem tra moi truong Kaggle GPU, ghi chep cau hinh phan cung | Ha tang | Ca nhom | M | Xong | PR #2 da merge, docs/kaggle_setup_notes.md, kernel cxr-setup-check | Chay thanh cong tren 2x Tesla T4, xac dinh torch 2.10.0+cu128 va CUDA 12.8 khong loi |
-| S1-02 | T1 | Ghim phien ban thu vien thuc te vao requirements.txt | Ha tang | Ca nhom | S | Xong | PR #2 da merge, commit e7c88b0, docs/kaggle_setup_notes.md | Ghi chep day du torch==2.10.0+cu128, torchvision==0.25.0+cu128 tu log Kaggle |
-| S1-03 | T1 | 6/6 thanh vien clone repo ve may va kiem tra moi truong cuc bo | Ha tang | Ca nhom | S | Chua lam | Chua co bang chung, can leader xac nhan | 6/6 nguoi clone repo, chay xong 00_setup_check khong loi |
-| S1-04 | T1 | Gui danh sach cau hoi lam ro de tai cho giang vien | Bao cao | Leader | S | Chua lam | Chua co bang chung, can leader xac nhan | Cau hoi cho giang vien da gui bang van ban hoac email |
-| S1-05 | T2 | Xay dung notebook 01_download_and_eda.ipynb doc du lieu tu Kaggle | Ha tang | TV1 | M | Xong | PR #1 da merge, notebooks/01_download_and_eda.ipynb, kernel cxr-eda-manifest | Notebook tu dong tim dataset, doc du lieu, khong co loi lap trinh |
-| S1-06 | T2 | Tao file manifest.csv, doi chieu so luong anh va mask 4 lop | Chong ro ri | TV1 | M | Xong | PR #1 da merge, splits/manifest.csv, outputs/eda_manifest/manifest.csv | So anh moi lop khop chinh xac so biet (21.165 anh), bao cao mask khop 100% |
-| S1-07 | T2 | Thong ke do sang, luoi anh mau va phat hien 54 hash trung lap | Chong ro ri | TV1 | S | Xong | PR #1 da merge, results/eda/brightness_distribution.png, samples_grid.png | Co danh sach nhom anh trung lap, phan tich nghi van shortcut learning ve do sang |
+| S1-01 | T1 | Kiểm tra môi trường Kaggle GPU, ghi chép cấu hình phần cứng | Hạ tầng | Cả nhóm | M | Xong | PR #2 đã merge, `docs/kaggle_setup_notes.md`, kernel `cxr-setup-check` | Chạy thành công trên 2x Tesla T4, xác định torch 2.10.0+cu128 và CUDA 12.8 không lỗi |
+| S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Xong | PR #2 đã merge, commit `e7c88b0`, `docs/kaggle_setup_notes.md` | Ghi chép đầy đủ torch==2.10.0+cu128, torchvision==0.25.0+cu128 từ log Kaggle |
+| S1-03 | T1 | 6/6 thành viên clone repo về máy và kiểm tra môi trường cục bộ | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có bằng chứng, cần leader xác nhận | 6/6 người clone repo, chạy xong `00_setup_check` không lỗi |
+| S1-04 | T1 | Gửi danh sách câu hỏi làm rõ đề tài cho giảng viên | Báo cáo | Leader | S | Chưa làm | Chưa có bằng chứng, cần leader xác nhận | Câu hỏi cho giảng viên đã gửi bằng văn bản hoặc email |
+| S1-05 | T2 | Xây dựng notebook `01_download_and_eda.ipynb` đọc dữ liệu từ Kaggle | Hạ tầng | TV1 | M | Xong | PR #1 đã merge, `notebooks/01_download_and_eda.ipynb`, kernel `cxr-eda-manifest` | Notebook tự động tìm dataset, đọc dữ liệu, không có lỗi lập trình |
+| S1-06 | T2 | Tạo file `manifest.csv`, đối chiếu số lượng ảnh và mask 4 lớp | Chống rò rỉ | TV1 | M | Xong | PR #1 đã merge, `splits/manifest.csv`, `outputs/eda_manifest/manifest.csv` | Số ảnh mỗi lớp khớp chính xác số biết (21.165 ảnh), báo cáo mask khớp 100% |
+| S1-07 | T2 | Thống kê độ sáng, lưới ảnh mẫu và phát hiện 54 hash trùng lặp | Chống rò rỉ | TV1 | S | Xong | PR #1 đã merge, `results/eda/brightness_distribution.png`, `samples_grid.png` | Có danh sách nhóm ảnh trùng lặp, phân tích nghi vấn shortcut learning về độ sáng |
 
 ---
 
-### Sprint 2 (Tuan 3 - 4): Khoa test, khung huan luyen, baseline va nguong chap nhan
-**Sprint Goal:** Hoan thanh loc trung va chia train/val/test 70/15/15, khoa nghiem ngat tap test; hoan thien khung train.py co checkpoint resume; huan luyen thanh cong mo hinh baseline va chot nguong chap nhan.
+### Sprint 2 (Tuần 3 - 4): Khóa test, khung huấn luyện, baseline và ngưỡng chấp nhận
+**Sprint Goal:** Hoàn thành lọc trùng và chia train/val/test 70/15/15, khóa nghiêm ngặt tập test; hoàn thiện khung `train.py` có checkpoint resume; huấn luyện thành công mô hình baseline và chốt ngưỡng chấp nhận.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S2-01 | T3 | Loc bo 54 anh trung bang imagehash trong 02_duplicates_and_split.ipynb | Chong ro ri | TV1 | M | Xong | PR #4 da merge (commit 83531cc), notebooks/02_duplicates_and_split.ipynb, kernel cxr-duplicates-and-split, splits/README.md | Loc nhom trung pHash nguong T=0 (178 nhom, 401 anh), 0 cap trung khac nhan, khong ro ri nhom giua cac split |
-| S2-02 | T3 | Chia tap train/val/test theo ti le 70/15/15 va gan tag test-locked | Chong ro ri | TV1 | M | Xong | PR #4 da merge, splits/split_v1.csv, split_v1.sha256, tag test-locked tro commit e7c0993b, tests/test_split.py pass | Ti le 70/15/15 chuan (do lech < 0.1%), khoa test set v1 bang SHA256 va tag test-locked |
-| S2-03 | T3 | Xay dung DataLoader va Data Augmentation co ban trong src/dataset.py | Ha tang | TV4 | M | Xong | PR #5 da merge (commit f5c688b), src/dataset.py, tests/test_resume.py | Dataset doc split_v1.csv, anh xam -> 3 kenh, chuan hoa ImageNet, augment chi cho train (khong lat anh), chan split test bang allow_test |
-| S2-04 | T3 | Xay dung pipeline huan luyen src/train.py co ho tro resume | Ha tang | TV2 | L | Xong | PR #5 da merge, commit f5c688b, src/train.py, src/metrics.py, src/models.py, tests/test_metrics.py, tests/test_resume.py | Pipeline mixed precision AMP, luu last.pt va best.pt (macro-F1), ho tro resume tu dong, ten run chuan <rq>_<backbone>_<strategy>_<imb>_s<seed> |
-| S2-05 | T3 | Chay smoke test tren 03_smoke_test_train.ipynb | Ha tang | TV2 | S | Xong | PR #5 da merge, notebooks/03_smoke_test_train.ipynb, kernel cxr-smoke-test-train (GPU T4x2), outputs/smoke_test/smoke_test_report.json | 12/12 pytest pass, gia lap ngat phien va resume thanh cong epoch 1 -> 2 tren Kaggle GPU trong 49s |
-| S2-06 | T4 | Huan luyen mo hinh co so Baseline tren 04_baseline.ipynb | Ha tang | TV2 | L | Chua lam | Chua co nhanh/PR | Bang baseline co macro-F1 va recall tung lop tren tap validation |
-| S2-07 | T4 | Do dac thoi gian chay thuc te moi run va uoc tinh tong GPU-gio | Ha tang | TV2 | S | Chua lam | Chua co nhanh/PR | Co so lieu thoi gian tung epoch va bang uoc tinh tong GPU-gio cho cac tuan sau |
-| S2-08 | T4 | Xac lap nguong hieu nang toi thieu chap nhan duoc bang van ban | Bao cao | Leader | S | Chua lam | Chua co nhanh/PR | Nguong chap nhan viet bang loi trong results/, gan lien voi ket qua baseline |
+| S2-01 | T3 | Lọc bỏ 54 ảnh trùng bằng imagehash trong `02_duplicates_and_split.ipynb` | Chống rò rỉ | TV1 | M | Xong | PR #4 đã merge (commit `83531cc`), `notebooks/02_duplicates_and_split.ipynb`, kernel `cxr-duplicates-and-split`, `splits/README.md` | Lọc nhóm trùng pHash ngưỡng T=0 (178 nhóm, 401 ảnh), 0 cặp trùng khác nhãn, không rò rỉ nhóm giữa các split |
+| S2-02 | T3 | Chia tập train/val/test theo tỉ lệ 70/15/15 và gắn tag `test-locked` | Chống rò rỉ | TV1 | M | Xong | PR #4 đã merge, `splits/split_v1.csv`, `split_v1.sha256`, tag `test-locked` trỏ commit `e7c0993b`, `tests/test_split.py` pass | Tỉ lệ 70/15/15 chuẩn (độ lệch < 0.1%), khóa test set v1 bằng SHA256 và tag `test-locked` |
+| S2-03 | T3 | Xây dựng DataLoader và Data Augmentation cơ bản trong `src/dataset.py` | Hạ tầng | TV4 | M | Xong | PR #5 đã merge (commit `f5c688b`), `src/dataset.py`, `tests/test_resume.py` | Dataset đọc `split_v1.csv`, ảnh xám -> 3 kênh, chuẩn hóa ImageNet, augment chỉ cho train (không lật ảnh), chặn split test bằng `allow_test` |
+| S2-04 | T3 | Xây dựng pipeline huấn luyện `src/train.py` có hỗ trợ resume | Hạ tầng | TV2 | L | Xong | PR #5 đã merge, commit `f5c688b`, `src/train.py`, `src/metrics.py`, `src/models.py`, `tests/test_metrics.py`, `tests/test_resume.py` | Pipeline mixed precision AMP, lưu `last.pt` và `best.pt` (macro-F1), hỗ trợ resume tự động, tên run chuẩn `<rq>_<backbone>_<strategy>_<imb>_s<seed>` |
+| S2-05 | T3 | Chạy smoke test trên `03_smoke_test_train.ipynb` | Hạ tầng | TV2 | S | Xong | PR #5 đã merge, `notebooks/03_smoke_test_train.ipynb`, kernel `cxr-smoke-test-train` (GPU T4x2), `outputs/smoke_test/smoke_test_report.json` | 12/12 pytest pass, giả lập ngắt phiên và resume thành công epoch 1 -> 2 trên Kaggle GPU trong 49s |
+| S2-06 | T4 | Huấn luyện mô hình cơ sở Baseline trên `04_baseline.ipynb` | Hạ tầng | TV2 | L | Chưa làm | Chưa có nhánh/PR | Bảng baseline có macro-F1 và recall từng lớp trên tập validation |
+| S2-07 | T4 | Đo đạc thời gian chạy thực tế mỗi run và ước tính tổng GPU-giờ | Hạ tầng | TV2 | S | Chưa làm | Chưa có nhánh/PR | Có số liệu thời gian từng epoch và bảng ước tính tổng GPU-giờ cho các tuần sau |
+| S2-08 | T4 | Xác lập ngưỡng hiệu năng tối thiểu chấp nhận được bằng văn bản | Báo cáo | Leader | S | Chưa làm | Chưa có nhánh/PR | Ngưỡng chấp nhận viết bằng lời trong `results/`, gắn liền với kết quả baseline |
 
 ---
 
-### Sprint 3 (Tuan 5 - 6): Hoan tat RQ1 (So sanh backbone va chien luoc fine-tune)
-**Sprint Goal:** Hoan thanh so sanh thuc nghiem giua DenseNet121 va EfficientNet-B0 duoi 2 chien luoc (frozen vs fine-tune) tren 3 seed ngau nhien; chon ra 1 cau hinh toi uu nhat dua sang RQ2.
+### Sprint 3 (Tuần 5 - 6): Hoàn tất RQ1 (So sánh backbone và chiến lược fine-tune)
+**Sprint Goal:** Hoàn thành so sánh thực nghiệm giữa DenseNet121 và EfficientNet-B0 dưới 2 chiến lược (frozen vs fine-tune) trên 3 seed ngẫu nhiên; chọn ra 1 cấu hình tối ưu nhất đưa sang RQ2.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S3-01 | T5 | Cai dat cac kien truc DenseNet121 va EfficientNet-B0 trong src/models.py | RQ1 | TV3 | M | Chua lam | Chua co nhanh/PR | Khoi tao dung kien truc, nap dung pretrained weights ImageNet |
-| S3-02 | T5 | Thuc hien cac run huan luyen chien luoc frozen backbone | RQ1 | TV3 | L | Chua lam | Chua co nhanh/PR | It nhat 50% run RQ1 hoan tat, moi run co day du config, log va file best.pt |
-| S3-03 | T5 | Thuc hien cac run huan luyen chien luoc full fine-tuning | RQ1 | TV3 | L | Chua lam | Chua co nhanh/PR | Hoan tat cac run fine-tune tren ca 2 backbone voi log va checkpoint |
-| S3-04 | T6 | Chay lap lai thuc nghiem tren 3 seed ngau nhien (s42, s43, s44) | RQ1 | TV3 | L | Chua lam | Chua co nhanh/PR | Du so lieu 3 seed cho tung cau hinh de tinh toan thong ke |
-| S3-05 | T6 | Tong hop bang ket qua so sanh RQ1 trong 05_rq1_backbones.ipynb | RQ1 | TV3 | M | Chua lam | Chua co nhanh/PR | Bang RQ1 co trung binh cong va do lech chuan qua 3 seed cho macro-F1, recall |
-| S3-06 | T6 | Phan tich va chot 1 cau hinh backbone tot nhat tren validation cho RQ2 | RQ1 | TV3 | S | Chua lam | Chua co nhanh/PR | Co bien ban ket luan ro rang dua tren validation metric de chuyen tiep |
+| S3-01 | T5 | Cài đặt các kiến trúc DenseNet121 và EfficientNet-B0 trong `src/models.py` | RQ1 | TV3 | M | Chưa làm | Chưa có nhánh/PR | Khởi tạo đúng kiến trúc, nạp đúng pretrained weights ImageNet |
+| S3-02 | T5 | Thực hiện các run huấn luyện chiến lược frozen backbone | RQ1 | TV3 | L | Chưa làm | Chưa có nhánh/PR | Ít nhất 50% run RQ1 hoàn tất, mỗi run có đầy đủ config, log và file `best.pt` |
+| S3-03 | T5 | Thực hiện các run huấn luyện chiến lược full fine-tuning | RQ1 | TV3 | L | Chưa làm | Chưa có nhánh/PR | Hoàn tất các run fine-tune trên cả 2 backbone với log và checkpoint |
+| S3-04 | T6 | Chạy lặp lại thực nghiệm trên 3 seed ngẫu nhiên (s42, s43, s44) | RQ1 | TV3 | L | Chưa làm | Chưa có nhánh/PR | Đủ số liệu 3 seed cho từng cấu hình để tính toán thống kê |
+| S3-05 | T6 | Tổng hợp bảng kết quả so sánh RQ1 trong `05_rq1_backbones.ipynb` | RQ1 | TV3 | M | Chưa làm | Chưa có nhánh/PR | Bảng RQ1 có trung bình cộng và độ lệch chuẩn qua 3 seed cho macro-F1, recall |
+| S3-06 | T6 | Phân tích và chốt 1 cấu hình backbone tốt nhất trên validation cho RQ2 | RQ1 | TV3 | S | Chưa làm | Chưa có nhánh/PR | Có biên bản kết luận rõ ràng dựa trên validation metric để chuyển tiếp |
 
 ---
 
-### Sprint 4 (Tuan 7 - 8): Hoan tat RQ2, chot cau hinh, Grad-CAM, phan tich loi, bo anh che
-**Sprint Goal:** Hoan thanh thu nghiem cac giai phap xu ly mat can bang lop (RQ2); dong bang cau hinh toi uu; cai dat Grad-CAM; phan tich loi va tao bo anh che mat na phoi.
+### Sprint 4 (Tuần 7 - 8): Hoàn tất RQ2, chốt cấu hình, Grad-CAM, phân tích lỗi, bộ ảnh che
+**Sprint Goal:** Hoàn thành thử nghiệm các giải pháp xử lý mất cân bằng lớp (RQ2); đóng băng cấu hình tối ưu; cài đặt Grad-CAM; phân tích lỗi và tạo bộ ảnh che mặt nạ phổi.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S4-01 | T7 | Cai dat Weighted Cross-Entropy va Focal Loss trong src/train.py | RQ2 | TV4 | M | Chua lam | Chua co nhanh/PR | Ham mat mat tinh dung dao ham, ho tro truyen trong so lop |
-| S4-02 | T7 | Thu nghiem WeightedRandomSampler va Data Augmentation bo sung | RQ2 | TV4 | M | Chua lam | Chua co nhanh/PR | Sampler can bang ti le lay mau giua lop it (Viral Pneumonia) va lop nhieu (Normal) |
-| S4-03 | T7 | Huan luyen so sanh cac chien luoc tren 06_rq2_imbalance.ipynb | RQ2 | TV4 | L | Chua lam | Chua co nhanh/PR | Bang RQ2 ghi ro recall va F1 rieng cho lop Viral Pneumonia va cac lop khac, so voi baseline |
-| S4-04 | T8 | Chot cau hinh mo hinh toi uu nhat va dong bang tham so thuc nghiem | Ha tang | Ca nhom | S | Chua lam | Chua co nhanh/PR | Cau hinh cuoi cung duoc ghi nhan van ban va khoa chat che |
-| S4-05 | T8 | Cai dat module Grad-CAM trong src/gradcam.py va 07_gradcam_lung_attention.ipynb | RQ3 | TV5 | L | Chua lam | Chua co nhanh/PR | Xuat duoc ban do nhiet Grad-CAM phu tren anh X-quang, doi chieu truc quan voi mask |
-| S4-06 | T8 | Phan tich chi tiet cac ca du doan sai tren 09_error_analysis.ipynb | Bao cao | TV5 | M | Chua lam | Chua co nhanh/PR | Lap danh sach cac ca nham lan dien hinh giua COVID, Lung Opacity va Pneumonia |
-| S4-07 | T8 | Tao bo anh che thu nghiem (chi giu phoi / che ngoai phoi) | RQ3 | TV5 | M | Chua lam | Chua co nhanh/PR | Bo anh che duoc kiem tra bang mat tren it nhat 20 anh moi lop khong bi lech mask |
+| S4-01 | T7 | Cài đặt Weighted Cross-Entropy và Focal Loss trong `src/train.py` | RQ2 | TV4 | M | Chưa làm | Chưa có nhánh/PR | Hàm mất mát tính đúng đạo hàm, hỗ trợ truyền trọng số lớp |
+| S4-02 | T7 | Thử nghiệm WeightedRandomSampler và Data Augmentation bổ sung | RQ2 | TV4 | M | Chưa làm | Chưa có nhánh/PR | Sampler cân bằng tỉ lệ lấy mẫu giữa lớp ít (Viral Pneumonia) và lớp nhiều (Normal) |
+| S4-03 | T7 | Huấn luyện so sánh các chiến lược trên `06_rq2_imbalance.ipynb` | RQ2 | TV4 | L | Chưa làm | Chưa có nhánh/PR | Bảng RQ2 ghi rõ recall và F1 riêng cho lớp Viral Pneumonia và các lớp khác, so với baseline |
+| S4-04 | T8 | Chốt cấu hình mô hình tối ưu nhất và đóng băng tham số thực nghiệm | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có nhánh/PR | Cấu hình cuối cùng được ghi nhận văn bản và khóa chặt chẽ |
+| S4-05 | T8 | Cài đặt module Grad-CAM trong `src/gradcam.py` và `07_gradcam_lung_attention.ipynb` | RQ3 | TV5 | L | Chưa làm | Chưa có nhánh/PR | Xuất được bản đồ nhiệt Grad-CAM phủ trên ảnh X-quang, đối chiếu trực quan với mask |
+| S4-06 | T8 | Phân tích chi tiết các ca dự đoán sai trên `09_error_analysis.ipynb` | Báo cáo | TV5 | M | Chưa làm | Chưa có nhánh/PR | Lập danh sách các ca nhầm lẫn điển hình giữa COVID, Lung Opacity và Pneumonia |
+| S4-07 | T8 | Tạo bộ ảnh che thử nghiệm (chỉ giữ phổi / che ngoài phổi) | RQ3 | TV5 | M | Chưa làm | Chưa có nhánh/PR | Bộ ảnh che được kiểm tra bằng mắt trên ít nhất 20 ảnh mỗi lớp không bị lệch mask |
 
 ---
 
-### Sprint 5 (Tuan 9 - 10): RQ3 (Shortcut Learning), danh gia test MOT lan, suy luan
-**Sprint Goal:** Danh gia mo hinh tren bo anh che de do luong do le thuoc vao vung ngoai phoi (RQ3); mo khoa tap test de danh gia duy nhat mot lan; hoan thien notebook suy luan doc lap.
+### Sprint 5 (Tuần 9 - 10): RQ3 (Shortcut Learning), đánh giá test MỘT lần, suy luận
+**Sprint Goal:** Đánh giá mô hình trên bộ ảnh che để đo lường độ lệ thuộc vào vùng ngoài phổi (RQ3); mở khóa tập test để đánh giá duy nhất một lần; hoàn thiện notebook suy luận độc lập.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S5-01 | T9 | Danh gia mo hinh tren 3 tap (anh goc, chi phoi, ngoai phoi) trong 08_rq3_masked_eval.ipynb | RQ3 | TV5 | L | Chua lam | Chua co nhanh/PR | Bang RQ3 tren tap validation the hien day du su thay doi do chinh xac tren 3 kieu che |
-| S5-02 | T9 | Tinh toan chi so tap trung nang luong Grad-CAM ben trong mask phoi | RQ3 | TV5 | M | Chua lam | Chua co nhanh/PR | Co ti le % nang luong nam trong phoi so voi ngoai phoi |
-| S5-03 | T9 | Soan thao ket luan nghien cuu ve nguy co shortcut learning | RQ3 | TV5 | M | Chua lam | Chua co nhanh/PR | Ket luan so bo ve muc do shortcut learning du ket qua co dep hay khong |
-| S5-04 | T10 | Mo khoa tap test va thuc hien danh gia DUY NHAT 1 LAN trong 10_final_test_eval.ipynb | Chong ro ri | TV6 | M | Chua lam | Chua co nhanh/PR | Ket qua test ghi dung 1 lan duy nhat kem ma hash file split de dam bao tinh khach quan |
-| S5-05 | T10 | Xuat ma tran nham lan (Confusion Matrix) va bang chi so tren test | Bao cao | TV6 | S | Chua lam | Chua co nhanh/PR | Bang ket qua test day du accuracy, macro-F1 va recall tung lop |
-| S5-06 | T10 | Xay dung notebook suy luan doc lap 11_inference_demo.ipynb | Ha tang | TV6 | M | Chua lam | Chua co nhanh/PR | Notebook suy luan chay lai duoc tu dau tren mot phien Kaggle moi tinh |
+| S5-01 | T9 | Đánh giá mô hình trên 3 tập (ảnh gốc, chỉ phổi, ngoài phổi) trong `08_rq3_masked_eval.ipynb` | RQ3 | TV5 | L | Chưa làm | Chưa có nhánh/PR | Bảng RQ3 trên tập validation thể hiện đầy đủ sự thay đổi độ chính xác trên 3 kiểu che |
+| S5-02 | T9 | Tính toán chỉ số tập trung năng lượng Grad-CAM bên trong mask phổi | RQ3 | TV5 | M | Chưa làm | Chưa có nhánh/PR | Có tỉ lệ % năng lượng nằm trong phổi so với ngoài phổi |
+| S5-03 | T9 | Soạn thảo kết luận nghiên cứu về nguy cơ shortcut learning | RQ3 | TV5 | M | Chưa làm | Chưa có nhánh/PR | Kết luận sơ bộ về mức độ shortcut learning dù kết quả có đẹp hay không |
+| S5-04 | T10 | Mở khóa tập test và thực hiện đánh giá DUY NHẤT 1 LẦN trong `10_final_test_eval.ipynb` | Chống rò rỉ | TV6 | M | Chưa làm | Chưa có nhánh/PR | Kết quả test ghi đúng 1 lần duy nhất kèm mã hash file split để đảm bảo tính khách quan |
+| S5-05 | T10 | Xuất ma trận nhầm lẫn (Confusion Matrix) và bảng chỉ số trên test | Báo cáo | TV6 | S | Chưa làm | Chưa có nhánh/PR | Bảng kết quả test đầy đủ accuracy, macro-F1 và recall từng lớp |
+| S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | TV6 | M | Chưa làm | Chưa có nhánh/PR | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |
 
 ---
 
-### Sprint 6 (Tuan 11 - 12): Bao cao, Demo, Bao ve va Hoan tat
-**Sprint Goal:** Hoan thien toan dien bao cao bai tap lon, ung dung demo Gradio, slide thuyet trinh; dien tap bao ve va nop san pham dung han.
+### Sprint 6 (Tuần 11 - 12): Báo cáo, Demo, Bảo vệ và Hoàn tất
+**Sprint Goal:** Hoàn thiện toàn diện báo cáo bài tập lớn, ứng dụng demo Gradio, slide thuyết trình; diễn tập bảo vệ và nộp sản phẩm đúng hạn.
 
-| ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
+| ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S6-01 | T11 | Soan thao bao cao bai tap lon trong thu muc report/ | Bao cao | TV6 | L | Chua lam | Chua co nhanh/PR | Bao cao trinh bay day du RQ1-3, gioi han nghien cuu va canh bao y khoa |
-| S6-02 | T11 | Xay dung ung dung demo Gradio tuong tac trong demo/ | Ha tang | TV6 | M | Chua lam | Chua co nhanh/PR | Mot thanh vien khong phu trach phan do chay lai duoc app va suy luan thanh cong |
-| S6-03 | T11 | Hoan thien slide thuyet trinh bao ve de tai trong slides/ | Bao cao | Ca nhom | M | Chua lam | Chua co nhanh/PR | Slide ngan gon, day du bieu do thuc nghiem va cau truc de cuong |
-| S6-04 | T12 | Ra soat toan bo san pham, code va dinh dang theo yeu cau giang vien | Bao cao | Ca nhom | S | Chua lam | Chua co nhanh/PR | Dung dinh dang file, tieu chuan ky thuat ma giang vien yeu cau |
-| S6-05 | T12 | To chuc dien tap thuyet trinh va tra loi cau hoi phan bien | Bao cao | Ca nhom | M | Chua lam | Chua co nhanh/PR | Dien tap thuyet trinh hoan chinh it nhat 1 lan truoc buoi bao ve chinh thuc |
-| S6-06 | T12 | Dong goi san pham cuoi ky va nop bai tap lon | Bao cao | Leader | S | Chua lam | Chua co nhanh/PR | Nop bai dung han quy dinh, repo sach se va dong bo |
+| S6-01 | T11 | Soạn thảo báo cáo bài tập lớn trong thư mục `report/` | Báo cáo | TV6 | L | Chưa làm | Chưa có nhánh/PR | Báo cáo trình bày đầy đủ RQ1-3, giới hạn nghiên cứu và cảnh báo y khoa |
+| S6-02 | T11 | Xây dựng ứng dụng demo Gradio tương tác trong `demo/` | Hạ tầng | TV6 | M | Chưa làm | Chưa có nhánh/PR | Một thành viên không phụ trách phần đó chạy lại được app và suy luận thành công |
+| S6-03 | T11 | Hoàn thiện slide thuyết trình bảo vệ đề tài trong `slides/` | Báo cáo | Cả nhóm | M | Chưa làm | Chưa có nhánh/PR | Slide ngắn gọn, đầy đủ biểu đồ thực nghiệm và cấu trúc đề cương |
+| S6-04 | T12 | Rà soát toàn bộ sản phẩm, code và định dạng theo yêu cầu giảng viên | Báo cáo | Cả nhóm | S | Chưa làm | Chưa có nhánh/PR | Đúng định dạng file, tiêu chuẩn kỹ thuật mà giảng viên yêu cầu |
+| S6-05 | T12 | Tổ chức diễn tập thuyết trình và trả lời câu hỏi phản biện | Báo cáo | Cả nhóm | M | Chưa làm | Chưa có nhánh/PR | Diễn tập thuyết trình hoàn chỉnh ít nhất 1 lần trước buổi bảo vệ chính thức |
+| S6-06 | T12 | Đóng gói sản phẩm cuối kỳ và nộp bài tập lớn | Báo cáo | Leader | S | Chưa làm | Chưa có nhánh/PR | Nộp bài đúng hạn quy định, repo sạch sẽ và đồng bộ |
 
 ---
 
-## Muc 4. Definition of Done chung
+## Mục 4. Definition of Done chung
 
-Mot cong viec chi duoc phep danh dau la **Xong** khi va chi khi thoa man day du 6 dieu kien nghiem ngat sau day:
+Một công việc chỉ được phép đánh dấu là **Xong** khi và chỉ khi thỏa mãn đầy đủ 6 điều kiện nghiêm ngặt sau đây:
 
-1. **Pull Request duoc duyet chéo:** Pull Request da duoc it nhat mot thanh vien trong cap xem xet, kiem tra va phe duyet (Approve), sau do duoc merge vao nhanh `main`.
-2. **Notebook chay lai duoc:** Tat ca notebook phai chay lai thanh cong tu dau den cuoi (`Run All`) tren moi truong sach khong phat sinh loi.
-3. **Ket qua luu dung vi tri:** Bang so lieu, log, checkpoint hoac bieu do phai duoc luu dung thu muc quy dinh (`results/`, `splits/`, `report/`).
-4. **Bao mat va sach repo:** Tuyet doi khong co du lieu anh tho, checkpoint trong so lon (`*.pt`, `*.pth`), token bi mat (`kaggle.json`, `.env`) bi commit vao Git.
-5. **Dong bo tien do tren roadmap:** Dong cong viec tuong ung trong `docs/roadmap.md` da duoc cap nhat trang thai thanh `Xong` kem link Pull Request hoac bang chung cu the.
-6. **Tuan thu khoa test:** Tuyet doi khong dung tap test trong bat ky buoc huan luyen, chon mo hinh hay tinh chinh nao; tap test chi duoc mo ra dung mot lan tai Tuan 10.
+1. **Pull Request được duyệt chéo:** Pull Request đã được ít nhất một thành viên trong cặp xem xét, kiểm tra và phê duyệt (Approve), sau đó được merge vào nhánh `main`.
+2. **Notebook chạy lại được:** Tất cả notebook phải chạy lại thành công từ đầu đến cuối (`Run All`) trên môi trường sạch không phát sinh lỗi.
+3. **Kết quả lưu đúng vị trí:** Bảng số liệu, log, checkpoint hoặc biểu đồ phải được lưu đúng thư mục quy định (`results/`, `splits/`, `report/`).
+4. **Bảo mật và sạch repo:** Tuyệt đối không có dữ liệu ảnh thô, checkpoint trọng số lớn (`*.pt`, `*.pth`), token bí mật (`kaggle.json`, `.env`) bị commit vào Git.
+5. **Đồng bộ tiến độ trên roadmap:** Dòng công việc tương ứng trong `docs/roadmap.md` đã được cập nhật trạng thái thành `Xong` kèm link Pull Request hoặc bằng chứng cụ thể.
+6. **Tuân thủ khóa test:** Tuyệt đối không dùng tập test trong bất kỳ bước huấn luyện, chọn mô hình hay tinh chỉnh nào; tập test chỉ được mở ra đúng một lần tại Tuần 10.
 
 ---
 
-## Muc 5. Vuong mac va quyet dinh dang mo
+## Mục 5. Vướng mắc và quyết định đang mở
 
-Bang tong hop cac van de can giai quyet hoac quyet dinh de tranh bi chan tien do:
+Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định để tránh bị chặn tiến độ:
 
-| Muc | Loai | Nguoi quyet | Trang thai | Ghi chu |
+| Mục | Loại | Người quyết | Trạng thái | Ghi chú |
 | :--- | :---: | :---: | :---: | :--- |
-| Phuong an tai trong so ImageNet cho kernel huan luyen | Quyet dinh | Leader | Mo | De xuat (bat internet enable_internet: true cho kernel huan luyen hoac gan Kaggle Dataset chua weights), CHUA CHOT. Nguoi quyet: Leader. Can chot truoc khi chay Baseline Tuan 4. |
-| Phan cong chu so huu module src/models.py | Quyet dinh | Leader | Da giai quyet | Da phan cong Hang Thai Tu (TV3) lam chu so huu src/models.py, kem cap boi TV4 Nguyen Vu Thuong |
-| Quyet dinh giu split_v1 hay tao split_v2 | Quyet dinh | Leader | Mo | split_v1 da khoa voi nguong T=0 (178 nhom, 401 anh). Da thong ke 735 cap gan trung (Hamming 1-4) khac split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khac nhan, 506 cung nhan). Mo cho toi khi Leader danh gia co can sua nguong hay khong (735 cap gan trung la gioi han da biet). |
-| Rubric cham diem chi tiet cua giang vien | Rui ro | Giang vien / Leader | Dang cho | Chua co rubric cham diem chinh thuc; nhom can lien he hoi giang vien de bam sat trong so diem. |
-| Hinh thuc san pham nop cuoi ky | Quyet dinh | Giang vien / Leader | Dang cho | Can xac nhan san pham nop gom nhung gi (mo hinh fine-tune, notebook, bao cao, co bat buoc demo app Gradio hay khong). |
-| Thong tin nguon goc cua bo du lieu CXR (Shortcut Learning) | Rui ro | Ca nhom | Mo | Dataset tong hop tu nhieu nguon, thieu metadata benh nhan (patient_id) va thiet bi chup; do lech do sang lop COVID cao hon ro ret; can ghi ro gioi han nay trong bao cao va danh gia tai RQ3. |
+| Phương án tải trọng số ImageNet cho kernel huấn luyện | Quyết định | Leader | Mở | Đề xuất (bật internet `enable_internet: true` cho kernel huấn luyện hoặc gắn Kaggle Dataset chứa weights), CHƯA CHỐT. Người quyết: Leader. Cần chốt trước khi chạy Baseline Tuần 4. |
+| Phân công chủ sở hữu module `src/models.py` | Quyết định | Leader | Đã giải quyết | Đã phân công Hàng Thái Tú (TV3) làm chủ sở hữu `src/models.py`, kèm cặp bởi TV4 Nguyễn Vũ Thương |
+| Quyết định giữ `split_v1` hay tạo `split_v2` | Quyết định | Leader | Mở | `split_v1` đã khóa với ngưỡng T=0 (178 nhóm, 401 ảnh). Đã thống kê 735 cặp gần trùng (Hamming 1-4) khác split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khác nhãn, 506 cùng nhãn). Mở cho tới khi Leader đánh giá có cần sửa ngưỡng hay không (735 cặp gần trùng là giới hạn đã biết). |
+| Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader | Đang chờ | Chưa có rubric chấm điểm chính thức; nhóm cần liên hệ hỏi giảng viên để bám sát trọng số điểm. |
+| Hình thức sản phẩm nộp cuối kỳ | Quyết định | Giảng viên / Leader | Đang chờ | Cần xác nhận sản phẩm nộp gồm những gì (mô hình fine-tune, notebook, báo cáo, có bắt buộc demo app Gradio hay không). |
+| Thông tin nguồn gốc của bộ dữ liệu CXR (Shortcut Learning) | Rủi ro | Cả nhóm | Mở | Dataset tổng hợp từ nhiều nguồn, thiếu metadata bệnh nhân (`patient_id`) và thiết bị chụp; độ lệch độ sáng lớp COVID cao hơn rõ rệt; cần ghi rõ giới hạn này trong báo cáo và đánh giá tại RQ3. |
 
 ---
 
-## Muc 6. Quy tac khi tre tien do
+## Mục 6. Quy tắc khi trễ tiến độ
 
-Trong qua trinh thuc hien, neu tien do thuc te bi tre hon 1 tuan so voi ke hoach Sprint, nhom se ap dung quy tac cat giam pham vi cong viec theo thu tu uu tien sau day:
+Trong quá trình thực hiện, nếu tiến độ thực tế bị trễ hơn 1 tuần so với kế hoạch Sprint, nhóm sẽ áp dụng quy tắc cắt giảm phạm vi công việc theo thứ tự ưu tiên sau đây:
 
-1. **Cat giam 1:** Cat bo phan RQ3-C (phan mo rong: huan luyen lai mo hinh tu dau tren tap anh chi chua vung phoi).
-2. **Cat giam 2:** Cat bo thu nghiem Focal Loss trong RQ2 (chi giu lai Weighted Cross-Entropy Loss).
-3. **Cat giam 3:** Bot di mot kien truc backbone trong RQ1 (chi tap trung vao DenseNet121 hoac EfficientNet-B0).
-4. **Cat giam 4:** Giam so luong seed ngau nhien chay lap lai tu 3 seed xuong con 2 seed de tiet kiem thoi gian tinh toan.
-5. **Cat giam 5:** Cat bo phan ung dung demo giao dien (Gradio app), chi giu lai notebook suy luan 11_inference_demo.ipynb.
+1. **Cắt giảm 1:** Cắt bỏ phần RQ3-C (phần mở rộng: huấn luyện lại mô hình từ đầu trên tập ảnh chỉ chứa vùng phổi).
+2. **Cắt giảm 2:** Cắt bỏ thử nghiệm Focal Loss trong RQ2 (chỉ giữ lại Weighted Cross-Entropy Loss).
+3. **Cắt giảm 3:** Bớt đi một kiến trúc backbone trong RQ1 (chỉ tập trung vào DenseNet121 hoặc EfficientNet-B0).
+4. **Cắt giảm 4:** Giảm số lượng seed ngẫu nhiên chạy lặp lại từ 3 seed xuống còn 2 seed để tiết kiệm thời gian tính toán.
+5. **Cắt giảm 5:** Cắt bỏ phần ứng dụng demo giao diện (Gradio app), chỉ giữ lại notebook suy luận `11_inference_demo.ipynb`.
 
-**Cac phan tuyet doi KHONG duoc phep cat giam:**
-- Quy tac khoa tap test va cach ly du lieu.
-- Mo hinh co so Baseline va nguong chap nhan toi thieu.
-- Danh gia Macro-F1 va Recall tren tung lop benh rieng biet.
-- RQ3-A va RQ3-B (danh gia tren anh che phoi va truc quan hoa Grad-CAM).
-- Phan gioi han nghien cuu va canh bao y khoa trong bao cao bai tap lon.
-
----
-
-## Muc 7. Sprint Review va Retrospective
-
-Khung theo doi danh gia va rut kinh nghiem cuoi moi sprint (dien noi dung thuc te o buoi hop cuoi sprint, khong tu y bia dat):
-
-### Sprint 1 (Tuan 1 - 2)
-- **Da lam duoc:** Chua dien ra (se dien vao cuoi Tuan 2)
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
-
-### Sprint 2 (Tuan 3 - 4)
-- **Da lam duoc:** Hoan thanh chia split 70/15/15 chong ro ri pHash, khoa tap test (tag test-locked), xay dung xong khung huan luyen PyTorch AMP co resume, chay smoke test thanh cong tren Kaggle GPU T4x2 dat 12/12 pytest pass
-- **Chua xong va vi sao:** Cac viec Tuan 4 (Baseline, do gio GPU, nguong chap nhan) chua bat dau
-- **Doi gi o sprint sau:** Chot phuong an trong so ImageNet voi Leader de chay Baseline
-
-### Sprint 3 (Tuan 5 - 6)
-- **Da lam duoc:** Chua dien ra
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
-
-### Sprint 4 (Tuan 7 - 8)
-- **Da lam duoc:** Chua dien ra
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
-
-### Sprint 5 (Tuan 9 - 10)
-- **Da lam duoc:** Chua dien ra
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
-
-### Sprint 6 (Tuan 11 - 12)
-- **Da lam duoc:** Chua dien ra
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
+**Các phần tuyệt đối KHÔNG được phép cắt giảm:**
+- Quy tắc khóa tập test và cách ly dữ liệu.
+- Mô hình cơ sở Baseline và ngưỡng chấp nhận tối thiểu.
+- Đánh giá Macro-F1 và Recall trên từng lớp bệnh riêng biệt.
+- RQ3-A và RQ3-B (đánh giá trên ảnh che phổi và trực quan hóa Grad-CAM).
+- Phần giới hạn nghiên cứu và cảnh báo y khoa trong báo cáo bài tập lớn.
 
 ---
 
-## Muc 8. Lich su thay doi
+## Mục 7. Sprint Review và Retrospective
 
-| Phien ban | Ngay | Nguoi sua | Noi dung thay doi |
+Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền nội dung thực tế ở buổi họp cuối sprint, không tự ý bịa đặt):
+
+### Sprint 1 (Tuần 1 - 2)
+- **Đã làm được:** Chưa diễn ra (sẽ điền vào cuối Tuần 2)
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
+
+### Sprint 2 (Tuần 3 - 4)
+- **Đã làm được:** Hoàn thành chia split 70/15/15 chống rò rỉ pHash, khóa tập test (tag `test-locked`), xây dựng xong khung huấn luyện PyTorch AMP có resume, chạy smoke test thành công trên Kaggle GPU T4x2 đạt 12/12 pytest pass
+- **Chưa xong và vì sao:** Các việc Tuần 4 (Baseline, đo giờ GPU, ngưỡng chấp nhận) chưa bắt đầu
+- **Đổi gì ở sprint sau:** Chốt phương án trọng số ImageNet với Leader để chạy Baseline
+
+### Sprint 3 (Tuần 5 - 6)
+- **Đã làm được:** Chưa diễn ra
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
+
+### Sprint 4 (Tuần 7 - 8)
+- **Đã làm được:** Chưa diễn ra
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
+
+### Sprint 5 (Tuần 9 - 10)
+- **Đã làm được:** Chưa diễn ra
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
+
+### Sprint 6 (Tuần 11 - 12)
+- **Đã làm được:** Chưa diễn ra
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
+
+---
+
+## Mục 8. Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người sửa | Nội dung thay đổi |
 | :---: | :---: | :---: | :--- |
-| **v1.0** | 28/09/2026 | Ca nhom | Khoi tao khung lo trinh 12 tuan ban dau |
-| **v2.0** | 02/10/2026 | Leader va nhom | Nang cap lo trinh sang bang theo doi tien do Scrum rut gon 6 sprint co trang thai va bang chung |
-| **v2.1** | 03/10/2026 | Ky su ML & Nhom | Dong bo tien do Sprint 2 (hoan tat Tuan 3 Track A & Track B, khoa test, GPU smoke test pass) va mo lai cac quyet dinh cua Leader |
+| **v1.0** | 28/09/2026 | Cả nhóm | Khởi tạo khung lộ trình 12 tuần ban đầu |
+| **v2.0** | 02/10/2026 | Leader và nhóm | Nâng cấp lộ trình sang bảng theo dõi tiến độ Scrum rút gọn 6 sprint có trạng thái và bằng chứng |
+| **v2.1** | 03/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ tiến độ Sprint 2 (hoàn tất Tuần 3 Track A & Track B, khóa test, GPU smoke test pass) và mở lại các quyết định của Leader |
+| **v2.2** | 04/10/2026 | Leader & Nhóm | Chuẩn hóa toàn bộ nội dung sang tiếng Việt có dấu chuẩn UTF-8, đồng bộ bảng Code Owners |
