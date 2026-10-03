@@ -14,3 +14,4 @@ grad-cam
 tqdm
 pyyaml
 gradio
+pytest
