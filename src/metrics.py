@@ -1,7 +1,7 @@
 """Module metrics.py
 
 Trách nhiệm:
-- Tính toán toàn diện các chỉ số đánh giá cho bài toán phân loại X-quang 4 lớp (phụ trách: TV6).
+- Tính toán toàn diện các chỉ số đánh giá cho bài toán phân loại X-quang 4 lớp (phụ trách: Hải Lý).
 - Chỉ số chính: Macro-F1 (tiêu chí chính để chọn mô hình và lưu best checkpoint), Balanced Accuracy.
 - Chỉ số chi tiết: Accuracy, Weighted-F1, Per-class Precision, Per-class Recall, Per-class F1.
 - Xuất ma trận nhầm lẫn (Confusion Matrix) dạng số liệu và biểu đồ trực quan hóa.

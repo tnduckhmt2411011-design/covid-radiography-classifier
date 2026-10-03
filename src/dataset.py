@@ -1,9 +1,9 @@
 """Module dataset.py
 
 Trách nhiệm:
-- Quản lý nạp dữ liệu từ file split_v1.csv (phụ trách: TV1).
+- Quản lý nạp dữ liệu từ file split_v1.csv (phụ trách: Nguyễn Đức).
 - Định nghĩa lớp PyTorch CXRDataset cho bài toán phân loại 4 nhóm ảnh X-quang ngực.
-- Thiết kế Data Augmentation cho tập Train và Transform chuẩn hóa cho Validation (phụ trách: TV4).
+- Thiết kế Data Augmentation cho tập Train và Transform chuẩn hóa cho Validation (phụ trách: Vũ Thương).
 - Cài đặt cơ chế bảo vệ nghiêm ngặt: Khóa tập Test (allow_test=False).
 - Tính toán Class Weights hỗ trợ xử lý mất cân bằng lớp.
 """
@@ -35,7 +35,7 @@ def get_transforms(
 ) -> transforms.Compose:
     """Tạo chuỗi biến đổi tiền xử lý và tăng cường dữ liệu ảnh X-quang.
 
-    Quy tắc y khoa nghiêm ngặt (TV4 phụ trách):
+    Quy tắc y khoa nghiêm ngặt (Vũ Thương phụ trách):
     - TUYỆT ĐỐI KHÔNG sử dụng RandomHorizontalFlip (lật ngang).
       Lý do: Tim người nằm ở lồng ngực bên trái; lật ngang làm đảo ngược vị trí tim và
       bóng các cơ quan nội tạng (Situs Inversus nhân tạo), gây sai lệch đặc trưng y học.

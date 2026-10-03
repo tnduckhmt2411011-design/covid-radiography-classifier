@@ -1,8 +1,8 @@
 # Quản lý Phân chia Dữ liệu (Dataset Splits) - COVID-19 Radiography
 
 > **Phiên bản:** `v1.0` (Sprint 2 - Tuần 3)  
-> **Người phụ trách (Code Owner):** TV1 (Kèm cặp: TV2)  
-> **Quyết định phê duyệt:** Leader (chốt ngưỡng $T=0$ tại Cổng A2)
+> **Người phụ trách (Code Owner):** Nguyễn Đức (Kèm cặp: Hải Lý)  
+> **Quyết định phê duyệt:** Leader (Nguyễn Đức) (chốt ngưỡng $T=0$ tại Cổng A2)
 
 ---
 

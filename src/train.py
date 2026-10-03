@@ -1,7 +1,7 @@
 """Module train.py
 
 Trách nhiệm:
-- Điều khiển vòng lặp huấn luyện (train loop) và kiểm định (val loop) cho mô hình (phụ trách: TV2).
+- Điều khiển vòng lặp huấn luyện (train loop) và kiểm định (val loop) cho mô hình (phụ trách: Minh Thuận).
 - Hỗ trợ huấn luyện độ chính xác hỗn hợp (Mixed Precision) với torch.cuda.amp giúp tối ưu bộ nhớ GPU.
 - Quản lý checkpoint nghiêm ngặt:
   + Tự động lưu 'last.pt' sau mỗi epoch để sẵn sàng phục hồi khi kernel bị ngắt phiên (preemption).

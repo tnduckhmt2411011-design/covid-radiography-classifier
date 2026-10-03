@@ -1,7 +1,7 @@
 """Bộ kiểm thử tính toàn vẹn và chống rò rỉ của tập dữ liệu phân chia (splits/split_v1.csv).
 
 Tuần 3 (Sprint 2) - Track A.
-Phụ trách: TV1 (kèm cặp: TV2).
+Phụ trách: Nguyễn Đức (kèm cặp: Hải Lý).
 
 Kiểm tra 4 điều kiện cốt lõi:
 1. Không rò rỉ nhóm (Leakage Prevention): Tập group_id giữa train, val, test rời nhau hoàn toàn.
