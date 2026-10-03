@@ -70,7 +70,40 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 
 ---
 
-## 4. Hướng dẫn chạy trên Kaggle / Google Colab
+## 4. Hướng dẫn chạy trên Kaggle
 
-> [!NOTE]
-> **TODO sau khi chạy 00_setup_check**: Hướng dẫn chi tiết thiết lập môi trường, mount dataset Kaggle và lưu checkpoint/log sẽ được cập nhật cụ thể sau khi hoàn thành chạy notebook `notebooks/00_setup_check.ipynb`.
+Dự án được cấu hình và chạy chính trên môi trường Kaggle Linux (GPU Tesla T4 x 2, quota 30 giờ/tuần):
+
+### 4.1. Cấu hình kernel (`kernel-metadata.json`)
+Mỗi tác vụ chạy trên Kaggle sử dụng một thư mục riêng kèm metadata chuẩn:
+```json
+{
+  "id": "<username>/<kernel_name>",
+  "title": "<kernel_name>",
+  "code_file": "<notebook_name>.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": [
+    "tawsifurrahman/covid19-radiography-database"
+  ]
+}
+```
+
+### 4.2. Đường dẫn và dữ liệu trên Kaggle
+* **Dữ liệu đầu vào:** `/kaggle/input/datasets/tawsifurrahman/covid19-radiography-database/COVID-19_Radiography_Dataset` (gồm 21.165 ảnh và 21.165 masks trên 4 lớp: COVID, Lung_Opacity, Normal, Viral Pneumonia).
+* **Thư mục làm việc & xuất kết quả:** `/kaggle/working` (khoảng 19.5 GB khả dụng để lưu logs và checkpoints).
+
+### 4.3. Các lệnh Kaggle CLI cơ bản
+```powershell
+# 1. Đẩy notebook chạy trên Kaggle GPU T4
+kaggle kernels push -p <thư_mục_kernel> --accelerator NvidiaTeslaT4
+
+# 2. Theo dõi trạng thái thực thi của kernel
+kaggle kernels status <username>/<kernel_name>
+
+# 3. Kéo kết quả (outputs, log, checkpoint) về máy cục bộ
+kaggle kernels output <username>/<kernel_name> -p <thư_mục_output> --force
+```

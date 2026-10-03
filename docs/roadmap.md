@@ -53,17 +53,17 @@ Moi cong viec o trang thai "Xong" hoac "Cho duyet" bat buoc phai ghi ro nguon xa
 
 ## Muc 2. Tong quan tien do
 
-Cap nhat lan cuoi: 02/10/2026
+Cap nhat lan cuoi: 03/10/2026
 
 | Sprint | Tuan | Muc tieu sprint | So viec Xong/Tong | Trang thai sprint | Ghi chu |
 | :---: | :---: | :--- | :---: | :---: | :--- |
 | **S1** | T1-2 | Moi truong chay duoc va hieu du lieu | 5/7 | Dang lam | Da xong setup Kaggle, EDA va manifest; cho leader xac nhan T1-03 va T1-04 |
-| **S2** | T3-4 | Khoa test, khung huan luyen chay duoc, co baseline va nguong chap nhan | 0/8 | Chua lam | Chuan bi bat dau Tuần 3 loc trung va chia split |
+| **S2** | T3-4 | Khoa test, khung huan luyen chay duoc, co baseline va nguong chap nhan | 5/8 | Dang lam | Hoan tat 100% Tuan 3 (Track A & Track B, khoa test, GPU smoke test pass); chuan bi Tuan 4 baseline |
 | **S3** | T5-6 | Hoan tat RQ1 (so sanh backbone va chien luoc fine-tune) | 0/6 | Chua lam | So sanh DenseNet121 va EfficientNet-B0 |
 | **S4** | T7-8 | Hoan tat RQ2 (mat can bang lop), chot cau hinh cuoi, Grad-CAM, phan tich loi, bo anh che | 0/7 | Chua lam | Thu nghiem Weighted Loss, Focal Loss, tao mask anh |
 | **S5** | T9-10 | RQ3 (shortcut learning), danh gia test MOT lan, notebook suy luan | 0/6 | Chua lam | Danh gia anh che va mo khoa tap test duy nhat mot lan |
 | **S6** | T11-12 | Bao cao, slide, demo, du phong, nop, tap bao ve | 0/6 | Chua lam | Hoan thien bao cao tong ket va ung dung Gradio |
-| **Tong** | **T1-12** | **Toan bo 6 sprint cua do an** | **5/40** | **Dang trien khai** | **Dat 12.5% tong khoi luong cong viec** |
+| **Tong** | **T1-12** | **Toan bo 6 sprint cua do an** | **10/40** | **Dang trien khai** | **Dat 25.0% tong khoi luong cong viec** |
 
 ---
 
@@ -75,7 +75,7 @@ Cap nhat lan cuoi: 02/10/2026
 | ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | S1-01 | T1 | Kiem tra moi truong Kaggle GPU, ghi chep cau hinh phan cung | Ha tang | Ca nhom | M | Xong | PR #2 da merge, docs/kaggle_setup_notes.md, kernel cxr-setup-check | Chay thanh cong tren 2x Tesla T4, xac dinh torch 2.10.0+cu128 va CUDA 12.8 khong loi |
-| S1-02 | T1 | Ghim phien ban thu vien thuc te vao requirements.txt | Ha tang | Ca nhom | S | Xong | PR #2 da merge, commit e7c88b0, requirements.txt | Ghim ro torch==2.10.0+cu128, torchvision==0.25.0+cu128, khong de trong |
+| S1-02 | T1 | Ghim phien ban thu vien thuc te vao requirements.txt | Ha tang | Ca nhom | S | Xong | PR #2 da merge, commit e7c88b0, docs/kaggle_setup_notes.md | Ghi chep day du torch==2.10.0+cu128, torchvision==0.25.0+cu128 tu log Kaggle |
 | S1-03 | T1 | 6/6 thanh vien clone repo ve may va kiem tra moi truong cuc bo | Ha tang | Ca nhom | S | Chua lam | Chua co bang chung, can leader xac nhan | 6/6 nguoi clone repo, chay xong 00_setup_check khong loi |
 | S1-04 | T1 | Gui danh sach cau hoi lam ro de tai cho giang vien | Bao cao | Leader | S | Chua lam | Chua co bang chung, can leader xac nhan | Cau hoi cho giang vien da gui bang van ban hoac email |
 | S1-05 | T2 | Xay dung notebook 01_download_and_eda.ipynb doc du lieu tu Kaggle | Ha tang | TV1 | M | Xong | PR #1 da merge, notebooks/01_download_and_eda.ipynb, kernel cxr-eda-manifest | Notebook tu dong tim dataset, doc du lieu, khong co loi lap trinh |
@@ -89,11 +89,11 @@ Cap nhat lan cuoi: 02/10/2026
 
 | ID | Tuan | Cong viec | Gan voi | Phu trach | Size | Trang thai | Bang chung | Tieu chi nghiem thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S2-01 | T3 | Loc bo 54 anh trung bang imagehash trong 02_duplicates_and_split.ipynb | Chong ro ri | TV1 | M | Chua lam | Chua co nhanh/PR | Khong anh nao cua cung nhom trung lap nam o hai tap du lieu khac nhau |
-| S2-02 | T3 | Chia tap train/val/test theo ti le 70/15/15 va gan tag test-locked | Chong ro ri | TV1 | M | Chua lam | Chua co nhanh/PR | Ti le 4 lop o train/val/test tuong duong; luu files splits/; co tag test-locked tren Git |
-| S2-03 | T3 | Xay dung DataLoader va Data Augmentation co ban trong src/dataset.py | Ha tang | TV4 | M | Chua lam | Chua co nhanh/PR | Nap batch anh khong loi, ap dung dung tien xu ly co ban |
-| S2-04 | T3 | Xay dung pipeline huan luyen src/train.py co ho tro resume | Ha tang | TV2 | L | Chua lam | Chua co nhanh/PR | Ngat phien roi resume tiep tuc dung epoch, log day du loss va accuracy |
-| S2-05 | T3 | Chay smoke test tren 03_smoke_test_train.ipynb | Ha tang | TV2 | S | Chua lam | Chua co nhanh/PR | Chay thu 1-2 epoch tren tap du lieu nho hoan tat khong phat sinh loi |
+| S2-01 | T3 | Loc bo 54 anh trung bang imagehash trong 02_duplicates_and_split.ipynb | Chong ro ri | TV1 | M | Xong | PR #4 da merge (commit 83531cc), notebooks/02_duplicates_and_split.ipynb, kernel cxr-duplicates-and-split, splits/README.md | Loc nhom trung pHash nguong T=0 (178 nhom, 401 anh), 0 cap trung khac nhan, khong ro ri nhom giua cac split |
+| S2-02 | T3 | Chia tap train/val/test theo ti le 70/15/15 va gan tag test-locked | Chong ro ri | TV1 | M | Xong | PR #4 da merge, splits/split_v1.csv, split_v1.sha256, tag test-locked tro commit e7c0993b, tests/test_split.py pass | Ti le 70/15/15 chuan (do lech < 0.1%), khoa test set v1 bang SHA256 va tag test-locked |
+| S2-03 | T3 | Xay dung DataLoader va Data Augmentation co ban trong src/dataset.py | Ha tang | TV4 | M | Xong | PR #5 da merge (commit f5c688b), src/dataset.py, tests/test_resume.py | Dataset doc split_v1.csv, anh xam -> 3 kenh, chuan hoa ImageNet, augment chi cho train (khong lat anh), chan split test bang allow_test |
+| S2-04 | T3 | Xay dung pipeline huan luyen src/train.py co ho tro resume | Ha tang | TV2 | L | Xong | PR #5 da merge, commit f5c688b, src/train.py, src/metrics.py, src/models.py, tests/test_metrics.py, tests/test_resume.py | Pipeline mixed precision AMP, luu last.pt va best.pt (macro-F1), ho tro resume tu dong, ten run chuan <rq>_<backbone>_<strategy>_<imb>_s<seed> |
+| S2-05 | T3 | Chay smoke test tren 03_smoke_test_train.ipynb | Ha tang | TV2 | S | Xong | PR #5 da merge, notebooks/03_smoke_test_train.ipynb, kernel cxr-smoke-test-train (GPU T4x2), outputs/smoke_test/smoke_test_report.json | 12/12 pytest pass, gia lap ngat phien va resume thanh cong epoch 1 -> 2 tren Kaggle GPU trong 49s |
 | S2-06 | T4 | Huan luyen mo hinh co so Baseline tren 04_baseline.ipynb | Ha tang | TV2 | L | Chua lam | Chua co nhanh/PR | Bang baseline co macro-F1 va recall tung lop tren tap validation |
 | S2-07 | T4 | Do dac thoi gian chay thuc te moi run va uoc tinh tong GPU-gio | Ha tang | TV2 | S | Chua lam | Chua co nhanh/PR | Co so lieu thoi gian tung epoch va bang uoc tinh tong GPU-gio cho cac tuan sau |
 | S2-08 | T4 | Xac lap nguong hieu nang toi thieu chap nhan duoc bang van ban | Bao cao | Leader | S | Chua lam | Chua co nhanh/PR | Nguong chap nhan viet bang loi trong results/, gan lien voi ket qua baseline |
@@ -176,10 +176,12 @@ Bang tong hop cac van de can giai quyet hoac quyet dinh de tranh bi chan tien do
 
 | Muc | Loai | Nguoi quyet | Trang thai | Ghi chu |
 | :--- | :---: | :---: | :---: | :--- |
-| Phuong an tai trong so ImageNet cho kernel huan luyen | Quyet dinh | Leader | Da giai quyet | Da thong nhat chon Phuong an a: bat internet (enable_internet: true) cho cac kernel huan luyen tu Tuan 4 |
-| Rubric cham diem chi tiet cua giang vien | Rui ro | Giang vien / Leader | Dang cho | Chua co rubric cham diem chinh thuc; nhom can lien he hoi giang vien de bam sat trong so diem |
-| Hinh thuc san pham nop cuoi ky | Quyet dinh | Giang vien / Leader | Dang cho | Hien nhom nghieng ve mo hinh da fine-tune kem notebook va bao cao; can xac nhan xem co bat buoc demo app hay khong |
-| Thong tin nguon goc cua bo du lieu CXR | Rui ro | Ca nhom | Mo | Dataset tong hop tu nhieu nguon, thieu metadata benh nhan va thiet bi; can neu ro gioi han nay trong bao cao |
+| Phuong an tai trong so ImageNet cho kernel huan luyen | Quyet dinh | Leader | Mo | De xuat (bat internet enable_internet: true cho kernel huan luyen hoac gan Kaggle Dataset chua weights), CHUA CHOT. Nguoi quyet: Leader. Can chot truoc khi chay Baseline Tuan 4. |
+| Phan cong chu so huu module src/models.py | Quyet dinh | Leader | Mo | src/models.py hien chua co chu so huu trong docs/OWNERS.md. Can Leader phan cong thanh vien phu trach mo rong cac backbone DenseNet121 va EfficientNet-B0. |
+| Quyet dinh giu split_v1 hay tao split_v2 | Quyet dinh | Leader | Mo | split_v1 da khoa voi nguong T=0 (178 nhom, 401 anh). Da thong ke 735 cap gan trung (Hamming 1-4) khac split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khac nhan, 506 cung nhan). Mo cho toi khi Leader danh gia co can sua nguong hay khong (735 cap gan trung la gioi han da biet). |
+| Rubric cham diem chi tiet cua giang vien | Rui ro | Giang vien / Leader | Dang cho | Chua co rubric cham diem chinh thuc; nhom can lien he hoi giang vien de bam sat trong so diem. |
+| Hinh thuc san pham nop cuoi ky | Quyet dinh | Giang vien / Leader | Dang cho | Can xac nhan san pham nop gom nhung gi (mo hinh fine-tune, notebook, bao cao, co bat buoc demo app Gradio hay khong). |
+| Thong tin nguon goc cua bo du lieu CXR (Shortcut Learning) | Rui ro | Ca nhom | Mo | Dataset tong hop tu nhieu nguon, thieu metadata benh nhan (patient_id) va thiet bi chup; do lech do sang lop COVID cao hon ro ret; can ghi ro gioi han nay trong bao cao va danh gia tai RQ3. |
 
 ---
 
@@ -212,9 +214,9 @@ Khung theo doi danh gia va rut kinh nghiem cuoi moi sprint (dien noi dung thuc t
 - **Doi gi o sprint sau:** Chua dien ra
 
 ### Sprint 2 (Tuan 3 - 4)
-- **Da lam duoc:** Chua dien ra
-- **Chua xong va vi sao:** Chua dien ra
-- **Doi gi o sprint sau:** Chua dien ra
+- **Da lam duoc:** Hoan thanh chia split 70/15/15 chong ro ri pHash, khoa tap test (tag test-locked), xay dung xong khung huan luyen PyTorch AMP co resume, chay smoke test thanh cong tren Kaggle GPU T4x2 dat 12/12 pytest pass
+- **Chua xong va vi sao:** Cac viec Tuan 4 (Baseline, do gio GPU, nguong chap nhan) chua bat dau
+- **Doi gi o sprint sau:** Chot phuong an trong so ImageNet voi Leader de chay Baseline
 
 ### Sprint 3 (Tuan 5 - 6)
 - **Da lam duoc:** Chua dien ra
@@ -244,3 +246,4 @@ Khung theo doi danh gia va rut kinh nghiem cuoi moi sprint (dien noi dung thuc t
 | :---: | :---: | :---: | :--- |
 | **v1.0** | 28/09/2026 | Ca nhom | Khoi tao khung lo trinh 12 tuan ban dau |
 | **v2.0** | 02/10/2026 | Leader va nhom | Nang cap lo trinh sang bang theo doi tien do Scrum rut gon 6 sprint co trang thai va bang chung |
+| **v2.1** | 03/10/2026 | Ky su ML & Nhom | Dong bo tien do Sprint 2 (hoan tat Tuan 3 Track A & Track B, khoa test, GPU smoke test pass) va mo lai cac quyet dinh cua Leader |
