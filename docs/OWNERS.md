@@ -6,16 +6,16 @@ Tài liệu này quy định vai trò, nhóm kèm cặp (Pairing) và phân côn
 
 ## 1. Danh sách thành viên & Cơ chế ghép cặp (Pairing Mechanism)
 
-Nhóm áp dụng mô hình ghép cặp **1 Core Member kèm 1 Member (Weak hoặc Normal)** nhằm đảm bảo chất lượng kỹ thuật, chia sẻ tri thức và thực hiện cơ chế duyệt chéo PR (Peer Review):
+Nhóm áp dụng mô hình ghép cặp (Pairing Mechanism) nhằm đảm bảo chất lượng kỹ thuật, chia sẻ tri thức và thực hiện cơ chế duyệt chéo PR (Peer Review):
 
-| Mã TV | Họ và tên | Mã sinh viên | Năng lực & Vai trò | Trách nhiệm chính trong đồ án | Cặp kèm cặp & Duyệt chéo |
-| :---: | :--- | :---: | :---: | :--- | :--- |
-| **TV1** | **Trần Nguyễn Đức** | KHMT2411011 | **Core (Leader)** | Quản lý dự án, EDA, phân chia split và khóa tập test | Cặp 1 (kèm cặp TV6 Lê Hải Lý) |
-| **TV2** | **Nguyễn Trần Minh Thuận** | KHMT2411014 | **Core Member** | Pipeline huấn luyện PyTorch AMP, resume, baseline mô hình | Cặp 2 (kèm cặp TV5 Phạm Lê Minh) |
-| **TV3** | **Hàng Thái Tú** | KHMT2411046 | **Core Member** | Kiến trúc mô hình (`src/models.py`), nghiên cứu RQ1 (Backbones) | Cặp 3 (kèm cặp TV4 Nguyễn Vũ Thương) |
-| **TV4** | **Nguyễn Vũ Thương** | KHMT2411022 | **Normal Member** | Data Augmentation, nghiên cứu RQ2 (Mất cân bằng lớp) | Cặp 3 (được TV3 Hàng Thái Tú kèm cặp) |
-| **TV5** | **Phạm Lê Minh** | KHMT2411003 | **Normal Member** | Grad-CAM (`src/gradcam.py`), phân tích lỗi, nghiên cứu RQ3 (Ảnh che) | Cặp 2 (được TV2 Nguyễn Trần Minh Thuận kèm cặp) |
-| **TV6** | **Lê Hải Lý** | KHMT2411021 | **Weak Member** | Metrics (`src/metrics.py`), đánh giá test cuối, demo Gradio & báo cáo | Cặp 1 (được TV1 Trần Nguyễn Đức kèm cặp) |
+| Mã TV | Họ và tên | Mã sinh viên | Trách nhiệm chính trong đồ án | Cặp kèm cặp & Duyệt chéo |
+| :---: | :--- | :---: | :--- | :--- |
+| **TV1** | **Trần Nguyễn Đức** (Leader) | KHMT2411011 | Quản lý dự án, EDA, phân chia split và khóa tập test | Cặp 1 (kèm cặp TV6 Lê Hải Lý) |
+| **TV2** | **Nguyễn Trần Minh Thuận** | KHMT2411014 | Pipeline huấn luyện PyTorch AMP, resume, baseline mô hình | Cặp 2 (kèm cặp TV5 Phạm Lê Minh) |
+| **TV3** | **Hàng Thái Tú** | KHMT2411046 | Kiến trúc mô hình (`src/models.py`), nghiên cứu RQ1 (Backbones) | Cặp 3 (kèm cặp TV4 Nguyễn Vũ Thương) |
+| **TV4** | **Nguyễn Vũ Thương** | KHMT2411022 | Data Augmentation, nghiên cứu RQ2 (Mất cân bằng lớp) | Cặp 3 (được TV3 Hàng Thái Tú kèm cặp) |
+| **TV5** | **Phạm Lê Minh** | KHMT2411003 | Grad-CAM (`src/gradcam.py`), phân tích lỗi, nghiên cứu RQ3 (Ảnh che) | Cặp 2 (được TV2 Nguyễn Trần Minh Thuận kèm cặp) |
+| **TV6** | **Lê Hải Lý** | KHMT2411021 | Metrics (`src/metrics.py`), đánh giá test cuối, demo Gradio & báo cáo | Cặp 1 (được TV1 Trần Nguyễn Đức kèm cặp) |
 
 ---
 
@@ -48,6 +48,6 @@ Nhóm áp dụng mô hình ghép cặp **1 Core Member kèm 1 Member (Weak hoặ
 
 ## 3. Nguyên tắc làm việc & Hỗ trợ trong cặp
 
-1. **Trách nhiệm của Core Member:** Hướng dẫn thành viên trong cặp tiếp cận bài toán, giải thích kiến trúc code, hỗ trợ debug khi gặp lỗi khó, và kiểm tra kỹ lưỡng (Review) trước khi phê duyệt PR.
-2. **Trách nhiệm của Member được kèm cặp:** Tự giác học hỏi, đặt câu hỏi khi chưa hiểu, tuân thủ quy ước code và viết kiểm thử đầy đủ trước khi gửi yêu cầu duyệt PR.
-3. **Cơ chế dự phòng:** Trong trường hợp thành viên gặp khó khăn đột xuất, Core Member trong cặp sẽ cùng can thiệp (Pair Programming) để đảm bảo tiến độ chung của Sprint.
+1. **Trách nhiệm của người kèm cặp:** Hướng dẫn thành viên trong cặp tiếp cận bài toán, giải thích kiến trúc code, hỗ trợ debug khi gặp lỗi khó, và kiểm tra kỹ lưỡng (Review) trước khi phê duyệt PR.
+2. **Trách nhiệm của thành viên được kèm cặp:** Tự giác học hỏi, chủ động trao đổi khi gặp vướng mắc, tuân thủ quy ước code và viết kiểm thử đầy đủ trước khi gửi yêu cầu duyệt PR.
+3. **Cơ chế dự phòng:** Trong trường hợp thành viên gặp khó khăn đột xuất, người kèm cặp sẽ cùng tham gia (Pair Programming) để đảm bảo tiến độ chung của Sprint.

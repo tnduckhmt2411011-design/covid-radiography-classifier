@@ -177,7 +177,7 @@ Bang tong hop cac van de can giai quyet hoac quyet dinh de tranh bi chan tien do
 | Muc | Loai | Nguoi quyet | Trang thai | Ghi chu |
 | :--- | :---: | :---: | :---: | :--- |
 | Phuong an tai trong so ImageNet cho kernel huan luyen | Quyet dinh | Leader | Mo | De xuat (bat internet enable_internet: true cho kernel huan luyen hoac gan Kaggle Dataset chua weights), CHUA CHOT. Nguoi quyet: Leader. Can chot truoc khi chay Baseline Tuan 4. |
-| Phan cong chu so huu module src/models.py | Quyet dinh | Leader | Da giai quyet | Da phan cong Hang Thai Tu (TV3 - Core) lam chu so huu src/models.py, kem cap boi TV4 Nguyen Vu Thuong |
+| Phan cong chu so huu module src/models.py | Quyet dinh | Leader | Da giai quyet | Da phan cong Hang Thai Tu (TV3) lam chu so huu src/models.py, kem cap boi TV4 Nguyen Vu Thuong |
 | Quyet dinh giu split_v1 hay tao split_v2 | Quyet dinh | Leader | Mo | split_v1 da khoa voi nguong T=0 (178 nhom, 401 anh). Da thong ke 735 cap gan trung (Hamming 1-4) khac split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khac nhan, 506 cung nhan). Mo cho toi khi Leader danh gia co can sua nguong hay khong (735 cap gan trung la gioi han da biet). |
 | Rubric cham diem chi tiet cua giang vien | Rui ro | Giang vien / Leader | Dang cho | Chua co rubric cham diem chinh thuc; nhom can lien he hoi giang vien de bam sat trong so diem. |
 | Hinh thuc san pham nop cuoi ky | Quyet dinh | Giang vien / Leader | Dang cho | Can xac nhan san pham nop gom nhung gi (mo hinh fine-tune, notebook, bao cao, co bat buoc demo app Gradio hay khong). |
