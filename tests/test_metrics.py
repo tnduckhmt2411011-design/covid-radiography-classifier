@@ -1,7 +1,7 @@
 """Kiểm thử đơn vị cho module src/metrics.py.
 
 Tuần 3 (Sprint 2) - Track B.
-Phụ trách: TV6.
+Phụ trách: Hải Lý (kèm cặp: Nguyễn Đức).
 """
 
 import numpy as np

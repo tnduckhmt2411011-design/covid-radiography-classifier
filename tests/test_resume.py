@@ -1,7 +1,7 @@
 """Kiểm thử đơn vị cho cơ chế checkpoint / resume và cổng khóa tập Test.
 
 Tuần 3 (Sprint 2) - Track B.
-Phụ trách: TV2 (kèm cặp: TV1).
+Phụ trách: Minh Thuận (kèm cặp: Lê Minh).
 """
 
 from pathlib import Path
