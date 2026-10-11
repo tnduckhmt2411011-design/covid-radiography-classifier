@@ -46,6 +46,11 @@ Do tình trạng phân bố dữ liệu (`Normal` chiếm 48.1%, `Viral Pneumoni
 * **Cơ sở đo đạc thực tế:** Dữ liệu trích xuất từ 6 tệp `train_history.json` của kernel `cxr-baseline` (GPU Tesla T4x2) cho thấy thời gian trung bình thực tế của 30 epochs là **$117.7\text{ giây/epoch}$** (trong đó B3 trung bình $116.8\text{ s/epoch}$, B2 trung bình $118.6\text{ s/epoch}$). Một run 10 epochs ResNet18 thực tế mất khoảng $10 \times 117.7\text{s} \approx 19.6\text{ phút}$.
 * **Đề xuất công thức ngưỡng cho 1 run (ResNet18):**
   $$T_{\text{run}} \le N_{\text{epochs}} \times 125\text{s} + 120\text{s}_{\text{overhead}} \quad (\text{khoảng } \le 22 - 25\text{ phút cho 10 epochs})$$
+* **Bảng ước tính tổng GPU-giờ cho các kịch bản thực nghiệm Sprint 3–5 [ƯỚC TÍNH]:**
+  - **Kịch bản 1 (24 runs $\times$ 10 epochs = 240 epochs):** $\approx \mathbf{7.85\text{ GPU-giờ}}$
+  - **Kịch bản 2 (30 runs $\times$ 12 epochs = 360 epochs):** $\approx \mathbf{11.77\text{ GPU-giờ}}$
+  - **Kịch bản 3 (30 runs $\times$ 15 epochs = 450 epochs):** $\approx \mathbf{14.71\text{ GPU-giờ}}$  
+  *(Lưu ý: Đây là ước tính cho backbone ResNet18; DenseNet121 và EfficientNet-B0 ở Sprint 3 chưa đo, có thể mất nhiều thời gian hơn do độ sâu kiến trúc lớn hơn).*
 * **Hạn mức Sprint:** Tổng số run thử nghiệm trong mỗi Sprint không vượt quá **10–12 runs** (tiêu hao $\le 4.0\text{ giờ GPU/tuần}$ trên hạn ngạch 30h của Kaggle).
 
 ---
