@@ -153,8 +153,8 @@ class CXRDataset(Dataset):
         img_path = self._resolve_image_path(row)
 
         with Image.open(img_path) as img:
-            # Luôn chuyển đổi sang RGB 3 kênh để tương thích các kiến trúc CNN
-            img = img.convert("RGB")
+            # Chuẩn hóa cưỡng bức về ảnh đơn sắc trước khi nhân 3 kênh để phòng ngừa rò rỉ kênh màu
+            img = img.convert("L").convert("RGB")
             tensor_img = self.transform(img)
 
         label_name = row["label"]
