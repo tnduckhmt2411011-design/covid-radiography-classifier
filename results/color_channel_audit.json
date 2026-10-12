@@ -1,0 +1,16 @@
+{
+  "total_images": 140,
+  "num_images_channel_diff_gt_zero": 0,
+  "ratio_images_diff": 0.0,
+  "mean_max_diff": 0.0,
+  "percentiles": {
+    "p25": 0.0,
+    "p50": 0.0,
+    "p75": 0.0,
+    "p90": 0.0,
+    "p99": 0.0,
+    "max": 0
+  },
+  "total_different_pixels": 0,
+  "all_channels_identical_R_G_B": true
+}

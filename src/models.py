@@ -8,7 +8,7 @@ Trách nhiệm:
 - Cung cấp tiện ích đóng băng (freeze) và mở khóa (unfreeze) backbone phục vụ transfer learning.
 
 Ghi chú phân công:
-- Theo docs/OWNERS.md, src/models.py hiện CHƯA có chủ sở hữu chính thức (được báo cáo lên Leader).
+- Theo docs/OWNERS.md, src/models.py do Thái Tú (TV3) phụ trách chính, Vũ Thương (TV4) kèm cặp duyệt chéo.
 """
 
 from typing import Optional
@@ -36,19 +36,19 @@ def get_model(
     name_clean = model_name.lower().replace("-", "").replace("_", "")
 
     if "resnet18" in name_clean:
-        weights = models.ResNet18_Weights.DEFAULT if pretrained else None
+        weights = models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None
         model = models.resnet18(weights=weights)
         in_features = model.fc.in_features
         model.fc = nn.Linear(in_features, num_classes)
 
     elif "densenet121" in name_clean:
-        weights = models.DenseNet121_Weights.DEFAULT if pretrained else None
+        weights = models.DenseNet121_Weights.IMAGENET1K_V1 if pretrained else None
         model = models.densenet121(weights=weights)
         in_features = model.classifier.in_features
         model.classifier = nn.Linear(in_features, num_classes)
 
     elif "efficientnetb0" in name_clean:
-        weights = models.EfficientNet_B0_Weights.DEFAULT if pretrained else None
+        weights = models.EfficientNet_B0_Weights.IMAGENET1K_V1 if pretrained else None
         model = models.efficientnet_b0(weights=weights)
         in_features = model.classifier[1].in_features
         model.classifier[1] = nn.Linear(in_features, num_classes)

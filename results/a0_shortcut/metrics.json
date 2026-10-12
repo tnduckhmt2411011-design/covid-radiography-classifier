@@ -1,0 +1,122 @@
+{
+  "logistic_regression": {
+    "accuracy": 0.4899,
+    "balanced_accuracy": 0.2773,
+    "macro_f1": 0.2132,
+    "weighted_f1": 0.3295,
+    "macro_precision": 0.559,
+    "macro_recall": 0.2773,
+    "per_class": {
+      "COVID": {
+        "precision": 0.75,
+        "recall": 0.00558659217877095,
+        "f1": 0.011090573012939002,
+        "support": 537
+      },
+      "Lung_Opacity": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 903
+      },
+      "Normal": {
+        "precision": 0.4861860908224833,
+        "recall": 1.0,
+        "f1": 0.6542735042735043,
+        "support": 1531
+      },
+      "Viral Pneumonia": {
+        "precision": 1.0,
+        "recall": 0.10344827586206896,
+        "f1": 0.1875,
+        "support": 203
+      }
+    },
+    "confusion_matrix": [
+      [
+        3,
+        0,
+        534,
+        0
+      ],
+      [
+        1,
+        0,
+        902,
+        0
+      ],
+      [
+        0,
+        0,
+        1531,
+        0
+      ],
+      [
+        0,
+        0,
+        182,
+        21
+      ]
+    ]
+  },
+  "random_forest": {
+    "accuracy": 0.4956,
+    "balanced_accuracy": 0.2873,
+    "macro_f1": 0.2397,
+    "weighted_f1": 0.355,
+    "macro_precision": 0.6042,
+    "macro_recall": 0.2873,
+    "per_class": {
+      "COVID": {
+        "precision": 0.45714285714285713,
+        "recall": 0.0297951582867784,
+        "f1": 0.055944055944055944,
+        "support": 537
+      },
+      "Lung_Opacity": {
+        "precision": 0.4666666666666667,
+        "recall": 0.031007751937984496,
+        "f1": 0.058151609553478714,
+        "support": 903
+      },
+      "Normal": {
+        "precision": 0.49313276651406146,
+        "recall": 0.984977139124755,
+        "f1": 0.6572237960339944,
+        "support": 1531
+      },
+      "Viral Pneumonia": {
+        "precision": 1.0,
+        "recall": 0.10344827586206896,
+        "f1": 0.1875,
+        "support": 203
+      }
+    },
+    "confusion_matrix": [
+      [
+        16,
+        11,
+        510,
+        0
+      ],
+      [
+        9,
+        28,
+        866,
+        0
+      ],
+      [
+        9,
+        14,
+        1508,
+        0
+      ],
+      [
+        1,
+        7,
+        174,
+        21
+      ]
+    ]
+  }
+}
