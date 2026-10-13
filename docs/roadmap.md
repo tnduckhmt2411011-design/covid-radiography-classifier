@@ -53,17 +53,17 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 10/10/2026
+Cập nhật lần cuối: 13/10/2026
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Tổng | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
 | **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong setup Kaggle, EDA và manifest; chờ Leader (Nguyễn Đức) xác nhận T1-03 và T1-04 |
-| **S2** | T3-4 | Khóa test, khung huấn luyện chạy được, có baseline và ngưỡng chấp nhận | 5/8 | Đang làm | Hoàn tất 100% Tuần 3; Tuần 4 hoàn tất 6 runs baseline trên GPU T4x2, lưu kết quả validation và dự thảo threshold_v1.md, đang mở PR chờ duyệt (3 việc Chờ duyệt) |
+| **S2** | T3-4 | Khóa test, khung huấn luyện chạy được, có baseline và ngưỡng chấp nhận | 8/8 | Hoàn thành | Hoàn thành toàn bộ 8 việc Sprint 2: chia split, khóa test, khung huấn luyện AMP có resume, 6 runs baseline và dự thảo threshold_v1 (PR #11 đã merge) |
 | **S3** | T5-6 | Hoàn tất RQ1 (so sánh backbone và chiến lược fine-tune) | 0/6 | Chưa làm | So sánh DenseNet121 và EfficientNet-B0 |
 | **S4** | T7-8 | Hoàn tất RQ2 (mất cân bằng lớp), chốt cấu hình cuối, Grad-CAM, phân tích lỗi, bộ ảnh che | 0/7 | Chưa làm | Thử nghiệm Weighted Loss, Focal Loss, tạo mask ảnh |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết và ứng dụng Gradio |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **10/40** | **Đang triển khai** | **Đạt 25.0% Xong (thêm 3 việc Tuần 4 Chờ duyệt)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **13/40** | **Đang triển khai** | **Đạt 32.5% Xong (0 việc Chờ duyệt, 27 việc Chưa làm)** |
 
 ---
 
@@ -94,9 +94,9 @@ Cập nhật lần cuối: 10/10/2026
 | S2-03 | T3 | Xây dựng DataLoader và Data Augmentation cơ bản trong `src/dataset.py` | Hạ tầng | Vũ Thương | M | Xong | PR #5 đã merge (commit `f5c688b`), `src/dataset.py`, `tests/test_resume.py` | Dataset đọc `split_v1.csv`, ảnh xám -> 3 kênh, chuẩn hóa ImageNet, augment chỉ cho train (không lật ảnh), chặn split test bằng `allow_test` |
 | S2-04 | T3 | Xây dựng pipeline huấn luyện `src/train.py` có hỗ trợ resume | Hạ tầng | Minh Thuận | L | Xong | PR #5 đã merge, commit `f5c688b`, `src/train.py`, `src/metrics.py`, `src/models.py`, `tests/test_metrics.py`, `tests/test_resume.py` | Pipeline mixed precision AMP, lưu `last.pt` và `best.pt` (macro-F1), hỗ trợ resume tự động, tên run chuẩn `<rq>_<backbone>_<strategy>_<imb>_s<seed>` |
 | S2-05 | T3 | Chạy smoke test trên `03_smoke_test_train.ipynb` | Hạ tầng | Minh Thuận | S | Xong | PR #5 đã merge, `notebooks/03_smoke_test_train.ipynb`, kernel `cxr-smoke-test-train` (GPU T4x2), `outputs/smoke_test/smoke_test_report.json` | 12/12 pytest pass, giả lập ngắt phiên và resume thành công epoch 1 -> 2 trên Kaggle GPU trong 49s |
-| S2-06 | T4 | Huấn luyện mô hình cơ sở Baseline trên `04_baseline.ipynb` | Hạ tầng | Minh Thuận | L | Chờ duyệt | PR #11 (nhánh `feat/baseline-w4`), kernel `cxr-baseline` (GPU T4x2), `results/baseline_summary.csv`, `04_baseline.ipynb`. Đủ bảng baseline trên validation: B0 (0.1627), A0 (0.2397), B2 (0.8064), B3 (0.9575) kèm F1 và recall từng lớp trên 3 seeds | Bảng baseline có macro-F1 và recall từng lớp trên tập validation |
-| S2-07 | T4 | Đo đạc thời gian chạy thực tế mỗi run và ước tính tổng GPU-giờ | Hạ tầng | Minh Thuận | S | Chờ duyệt | PR #11 (nhánh `feat/baseline-w4`), `results/baseline_summary.csv`, `results/threshold_v1.md`. Chi tiết từng run (117.7s/epoch), tổng tiêu hao 0.98h GPU cho 6 runs baseline và bảng ước tính GPU-giờ: 7.85h (24 runs x 10 ep), 11.77h (30 runs x 12 ep), 14.71h (30 runs x 15 ep) [ƯỚC TÍNH] | Có số liệu thời gian từng epoch và bảng ước tính tổng GPU-giờ cho các tuần sau |
-| S2-08 | T4 | Xác lập ngưỡng hiệu năng tối thiểu chấp nhận được bằng văn bản | Báo cáo | Nguyễn Đức (Leader) | S | Chờ duyệt | PR #11 (nhánh `feat/baseline-w4`), `results/threshold_v1.md`. Bản dự thảo threshold_v1.md gắn liền với B0, A0, B2, B3 (gắn nhãn ĐỀ XUẤT, CHƯA CHỐT) | Ngưỡng chấp nhận viết bằng lời trong `results/`, gắn liền với kết quả baseline |
+| S2-06 | T4 | Huấn luyện mô hình cơ sở Baseline trên `04_baseline.ipynb` | Hạ tầng | Minh Thuận | L | Xong | PR #11 đã merge (commit `3d7cb5e`), kernel `cxr-baseline` (GPU T4x2), `results/baseline_summary.csv`, `notebooks/04_baseline.ipynb`. Đủ bảng baseline trên validation: B0 (0.1627), A0 (0.2397), B2 (0.8064), B3 (0.9575) kèm F1 và recall từng lớp trên 3 seeds | Bảng baseline có macro-F1 và recall từng lớp trên tập validation |
+| S2-07 | T4 | Đo đạc thời gian chạy thực tế mỗi run và ước tính tổng GPU-giờ | Hạ tầng | Minh Thuận | S | Xong | PR #11 đã merge (commit `3d7cb5e`), `results/baseline_summary.csv`, `results/threshold_v1.md`. Chi tiết từng run (117.7s/epoch), tổng tiêu hao 0.98h GPU cho 6 runs baseline và bảng ước tính GPU-giờ: 7.85h (24 runs x 10 ep), 11.77h (30 runs x 12 ep), 14.71h (30 runs x 15 ep) [ƯỚC TÍNH] | Có số liệu thời gian từng epoch và bảng ước tính tổng GPU-giờ cho các tuần sau |
+| S2-08 | T4 | Xác lập ngưỡng hiệu năng tối thiểu chấp nhận được bằng văn bản | Báo cáo | Nguyễn Đức (Leader) | S | Xong | PR #11 đã merge (commit `3d7cb5e`), `results/threshold_v1.md`. Bản dự thảo threshold_v1.md gắn liền với B0, A0, B2, B3 (gắn nhãn ĐỀ XUẤT, CHƯA CHỐT) | Ngưỡng chấp nhận viết bằng lời trong `results/`, gắn liền với kết quả baseline |
 
 ---
 
@@ -182,6 +182,11 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 | Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Chưa có rubric chấm điểm chính thức; nhóm cần liên hệ hỏi giảng viên để bám sát trọng số điểm. |
 | Hình thức sản phẩm nộp cuối kỳ | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Cần xác nhận sản phẩm nộp gồm những gì (mô hình fine-tune, notebook, báo cáo, có bắt buộc demo app Gradio hay không). |
 | Thông tin nguồn gốc của bộ dữ liệu CXR (Shortcut Learning) | Rủi ro | Cả nhóm | Mở | Dataset tổng hợp từ nhiều nguồn, thiếu metadata bệnh nhân (`patient_id`) và thiết bị chụp; độ lệch độ sáng lớp COVID cao hơn rõ rệt; cần ghi rõ giới hạn này trong báo cáo và đánh giá tại RQ3. |
+| Quyết định 1 (chuẩn hóa B2 head-only) | Quyết định | Leader / Cả nhóm | Đã chốt | Chạy lại B2 3 seed với backbone eval(); giữ số Tuần 4 làm biến thể "B2 train-mode" trong báo cáo |
+| Quyết định 2 (quy tắc chọn cấu hình RQ1 sang RQ2) | Quyết định | Leader / Cả nhóm | Đã chốt | Chấp nhận: chênh macro-F1 trung bình >= 0,005 VÀ khoảng tin cậy 95% bootstrap theo ảnh (ghép cặp, trung bình qua 3 seed, 2.000 lần lấy mẫu) không chứa 0; một phép so sánh chính (ứng viên tốt nhất với B3); quy tắc đóng băng trước khi xem kết quả RQ1 |
+| Quyết định 3 (triển khai baseline lối tắt A1) | Quyết định | Leader / Cả nhóm | Đã chốt | Triển khai A1 (histogram độ xám + trung bình và độ lệch chuẩn; CPU) |
+| Quyết định 4 (đo thử nghiệm ngân sách hai kiến trúc RQ1) | Quyết định | Leader / Cả nhóm | Đã chốt | Chạy 2 run thử (DenseNet121 và EfficientNet-B0, full fine-tune, seed 42, 5 epoch); đo giây/epoch tách nạp dữ liệu và tính toán, bộ nhớ GPU; dừng chờ leader duyệt |
+| Tiêu chí chấp nhận Threshold v2 | Quyết định | Leader / Cả nhóm | Mở | PR #12 đang mở trên nhánh `docs/threshold-v2`, chưa chốt |
 
 ---
 
@@ -214,9 +219,9 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 - **Đổi gì ở sprint sau:** Chưa diễn ra
 
 ### Sprint 2 (Tuần 3 - 4)
-- **Đã làm được:** Hoàn thành chia split 70/15/15 chống rò rỉ pHash, khóa tập test (tag `test-locked`), xây dựng xong khung huấn luyện PyTorch AMP có resume, chạy smoke test thành công trên Kaggle GPU T4x2 đạt 12/12 pytest pass
-- **Chưa xong và vì sao:** Các việc Tuần 4 (Baseline, đo giờ GPU, ngưỡng chấp nhận) chưa bắt đầu
-- **Đổi gì ở sprint sau:** Chốt phương án trọng số ImageNet với Leader (Nguyễn Đức) để chạy Baseline
+- **Đã làm được:** Chưa diễn ra
+- **Chưa xong và vì sao:** Chưa diễn ra
+- **Đổi gì ở sprint sau:** Chưa diễn ra
 
 ### Sprint 3 (Tuần 5 - 6)
 - **Đã làm được:** Chưa diễn ra
@@ -248,3 +253,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v2.0** | 02/10/2026 | Leader và nhóm | Nâng cấp lộ trình sang bảng theo dõi tiến độ Scrum rút gọn 6 sprint có trạng thái và bằng chứng |
 | **v2.1** | 03/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ tiến độ Sprint 2 (hoàn tất Tuần 3 Track A & Track B, khóa test, GPU smoke test pass) và mở lại các quyết định của Leader |
 | **v2.2** | 04/10/2026 | Nguyễn Đức (Leader) & Nhóm | Chuẩn hóa toàn bộ nội dung sang tiếng Việt có dấu chuẩn UTF-8, đồng bộ tên các thành viên (Nguyễn Đức, Minh Thuận, Thái Tú, Vũ Thương, Lê Minh, Hải Lý) thay cho mã định danh TV1-TV6 |
+| **v2.3** | 13/10/2026 | Trợ lý theo dõi tiến độ | Đồng bộ tiến độ Sprint 2 sau khi PR #11 merge (S2-06, S2-07, S2-08 chuyển Xong), ghi nhận 4 quyết định nhóm đã chốt tại Mục 5 |
