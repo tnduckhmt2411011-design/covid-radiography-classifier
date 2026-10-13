@@ -31,15 +31,17 @@ Dữ liệu được phân chia theo phương pháp **Stratified Group Splitting
 
 ### Bảng phân bố chi tiết 4 lớp theo từng tập
 
+*(Bảng sinh từ splits/split_v1.csv)*
+
 | Nhãn (Class) | Tổng số ảnh | Train (70%) | Validation (15%) | Test (15%) | Tỷ lệ Train / Val / Test |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **COVID** | 3.616 | 2.535 | 539 | 542 | 70,1% / 14,9% / 15,0% |
-| **Lung_Opacity** | 6.012 | 4.204 | 902 | 906 | 69,9% / 15,0% / 15,0% |
-| **Normal** | 10.192 | 7.134 | 1.529 | 1.529 | 70,0% / 15,0% / 15,0% |
-| **Viral Pneumonia** | 1.345 | 942 | 204 | 199 | 70,0% / 15,1% / 14,9% |
+| **COVID** | 3.616 | 2.536 | 537 | 543 | 70,1% / 14,9% / 15,0% |
+| **Lung_Opacity** | 6.012 | 4.205 | 903 | 904 | 69,9% / 15,0% / 15,0% |
+| **Normal** | 10.192 | 7.132 | 1.531 | 1.529 | 70,0% / 15,0% / 15,0% |
+| **Viral Pneumonia** | 1.345 | 942 | 203 | 200 | 70,0% / 15,1% / 14,9% |
 | **TỔNG CỘNG** | **21.165** | **14.815** | **3.174** | **3.176** | **70,00% / 15,00% / 15,01%** |
 
-*Ghi chú:* Độ lệch tỷ lệ giữa các tập ở mỗi lớp tối đa chỉ $\pm 0,1\%$, đảm bảo phân bố lớp đồng đều tuyệt đối trên mọi tập dữ liệu.
+*Ghi chú:* Độ lệch tỷ lệ giữa các tập ở mỗi lớp tối đa chỉ $\pm 0,1\%$, đảm bảo phân bố lớp đồng đều trên mọi tập dữ liệu.
 
 ---
 
