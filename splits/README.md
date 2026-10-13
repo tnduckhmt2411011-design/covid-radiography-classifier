@@ -8,7 +8,7 @@
 
 ## 1. Tổng quan & Tính toàn vẹn
 
-Thư mục này chứa file phân chia dữ liệu chính thức [`split_v1.csv`](file:///d:/Use%20Antigravity/Medical%20Vision/splits/split_v1.csv) và mã băm xác thực [`split_v1.sha256`](file:///d:/Use%20Antigravity/Medical%20Vision/splits/split_v1.sha256) cho đồ án phân loại 4 nhóm ảnh X-quang ngực (COVID-19 Radiography Database).
+Thư mục này chứa file phân chia dữ liệu chính thức [`split_v1.csv`](split_v1.csv) và mã băm xác thực [`split_v1.sha256`](split_v1.sha256) cho đồ án phân loại 4 nhóm ảnh X-quang ngực (COVID-19 Radiography Database).
 
 - **Tổng số mẫu:** 21.165 ảnh (khớp 100% với `manifest.csv`).
 - **Mã băm SHA256:**
