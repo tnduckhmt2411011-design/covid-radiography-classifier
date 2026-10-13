@@ -84,7 +84,7 @@ Do tình trạng phân bố dữ liệu (`Normal` chiếm 48.1%, `Viral Pneumoni
 * **Thời gian dự kiến:** Đầu Sprint 3 (trước khi triển khai công việc S3-01).
 * **Nội dung thảo luận & Phân công phát biểu:**
   1. Thái Tú & Vũ Thương: Nhận xét về độ phân kỳ giữa B2 (Head-only 80.6%) và B3 (Fine-tuning 95.8%).
-  2. Hoàng Hải: Đánh giá ma trận nhầm lẫn của B3 và xác nhận trọng số F1 lớp Lung Opacity.
+  2. Hải Lý: Đánh giá ma trận nhầm lẫn của B3 và xác nhận trọng số F1 lớp Lung Opacity.
   3. Minh Thuận: Đánh giá tính ổn định qua 3 seed (42, 43, 44) và cấu hình AMP.
   4. Lê Minh: [chờ leader phân công].
   5. Nguyễn Đức (Leader): Chủ trì biểu quyết chính thức chốt hoặc điều chỉnh các ngưỡng trong tài liệu này.
