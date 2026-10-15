@@ -107,3 +107,30 @@ kaggle kernels status <username>/<kernel_name>
 # 3. Kéo kết quả (outputs, log, checkpoint) về máy cục bộ
 kaggle kernels output <username>/<kernel_name> -p <thư_mục_output> --force
 ```
+
+---
+
+## 5. Chạy kiểm thử
+
+### Kích hoạt môi trường ảo (.venv) trên Windows PowerShell:
+```powershell
+# Nếu gặp lỗi ExecutionPolicy bị chặn chạy script:
+Set-ExecutionPolicy -Scope Process Bypass
+
+# Kích hoạt môi trường ảo:
+.\.venv\Scripts\Activate.ps1
+```
+
+### Các lệnh kiểm thử (không cần đặt PYTHONPATH):
+```powershell
+# 1. Chạy nhanh từ thư mục gốc repo:
+pytest -q
+
+# 2. Hoặc chạy qua module python từ thư mục gốc:
+python -m pytest -q
+
+# 3. Hoặc chạy từ bên trong thư mục tests:
+cd tests
+pytest -q
+```
+
