@@ -56,7 +56,7 @@ Bộ dữ liệu được nhóm tác giả phát hành qua nhiều giai đoạn:
 
 1. **Giấy phép bộ dữ liệu (Dataset License):**
    - Trong tệp `dataset-metadata.json` lấy qua lệnh `kaggle datasets metadata`, trường `licenses` ghi: **`[{"name": "copyright-authors"}]`** `[Nêu rõ trong bài — dataset-metadata.json]`.
-   - Trong phần `description` của `dataset-metadata.json`, nhóm tác giả ghi dòng quy định quyền truy cập và sử dụng: **chỉ phục vụ mục đích học thuật / phi thương mại (*Academic/Non-Commercial Use*)** và yêu cầu trích dẫn hai bài báo P1, P2 `[Nêu rõ trong bài — dataset-metadata.json]`.
+   - Trong phần `description` của `dataset-metadata.json`, nhóm tác giả ghi dòng quy định quyền truy cập và sử dụng: **`DATA ACCESS AND USE: Academic/Non-Commercial Use`** và yêu cầu trích dẫn hai bài báo P1, P2 (trường `licenses` ghi nhãn `[{"name": "copyright-authors"}]`; điều khoản chi tiết chưa xác minh) `[Nêu rõ trong bài — dataset-metadata.json]`.
    - Lưu ý phân biệt: Nhãn `CCBY` xuất hiện trong siêu dữ liệu trang IEEE Xplore của P1 và giấy phép `CC BY 4.0` trên trang arXiv của P2 là **giấy phép bản quyền của bài báo**, không phải giấy phép của bộ ảnh X-quang trên Kaggle.
 
 2. **Cấu trúc cột và nội dung 4 tệp `.metadata.xlsx`:**
@@ -221,8 +221,8 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 4. **Rủi ro từ sự mất cân bằng lớp nghiêm trọng kết hợp nguồn pha trộn ở lớp `Normal`:**
    - Lớp `Normal` (`10.192` ảnh) lớn gấp **7,58 lần** lớp `Viral Pneumonia` (`1.345` ảnh) và bao gồm hai quần thể khác nhau (`8.851` ảnh từ RSNA + `1.341` ảnh từ bộ Kaggle Mooney). Nếu dùng Accuracy hoặc Weighted F1 như P1/P2, kết quả tốt trên lớp `Normal` sẽ che lấp hoàn toàn sai số trên lớp `Viral Pneumonia` `[Suy ra từ số liệu]`.
 
-5. **Ràng buộc pháp lý và đạo đức từ giấy phép `copyright-authors` (Academic/Non-Commercial Use):**
-   - Bộ dữ liệu không mang giấy phép mở tự do thương mại mà chỉ cho phép sử dụng trong nghiên cứu học thuật phi thương mại và bắt buộc trích dẫn P1, P2 `[Nêu rõ trong bài — dataset-metadata.json]`.
+5. **Ràng buộc pháp lý và đạo đức từ nhãn giấy phép `copyright-authors`:**
+   - Trong `dataset-metadata.json`, trường `licenses` ghi nhãn `[{"name": "copyright-authors"}]` và phần description có dòng `DATA ACCESS AND USE: Academic/Non-Commercial Use`; điều khoản chi tiết chưa xác minh `[Nêu rõ trong bài — dataset-metadata.json]`.
 
 ---
 
@@ -250,7 +250,7 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 ### 8.1. Hai bài báo gốc và Trang dữ liệu Kaggle
 1. **[P1 — Bài báo gốc 1]** M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. Al-Emadi, M. B. I. Reaz, và M. T. Islam, *"Can AI Help in Screening Viral and COVID-19 Pneumonia?"*, *IEEE Access*, vol. 8, pp. 132665–132676, 2020, doi: `10.1109/ACCESS.2020.3010287`. Bản preprint đã đọc: `arXiv:2003.13145v3` (`https://arxiv.org/abs/2003.13145`).
 2. **[P2 — Bài báo gốc 2]** T. Rahman, A. Khandakar, Y. Qiblawey, A. Tahir, S. Kiranyaz, S. B. A. Kashem, M. T. Islam, S. Al Maadeed, S. M. Zughaier, M. S. Khan, và M. E. H. Chowdhury, *"Exploring the effect of image enhancement techniques on COVID-19 detection using chest X-ray images"*, *Computers in Biology and Medicine*, vol. 132, p. 104319, 2021, doi: `10.1016/j.compbiomed.2021.104319`. Bản preprint đã đọc: `arXiv:2012.02238v1` (`https://arxiv.org/abs/2012.02238`).
-3. **[Kaggle Dataset]** T. Rahman, M. E. H. Chowdhury, A. Khandakar và cộng sự, *"COVID-19 Radiography Database"*, Kaggle Repository (`https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database`), `datasetId: 576013`, giấy phép: `copyright-authors` (*Academic/Non-Commercial Use*).
+3. **[Kaggle Dataset]** T. Rahman, M. E. H. Chowdhury, A. Khandakar và cộng sự, *"COVID-19 Radiography Database"*, Kaggle Repository (`https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database`), `datasetId: 576013`, giấy phép: nhãn `copyright-authors` trên Kaggle (description ghi `Academic/Non-Commercial Use`; điều khoản chi tiết chưa xác minh).
 
 ### 8.2. Các nguồn dữ liệu gốc thành phần được trích dẫn trong P1, P2 và `README.md.txt`
 4. **[Nguồn COVID — BIMCV-COVID19+]** Medical Imaging Databank of the Valencia Region (BIMCV), *"BIMCV-COVID19+: Datasets related to COVID-19's pathology course"*, `https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/#1590858128006-9e640421-6711` (Trích dẫn `[67]` trong P2; `[1]` trong `README.md.txt`).
