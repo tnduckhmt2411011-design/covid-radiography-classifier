@@ -132,7 +132,7 @@ Cập nhật lần cuối: 14/10/2026
 ### Sprint 5 (Tuần 9 - 10): RQ3 (Shortcut Learning), đánh giá test MỘT lần, suy luận
 **Sprint Goal:** Đánh giá mô hình trên bộ ảnh che để đo lường độ lệ thuộc vào vùng ngoài phổi (RQ3); mở khóa tập test để đánh giá duy nhất một lần; hoàn thiện notebook suy luận độc lập.
 
-*Ghi chú kỹ thuật RQ3:* manifest ghi mask_match_size = False cho 21165 ảnh; mask cần đổi kích thước về kích thước ảnh (nội suy gần nhất) trước khi che; kích thước mask thực tế: 256x256.
+*Ghi chú kỹ thuật RQ3:* manifest ghi mask_match_size = False cho 21165 ảnh (cột image_width = 299, image_height = 299; manifest không có cột kích thước mask); mask cần đổi kích thước về kích thước ảnh (nội suy gần nhất) trước khi che; kích thước mask thực tế: chưa đo.
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
