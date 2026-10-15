@@ -53,7 +53,7 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 13/10/2026
+Cập nhật lần cuối: 14/10/2026
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Tổng | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
@@ -75,7 +75,7 @@ Cập nhật lần cuối: 13/10/2026
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | S1-01 | T1 | Kiểm tra môi trường Kaggle GPU, ghi chép cấu hình phần cứng | Hạ tầng | Cả nhóm | M | Xong | PR #2 đã merge, `docs/kaggle_setup_notes.md`, kernel `cxr-setup-check` | Chạy thành công trên 2x Tesla T4, xác định torch 2.10.0+cu128 và CUDA 12.8 không lỗi |
-| S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Xong | PR #2 đã merge, commit `e7c88b0`, `docs/kaggle_setup_notes.md` | Ghi chép đầy đủ torch==2.10.0+cu128, torchvision==0.25.0+cu128 từ log Kaggle |
+| S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Xong | PR #2 đã merge (commit `5e0553c`), `docs/kaggle_setup_notes.md` | Ghi chép đầy đủ torch==2.10.0+cu128, torchvision==0.25.0+cu128 từ log Kaggle |
 | S1-03 | T1 | 6/6 thành viên clone repo về máy và kiểm tra môi trường cục bộ | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | 6/6 người clone repo, chạy xong `00_setup_check` không lỗi |
 | S1-04 | T1 | Gửi danh sách câu hỏi làm rõ đề tài cho giảng viên | Báo cáo | Nguyễn Đức (Leader) | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | Câu hỏi cho giảng viên đã gửi bằng văn bản hoặc email |
 | S1-05 | T2 | Xây dựng notebook `01_download_and_eda.ipynb` đọc dữ liệu từ Kaggle | Hạ tầng | Nguyễn Đức | M | Xong | PR #1 đã merge, `notebooks/01_download_and_eda.ipynb`, kernel `cxr-eda-manifest` | Notebook tự động tìm dataset, đọc dữ liệu, không có lỗi lập trình |
@@ -132,6 +132,8 @@ Cập nhật lần cuối: 13/10/2026
 ### Sprint 5 (Tuần 9 - 10): RQ3 (Shortcut Learning), đánh giá test MỘT lần, suy luận
 **Sprint Goal:** Đánh giá mô hình trên bộ ảnh che để đo lường độ lệ thuộc vào vùng ngoài phổi (RQ3); mở khóa tập test để đánh giá duy nhất một lần; hoàn thiện notebook suy luận độc lập.
 
+*Ghi chú kỹ thuật RQ3:* manifest ghi mask_match_size = False cho 21165 ảnh (cột image_width = 299, image_height = 299; manifest không có cột kích thước mask); mask cần đổi kích thước về kích thước ảnh (nội suy gần nhất) trước khi che; kích thước mask thực tế: chưa đo.
+
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | S5-01 | T9 | Đánh giá mô hình trên 3 tập (ảnh gốc, chỉ phổi, ngoài phổi) trong `08_rq3_masked_eval.ipynb` | RQ3 | Lê Minh | L | Chưa làm | Chưa có nhánh/PR | Bảng RQ3 trên tập validation thể hiện đầy đủ sự thay đổi độ chính xác trên 3 kiểu che |
@@ -176,7 +178,7 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 
 | Mục | Loại | Người quyết | Trạng thái | Ghi chú |
 | :--- | :---: | :---: | :---: | :--- |
-| Phương án tải trọng số ImageNet cho kernel huấn luyện | Quyết định | Leader (Nguyễn Đức) | Mở | Đề xuất (bật internet `enable_internet: true` cho kernel huấn luyện hoặc gắn Kaggle Dataset chứa weights), CHƯA CHỐT. Người quyết: Leader (Nguyễn Đức). Cần chốt trước khi chạy Baseline Tuần 4. |
+| Phương án tải trọng số ImageNet cho kernel huấn luyện | Quyết định | Leader (Nguyễn Đức) | Mở | Đã áp dụng trong kernel cxr-baseline (enable_internet true); chưa có xác nhận bằng văn bản của leader |
 | Phân công chủ sở hữu module `src/models.py` | Quyết định | Leader (Nguyễn Đức) | Đã giải quyết | Đã phân công Thái Tú (Hàng Thái Tú) làm chủ sở hữu `src/models.py`, kèm cặp bởi Vũ Thương (Nguyễn Vũ Thương) |
 | Quyết định giữ `split_v1` hay tạo `split_v2` | Quyết định | Leader (Nguyễn Đức) | Mở | `split_v1` đã khóa với ngưỡng T=0 (178 nhóm, 401 ảnh). Đã thống kê 735 cặp gần trùng (Hamming 1-4) khác split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khác nhãn, 506 cùng nhãn). Mở cho tới khi Leader (Nguyễn Đức) đánh giá có cần sửa ngưỡng hay không (735 cặp gần trùng là giới hạn đã biết). |
 | Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Chưa có rubric chấm điểm chính thức; nhóm cần liên hệ hỏi giảng viên để bám sát trọng số điểm. |
@@ -186,7 +188,7 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 | Quyết định 2 (quy tắc chọn cấu hình RQ1 sang RQ2) | Quyết định | Leader / Cả nhóm | Đã chốt | Chấp nhận: chênh macro-F1 trung bình >= 0,005 VÀ khoảng tin cậy 95% bootstrap theo ảnh (ghép cặp, trung bình qua 3 seed, 2.000 lần lấy mẫu) không chứa 0; một phép so sánh chính (ứng viên tốt nhất với B3); quy tắc đóng băng trước khi xem kết quả RQ1 |
 | Quyết định 3 (triển khai baseline lối tắt A1) | Quyết định | Leader / Cả nhóm | Đã chốt | Triển khai A1 (histogram độ xám + trung bình và độ lệch chuẩn; CPU) |
 | Quyết định 4 (đo thử nghiệm ngân sách hai kiến trúc RQ1) | Quyết định | Leader / Cả nhóm | Đã chốt | Chạy 2 run thử (DenseNet121 và EfficientNet-B0, full fine-tune, seed 42, 5 epoch); đo giây/epoch tách nạp dữ liệu và tính toán, bộ nhớ GPU; dừng chờ leader duyệt |
-| Tiêu chí chấp nhận Threshold v2 | Quyết định | Leader / Cả nhóm | Mở | PR #12 đang mở trên nhánh `docs/threshold-v2`, chưa chốt |
+| Tiêu chí chấp nhận Threshold v2 | Quyết định | Leader / Cả nhóm | Mở | Đề xuất đã merge (PR #12); chưa có xác nhận của nhóm |
 
 ---
 
@@ -214,14 +216,14 @@ Trong quá trình thực hiện, nếu tiến độ thực tế bị trễ hơn 
 Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền nội dung thực tế ở buổi họp cuối sprint, không tự ý bịa đặt):
 
 ### Sprint 1 (Tuần 1 - 2)
-- **Đã làm được:** Chưa diễn ra (sẽ điền vào cuối Tuần 2)
-- **Chưa xong và vì sao:** Chưa diễn ra
-- **Đổi gì ở sprint sau:** Chưa diễn ra
+- **Đã làm được:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
+- **Chưa xong và vì sao:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
+- **Đổi gì ở sprint sau:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
 
 ### Sprint 2 (Tuần 3 - 4)
-- **Đã làm được:** Chưa diễn ra
-- **Chưa xong và vì sao:** Chưa diễn ra
-- **Đổi gì ở sprint sau:** Chưa diễn ra
+- **Đã làm được:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
+- **Chưa xong và vì sao:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
+- **Đổi gì ở sprint sau:** sprint đã kết thúc; chưa có biên bản review/retro trong repo
 
 ### Sprint 3 (Tuần 5 - 6)
 - **Đã làm được:** Chưa diễn ra
@@ -254,3 +256,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v2.1** | 03/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ tiến độ Sprint 2 (hoàn tất Tuần 3 Track A & Track B, khóa test, GPU smoke test pass) và mở lại các quyết định của Leader |
 | **v2.2** | 04/10/2026 | Nguyễn Đức (Leader) & Nhóm | Chuẩn hóa toàn bộ nội dung sang tiếng Việt có dấu chuẩn UTF-8, đồng bộ tên các thành viên (Nguyễn Đức, Minh Thuận, Thái Tú, Vũ Thương, Lê Minh, Hải Lý) thay cho mã định danh TV1-TV6 |
 | **v2.3** | 13/10/2026 | Trợ lý theo dõi tiến độ | Đồng bộ tiến độ Sprint 2 sau khi PR #11 merge (S2-06, S2-07, S2-08 chuyển Xong), ghi nhận 4 quyết định nhóm đã chốt tại Mục 5 |
+| **v2.4** | 14/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau kiểm toán V1: cập nhật merge commit PR #2 cho S1-02, cập nhật Mục 5 (trọng số ImageNet & Threshold v2), Mục 7 (Sprint 1-2 retro), bổ sung ghi chú mask RQ3 |
