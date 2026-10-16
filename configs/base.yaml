@@ -1,6 +1,5 @@
-# giá trị mặc định, nhóm chỉnh sau baseline
-
-img_size: 224
+# Cấu hình mặc định cho dự án Machine Learning cổ điển
+# Ảnh gốc kích thước 299x299, giữ nguyên không resize để trích xuất đặc trưng
 
 seeds:
   - 42
