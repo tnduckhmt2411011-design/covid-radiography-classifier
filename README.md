@@ -8,6 +8,8 @@ Dự án bài tập lớn môn Học máy (Machine Learning) thực hiện phân
 
 Dữ liệu sử dụng: [COVID-19 Radiography Database](https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database).
 
+Phạm vi đề tài môn Học máy chỉ áp dụng các thuật toán Machine Learning cổ điển và trích xuất đặc trưng ảnh. Toàn bộ phần mã nguồn, kết quả và cấu hình Deep Learning trước đây đã được lưu trữ tại tag `archive-dl-ngoai-pham-vi` và nằm ngoài phạm vi nộp bài.
+
 > [!CAUTION]
 > **CẢNH BÁO:** Chỉ phục vụ mục đích học thuật, không dùng để chẩn đoán hay hỗ trợ quyết định y khoa.
 
@@ -32,11 +34,8 @@ Dữ liệu sử dụng: [COVID-19 Radiography Database](https://www.kaggle.com/
 ├── slides/                       # Slide thuyết trình bảo vệ đề tài
 ├── splits/                       # Lưu file manifest phân chia tập train/val/test
 ├── src/                          # Mã nguồn Python tái sử dụng
-│   ├── dataset.py                # Xử lý dữ liệu và Data Augmentation
-│   ├── gradcam.py                # Trực quan hóa Grad-CAM và vùng chú ý phổi
+│   ├── dataset.py                # Xử lý dữ liệu và tiền xử lý ảnh xám
 │   ├── metrics.py                # Đánh giá độ đo (F1, Accuracy, Confusion Matrix)
-│   ├── models.py                 # Khởi tạo kiến trúc mô hình (DenseNet, EfficientNet, ...)
-│   ├── train.py                  # Pipeline huấn luyện mô hình có hỗ trợ resume
 │   └── utils.py                  # Các hàm tiện ích dùng chung (set_seed, ...)
 ├── .gitignore                    # Chặn dữ liệu, checkpoint, file nhạy cảm
 ├── README.md                     # Tài liệu tổng quan dự án
