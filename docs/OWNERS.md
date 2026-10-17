@@ -37,7 +37,7 @@ Nhóm áp dụng mô hình ghép cặp (Pairing Mechanism) nhằm đảm bảo c
 | `notebooks/09_error_analysis.ipynb` | **Lê Minh** | Minh Thuận | Phân tích các ca dự đoán sai và nguyên nhân |
 | `src/metrics.py` | **Hải Lý** | Nguyễn Đức | Xây dựng module tính toán chỉ số đánh giá và ma trận nhầm lẫn |
 | `notebooks/10_final_test_eval.ipynb` | **Hải Lý** | Nguyễn Đức | Thực hiện đánh giá DUY NHẤT 1 LẦN trên tập test |
-| `notebooks/11_inference_demo.ipynb` | **Hải Lý** | Nguyễn Đức | Xây dựng notebook suy luận và ứng dụng demo |
+| `notebooks/11_inference_demo.ipynb` | **Thái Tú** | Vũ Thương | Xây dựng notebook suy luận và ứng dụng demo |
 | `demo/` | **Thái Tú** | Vũ Thương | Quản lý mã nguồn và triển khai ứng dụng demo Gradio; dùng lại đúng hàm trích đặc trưng đã đánh giá |
 | `report/` | **Nguyễn Đức** (tổng hợp) | Hải Lý | Tổng hợp nội dung và hoàn thiện báo cáo bài tập lớn; mỗi thành viên viết phần của việc mình làm |
 
