@@ -54,14 +54,13 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 
 | STT | Notebook | Mục tiêu chính |
 | :---: | :--- | :--- |
-| 00 | `00_setup_check.ipynb` | Kiểm tra môi trường GPU, CUDA, thư viện và ghim phiên bản |
+| 00 | `00_setup_check.ipynb` | Kiểm tra môi trường CPU, thư viện và ghim phiên bản |
 | 01 | `01_download_and_eda.ipynb` | Khám phá dữ liệu, phân tích nhãn, kiểm tra mask phổi |
 | 02 | `02_duplicates_and_split.ipynb` | Lọc ảnh trùng bằng imagehash, chia tập train/val/test và khoá test |
 | 03 | `03_smoke_test_train.ipynb` | Chạy thử nghiệm nhanh luồng huấn luyện nhỏ và kiểm tra tính năng resume |
 | 04 | `04_baseline.ipynb` | Huấn luyện mô hình cơ sở, đo thời gian chạy và thiết lập ngưỡng chuẩn |
-| 05 | `05_rq1_backbones.ipynb` | Câu hỏi nghiên cứu 1: So sánh các backbone (DenseNet121, EfficientNet-B0) |
-| 06 | `06_rq2_imbalance.ipynb` | Câu hỏi nghiên cứu 2: Thử nghiệm các kỹ thuật xử lý mất cân bằng lớp |
-| 07 | `07_gradcam_lung_attention.ipynb`| Trực quan hóa Grad-CAM đối chiếu với mask phổi xem mô hình nhìn vào đâu |
+| 05 | `05_rq1_backbones.ipynb` | RQ1: so sánh nhóm đặc trưng thủ công (histogram độ xám, GLCM + LBP, HOG, ghép) |
+| 06 | `06_rq2_imbalance.ipynb` | RQ2: so sánh bộ phân loại học máy cổ điển |
 | 08 | `08_rq3_masked_eval.ipynb` | Câu hỏi nghiên cứu 3: Đánh giá trên ảnh gốc vs chỉ phổi vs ngoài phổi |
 | 09 | `09_error_analysis.ipynb` | Phân tích chi tiết các ca dự đoán sai và nguyên nhân gây nhầm lẫn |
 | 10 | `10_final_test_eval.ipynb` | Mở khoá tập test và đánh giá DUY NHẤT 1 LẦN trên mô hình tối ưu |
@@ -71,7 +70,7 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 
 ## 4. Hướng dẫn chạy trên Kaggle
 
-Dự án được cấu hình và chạy chính trên môi trường Kaggle Linux (GPU Tesla T4 x 2, quota 30 giờ/tuần):
+Dự án được cấu hình và chạy chính trên môi trường Kaggle Linux:
 
 ### 4.1. Cấu hình kernel (`kernel-metadata.json`)
 Mỗi tác vụ chạy trên Kaggle sử dụng một thư mục riêng kèm metadata chuẩn:
@@ -83,7 +82,7 @@ Mỗi tác vụ chạy trên Kaggle sử dụng một thư mục riêng kèm met
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
-  "enable_gpu": true,
+  "enable_gpu": false,
   "enable_internet": false,
   "dataset_sources": [
     "tawsifurrahman/covid19-radiography-database"
@@ -93,17 +92,17 @@ Mỗi tác vụ chạy trên Kaggle sử dụng một thư mục riêng kèm met
 
 ### 4.2. Đường dẫn và dữ liệu trên Kaggle
 * **Dữ liệu đầu vào:** `/kaggle/input/datasets/tawsifurrahman/covid19-radiography-database/COVID-19_Radiography_Dataset` (gồm 21.165 ảnh và 21.165 masks trên 4 lớp: COVID, Lung_Opacity, Normal, Viral Pneumonia).
-* **Thư mục làm việc & xuất kết quả:** `/kaggle/working` (khoảng 19.5 GB khả dụng để lưu logs và checkpoints).
+* **Thư mục làm việc & xuất kết quả:** `/kaggle/working` (khoảng 19.5 GB khả dụng để lưu logs và tệp kết quả của run (`results/<run_id>/`)).
 
 ### 4.3. Các lệnh Kaggle CLI cơ bản
 ```powershell
-# 1. Đẩy notebook chạy trên Kaggle GPU T4
-kaggle kernels push -p <thư_mục_kernel> --accelerator NvidiaTeslaT4
+# 1. Đẩy notebook lên Kaggle
+kaggle kernels push -p <thư_mục_kernel>
 
 # 2. Theo dõi trạng thái thực thi của kernel
 kaggle kernels status <username>/<kernel_name>
 
-# 3. Kéo kết quả (outputs, log, checkpoint) về máy cục bộ
+# 3. Kéo kết quả (outputs, log, tệp kết quả của run (results/<run_id>/)) về máy cục bộ
 kaggle kernels output <username>/<kernel_name> -p <thư_mục_output> --force
 ```
 

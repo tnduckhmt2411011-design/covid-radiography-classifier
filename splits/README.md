@@ -98,7 +98,7 @@ Theo chỉ đạo của Leader, nhóm kỹ thuật đã thực hiện quét toà
 3. **Biện pháp giảm thiểu rủi ro trong quá trình huấn luyện:**
    - Sử dụng các kỹ thuật tăng cường dữ liệu thích hợp (xoay góc nhỏ $\pm 7^\circ$, co giãn nhẹ, điều chỉnh độ sáng/tương phản; **tuyệt đối không lật ngang** để bảo toàn vị trí tim bên trái).
    - Sử dụng Lung Mask để tập trung vào nhu mô phổi thực sự thay vì khung xương lồng ngực.
-   - Dùng Grad-CAM ở Tuần 7 để giải thích vùng quan sát, đảm bảo mô hình không dựa vào viền xương lồng ngực hay ký tự đánh dấu phim.
+   - Kiểm tra lối tắt bằng permutation importance ở Tuần 7, đảm bảo mô hình không dựa vào viền xương lồng ngực hay ký tự đánh dấu phim.
 
 ---
 
