@@ -12,8 +12,8 @@ Tài liệu này quy định các nguyên tắc và quy chuẩn bắt buộc cho
   ```
 - Ví dụ:
   - `feat/duc-setup-data`
-  - `feat/nam-densenet121`
-  - `feat/linh-gradcam-eval`
+  - `feat/<ten>-trich-dac-trung-hog`
+  - `feat/<ten>-phan-loai-cv`
 
 ---
 
@@ -47,20 +47,18 @@ Tài liệu này quy định các nguyên tắc và quy chuẩn bắt buộc cho
 Mỗi lần chạy thực nghiệm huấn luyện mô hình cần được đặt tên định danh thống nhất theo cú pháp:
 
 ```text
-<rq>_<backbone>_<strategy>_<imb>_s<seed>
+<rq>_<features>_<classifier>_s<seed>
 ```
 
 Trong đó:
-- `<rq>`: Mã câu hỏi nghiên cứu hoặc mốc thực nghiệm (`baseline`, `rq1`, `rq2`, `rq3`).
-- `<backbone>`: Tên kiến trúc backbone (`densenet121`, `efficientnet_b0`, ...).
-- `<strategy>`: Chiến lược huấn luyện (`scratch`, `frozen`, `finetune`).
-- `<imb>`: Kỹ thuật xử lý mất cân bằng lớp (`none`, `weighted_ce`, `focal`, `oversampling`).
+- `<rq>`: Mã câu hỏi nghiên cứu (`rq1`, `rq2`, `rq3`).
+- `<features>`: Nhóm đặc trưng trích xuất (`hist`, `glcmlbp`, `hog`, `ghep`).
+- `<classifier>`: Bộ phân loại học máy (`lr`, `knn`, `dt`, `rf`, `svm`, `gb`).
 - `s<seed>`: Seed ngẫu nhiên sử dụng (`s42`, `s43`, `s44`).
 
 **Ví dụ:**
-- `baseline_densenet121_frozen_none_s42`
-- `rq1_efficientnet_b0_finetune_none_s43`
-- `rq2_densenet121_finetune_focal_s42`
+- `rq1_hog_rf_s42`
+- `rq2_hog_svm_s42`
 
 ---
 
@@ -75,3 +73,11 @@ Toàn bộ tiến độ công việc được theo dõi tập trung tại bảng
   - **Chờ duyệt:** Đã mở Pull Request trên GitHub, đang chờ thành viên trong cặp duyệt chéo.
   - **Xong:** Pull Request đã được merge vào `main` VÀ thỏa mãn đầy đủ Definition of Done (kèm bằng chứng cụ thể). Với việc phi kỹ thuật (hỏi giảng viên), cần leader xác nhận.
   - **Bị chặn:** Không thể tiếp tục do vướng mắc kỹ thuật hoặc phụ thuộc bên ngoài; bắt buộc ghi rõ nguyên nhân vào Mục 5 của `docs/roadmap.md`.
+
+---
+
+## 7. Quy tắc khi dùng agent
+
+1. Prompt giao cho agent luôn có dòng "không tự điền ô [...]" và "chỗ CŨ không khớp thì DỪNG và báo".
+2. Agent chỉ mở PR, không merge, không dùng git reset --hard, rebase hay force-push.
+3. PR chỉ merge khi người duyệt (khác tác giả) tự chạy lại các lệnh kiểm tra chính và đã Approve; merge bằng "Create a merge commit" (không squash).

@@ -1,7 +1,7 @@
 # Tiêu chí chấp nhận v3 [ĐÃ CHỐT 16/10/2026]
 Ngày soạn: 16/10/2026. Ngày chốt: 16/10/2026
 
-Thay cho results/threshold_v2.md. v1 và v2 đã lưu ở tag archive-dl-ngoai-pham-vi (sẽ xoá khỏi main trong PR tài liệu). Mọi nội dung Deep Learning trong v1/v2 (B2, B3, epoch, backbone, GPU, Grad-CAM) không còn hiệu lực theo quy định của giảng viên: chỉ dùng Machine Learning cổ điển và đặc trưng ảnh thủ công.
+Thay cho results/threshold_v2.md. v1 và v2 đã xoá khỏi main; bản lưu ở tag archive-dl-ngoai-pham-vi. Mọi nội dung Deep Learning trong v1/v2 (B2, B3, epoch, backbone, GPU, Grad-CAM) không còn hiệu lực theo quy định của giảng viên: chỉ dùng Machine Learning cổ điển và đặc trưng ảnh thủ công.
 
 ## 1. Đề tài và câu hỏi nghiên cứu
 Đề tài: Phân loại 4 nhóm ảnh X-quang ngực (COVID-19, Lung Opacity, Normal, Viral Pneumonia) bằng học máy cổ điển với đặc trưng thủ công.
