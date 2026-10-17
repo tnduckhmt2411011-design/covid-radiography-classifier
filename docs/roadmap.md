@@ -54,17 +54,17 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 16/10/2026
+Cập nhật lần cuối: 17/10/2026
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
 | **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 3/7 | Đang làm | Đã xong EDA và manifest; S1-01 và S1-02 chuyển Chưa làm để viết lại cho CPU; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
-| **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 3/4 | Đang làm | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 đang làm tại PR #17 (8 việc, 4 hủy, mẫu số 4) |
+| **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 0/6 | Chưa làm | Trích đặc trưng và so sánh 4 nhóm đặc trưng với Random Forest cố định trên 3 seed; chốt nhóm đặc trưng cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 0/4 | Chưa làm | So sánh 6 bộ phân loại trên nhóm đặc trưng tốt nhất của RQ1, chốt cấu hình, chuẩn bị bộ ảnh che cho RQ3 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **6/33** | **Đang triển khai** | **Đạt 18.2% Xong (6/33 việc), 1 việc Đang làm (S2-08), 26 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **7/33** | **Đang triển khai** | **Đạt 21.2% Xong (7/33 việc), 0 việc Đang làm, 26 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -97,7 +97,7 @@ Cập nhật lần cuối: 16/10/2026
 | S2-05 | T3 | Chạy smoke test trên `03_smoke_test_train.ipynb` | Hạ tầng | Minh Thuận | S | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | 12/12 pytest pass, giả lập ngắt phiên và resume thành công epoch 1 -> 2 trên Kaggle GPU trong 49s |
 | S2-06 | T4 | Huấn luyện mô hình cơ sở Baseline trên `04_baseline.ipynb` | Hạ tầng | Minh Thuận | L | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Bảng baseline có macro-F1 và recall từng lớp trên tập validation |
 | S2-07 | T4 | Đo đạc thời gian chạy thực tế mỗi run và ước tính tổng GPU-giờ | Hạ tầng | Minh Thuận | S | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Có số liệu thời gian từng epoch và bảng ước tính tổng GPU-giờ cho các tuần sau |
-| S2-08 | T4 | Xác lập tiêu chí chấp nhận bằng văn bản (threshold_v3) | Báo cáo | Nguyễn Đức (Leader) | S | Đang làm | PR #17 (Draft) | results/threshold_v3.md được nhóm chốt (ngày chốt 16/10/2026), PR được duyệt chéo và merge |
+| S2-08 | T4 | Xác lập tiêu chí chấp nhận bằng văn bản (threshold_v3) | Báo cáo | Nguyễn Đức (Leader) | S | Xong | PR #17 (đã merge) | results/threshold_v3.md được nhóm chốt (ngày chốt 16/10/2026), PR được duyệt chéo và merge |
 
 ---
 
@@ -265,3 +265,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v2.3** | 13/10/2026 | Trợ lý theo dõi tiến độ | Đồng bộ tiến độ Sprint 2 sau khi PR #11 merge (S2-06, S2-07, S2-08 chuyển Xong), ghi nhận 4 quyết định nhóm đã chốt tại Mục 5 |
 | **v2.4** | 14/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau kiểm toán V1: cập nhật merge commit PR #2 cho S1-02, cập nhật Mục 5 (trọng số ImageNet & Threshold v2), Mục 7 (Sprint 1-2 retro), bổ sung ghi chú mask RQ3 |
 | **v3.0** | 16/10/2026 | Kỹ sư ML & Nhóm | Chuyển hướng ML cổ điển theo quy định giảng viên: 10 việc Hủy, 11 việc sửa, 3 việc mới, mẫu số mới 33 việc; cập nhật tiêu chí nghiệm thu cho các việc ML cổ điển và ngưỡng threshold_v3 (quyết định ngày 16/10/2026) |
+| **v3.1** | 17/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau khi PR #17 (threshold_v3) được merge: S2-08 chuyển Xong; tiến độ 7/33 (mẫu số 33) |
