@@ -6,5 +6,5 @@
 <!-- Đánh dấu [x] vào các ô nếu bạn đã hoàn thành kiểm tra -->
 - [ ] **Mô tả thay đổi:** Đã nêu rõ nội dung thay đổi và liên kết với đầu việc/tuần tương ứng.
 - [ ] **Đã chạy thử nghiệm:** Code/notebook đã được chạy thử thành công tại máy cục bộ hoặc môi trường Kaggle/Colab, không phát sinh lỗi.
-- [ ] **Bảo mật và dữ liệu:** Cam kết **KHÔNG** chứa file dữ liệu ảnh (`data/`, `input/`), file checkpoint trọng số (`*.pt`, `*.pth`), hay token bí mật (`kaggle.json`, `.env`).
+- [ ] **Bảo mật và dữ liệu:** Cam kết **KHÔNG** chứa file dữ liệu ảnh (`data/`, `input/`), tệp mô hình đã huấn luyện (ví dụ *.pkl, *.joblib), hay token bí mật (`kaggle.json`, `.env`).
 - [ ] **Người duyệt (Reviewer trong cặp):** @[Tên thành viên duyệt] đã được gán và sẵn sàng review.
