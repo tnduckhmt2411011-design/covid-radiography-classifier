@@ -47,18 +47,23 @@ Tài liệu này quy định các nguyên tắc và quy chuẩn bắt buộc cho
 Mỗi lần chạy thực nghiệm huấn luyện mô hình cần được đặt tên định danh thống nhất theo cú pháp:
 
 ```text
-<rq>_<features>_<classifier>_s<seed>
+<rq>_<features>_<classifier>_s<seed>           (rq1, rq2)
+rq3_<features>_<classifier>_<view>_s<seed>     (rq3)
 ```
 
 Trong đó:
 - `<rq>`: Mã câu hỏi nghiên cứu (`rq1`, `rq2`, `rq3`).
 - `<features>`: Nhóm đặc trưng trích xuất (`hist`, `glcmlbp`, `hog`, `ghep`).
 - `<classifier>`: Bộ phân loại học máy (`lr`, `knn`, `dt`, `rf`, `svm`, `gb`).
+- `<view>`: Chỉ dùng cho `rq3`, đặt giữa `<classifier>` và `s<seed>`; chế độ ảnh: `full` (ảnh gốc), `lung` (chỉ trong phổi), `outside` (chỉ ngoài phổi).
 - `s<seed>`: Seed ngẫu nhiên sử dụng (`s42`, `s43`, `s44`).
 
 **Ví dụ:**
 - `rq1_hog_rf_s42`
 - `rq2_hog_svm_s42`
+- `rq3_hog_rf_full_s42`
+- `rq3_hog_rf_lung_s42`
+- `rq3_hog_rf_outside_s42`
 
 ---
 
