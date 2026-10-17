@@ -1,4 +1,4 @@
-# Tiêu chí chấp nhận v3 [ĐỀ XUẤT, CHỜ NHÓM CHỐT]
+# Tiêu chí chấp nhận v3 [ĐÃ CHỐT 16/10/2026]
 Ngày soạn: 16/10/2026. Ngày chốt: 16/10/2026
 
 Thay cho results/threshold_v2.md. v1 và v2 đã lưu ở tag archive-dl-ngoai-pham-vi (sẽ xoá khỏi main trong PR tài liệu). Mọi nội dung Deep Learning trong v1/v2 (B2, B3, epoch, backbone, GPU, Grad-CAM) không còn hiệu lực theo quy định của giảng viên: chỉ dùng Machine Learning cổ điển và đặc trưng ảnh thủ công.
