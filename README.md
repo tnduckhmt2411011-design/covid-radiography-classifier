@@ -59,8 +59,8 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 | 02 | `02_duplicates_and_split.ipynb` | Lọc ảnh trùng bằng imagehash, chia tập train/val/test và khoá test |
 | 03 | `03_smoke_test_train.ipynb` | Chạy thử nghiệm nhanh luồng huấn luyện nhỏ và kiểm tra tính năng resume |
 | 04 | `04_baseline.ipynb` | Huấn luyện mô hình cơ sở, đo thời gian chạy và thiết lập ngưỡng chuẩn |
-| 05 | `05_rq1_backbones.ipynb` | RQ1: so sánh nhóm đặc trưng thủ công (histogram độ xám, GLCM + LBP, HOG, ghép) |
-| 06 | `06_rq2_imbalance.ipynb` | RQ2: so sánh bộ phân loại học máy cổ điển |
+| 05 | `05_rq1_features.ipynb` | RQ1: so sánh nhóm đặc trưng thủ công (histogram độ xám, GLCM + LBP, HOG, ghép) |
+| 06 | `06_rq2_classifiers.ipynb` | RQ2: so sánh bộ phân loại học máy cổ điển |
 | 08 | `08_rq3_masked_eval.ipynb` | Câu hỏi nghiên cứu 3: Đánh giá trên ảnh gốc vs chỉ phổi vs ngoài phổi |
 | 09 | `09_error_analysis.ipynb` | Phân tích chi tiết các ca dự đoán sai và nguyên nhân gây nhầm lẫn |
 | 10 | `10_final_test_eval.ipynb` | Mở khoá tập test và đánh giá DUY NHẤT 1 LẦN trên mô hình tối ưu |
