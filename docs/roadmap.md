@@ -71,7 +71,7 @@ Cập nhật lần cuối: 16/10/2026
 ## Mục 3. Backlog chi tiết theo sprint
 
 ### Sprint 1 (Tuần 1 - 2): Môi trường chạy được và hiểu dữ liệu
-**Sprint Goal:** Chứng minh môi trường tính toán Kaggle GPU hoạt động ổn định, xác minh tập dữ liệu 21.165 ảnh trên 4 lớp, xuất file `manifest.csv` đầy đủ mask và phân tích nguy cơ shortcut learning.
+**Sprint Goal:** Chứng minh môi trường tính toán môi trường chạy CPU (Kaggle hoặc máy cá nhân) hoạt động ổn định, xác minh tập dữ liệu 21.165 ảnh trên 4 lớp, xuất file `manifest.csv` đầy đủ mask và phân tích nguy cơ shortcut learning.
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
@@ -186,7 +186,7 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 | Phân công chủ sở hữu module `src/models.py` | Quyết định | Leader (Nguyễn Đức) | Đã giải quyết | Đã phân công Thái Tú (Hàng Thái Tú) làm chủ sở hữu `src/models.py`, kèm cặp bởi Vũ Thương (Nguyễn Vũ Thương) |
 | Quyết định giữ `split_v1` hay tạo `split_v2` | Quyết định | Leader (Nguyễn Đức) | Mở | `split_v1` đã khóa với ngưỡng T=0 (178 nhóm, 401 ảnh). Đã thống kê 735 cặp gần trùng (Hamming 1-4) khác split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khác nhãn, 506 cùng nhãn). Mở cho tới khi Leader (Nguyễn Đức) đánh giá có cần sửa ngưỡng hay không (735 cặp gần trùng là giới hạn đã biết). |
 | Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Chưa có rubric chấm điểm chính thức; nhóm cần liên hệ hỏi giảng viên để bám sát trọng số điểm. |
-| Hình thức sản phẩm nộp cuối kỳ | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Cần xác nhận sản phẩm nộp gồm những gì (mô hình fine-tune, notebook, báo cáo, có bắt buộc demo app Gradio hay không). |
+| Hình thức sản phẩm nộp cuối kỳ | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Cần xác nhận sản phẩm nộp gồm những gì (ứng dụng demo hoàn chỉnh, notebook, báo cáo, có bắt buộc demo app Gradio hay không). (giảng viên đã nêu: ứng dụng demo hoàn chỉnh kèm báo cáo và bài thuyết trình bảo vệ; định nghĩa 'hoàn chỉnh' và hạn nộp chờ giảng viên) |
 | Thông tin nguồn gốc của bộ dữ liệu CXR (Shortcut Learning) | Rủi ro | Cả nhóm | Mở | Dataset tổng hợp từ nhiều nguồn, thiếu metadata bệnh nhân (`patient_id`) và thiết bị chụp; độ lệch độ sáng lớp COVID cao hơn rõ rệt; cần ghi rõ giới hạn này trong báo cáo và đánh giá tại RQ3. |
 | Quyết định 1 (chuẩn hóa B2 head-only) | Quyết định | Leader / Cả nhóm | Đóng – ngoài phạm vi (16/10/2026) | Không còn áp dụng sau khi gỡ bỏ toàn bộ baseline Deep Learning B2/B3 |
 | Quyết định 2 (quy tắc chọn cấu hình RQ1 sang RQ2) | Quyết định | Leader / Cả nhóm | Đã chốt | Chấp nhận: chênh macro-F1 trung bình >= 0,005 VÀ khoảng tin cậy 95% bootstrap theo ảnh (ghép cặp, trung bình qua 3 seed, 2.000 lần lấy mẫu) không chứa 0; một phép so sánh chính (ứng viên tốt nhất với B3); quy tắc đóng băng trước khi xem kết quả RQ1 |
@@ -205,7 +205,7 @@ Trong quá trình thực hiện, nếu tiến độ thực tế bị trễ hơn 
 
 1. **Cắt giảm 1:** Cắt bỏ phần RQ3-C (phần mở rộng: huấn luyện lại mô hình từ đầu trên tập ảnh chỉ chứa vùng phổi).
 2. **Cắt giảm 2:** Cắt bỏ thử nghiệm Focal Loss trong RQ2 (chỉ giữ lại Weighted Cross-Entropy Loss).
-3. **Cắt giảm 3:** Bớt đi một nhóm đặc trưng trong RQ1 (chỉ tập trung vào DenseNet121 hoặc EfficientNet-B0).
+3. **Cắt giảm 3:** Bớt đi một nhóm đặc trưng trong RQ1 (bỏ nhóm ghép, chỉ giữ histogram, GLCM + LBP và HOG).
 4. **Cắt giảm 4:** Giảm số lượng seed ngẫu nhiên chạy lặp lại từ 3 seed xuống còn 2 seed để tiết kiệm thời gian tính toán.
 5. **Cắt giảm 5:** Cắt bỏ phần ứng dụng demo giao diện (Gradio app), chỉ giữ lại notebook suy luận `11_inference_demo.ipynb`.
 
@@ -264,4 +264,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v2.2** | 04/10/2026 | Nguyễn Đức (Leader) & Nhóm | Chuẩn hóa toàn bộ nội dung sang tiếng Việt có dấu chuẩn UTF-8, đồng bộ tên các thành viên (Nguyễn Đức, Minh Thuận, Thái Tú, Vũ Thương, Lê Minh, Hải Lý) thay cho mã định danh TV1-TV6 |
 | **v2.3** | 13/10/2026 | Trợ lý theo dõi tiến độ | Đồng bộ tiến độ Sprint 2 sau khi PR #11 merge (S2-06, S2-07, S2-08 chuyển Xong), ghi nhận 4 quyết định nhóm đã chốt tại Mục 5 |
 | **v2.4** | 14/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau kiểm toán V1: cập nhật merge commit PR #2 cho S1-02, cập nhật Mục 5 (trọng số ImageNet & Threshold v2), Mục 7 (Sprint 1-2 retro), bổ sung ghi chú mask RQ3 |
-| **v3.0** | 16/10/2026 | Kỹ sư ML & Nhóm | Chuyển hướng ML cổ điển theo quy định giảng viên: 10 việc Hủy, 11 việc sửa, 3 việc mới, mẫu số mới 33 việc; cập nhật tiêu chí nghiệm thu cho các việc ML cổ điển và ngưỡng threshold_v3 |
+| **v3.0** | 16/10/2026 | Kỹ sư ML & Nhóm | Chuyển hướng ML cổ điển theo quy định giảng viên: 10 việc Hủy, 11 việc sửa, 3 việc mới, mẫu số mới 33 việc; cập nhật tiêu chí nghiệm thu cho các việc ML cổ điển và ngưỡng threshold_v3 (quyết định ngày 16/10/2026) |
