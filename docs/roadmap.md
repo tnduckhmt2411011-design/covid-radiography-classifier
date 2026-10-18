@@ -129,7 +129,7 @@ Cập nhật lần cuối: 17/10/2026
 | S4-04 | T8 | Chốt cấu hình mô hình tối ưu nhất và đóng băng tham số thực nghiệm | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có nhánh/PR | Cấu hình cuối cùng được ghi nhận văn bản và khóa chặt chẽ |
 | S4-05 | T8 | Cài đặt module Grad-CAM trong `src/gradcam.py` và `07_gradcam_lung_attention.ipynb` | RQ3 | Lê Minh | L | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Xuất được bản đồ nhiệt Grad-CAM phủ trên ảnh X-quang, đối chiếu trực quan với mask |
 | S4-06 | T8 | Phân tích chi tiết các ca dự đoán sai trên `09_error_analysis.ipynb` | Báo cáo | Lê Minh | M | Chưa làm | Chưa có nhánh/PR | Lập danh sách các ca nhầm lẫn điển hình giữa COVID, Lung Opacity và Pneumonia |
-| S4-07 | T8 | Tạo bộ ảnh che thử nghiệm (chỉ giữ phổi / che ngoài phổi) | RQ3 | Lê Minh (duyệt Minh Thuận) | M | Chưa làm | Chưa có nhánh/PR | Bộ ảnh che được kiểm tra bằng mắt trên ít nhất 20 ảnh mỗi lớp không bị lệch mask |
+| S4-07 | T8 | Tạo bộ ảnh che thử nghiệm (chỉ giữ phổi / che ngoài phổi) | RQ3 | Lê Minh (duyệt Minh Thuận) | M | Chưa làm | Chưa có nhánh/PR | Bộ ảnh che được kiểm tra bằng mắt trên ít nhất 20 ảnh mỗi lớp không bị lệch mask; trước đó đo kích thước thật của toàn bộ 21.165 mask (đếm số kích thước khác nhau) và ghi kết quả vào docs/dataset_provenance.md |
 
 ---
 
@@ -154,9 +154,9 @@ Cập nhật lần cuối: 17/10/2026
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S6-01 | T11 | Soạn thảo báo cáo bài tập lớn trong thư mục `report/` | Báo cáo | Đức | L | Chưa làm | Chưa có nhánh/PR | Báo cáo trình bày đầy đủ RQ1-3, giới hạn nghiên cứu và cảnh báo y khoa |
+| S6-01 | T11 | Soạn thảo báo cáo bài tập lớn trong thư mục `report/` | Báo cáo | Nguyễn Đức (duyệt Hải Lý) | L | Chưa làm | Chưa có nhánh/PR | Báo cáo trình bày đầy đủ RQ1-3, giới hạn nghiên cứu và cảnh báo y khoa |
 | S6-02 | T11 | Xây dựng ứng dụng demo Gradio tương tác trong `demo/` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Chưa làm | Chưa có nhánh/PR | Một thành viên không phụ trách phần đó chạy lại được app và suy luận thành công |
-| S6-03 | T11 | Hoàn thiện slide thuyết trình bảo vệ đề tài trong `slides/` | Báo cáo | Đức | M | Chưa làm | Chưa có nhánh/PR | Slide ngắn gọn, đầy đủ biểu đồ thực nghiệm và cấu trúc đề cương |
+| S6-03 | T11 | Hoàn thiện slide thuyết trình bảo vệ đề tài trong `slides/` | Báo cáo | Nguyễn Đức (duyệt Hải Lý) | M | Chưa làm | Chưa có nhánh/PR | Slide ngắn gọn, đầy đủ biểu đồ thực nghiệm và cấu trúc đề cương |
 | S6-04 | T12 | Rà soát toàn bộ sản phẩm, code và định dạng theo yêu cầu giảng viên | Báo cáo | Cả nhóm | S | Chưa làm | Chưa có nhánh/PR | Đúng định dạng file, tiêu chuẩn kỹ thuật mà giảng viên yêu cầu |
 | S6-05 | T12 | Tổ chức diễn tập thuyết trình và trả lời câu hỏi phản biện | Báo cáo | Cả nhóm | M | Chưa làm | Chưa có nhánh/PR | Diễn tập thuyết trình hoàn chỉnh ít nhất 1 lần trước buổi bảo vệ chính thức |
 | S6-06 | T12 | Đóng gói sản phẩm cuối kỳ và nộp bài tập lớn | Báo cáo | Nguyễn Đức (Leader) | S | Chưa làm | Chưa có nhánh/PR | Nộp bài đúng hạn quy định, repo sạch sẽ và đồng bộ |
@@ -267,3 +267,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.0** | 16/10/2026 | Kỹ sư ML & Nhóm | Chuyển hướng ML cổ điển theo quy định giảng viên: 10 việc Hủy, 11 việc sửa, 3 việc mới, mẫu số mới 33 việc; cập nhật tiêu chí nghiệm thu cho các việc ML cổ điển và ngưỡng threshold_v3 (quyết định ngày 16/10/2026) |
 | **v3.1** | 17/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau khi PR #17 (threshold_v3) được merge: S2-08 chuyển Xong; tiến độ 7/33 (mẫu số 33) |
 | **v3.2** | 17/10/2026 | Kỹ sư ML & Nhóm | Đổi phụ trách S5-06 sang Thái Tú (đồng bộ OWNERS); sửa định dạng ô tiêu chí S3-04. |
+| **v3.3** | 18/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ phụ trách S6-01 và S6-03 với OWNERS; bổ sung đo kích thước mask thật vào tiêu chí S4-07. |
