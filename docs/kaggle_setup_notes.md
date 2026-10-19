@@ -62,7 +62,6 @@ $env:PYTHONUTF8=1
   * Tổng dung lượng: **19.52 GB**
   * Đã sử dụng: **0.00 GB**
   * Khả dụng: **19.50 GB**
-* **Thời gian chạy thực tế:** **~2 phút 42 giây** trên CPU.
 * **Phiên bản 7 thư viện chính:**
   * `numpy==2.0.2`
   * `pandas==2.3.3`
@@ -95,12 +94,12 @@ $env:PYTHONUTF8=1
 ## 5. Kết quả kiểm tra tải trọng số
 
 * Không dùng trọng số huấn luyện sẵn (ngoài phạm vi ML cổ điển theo quy định giảng viên và biên bản họp 16/10/2026).
-* Thiết lập `"enable_internet": false` giữ nguyên để đảm bảo môi trường thực thi hoàn toàn ngoại tuyến (offline).
+* Thiết lập `"enable_internet": false` giữ nguyên.
 
 ---
 
 ## 6. Hạn mức tài nguyên xác nhận từ giao diện người dùng
 
 * **Chế độ tính toán:** Thuần CPU (không dùng GPU theo biên bản họp 16/10/2026 mục 3.8).
-* **Hạn mức CPU:** Phiên CPU trên Kaggle không giới hạn quota hàng tuần (theo biên bản họp 16/10/2026 mục 3.8: không dùng GPU, phiên CPU không giới hạn giờ).
+* **Hạn mức CPU:** theo xác nhận của nhóm trong biên bản họp 16/10/2026 mục 3.8, phiên CPU không giới hạn giờ (chưa kiểm trên trang usage của Kaggle).
 * **Trạng thái kết nối mạng:** `Internet off` (`"enable_internet": false`).
