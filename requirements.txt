@@ -1,14 +1,15 @@
 # Danh sách các thư viện yêu cầu cho dự án
-# Ghi chú: ghim phiên bản sau khi chạy 00_setup_check trên Kaggle
-numpy  # chưa đo
-pandas  # chưa đo
-scikit-learn  # chưa đo
+# Ghi chú: 7 thư viện chính ghim theo đầu ra notebooks/00_setup_check.ipynb trên Kaggle CPU (Python 3.12.13); các thư viện còn lại chưa đo.
+numpy==2.0.2
+pandas==2.3.3
+scikit-learn==1.6.1
+scikit-image==0.25.2
 matplotlib  # chưa đo
 seaborn  # chưa đo
-pillow  # chưa đo
-opencv-python-headless  # chưa đo
+pillow==11.3.0
+opencv-python-headless==4.13.0.92
 imagehash  # chưa đo
 tqdm  # chưa đo
 pyyaml  # chưa đo
-gradio  # chưa đo
+gradio==5.50.0
 pytest

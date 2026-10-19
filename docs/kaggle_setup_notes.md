@@ -1,6 +1,6 @@
 # Ghi chép thiết lập môi trường Kaggle (Kaggle Setup Notes)
 
-Tài liệu này ghi nhận kết quả chạy thử nghiệm và kiểm tra môi trường Kaggle qua Kaggle CLI (đã xác thực Phone Verification và kích hoạt GPU).
+Tài liệu này ghi nhận kết quả chạy kiểm tra môi trường Kaggle CPU qua Kaggle CLI `[Theo biên bản họp 16/10/2026 mục 3.8: không dùng GPU, phiên CPU không giới hạn giờ]`.
 
 ---
 
@@ -17,8 +17,8 @@ Tài liệu này ghi nhận kết quả chạy thử nghiệm và kiểm tra mô
 # 3. Kiểm tra danh mục file trong dataset từ xa
 .\.venv\Scripts\kaggle.exe datasets files tawsifurrahman/covid19-radiography-database
 
-# 4. Đẩy notebook chạy thử nghiệm lên Kaggle GPU T4
-.\.venv\Scripts\kaggle.exe kernels push -p kaggle/setup_check --accelerator NvidiaTeslaT4
+# 4. Đẩy notebook chạy kiểm tra môi trường lên Kaggle CPU (chạy CPU do enable_gpu false)
+.\.venv\Scripts\kaggle.exe kernels push -p kaggle/setup_check
 
 # 5. Theo dõi trạng thái kernel định kỳ (~30 giây/lần)
 .\.venv\Scripts\kaggle.exe kernels status ductrannguyen/cxr-setup-check
@@ -40,7 +40,7 @@ $env:PYTHONUTF8=1
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
-  "enable_gpu": true,
+  "enable_gpu": false,
   "enable_internet": false,
   "dataset_sources": [
     "tawsifurrahman/covid19-radiography-database"
@@ -50,28 +50,34 @@ $env:PYTHONUTF8=1
 
 ---
 
-## 3. Phần cứng & Môi trường quan sát được (Phiên GPU chính thức)
+## 3. Cấu hình môi trường Kaggle CPU (đầu ra setup_check)
+
+`[Theo đầu ra notebooks/00_setup_check.ipynb trên Kaggle CPU]`
 
 * **Python:** `3.12.13 (GCC 11.4.0)`
-* **PyTorch:** `2.10.0+cu128` (CUDA 12.8 support)
-* **Torchvision:** `0.25.0+cu128`
-* **GPU quan sát được:**
-  * `cuda_available`: **`True`** ✅
-  * `gpu_count`: **`2`** (Hệ thống cấp phát cấu hình GPU kép: **GPU T4 × 2**)
-  * `gpu_names`: `["Tesla T4", "Tesla T4"]`
-  * Bộ nhớ mỗi GPU: **15.360 MiB (~15 GB VRAM/GPU)**, tổng cộng 30 GB VRAM.
-  * Driver Version: `580.159.04`, CUDA Version: `13.0`
+* **Hệ điều hành:** `Linux 6.18.48+` (`posix`)
+* **CPU:** `4` (`CPU Count: 4`)
+* **RAM:** `32869448 kB` (khoảng 31,3 GiB)
 * **Dung lượng đĩa `/kaggle/working`:**
   * Tổng dung lượng: **19.52 GB**
-  * Đã sử dụng: `0.00 GB`
+  * Đã sử dụng: **0.00 GB**
   * Khả dụng: **19.50 GB**
-* **Thời gian chạy thực tế:** **~2 phút 30 giây** trên GPU (nhanh gấp hơn 4 lần so với CPU 10m25s).
+* **Phiên bản 7 thư viện chính:**
+  * `numpy==2.0.2`
+  * `pandas==2.3.3`
+  * `scikit-learn==1.6.1`
+  * `scikit-image==0.25.2`
+  * `opencv-python-headless==4.13.0.92`
+  * `pillow==11.3.0`
+  * `gradio==5.50.0`
+  * Cả 7 gói import OK; KẾT QUẢ: ĐẠT.
 
 ---
 
 ## 4. Kết quả kiểm tra Dataset (`COVID-19 Radiography Database`)
 
 * **Thư mục gốc tìm thấy:** `/kaggle/input/datasets/tawsifurrahman/covid19-radiography-database/COVID-19_Radiography_Dataset`
+* **Lưu ý:** Đường dẫn dataset trên Kaggle có dạng `/kaggle/input/datasets/<owner>/<tên-dataset>`; notebook `setup_check` dò động nên không phụ thuộc đường dẫn cố định.
 * **Cấu trúc thư mục:** Mỗi lớp bệnh đều chứa 2 thư mục con là `images` và `masks`.
 * **Đối chiếu số lượng file:**
 
@@ -85,23 +91,15 @@ $env:PYTHONUTF8=1
 
 ---
 
-## 5. Kết quả kiểm tra tải trọng số Pretrained (ImageNet)
+## 5. Ghi chú về trọng số huấn luyện sẵn
 
-* **Trạng thái:** **`FAILED`**
-* **Thông báo lỗi quan sát được:**
-  ```text
-  TẢI TRỌNG SỐ THẤT BẠI (có thể do internet tắt)
-  Chi tiết lỗi: <urlopen error [Errno -3] Temporary failure in name resolution>
-  ```
-* **Phân tích:** Thiết lập `"enable_internet": false` hoạt động đúng như mong đợi, ngăn chặn tải ra ngoài mạng internet.
-* **Phương án giải quyết của nhóm:**
-  1. *Lựa chọn 1 (Bật Internet):* Đổi `"enable_internet": true` khi cần tải tự động trọng số torchvision.
-  2. *Lựa chọn 2 (Gắn Dataset trọng số offline - Khuyên dùng):* Thêm Kaggle Dataset chứa sẵn các file `.pth` của backbone (DenseNet121, EfficientNet-B0) vào `dataset_sources` của notebook để nạp trực tiếp offline.
+* Không dùng trọng số huấn luyện sẵn (ngoài phạm vi ML cổ điển theo quy định giảng viên và biên bản họp 16/10/2026).
+* Thiết lập `"enable_internet": false` giữ nguyên.
 
 ---
 
-## 6. Hạn mức tài nguyên xác nhận từ giao diện người dùng
+## 6. Hạn mức tài nguyên
 
-* **Hạn mức GPU hàng tuần:** **30 giờ / tuần** (hiện tại còn nguyên `30.0 / 30.0 hrs`).
-* **Loại Accelerator mặc định:** `GPU T4 x2`.
-* **Trạng thái kết nối mạng:** `Internet off`.
+* **Chế độ tính toán:** Thuần CPU (không dùng GPU theo biên bản họp 16/10/2026 mục 3.8).
+* **Hạn mức CPU:** theo xác nhận của nhóm trong biên bản họp 16/10/2026 mục 3.8, phiên CPU không giới hạn giờ (chưa kiểm trên trang usage của Kaggle).
+* **Trạng thái kết nối mạng:** `Internet off` (`"enable_internet": false`).
