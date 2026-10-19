@@ -1,0 +1,9 @@
+{
+  "dataset": "tawsifurrahman/covid19-radiography-database",
+  "kernel": "ductrannguyen/cxr-mask-size-audit",
+  "method": "PIL Image.open(...).size trên toàn bộ cột rel_mask_path của splits/manifest.csv",
+  "total_masks": 21165,
+  "sizes": {"256x256": 21165},
+  "note": "mask_match_size = False cho 21165 cặp vì ảnh gốc 299x299",
+  "recorded_on": "19/10/2026"
+}
