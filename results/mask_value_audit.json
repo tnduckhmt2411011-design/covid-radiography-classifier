@@ -1,6 +1,7 @@
 {
   "dataset": "tawsifurrahman/covid19-radiography-database",
   "kernel": "ductrannguyen/cxr-mask-size-audit",
+  "kernel_version": 2,
   "method": "PIL Image.open(...) rồi np.array: chế độ màu, tập giá trị duy nhất và tỉ lệ điểm ảnh > 0, trên toàn bộ cột rel_mask_path của splits/manifest.csv",
   "total_masks": 21165,
   "modes": {"RGB": 21165},
@@ -13,5 +14,6 @@
     "Viral Pneumonia": {"mean": 0.233, "min": 0.102, "max": 0.464}
   },
   "note": "mã đo lần 2 chưa được lưu trong repo",
+  "measured_on": "19/10/2026",
   "recorded_on": "23/10/2026"
 }
