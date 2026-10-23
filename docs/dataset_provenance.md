@@ -232,7 +232,7 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 > Các mục dưới đây chỉ là **ĐỀ XUẤT** dựa trên bằng chứng kiểm chứng, **chưa phải quyết định chính thức**. Mọi thay đổi đối với lộ trình hay tài liệu quản trị đều chờ Leader (Nguyễn Đức) phê duyệt.
 
 1. **`[ĐỀ XUẤT 1 — Cho RQ3 & Phân tích lỗi (Lê Minh & Minh Thuận)]` Kiểm tra định lượng và trực quan hóa độ lệch kích thước ảnh/mask và hiện tượng Shortcut Learning:**
-   - Khi viết notebook `08_rq3_masked_eval.ipynb` ở Sprint 4–5, bắt buộc phải resize mask về kích thước ảnh CXR (`299×299`), ảnh CXR không resize; mask đã đo `256×256` (manifest ghi `mask_match_size = False` cho 21.165 ảnh); dùng nội suy nearest cho mask để giữ giá trị nhị phân `{0, 1}`.
+   - Khi viết notebook `08_rq3_masked_eval.ipynb` ở Sprint 4–5, bắt buộc phải resize mask về kích thước ảnh CXR (`299×299`), ảnh CXR không resize; mask đã đo `256×256` (manifest ghi `mask_match_size = False` cho 21.165 ảnh); dùng nội suy nearest cho mask để giữ nguyên hai giá trị (mask lưu ở chế độ RGB, mọi mask chỉ có hai giá trị `{0, 255}`, không có mask rỗng) `[Đã đo — results/mask_value_audit.json]`.
    - Trong `09_error_analysis.ipynb`, đề xuất đối chiếu kết quả dự đoán của lớp `Normal` tách riêng theo 2 nhóm nguồn con (`8.851` ảnh RSNA vs `1.341` ảnh Mooney dựa theo `Normal.metadata.xlsx`) để kiểm tra xem mô hình có bị nhầm lẫn giữa `Normal (Mooney)` và `Viral Pneumonia (Mooney)` do cùng nguồn ảnh bệnh nhi hay không.
 
 2. **`[ĐỀ XUẤT 2 — Cho Quản lý Split (Nguyễn Đức & Hải Lý)]` Giữ nguyên `split_v1.csv` đã khóa nhưng bổ sung cảnh báo nguồn gốc vào tài liệu báo cáo:**
