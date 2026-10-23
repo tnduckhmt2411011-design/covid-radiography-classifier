@@ -83,7 +83,7 @@ Kết quả chạy script kiểm tra số học tự động đối chiếu số
 | **3. Tổng ảnh lớp `Normal` từ RSNA và Kaggle Mooney** | $8.851 + 1.341$ | **10.192** | 10.192 | **Khớp tuyệt đối ($0$)** với `Normal.metadata.xlsx`, `README.md.txt` (dòng 17–19) và `splits/manifest.csv`. |
 | **4. Tổng ảnh bộ `COVQU` (3 lớp trong P2)** | $3.616 + 6.012 + 8.851$ | **18.479** | 18.479 | **Khớp tuyệt đối ($0$)** với P2 Abstract (tr. 2), Mục 3.1 (tr. 16) và Bảng 1 (tr. 20). |
 | **5. Tổng toàn bộ dataset (`COVQU` + phần từ Kaggle Mooney)** | $18.479 + 1.345 + 1.341$ | **21.165** | 21.165 | **Khớp tuyệt đối ($0$)**; phần chênh lệch $21.165 - 18.479 = 2.686$ ảnh chính là $1.345$ ảnh `Viral Pneumonia` + $1.341$ ảnh `Normal` từ bộ Kaggle của Paul Mooney. |
-| **6. Đối chiếu số lượng ảnh & mask trong `splits/manifest.csv`** | `COVID`: 3.616<br>`Lung_Opacity`: 6.012<br>`Normal`: 10.192<br>`Viral Pneumonia`: 1.345 | **21.165 ảnh**<br>**21.165 mask** | 21.165 ảnh<br>21.165 mask | **Khớp 100% về số lượng file**; tuy nhiên `mask_match_size = False` trên cả `21.165/21.165` cặp (ảnh gốc `299×299`; kích thước mask thật chưa đo vì manifest không có cột kích thước mask; giả thuyết `256×256` theo đầu ra U-Net của P2, cần đo). |
+| **6. Đối chiếu số lượng ảnh & mask trong `splits/manifest.csv`** | `COVID`: 3.616<br>`Lung_Opacity`: 6.012<br>`Normal`: 10.192<br>`Viral Pneumonia`: 1.345 | **21.165 ảnh**<br>**21.165 mask** | 21.165 ảnh<br>21.165 mask | **Khớp 100% về số lượng file**; tuy nhiên `mask_match_size = False` trên cả `21.165/21.165` cặp (ảnh gốc `299×299`; mask `256×256` cho cả `21.165` mask, đo trực tiếp bằng PIL `[Đã đo — results/mask_size_audit.json]`). |
 
 ---
 
@@ -114,7 +114,7 @@ Kết quả chạy script kiểm tra số học tự động đối chiếu số
 - **Độ phân giải thực tế của ảnh và mask:**
   - Tệp `README.md.txt` (dòng 47) và `dataset-metadata.json` ghi tất cả ảnh có định dạng `PNG` và độ phân giải `299×299` pixels `[Nêu rõ trong bài — README.md.txt dòng 47]`.
   - Ngược lại, cả 4 tệp `*.metadata.xlsx` đều ghi cột `SIZE` là `256*256` cho toàn bộ `21.165` dòng `[Nêu rõ trong bài — 4 tệp *.metadata.xlsx]`.
-  - Kiểm tra thực tế trong [`splits/manifest.csv`](../splits/manifest.csv) (do notebook `01_download_and_eda.ipynb` quét trực tiếp trên Kaggle): 100% ảnh X-quang (`21.165/21.165` ảnh) có kích thước **`299×299`**, trong khi 100% mặt nạ phổi (`21.165/21.165` mask) có `mask_match_size = False` (kích thước mask thật chưa đo; giả thuyết `256×256`, bằng kích thước đầu ra của mạng Modified U-Net ở P2 Hình 1 tr. 9) `[Suy ra từ số liệu — splits/manifest.csv & P2 tr. 9, 19]`.
+  - Kiểm tra thực tế trong [`splits/manifest.csv`](../splits/manifest.csv) (do notebook `01_download_and_eda.ipynb` quét trực tiếp trên Kaggle): 100% ảnh X-quang (`21.165/21.165` ảnh) có kích thước **`299×299`**, trong khi 100% mặt nạ phổi (`21.165/21.165` mask) có `mask_match_size = False` (kích thước mask đã đo: `256×256` cho `21.165/21.165` mask, bằng kích thước đầu ra của mạng Modified U-Net ở P2 Hình 1 tr. 9) `[Đã đo — results/mask_size_audit.json; P2 tr. 9, 19]`.
 
 ### 3.3. Thiết bị chụp, Tư thế chụp và Nhân khẩu học (Độ tuổi / Giới tính)
 - **Tư thế chụp:** P1 nêu rằng bộ dữ liệu sử dụng ảnh X-quang ngực tư thế sau-trước (PA) hoặc trước-sau (AP) `[Nêu rõ trong bài — P1 Mục II.A tr. 3]`.
@@ -187,7 +187,7 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 4. **Bất nhất về thông số kích thước ảnh (`256×256` vs `299×299`):**
    - Trong `README.md.txt` (dòng 47) và `dataset-metadata.json`, tác giả ghi toàn bộ ảnh là file `PNG` kích thước **`299×299`**.
    - Trong cả 4 tệp `*.metadata.xlsx`, cột `SIZE` lại ghi **`256*256`** cho toàn bộ `21.165` dòng.
-   - Thực tế kiểm tra trong [`splits/manifest.csv`](../splits/manifest.csv): toàn bộ `21.165` ảnh trong thư mục `images/` có kích thước **`299×299`**, còn toàn bộ `21.165` mặt nạ phổi trong thư mục `masks/` có kích thước chưa đo (giả thuyết `256×256`) `[Chưa đo — splits/manifest.csv chỉ có cột mask_match_size]`.
+   - Thực tế kiểm tra trong [`splits/manifest.csv`](../splits/manifest.csv): toàn bộ `21.165` ảnh trong thư mục `images/` có kích thước **`299×299`**, còn toàn bộ `21.165` mặt nạ phổi trong thư mục `masks/` có kích thước `256×256` `[Đã đo — results/mask_size_audit.json]`.
 
 5. **Lệch số liệu nhỏ giữa Abstract / Kết luận và các Bảng kết quả trong P2:**
    - Với ảnh gốc + Gamma (CheXNet): **Bảng 3 & 4 (tr. 25)** ghi `Specificity = 97,27%`, nhưng **Abstract (tr. 2)** ghi `96,27%`; **Bảng 3 & 4 (tr. 25)** ghi `Recall = 96,29%`, nhưng **Conclusion (tr. 30)** ghi `96,28%`.
@@ -214,8 +214,8 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
    - P2 xác nhận `18.479` ảnh thuộc khoảng `15.000` bệnh nhân (tức có nhiều bệnh nhân chụp nhiều ảnh theo thời gian), nhưng metadata công bố trên Kaggle không có `patient_id`.
    - Dù nhóm đã lọc trùng khít `pHash` ngưỡng $T=0$ (`178` nhóm, `401` ảnh) trong [`splits/split_v1.csv`](../splits/split_v1.csv), các ảnh chụp cùng một bệnh nhân ở các ngày khác nhau (hoặc một phần trong `506` cặp gần trùng cùng nhãn ở khoảng cách Hamming $1 \le D \le 4$ nằm khác split) vẫn có thể tồn tại giữa Train, Val và Test `[Suy ra từ số liệu — P2 tr. 16 & splits/README.md]`.
 
-3. **Rủi ro sai lệch không gian khi dùng Lung Mask (kích thước mask chưa đo, khác ảnh `299×299`) và nhiễu biên mask sinh tự động:**
-   - Toàn bộ `21.165` mask có `mask_match_size = False` (kích thước mask thật chưa đo; giả thuyết `256×256`) trong khi ảnh CXR gốc là `299×299`. Nếu áp dụng mask trực tiếp mà không đồng bộ kích thước hoặc dùng phép nội suy tuyến tính làm nhòe biên nhị phân, mặt nạ phổi sẽ bị lệch vị trí giải phẫu.
+3. **Rủi ro sai lệch không gian khi dùng Lung Mask (mask `256×256` đã đo, khác ảnh `299×299`) và nhiễu biên mask sinh tự động:**
+   - Toàn bộ `21.165` mask có `mask_match_size = False` (kích thước mask đã đo: `256×256`) trong khi ảnh CXR gốc là `299×299`. Nếu áp dụng mask trực tiếp mà không đồng bộ kích thước hoặc dùng phép nội suy tuyến tính làm nhòe biên nhị phân, mặt nạ phổi sẽ bị lệch vị trí giải phẫu.
    - Hơn nữa, vì mask của bộ dữ liệu phân loại nhiều khả năng được sinh tự động bằng mạng Modified U-Net (như P2 Mục 4.1 tr. 23–24 mô tả), trên các ca mờ phổi nặng (đông đặc phổi sát thành ngực), U-Net có thể cắt thiếu chính vùng tổn thương bệnh lý `[Suy ra từ số liệu — P2 tr. 23–24 & splits/manifest.csv]`.
 
 4. **Rủi ro từ sự mất cân bằng lớp nghiêm trọng kết hợp nguồn pha trộn ở lớp `Normal`:**
@@ -232,7 +232,7 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 > Các mục dưới đây chỉ là **ĐỀ XUẤT** dựa trên bằng chứng kiểm chứng, **chưa phải quyết định chính thức**. Mọi thay đổi đối với lộ trình hay tài liệu quản trị đều chờ Leader (Nguyễn Đức) phê duyệt.
 
 1. **`[ĐỀ XUẤT 1 — Cho RQ3 & Phân tích lỗi (Lê Minh & Minh Thuận)]` Kiểm tra định lượng và trực quan hóa độ lệch kích thước ảnh/mask và hiện tượng Shortcut Learning:**
-   - Khi viết notebook `08_rq3_masked_eval.ipynb` ở Sprint 4–5, bắt buộc phải resize mask về kích thước ảnh CXR (`299×299`), ảnh CXR không resize; kích thước thật của mask chưa đo (manifest ghi `mask_match_size = False` cho 21.165 ảnh); dùng nội suy nearest cho mask để giữ giá trị nhị phân `{0, 1}`.
+   - Khi viết notebook `08_rq3_masked_eval.ipynb` ở Sprint 4–5, bắt buộc phải resize mask về kích thước ảnh CXR (`299×299`), ảnh CXR không resize; mask đã đo `256×256` (manifest ghi `mask_match_size = False` cho 21.165 ảnh); dùng nội suy nearest cho mask để giữ nguyên hai giá trị (mask lưu ở chế độ RGB, mọi mask chỉ có hai giá trị `{0, 255}`, không có mask rỗng) `[Đã đo — results/mask_value_audit.json]`.
    - Trong `09_error_analysis.ipynb`, đề xuất đối chiếu kết quả dự đoán của lớp `Normal` tách riêng theo 2 nhóm nguồn con (`8.851` ảnh RSNA vs `1.341` ảnh Mooney dựa theo `Normal.metadata.xlsx`) để kiểm tra xem mô hình có bị nhầm lẫn giữa `Normal (Mooney)` và `Viral Pneumonia (Mooney)` do cùng nguồn ảnh bệnh nhi hay không.
 
 2. **`[ĐỀ XUẤT 2 — Cho Quản lý Split (Nguyễn Đức & Hải Lý)]` Giữ nguyên `split_v1.csv` đã khóa nhưng bổ sung cảnh báo nguồn gốc vào tài liệu báo cáo:**
@@ -241,7 +241,7 @@ Quá trình đối chiếu chéo giữa P1, P2, các tệp metadata trên Kaggle
 
 3. **`[ĐỀ XUẤT 3 — Cho cập nhật tài liệu nội bộ sau khi PR này được duyệt]`:**
    - Đề xuất cập nhật dòng *"Thông tin nguồn gốc của bộ dữ liệu CXR (Shortcut Learning)"* tại Mục 5 của [`docs/roadmap.md`](roadmap.md#L184) từ trạng thái `Mở` sang `Đã giải quyết` (dẫn chiếu tới `docs/dataset_provenance.md`).
-   - Đề xuất bổ sung một đoạn ghi chú ngắn vào Mục 4 của [`splits/README.md`](../splits/README.md#L90-L95) dẫn chiếu tới `docs/dataset_provenance.md` về tỷ lệ `18.479` ảnh / `15.000` bệnh nhân và sự lệch kích thước gốc giữa ảnh (`299×299`) và mask (kích thước thật chưa đo; giả thuyết `256×256`). *(Nhóm nghiên cứu KHÔNG tự ý sửa 2 tệp này trong PR hiện tại).*
+   - Đề xuất bổ sung một đoạn ghi chú ngắn vào Mục 4 của [`splits/README.md`](../splits/README.md#L90-L95) dẫn chiếu tới `docs/dataset_provenance.md` về tỷ lệ `18.479` ảnh / `15.000` bệnh nhân và sự lệch kích thước gốc giữa ảnh (`299×299`) và mask (`256×256`, đã đo). *(Nhóm nghiên cứu KHÔNG tự ý sửa 2 tệp này trong PR hiện tại).*
 
 ---
 
