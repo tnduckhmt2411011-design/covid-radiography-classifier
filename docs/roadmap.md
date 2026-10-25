@@ -54,11 +54,11 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 17/10/2026
+Cập nhật lần cuối: 25/10/2026
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
-| **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 3/7 | Đang làm | Đã xong EDA và manifest; S1-01 và S1-02 chuyển Chưa làm để viết lại cho CPU; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
+| **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong EDA, manifest, S1-01 và S1-02; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
 | **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 0/6 | Chưa làm | Trích đặc trưng và so sánh 4 nhóm đặc trưng với Random Forest cố định trên 3 seed; chốt nhóm đặc trưng cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 0/4 | Chưa làm | So sánh 6 bộ phân loại trên nhóm đặc trưng tốt nhất của RQ1, chốt cấu hình, chuẩn bị bộ ảnh che cho RQ3 (7 việc, 3 hủy, mẫu số 4) |
@@ -75,8 +75,8 @@ Cập nhật lần cuối: 17/10/2026
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S1-01 | T1 | Kiểm tra môi trường chạy (Kaggle CPU hoặc máy cá nhân), ghi chép cấu hình | Hạ tầng | Lê Minh (duyệt Minh Thuận) | M | Chưa làm | Chưa có PR | notebooks/00_setup_check.ipynb viết lại cho CPU (không import torch), in được phiên bản numpy, pandas, scikit-learn, scikit-image, opencv, pillow, gradio và kiểm tra được đường dẫn dữ liệu; cấu hình ghi trong docs/kaggle_setup_notes.md |
-| S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có PR | requirements.txt có scikit-image và phiên bản đã ghim của numpy, pandas, scikit-learn, scikit-image, opencv-python-headless, pillow, gradio (lấy từ kết quả setup_check); không còn chú thích '# chưa đo' cho thư viện đã ghim |
+| S1-01 | T1 | Kiểm tra môi trường chạy (Kaggle CPU hoặc máy cá nhân), ghi chép cấu hình | Hạ tầng | Lê Minh (duyệt Minh Thuận) | M | Xong | PR #24 và PR #25 đã merge, notebooks/00_setup_check.ipynb, docs/kaggle_setup_notes.md | notebooks/00_setup_check.ipynb viết lại cho CPU (không import torch), in được phiên bản numpy, pandas, scikit-learn, scikit-image, opencv, pillow, gradio và kiểm tra được đường dẫn dữ liệu; cấu hình ghi trong docs/kaggle_setup_notes.md |
+| S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Xong | PR #25 đã merge, requirements.txt | requirements.txt có scikit-image và phiên bản đã ghim của numpy, pandas, scikit-learn, scikit-image, opencv-python-headless, pillow, gradio (lấy từ kết quả setup_check); không còn chú thích '# chưa đo' cho thư viện đã ghim |
 | S1-03 | T1 | 6/6 thành viên clone repo về máy và kiểm tra môi trường cục bộ | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | 6/6 thành viên chạy notebooks/00_setup_check.ipynb (bản CPU) trên máy cục bộ và ghi lại kết quả; phụ thuộc S1-01 |
 | S1-04 | T1 | Gửi danh sách câu hỏi làm rõ đề tài cho giảng viên | Báo cáo | Nguyễn Đức (Leader) | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | Câu hỏi cho giảng viên đã gửi bằng văn bản hoặc email |
 | S1-05 | T2 | Xây dựng notebook `01_download_and_eda.ipynb` đọc dữ liệu từ Kaggle | Hạ tầng | Nguyễn Đức | M | Xong | PR #1 đã merge, `notebooks/01_download_and_eda.ipynb`, kernel `cxr-eda-manifest` | Notebook tự động tìm dataset, đọc dữ liệu, không có lỗi lập trình |
@@ -136,7 +136,7 @@ Cập nhật lần cuối: 17/10/2026
 ### Sprint 5 (Tuần 9 - 10): RQ3 (Shortcut Learning), đánh giá test MỘT lần, suy luận
 **Sprint Goal:** Đánh giá mô hình trên bộ ảnh che để đo lường độ lệ thuộc vào vùng ngoài phổi (RQ3); mở khóa tập test để đánh giá duy nhất một lần; hoàn thiện notebook suy luận độc lập.
 
-*Ghi chú kỹ thuật RQ3:* manifest ghi mask_match_size = False cho 21165 ảnh (cột image_width = 299, image_height = 299; manifest không có cột kích thước mask); mask cần đổi kích thước về kích thước ảnh (nội suy gần nhất) trước khi che; kích thước mask thực tế: chưa đo.
+*Ghi chú kỹ thuật RQ3:* manifest ghi mask_match_size = False cho 21165 ảnh (cột image_width = 299, image_height = 299; manifest không có cột kích thước mask); mask cần đổi kích thước về kích thước ảnh (nội suy gần nhất) trước khi che; kích thước mask thực tế đã đo: 21.165 mask đều 256x256, chế độ RGB, chỉ có giá trị {0,255} (results/mask_size_audit.json, results/mask_value_audit.json); chưa kiểm khớp vị trí mask với ảnh.
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
@@ -268,3 +268,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.1** | 17/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau khi PR #17 (threshold_v3) được merge: S2-08 chuyển Xong; tiến độ 7/33 (mẫu số 33) |
 | **v3.2** | 17/10/2026 | Kỹ sư ML & Nhóm | Đổi phụ trách S5-06 sang Thái Tú (đồng bộ OWNERS); sửa định dạng ô tiêu chí S3-04. |
 | **v3.3** | 18/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ phụ trách S6-01 và S6-03 với OWNERS; bổ sung đo kích thước mask thật vào tiêu chí S4-07. |
+| **v3.4** | 25/10/2026 | Kỹ sư ML & Nhóm | Đánh dấu Xong S1-01 và S1-02 (PR #24, #25); cập nhật ghi chú kỹ thuật RQ3 theo kết quả đo mask (PR #27). |
