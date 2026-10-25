@@ -64,7 +64,7 @@ Cập nhật lần cuối: 25/10/2026
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 0/4 | Chưa làm | So sánh 6 bộ phân loại trên nhóm đặc trưng tốt nhất của RQ1, chốt cấu hình, chuẩn bị bộ ảnh che cho RQ3 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **7/33** | **Đang triển khai** | **Đạt 21.2% Xong (7/33 việc), 0 việc Đang làm, 26 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **9/33** | **Đang triển khai** | **Đạt 27.3% Xong (9/33 việc), 0 việc Đang làm, 24 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -268,4 +268,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.1** | 17/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ sau khi PR #17 (threshold_v3) được merge: S2-08 chuyển Xong; tiến độ 7/33 (mẫu số 33) |
 | **v3.2** | 17/10/2026 | Kỹ sư ML & Nhóm | Đổi phụ trách S5-06 sang Thái Tú (đồng bộ OWNERS); sửa định dạng ô tiêu chí S3-04. |
 | **v3.3** | 18/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ phụ trách S6-01 và S6-03 với OWNERS; bổ sung đo kích thước mask thật vào tiêu chí S4-07. |
-| **v3.4** | 25/10/2026 | Kỹ sư ML & Nhóm | Đánh dấu Xong S1-01 và S1-02 (PR #24, #25); cập nhật ghi chú kỹ thuật RQ3 theo kết quả đo mask (PR #27). |
+| **v3.4** | 25/10/2026 | Kỹ sư ML & Nhóm | Đánh dấu Xong S1-01 và S1-02 (PR #24, #25); tiến độ 9/33 (mẫu số 33); cập nhật ghi chú kỹ thuật RQ3 theo kết quả đo mask (PR #27). |
