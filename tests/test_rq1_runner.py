@@ -972,7 +972,7 @@ def test_t16_kaggle_main_and_search_helpers(
 
     monkeypatch.setattr(
         "src.rq1_runner.collect_versions",
-        lambda: {**EXPECTED_VERSIONS, "python": "3.12.0", "numpy": "0.0.0"},
+        lambda: {**EXPECTED_VERSIONS, "python": "3.12.0", "scikit-learn": "0.0.0"},
     )
     with pytest.raises(RuntimeError) as exc_info:
         kaggle_main(
@@ -982,4 +982,42 @@ def test_t16_kaggle_main_and_search_helpers(
             expected_train_n=24,
             expected_val_n=12,
         )
-    assert "numpy" in str(exc_info.value)
+    assert "scikit-learn" in str(exc_info.value)
+
+
+def test_t17_soft_version_drift_does_not_stop(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """T17: Chỉ lệch scikit-learn hoặc scikit-image mới làm kernel dừng.
+
+    Lý do kỳ vọng:
+    - numpy, opencv-python-headless, pillow và phiên bản Python lệch so với bản ghim chỉ
+      được in lưu ý; kaggle_main đi qua bước kiểm tra phiên bản rồi dừng ở bước tìm gói mã
+      (FileNotFoundError vì thư mục đầu vào rỗng).
+    - scikit-image lệch thì kaggle_main dừng với RuntimeError có nhắc tên gói.
+    """
+    input_dir = tmp_path / "input_empty"
+    working_dir = tmp_path / "working_empty"
+    input_dir.mkdir()
+    working_dir.mkdir()
+
+    monkeypatch.setattr(
+        "src.rq1_runner.collect_versions",
+        lambda: {
+            **EXPECTED_VERSIONS,
+            "python": "3.13.15",
+            "numpy": "2.1.3",
+            "opencv-python-headless": "4.14.0.94",
+            "pillow": "12.3.0",
+        },
+    )
+    with pytest.raises(FileNotFoundError):
+        kaggle_main(input_dir, working_dir, n_estimators=10)
+
+    monkeypatch.setattr(
+        "src.rq1_runner.collect_versions",
+        lambda: {**EXPECTED_VERSIONS, "python": "3.13.15", "scikit-image": "0.0.0"},
+    )
+    with pytest.raises(RuntimeError) as exc_info:
+        kaggle_main(input_dir, working_dir, n_estimators=10)
+    assert "scikit-image" in str(exc_info.value)

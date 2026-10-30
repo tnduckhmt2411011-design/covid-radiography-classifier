@@ -10,7 +10,6 @@ Trách nhiệm:
 import hashlib
 import importlib.metadata
 import json
-import logging
 from pathlib import Path
 import shutil
 import sys
@@ -67,6 +66,7 @@ PACKAGE_SPLIT_FILES: Tuple[str, ...] = (
     "split_v1.csv",
     "split_v1.sha256",
 )
+HARD_PINNED_PACKAGES: Tuple[str, ...] = ("scikit-learn", "scikit-image")
 EXPECTED_VERSIONS: Dict[str, str] = {
     "numpy": "2.0.2",
     "pandas": "2.3.3",
@@ -276,13 +276,13 @@ def feature_params(group: str) -> Dict[str, object]:
         ValueError: Nếu tên nhóm đặc trưng không hợp lệ.
     """
     hist = {
-        "bins": 64,
+        "bins": HIST_BINS,
         "range": [0, 256],
         "normalize": "sum1",
     }
     glcm = {
-        "levels": 32,
-        "distances": [1, 3, 5],
+        "levels": GLCM_LEVELS,
+        "distances": list(GLCM_DISTANCES),
         "angles": list(GLCM_ANGLES),
         "props": list(GLCM_PROPS),
         "symmetric": True,
@@ -295,10 +295,10 @@ def feature_params(group: str) -> Dict[str, object]:
         "method": "uniform",
     }
     hog = {
-        "orientations": 9,
-        "pixels_per_cell": [16, 16],
-        "cells_per_block": [2, 2],
-        "block_norm": "L2-Hys",
+        "orientations": HOG_ORIENTATIONS,
+        "pixels_per_cell": list(HOG_PIXELS_PER_CELL),
+        "cells_per_block": list(HOG_CELLS_PER_BLOCK),
+        "block_norm": HOG_BLOCK_NORM,
     }
     if group == "hist":
         return hist
@@ -978,7 +978,11 @@ def kaggle_main(
     for k, v in versions.items():
         print(f"  {k}: {v}")
 
-    mismatches = check_pinned_versions(versions)
+    hard_expected = {k: v for k, v in EXPECTED_VERSIONS.items() if k in HARD_PINNED_PACKAGES}
+    soft_expected = {k: v for k, v in EXPECTED_VERSIONS.items() if k not in HARD_PINNED_PACKAGES}
+    for note in check_pinned_versions(versions, soft_expected):
+        print(f"Luu y (khong dung chay): {note}")
+    mismatches = check_pinned_versions(versions, hard_expected)
     if mismatches:
         for m in mismatches:
             print(f"Sai lech: {m}")
