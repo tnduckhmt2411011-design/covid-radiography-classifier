@@ -991,9 +991,11 @@ def test_t17_soft_version_drift_does_not_stop(
     """T17: Chỉ lệch scikit-learn hoặc scikit-image mới làm kernel dừng.
 
     Lý do kỳ vọng:
-    - numpy, opencv-python-headless, pillow và phiên bản Python lệch so với bản ghim chỉ
-      được in lưu ý; kaggle_main đi qua bước kiểm tra phiên bản rồi dừng ở bước tìm gói mã
-      (FileNotFoundError vì thư mục đầu vào rỗng).
+    - numpy và opencv-python-headless lệch so với bản ghim chỉ được in lưu ý (pandas thuộc
+      cùng nhóm nhưng test này không đổi pandas); Python, pillow và pyyaml không nằm trong
+      EXPECTED_VERSIONS nên không được kiểm, chỉ ghi vào config.yaml. kaggle_main đi qua
+      bước kiểm tra phiên bản rồi dừng ở bước tìm gói mã (FileNotFoundError vì thư mục
+      đầu vào rỗng).
     - scikit-image lệch thì kaggle_main dừng với RuntimeError có nhắc tên gói.
     """
     input_dir = tmp_path / "input_empty"
