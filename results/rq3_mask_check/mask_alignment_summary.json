@@ -1,0 +1,16 @@
+{
+  "samples_per_class": 20,
+  "total_visual_samples": 80,
+  "empty_masks_count": 0,
+  "centered_masks_count": 80,
+  "all_centered": true,
+  "lung_fraction_mean": 0.2424,
+  "lung_fraction_min": 0.0723,
+  "lung_fraction_max": 0.4857,
+  "contact_sheets": {
+    "COVID": "mask_visual_check_COVID.png",
+    "Lung_Opacity": "mask_visual_check_Lung_Opacity.png",
+    "Normal": "mask_visual_check_Normal.png",
+    "Viral Pneumonia": "mask_visual_check_Viral_Pneumonia.png"
+  }
+}

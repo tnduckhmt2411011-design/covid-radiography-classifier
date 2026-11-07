@@ -1,0 +1,45 @@
+{
+  "rq": "rq3",
+  "mode": "full",
+  "commit": "9ce35960cac5ea48967ce2ef640c56515ed8933b",
+  "features": "ghep",
+  "classifier": "svm",
+  "seed": 42,
+  "mask_modes": [
+    "original",
+    "lung_only",
+    "outside_only"
+  ],
+  "scored": true,
+  "n_train": 14815,
+  "n_val": 3174,
+  "extract_cpu_seconds": {
+    "train": {
+      "original": 822.533,
+      "lung_only": 828.093,
+      "outside_only": 823.877
+    },
+    "val": {
+      "original": 176.051,
+      "lung_only": 178.134,
+      "outside_only": 177.346
+    }
+  },
+  "fit_cpu_seconds": {
+    "original": 59.897,
+    "lung_only": 70.561,
+    "outside_only": 60.452
+  },
+  "visual_mask_check": {
+    "total_visual_samples": 80,
+    "all_centered": true,
+    "lung_fraction_mean": 0.2424
+  },
+  "runs": [
+    "rq3_ghep_svm_orig_to_orig_s42",
+    "rq3_ghep_svm_orig_to_lung_s42",
+    "rq3_ghep_svm_orig_to_out_s42",
+    "rq3_ghep_svm_lung_to_lung_s42",
+    "rq3_ghep_svm_out_to_out_s42"
+  ]
+}
