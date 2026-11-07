@@ -34,8 +34,12 @@ Phạm vi đề tài môn Học máy chỉ áp dụng các thuật toán Machine
 ├── slides/                       # Slide thuyết trình bảo vệ đề tài
 ├── splits/                       # Lưu file manifest phân chia tập train/val/test
 ├── src/                          # Mã nguồn Python tái sử dụng
+│   ├── bootstrap.py              # Kiểm định bootstrap ghép cặp và xuất báo cáo R1-R5
 │   ├── dataset.py                # Xử lý dữ liệu và tiền xử lý ảnh xám
+│   ├── features_hist_glcm_lbp.py # Trích đặc trưng Histogram, GLCM, LBP
+│   ├── features_hog_ghep.py      # Trích đặc trưng HOG và nhóm ghép
 │   ├── metrics.py                # Đánh giá độ đo (F1, Accuracy, Confusion Matrix)
+│   ├── rq1_runner.py             # Runner huấn luyện Random Forest cố định cho RQ1
 │   └── utils.py                  # Các hàm tiện ích dùng chung (set_seed, ...)
 ├── .gitignore                    # Chặn dữ liệu, checkpoint, file nhạy cảm
 ├── README.md                     # Tài liệu tổng quan dự án
@@ -57,8 +61,6 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 | 00 | `00_setup_check.ipynb` | Kiểm tra môi trường CPU, thư viện và ghim phiên bản |
 | 01 | `01_download_and_eda.ipynb` | Khám phá dữ liệu, phân tích nhãn, kiểm tra mask phổi |
 | 02 | `02_duplicates_and_split.ipynb` | Lọc ảnh trùng bằng imagehash, chia tập train/val/test và khoá test |
-| 03 | `03_smoke_test_train.ipynb` | Chạy thử nghiệm nhanh luồng huấn luyện nhỏ và kiểm tra tính năng resume |
-| 04 | `04_baseline.ipynb` | Huấn luyện mô hình cơ sở, đo thời gian chạy và thiết lập ngưỡng chuẩn |
 | 05 | `05_rq1_features.ipynb` | RQ1: so sánh nhóm đặc trưng thủ công (histogram độ xám, GLCM + LBP, HOG, ghép) |
 | 06 | `06_rq2_classifiers.ipynb` | RQ2: so sánh bộ phân loại học máy cổ điển |
 | 08 | `08_rq3_masked_eval.ipynb` | Câu hỏi nghiên cứu 3: Đánh giá trên ảnh gốc vs chỉ phổi vs ngoài phổi |

@@ -54,17 +54,17 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 25/10/2026
+Cập nhật lần cuối: 07/11/2026
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
 | **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong EDA, manifest, S1-01 và S1-02; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
 | **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
-| **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 0/6 | Chưa làm | Trích đặc trưng và so sánh 4 nhóm đặc trưng với Random Forest cố định trên 3 seed; chốt nhóm đặc trưng cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
+| **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 6/6 | Xong | Đã xong trích đặc trưng (PR #30, #31), script bootstrap R1-R5 (PR #29), runner và 12 run Random Forest (PR #32, #33), tổng hợp bảng RQ1 và chốt nhóm đặc trưng ghep (152 chiều) cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 0/4 | Chưa làm | So sánh 6 bộ phân loại trên nhóm đặc trưng tốt nhất của RQ1, chốt cấu hình, chuẩn bị bộ ảnh che cho RQ3 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **9/33** | **Đang triển khai** | **Đạt 27.3% Xong (9/33 việc), 0 việc Đang làm, 24 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **15/33** | **Đang triển khai** | **Đạt 45.5% Xong (15/33 việc), 0 việc Đang làm, 18 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -109,12 +109,12 @@ Cập nhật lần cuối: 25/10/2026
 | S3-01 | T5 | Cài đặt các kiến trúc DenseNet121 và EfficientNet-B0 trong `src/models.py` | RQ1 | Thái Tú | M | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Khởi tạo đúng kiến trúc, nạp đúng pretrained weights ImageNet |
 | S3-02 | T5 | Thực hiện các run huấn luyện chiến lược frozen backbone | RQ1 | Thái Tú | L | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Ít nhất 50% run RQ1 hoàn tất, mỗi run có đầy đủ config, log và file `best.pt` |
 | S3-03 | T5 | Thực hiện các run huấn luyện chiến lược full fine-tuning | RQ1 | Thái Tú | L | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Hoàn tất các run fine-tune trên cả 2 backbone với log và checkpoint |
-| S3-04 | T6 | Chạy Random Forest cố định trên 4 nhóm đặc trưng, 3 seed (42, 43, 44) | RQ1 | Minh Thuận (duyệt Lê Minh) | L | Chưa làm | Chưa có nhánh/PR | RandomForestClassifier 500 cây, class_weight="balanced_subsample", không tinh chỉnh; 4 nhóm (histogram; GLCM + LBP; HOG; ghép) x 3 seed = 12 run; mỗi run có `results/<run_id>/{config.yaml, metrics.json, log, preds_val.csv}` theo cổng H1 của threshold_v3 |
-| S3-05 | T6 | Tổng hợp bảng kết quả RQ1 (so sánh 4 nhóm đặc trưng) trong notebooks/05_rq1_features.ipynb | RQ1 | Hải Lý (duyệt Đức) | M | Chưa làm | Chưa có nhánh/PR | bảng macro-F1 và recall từng lớp của 4 nhóm đặc trưng (trung bình ± độ lệch chuẩn mẫu của 3 seed), kèm khoảng tin cậy bootstrap theo mục 5 threshold_v3 |
-| S3-06 | T6 | Chốt nhóm đặc trưng tốt nhất trên validation cho RQ2 | RQ1 | Nguyễn Đức (duyệt Hải Lý) | S | Chưa làm | Chưa có nhánh/PR | theo mục 5 threshold_v3: nhóm khác histogram chỉ thay tham chiếu khi chênh macro-F1 trung bình >= 0,005 và khoảng tin cậy 95% của hiệu số không chứa 0; ghi vào biên bản trước khi xem kết quả |
-| S3-07 | T5 | Trích đặc trưng histogram, GLCM, LBP | RQ1 | Thái Tú (duyệt Vũ Thương) | M | Chưa làm | Chưa có nhánh/PR | module trích đặc trưng chạy trên ảnh xám 299x299 không resize, đúng tham số mục 1 threshold_v3 (histogram 64 bin; GLCM 32 mức, khoảng cách [1, 3, 5], 4 góc, 5 thuộc tính; LBP uniform (8,1) và (16,2)); có test đơn vị; ghi số ảnh có correlation NaN vào log |
-| S3-08 | T5 | Trích đặc trưng HOG và tạo nhóm ghép | RQ1 | Vũ Thương (duyệt Thái Tú) | M | Chưa làm | Chưa có nhánh/PR | HOG ô 16x16, khối 2x2, 9 hướng, L2-Hys; ghép = histogram + GLCM + LBP; đo thời gian trích (giây CPU) của từng nhóm |
-| S3-09 | T6 | Script bootstrap ghép cặp và bảng báo cáo R1-R5 | RQ1 | Hải Lý (duyệt Đức) | M | Chưa làm | Chưa có nhánh/PR | bootstrap 2.000 lần: mỗi lần rút cùng một mẫu ảnh cho hai cấu hình, macro-F1 trung bình 3 seed, hiệu số A - B, khoảng tin cậy 95% theo phân vị 2,5-97,5; có test trên dữ liệu giả có đáp án biết trước; xuất R1, R2, R4, R5 (phải xong trước S3-06) |
+| S3-04 | T6 | Chạy Random Forest cố định trên 4 nhóm đặc trưng, 3 seed (42, 43, 44) | RQ1 | Minh Thuận (duyệt Lê Minh) | L | Xong | PR #32 và PR #33 đã merge, src/rq1_runner.py, kaggle/rq1_rf/, results/rq1_cost_rank_record.md, results/summary_full.json, 12 thư mục results/rq1_*_rf_s*, kernel ductrannguyen/cxr-rq1-rf (version 5) | RandomForestClassifier 500 cây, class_weight="balanced_subsample", không tinh chỉnh; 4 nhóm (histogram; GLCM + LBP; HOG; ghép) x 3 seed = 12 run; mỗi run có `results/<run_id>/{config.yaml, metrics.json, log, preds_val.csv}` theo cổng H1 của threshold_v3 |
+| S3-05 | T6 | Tổng hợp bảng kết quả RQ1 (so sánh 4 nhóm đặc trưng) trong notebooks/05_rq1_features.ipynb | RQ1 | Hải Lý (duyệt Đức) | M | Xong | notebooks/05_rq1_features.ipynb, results/report_rq1/, tests/test_rq1_report_and_selection.py | bảng macro-F1 và recall từng lớp của 4 nhóm đặc trưng (trung bình ± độ lệch chuẩn mẫu của 3 seed), kèm khoảng tin cậy bootstrap theo mục 5 threshold_v3 |
+| S3-06 | T6 | Chốt nhóm đặc trưng tốt nhất trên validation cho RQ2 | RQ1 | Nguyễn Đức (duyệt Hải Lý) | S | Xong | results/rq1_feature_selection_record.md, results/rq1_cost_rank_record.md, results/report_rq1/r1_bootstrap_vs_reference.csv | theo mục 5 threshold_v3: nhóm khác histogram chỉ thay tham chiếu khi chênh macro-F1 trung bình >= 0,005 và khoảng tin cậy 95% của hiệu số không chứa 0; ghi vào biên bản trước khi xem kết quả |
+| S3-07 | T5 | Trích đặc trưng histogram, GLCM, LBP | RQ1 | Thái Tú (duyệt Vũ Thương) | M | Xong | PR #30 đã merge, src/features_hist_glcm_lbp.py, tests/test_features_hist_glcm_lbp.py | module trích đặc trưng chạy trên ảnh xám 299x299 không resize, đúng tham số mục 1 threshold_v3 (histogram 64 bin; GLCM 32 mức, khoảng cách [1, 3, 5], 4 góc, 5 thuộc tính; LBP uniform (8,1) và (16,2)); có test đơn vị; ghi số ảnh có correlation NaN vào log |
+| S3-08 | T5 | Trích đặc trưng HOG và tạo nhóm ghép | RQ1 | Vũ Thương (duyệt Thái Tú) | M | Xong | PR #31 đã merge, src/features_hog_ghep.py, tests/test_features_hog_ghep.py | HOG ô 16x16, khối 2x2, 9 hướng, L2-Hys; ghép = histogram + GLCM + LBP; đo thời gian trích (giây CPU) của từng nhóm |
+| S3-09 | T6 | Script bootstrap ghép cặp và bảng báo cáo R1-R5 | RQ1 | Hải Lý (duyệt Đức) | M | Xong | PR #29 đã merge, src/bootstrap.py, tests/test_bootstrap.py | bootstrap 2.000 lần: mỗi lần rút cùng một mẫu ảnh cho hai cấu hình, macro-F1 trung bình 3 seed, hiệu số A - B, khoảng tin cậy 95% theo phân vị 2,5-97,5; có test trên dữ liệu giả có đáp án biết trước; xuất R1, R2, R4, R5 (phải xong trước S3-06) |
 
 ---
 
@@ -269,3 +269,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.2** | 17/10/2026 | Kỹ sư ML & Nhóm | Đổi phụ trách S5-06 sang Thái Tú (đồng bộ OWNERS); sửa định dạng ô tiêu chí S3-04. |
 | **v3.3** | 18/10/2026 | Kỹ sư ML & Nhóm | Đồng bộ phụ trách S6-01 và S6-03 với OWNERS; bổ sung đo kích thước mask thật vào tiêu chí S4-07. |
 | **v3.4** | 25/10/2026 | Kỹ sư ML & Nhóm | Đánh dấu Xong S1-01 và S1-02 (PR #24, #25); tiến độ 9/33 (mẫu số 33); cập nhật ghi chú kỹ thuật RQ3 theo kết quả đo mask (PR #27). |
+| **v3.5** | 07/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất toàn bộ 6/6 việc Sprint 3 (PR #29, #30, #31, #32, #33, báo cáo R1-R5 trong `results/report_rq1/`, `notebooks/05_rq1_features.ipynb` và chốt nhóm đặc trưng `ghep` 152 chiều cho RQ2 tại `results/rq1_feature_selection_record.md`); tiến độ đạt 15/33 (45.5%). |

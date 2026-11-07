@@ -1,0 +1,13 @@
+run_id,features,seed,LO_to_LO,LO_to_Normal,Normal_to_LO,Normal_to_Normal
+rq1_hist_rf_s42,hist,42,644,231,131,1367
+rq1_hist_rf_s43,hist,43,645,234,137,1366
+rq1_hist_rf_s44,hist,44,646,233,136,1365
+rq1_glcmlbp_rf_s42,glcmlbp,42,677,214,164,1343
+rq1_glcmlbp_rf_s43,glcmlbp,43,667,220,160,1345
+rq1_glcmlbp_rf_s44,glcmlbp,44,675,212,162,1342
+rq1_hog_rf_s42,hog,42,682,216,113,1409
+rq1_hog_rf_s43,hog,43,689,206,108,1411
+rq1_hog_rf_s44,hog,44,681,216,111,1412
+rq1_ghep_rf_s42,ghep,42,694,204,140,1375
+rq1_ghep_rf_s43,ghep,43,698,200,137,1378
+rq1_ghep_rf_s44,ghep,44,691,206,137,1378
