@@ -1,0 +1,144 @@
+{
+  "accuracy": 0.8538,
+  "balanced_accuracy": 0.8291,
+  "macro_f1": 0.8547,
+  "weighted_f1": 0.8532,
+  "macro_precision": 0.8879,
+  "macro_recall": 0.8291,
+  "per_class": {
+    "COVID": {
+      "precision": 0.9468503937007874,
+      "recall": 0.8957169459962756,
+      "f1": 0.9205741626794258,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.8116959064327486,
+      "recall": 0.7685492801771872,
+      "f1": 0.7895335608646189,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8371670702179177,
+      "recall": 0.9033311561071196,
+      "f1": 0.8689915174363808,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.9559748427672956,
+      "recall": 0.7487684729064039,
+      "f1": 0.8397790055248618,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      481,
+      19,
+      35,
+      2
+    ],
+    [
+      7,
+      694,
+      202,
+      0
+    ],
+    [
+      8,
+      135,
+      1383,
+      5
+    ],
+    [
+      12,
+      7,
+      32,
+      152
+    ]
+  ],
+  "run_id": "rq2_ghep_rf_s44",
+  "mode": "full",
+  "classifier": "rf",
+  "features": "ghep",
+  "deterministic": false,
+  "n_train": 14815,
+  "n_val": 3174,
+  "selected_params": {
+    "n_estimators": 300,
+    "max_depth": null
+  },
+  "cv_best_macro_f1": 0.85502,
+  "cv_best_std": 0.006489,
+  "cv_candidates": [
+    {
+      "params": {
+        "n_estimators": 300,
+        "max_depth": 20
+      },
+      "fold_scores": [
+        0.8469,
+        0.8598,
+        0.859,
+        0.8576,
+        0.8491
+      ],
+      "mean_score": 0.85448,
+      "std_score": 0.006018056164576746
+    },
+    {
+      "params": {
+        "n_estimators": 300,
+        "max_depth": null
+      },
+      "fold_scores": [
+        0.8496,
+        0.8582,
+        0.8574,
+        0.8628,
+        0.8471
+      ],
+      "mean_score": 0.85502,
+      "std_score": 0.006488605397155858
+    },
+    {
+      "params": {
+        "n_estimators": 500,
+        "max_depth": 20
+      },
+      "fold_scores": [
+        0.849,
+        0.8596,
+        0.8556,
+        0.8579,
+        0.8493
+      ],
+      "mean_score": 0.8542799999999999,
+      "std_score": 0.004894588848922861
+    },
+    {
+      "params": {
+        "n_estimators": 500,
+        "max_depth": null
+      },
+      "fold_scores": [
+        0.8519,
+        0.8591,
+        0.8552,
+        0.8601,
+        0.8474
+      ],
+      "mean_score": 0.8547399999999999,
+      "std_score": 0.005241469259663719
+    }
+  ],
+  "seconds": {
+    "extract_cpu_train": 1155.273,
+    "extract_cpu_val": 247.594,
+    "cv_cpu": 3086.971,
+    "cv_wall": 784.849,
+    "fit_cpu": 151.301,
+    "fit_wall": 38.376,
+    "predict_wall": 0.13
+  }
+}
