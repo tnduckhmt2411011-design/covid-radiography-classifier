@@ -1,0 +1,19 @@
+{
+  "id": "ductrannguyen/cxr-rq2-classifiers",
+  "title": "cxr-rq2-classifiers",
+  "code_file": "run_rq2_classifiers.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "tawsifurrahman/covid19-radiography-database",
+    "ductrannguyen/cxr-rq2-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a"
+}
