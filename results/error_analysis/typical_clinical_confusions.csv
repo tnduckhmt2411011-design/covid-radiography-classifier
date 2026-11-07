@@ -1,0 +1,48 @@
+clinical_group,direction,image_id,true_label,pred_label,proba_pred,proba_true,margin,error_type,consensus_hard_error,mean_brightness,group_id
+COVID <-> Lung_Opacity,COVID -> Lung_Opacity,COVID-1183.png,COVID,Lung_Opacity,0.987,0.0099,0.9771,High-confidence error (p >= 0.80),True,122.5,G00204
+COVID <-> Lung_Opacity,COVID -> Lung_Opacity,COVID-329.png,COVID,Lung_Opacity,0.9029,0.0704,0.8325,High-confidence error (p >= 0.80),True,155.53,G02465
+COVID <-> Lung_Opacity,COVID -> Lung_Opacity,COVID-1084.png,COVID,Lung_Opacity,0.8369,0.1418,0.6951,High-confidence error (p >= 0.80),False,137.99,G00095
+COVID <-> Lung_Opacity,COVID -> Lung_Opacity,COVID-3274.png,COVID,Lung_Opacity,0.5551,0.2897,0.2654,Moderate error (0.55 <= p < 0.80),True,118.27,G02448
+COVID <-> Lung_Opacity,COVID -> Lung_Opacity,COVID-232.png,COVID,Lung_Opacity,0.5384,0.2071,0.3313,Borderline error (p < 0.55),True,124.52,G01439
+COVID <-> Lung_Opacity,Lung_Opacity -> COVID,Lung_Opacity-3062.png,Lung_Opacity,COVID,0.9238,0.0169,0.9069,High-confidence error (p >= 0.80),True,189.08,G05695
+COVID <-> Lung_Opacity,Lung_Opacity -> COVID,Lung_Opacity-5040.png,Lung_Opacity,COVID,0.9004,0.0174,0.8829,High-confidence error (p >= 0.80),True,229.14,G07893
+COVID <-> Lung_Opacity,Lung_Opacity -> COVID,Lung_Opacity-195.png,Lung_Opacity,COVID,0.8234,0.0406,0.7828,High-confidence error (p >= 0.80),True,153.48,G04458
+COVID <-> Lung_Opacity,Lung_Opacity -> COVID,Lung_Opacity-1931.png,Lung_Opacity,COVID,0.354,0.23,0.1239,Borderline error (p < 0.55),True,146.94,G04438
+COVID <-> Lung_Opacity,Lung_Opacity -> COVID,Lung_Opacity-1359.png,Lung_Opacity,COVID,0.2435,0.3232,-0.0796,Borderline error (p < 0.55),False,144.1,G03802
+COVID <-> Viral Pneumonia,COVID -> Viral Pneumonia,COVID-1177.png,COVID,Viral Pneumonia,0.6698,0.2014,0.4684,Moderate error (0.55 <= p < 0.80),False,138.53,G00197
+COVID <-> Viral Pneumonia,COVID -> Viral Pneumonia,COVID-3579.png,COVID,Viral Pneumonia,0.4741,0.3023,0.1718,Borderline error (p < 0.55),False,137.32,G02771
+COVID <-> Viral Pneumonia,Viral Pneumonia -> COVID,Viral Pneumonia-792.png,Viral Pneumonia,COVID,0.9577,0.0124,0.9453,High-confidence error (p >= 0.80),True,165.18,G20713
+COVID <-> Viral Pneumonia,Viral Pneumonia -> COVID,Viral Pneumonia-644.png,Viral Pneumonia,COVID,0.9195,0.0522,0.8672,High-confidence error (p >= 0.80),True,144.24,G20550
+COVID <-> Viral Pneumonia,Viral Pneumonia -> COVID,Viral Pneumonia-175.png,Viral Pneumonia,COVID,0.5532,0.2807,0.2724,Moderate error (0.55 <= p < 0.80),True,112.01,G20032
+COVID <-> Viral Pneumonia,Viral Pneumonia -> COVID,Viral Pneumonia-898.png,Viral Pneumonia,COVID,0.5124,0.4705,0.0419,Borderline error (p < 0.55),False,132.68,G20830
+Lung_Opacity <-> Viral Pneumonia,Viral Pneumonia -> Lung_Opacity,Viral Pneumonia-622.png,Viral Pneumonia,Lung_Opacity,0.5127,0.2592,0.2535,Borderline error (p < 0.55),True,133.1,G20526
+COVID <-> Normal,COVID -> Normal,COVID-3419.png,COVID,Normal,0.989,0.0005,0.9885,High-confidence error (p >= 0.80),True,156.76,G02602
+COVID <-> Normal,COVID -> Normal,COVID-32.png,COVID,Normal,0.9439,0.0142,0.9297,High-confidence error (p >= 0.80),True,124.47,G01439
+COVID <-> Normal,COVID -> Normal,COVID-3541.png,COVID,Normal,0.8715,0.1258,0.7457,High-confidence error (p >= 0.80),True,127.81,G02733
+COVID <-> Normal,COVID -> Normal,COVID-2162.png,COVID,Normal,0.5804,0.0639,0.5166,Moderate error (0.55 <= p < 0.80),False,181.26,G01266
+COVID <-> Normal,COVID -> Normal,COVID-1198.png,COVID,Normal,0.5437,0.1875,0.3563,Borderline error (p < 0.55),True,133.76,G00220
+COVID <-> Normal,Normal -> COVID,Normal-3652.png,Normal,COVID,0.963,0.0202,0.9428,High-confidence error (p >= 0.80),True,146.47,G12555
+COVID <-> Normal,Normal -> COVID,Normal-7599.png,Normal,COVID,0.9282,0.0199,0.9082,High-confidence error (p >= 0.80),True,102.2,G16938
+COVID <-> Normal,Normal -> COVID,Normal-1709.png,Normal,COVID,0.9071,0.0677,0.8394,High-confidence error (p >= 0.80),True,138.93,G10396
+COVID <-> Normal,Normal -> COVID,Normal-122.png,Normal,COVID,0.2558,0.4508,-0.195,Borderline error (p < 0.55),False,137.94,G09853
+COVID <-> Normal,Normal -> COVID,Normal-3203.png,Normal,COVID,0.2285,0.4145,-0.186,Borderline error (p < 0.55),False,108.1,G12057
+Viral Pneumonia <-> Normal,Normal -> Viral Pneumonia,Normal-1387.png,Normal,Viral Pneumonia,0.9979,0.002,0.996,High-confidence error (p >= 0.80),True,129.72,G10038
+Viral Pneumonia <-> Normal,Normal -> Viral Pneumonia,Normal-1292.png,Normal,Viral Pneumonia,0.991,0.0086,0.9825,High-confidence error (p >= 0.80),True,123.24,G09933
+Viral Pneumonia <-> Normal,Normal -> Viral Pneumonia,Normal-1154.png,Normal,Viral Pneumonia,0.7605,0.1956,0.5649,Moderate error (0.55 <= p < 0.80),True,139.02,G09780
+Viral Pneumonia <-> Normal,Normal -> Viral Pneumonia,Normal-1027.png,Normal,Viral Pneumonia,0.3618,0.6332,-0.2714,Borderline error (p < 0.55),False,139.23,G09639
+Viral Pneumonia <-> Normal,Normal -> Viral Pneumonia,Normal-88.png,Normal,Viral Pneumonia,0.3456,0.6306,-0.2849,Borderline error (p < 0.55),False,132.57,G18271
+Viral Pneumonia <-> Normal,Viral Pneumonia -> Normal,Viral Pneumonia-1072.png,Viral Pneumonia,Normal,0.8879,0.0679,0.82,High-confidence error (p >= 0.80),True,145.16,G19685
+Viral Pneumonia <-> Normal,Viral Pneumonia -> Normal,Viral Pneumonia-699.png,Viral Pneumonia,Normal,0.7733,0.0787,0.6945,Moderate error (0.55 <= p < 0.80),True,97.9,G20610
+Viral Pneumonia <-> Normal,Viral Pneumonia -> Normal,Viral Pneumonia-138.png,Viral Pneumonia,Normal,0.7286,0.2692,0.4594,Moderate error (0.55 <= p < 0.80),True,115.96,G19991
+Viral Pneumonia <-> Normal,Viral Pneumonia -> Normal,Viral Pneumonia-621.png,Viral Pneumonia,Normal,0.6433,0.1774,0.4659,Moderate error (0.55 <= p < 0.80),True,87.98,G20525
+Viral Pneumonia <-> Normal,Viral Pneumonia -> Normal,Viral Pneumonia-1218.png,Viral Pneumonia,Normal,0.5819,0.0769,0.505,Moderate error (0.55 <= p < 0.80),False,116.12,G19846
+Lung_Opacity <-> Normal,Lung_Opacity -> Normal,Lung_Opacity-3644.png,Lung_Opacity,Normal,0.9869,0.0069,0.98,High-confidence error (p >= 0.80),True,119.81,G06341
+Lung_Opacity <-> Normal,Lung_Opacity -> Normal,Lung_Opacity-2478.png,Lung_Opacity,Normal,0.9825,0.0174,0.9651,High-confidence error (p >= 0.80),True,123.23,G05045
+Lung_Opacity <-> Normal,Lung_Opacity -> Normal,Lung_Opacity-5495.png,Lung_Opacity,Normal,0.9821,0.0178,0.9643,High-confidence error (p >= 0.80),True,117.77,G08397
+Lung_Opacity <-> Normal,Lung_Opacity -> Normal,Lung_Opacity-455.png,Lung_Opacity,Normal,0.5886,0.3851,0.2034,Moderate error (0.55 <= p < 0.80),False,118.57,G07347
+Lung_Opacity <-> Normal,Lung_Opacity -> Normal,Lung_Opacity-2603.png,Lung_Opacity,Normal,0.541,0.3144,0.2265,Borderline error (p < 0.55),False,101.59,G05185
+Lung_Opacity <-> Normal,Normal -> Lung_Opacity,Normal-9540.png,Normal,Lung_Opacity,0.97,0.0292,0.9408,High-confidence error (p >= 0.80),True,110.94,G19095
+Lung_Opacity <-> Normal,Normal -> Lung_Opacity,Normal-4930.png,Normal,Lung_Opacity,0.968,0.0315,0.9365,High-confidence error (p >= 0.80),True,137.1,G13975
+Lung_Opacity <-> Normal,Normal -> Lung_Opacity,Normal-8652.png,Normal,Lung_Opacity,0.967,0.0301,0.9369,High-confidence error (p >= 0.80),True,150.28,G18108
+Lung_Opacity <-> Normal,Normal -> Lung_Opacity,Normal-5257.png,Normal,Lung_Opacity,0.4135,0.5715,-0.158,Borderline error (p < 0.55),False,138.93,G14337
+Lung_Opacity <-> Normal,Normal -> Lung_Opacity,Normal-7950.png,Normal,Lung_Opacity,0.3624,0.492,-0.1296,Borderline error (p < 0.55),False,142.12,G17329
