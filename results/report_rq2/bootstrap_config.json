@@ -1,0 +1,30 @@
+{
+  "rq": "rq2",
+  "features": "ghep",
+  "classifiers": [
+    "lr",
+    "knn",
+    "dt",
+    "rf",
+    "svm",
+    "gb"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "deterministic_classifiers": [
+    "svm",
+    "knn",
+    "lr"
+  ],
+  "reference": "rf",
+  "n": 3174,
+  "n_boot": 2000,
+  "rng_seed": 42,
+  "expected_n": 3174,
+  "numpy_version": "2.5.4",
+  "pandas_version": "2.2.3",
+  "scikit_learn_version": "1.6.1"
+}
