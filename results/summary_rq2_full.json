@@ -1,0 +1,135 @@
+{
+  "mode": "full",
+  "commit": "1a0925dcbe5e7a847c65f9654574806122f75b3d",
+  "features": "ghep",
+  "classifiers": [
+    "lr",
+    "knn",
+    "dt",
+    "rf",
+    "svm",
+    "gb"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "deterministic_classifiers": [
+    "lr",
+    "knn",
+    "svm"
+  ],
+  "runs_by_classifier": {
+    "lr": [
+      "rq2_ghep_lr_s42"
+    ],
+    "knn": [
+      "rq2_ghep_knn_s42"
+    ],
+    "dt": [
+      "rq2_ghep_dt_s42",
+      "rq2_ghep_dt_s43",
+      "rq2_ghep_dt_s44"
+    ],
+    "rf": [
+      "rq2_ghep_rf_s42",
+      "rq2_ghep_rf_s43",
+      "rq2_ghep_rf_s44"
+    ],
+    "svm": [
+      "rq2_ghep_svm_s42"
+    ],
+    "gb": [
+      "rq2_ghep_gb_s42",
+      "rq2_ghep_gb_s43",
+      "rq2_ghep_gb_s44"
+    ]
+  },
+  "scored": true,
+  "n_train": 14815,
+  "n_val": 3174,
+  "extract_cpu_seconds": {
+    "train": {
+      "ghep": 1155.2730491249993
+    },
+    "val": {
+      "ghep": 247.59367723799983
+    }
+  },
+  "extract_cpu_seconds_per_image": {
+    "ghep": 0.077985
+  },
+  "selected_hyperparameters": {
+    "lr": {
+      "C": 10.0
+    },
+    "knn": {
+      "n_neighbors": 5,
+      "weights": "distance"
+    },
+    "dt": {
+      "max_depth": 10,
+      "min_samples_leaf": 1
+    },
+    "rf": {
+      "n_estimators": 300,
+      "max_depth": null
+    },
+    "svm": {
+      "C": 10.0,
+      "gamma": "scale"
+    },
+    "gb": {
+      "n_estimators": 200,
+      "learning_rate": 0.1,
+      "max_depth": 5
+    }
+  },
+  "cv_cpu_seconds": {
+    "lr": 86.869,
+    "knn": 18.467,
+    "dt": 189.601,
+    "rf": 3086.971,
+    "svm": 419.094,
+    "gb": 1765.091
+  },
+  "fit_cpu_seconds_mean": {
+    "lr": 185.638,
+    "knn": 0.039,
+    "dt": 4.254,
+    "rf": 151.621,
+    "svm": 60.754,
+    "gb": 132.789
+  },
+  "total_train_cpu_seconds": {
+    "lr": 272.507,
+    "knn": 18.506,
+    "dt": 202.362,
+    "rf": 3541.833,
+    "svm": 479.848,
+    "gb": 2163.459
+  },
+  "cost_rank": [
+    "knn",
+    "dt",
+    "lr",
+    "svm",
+    "gb",
+    "rf"
+  ],
+  "runs": [
+    "rq2_ghep_lr_s42",
+    "rq2_ghep_knn_s42",
+    "rq2_ghep_dt_s42",
+    "rq2_ghep_dt_s43",
+    "rq2_ghep_dt_s44",
+    "rq2_ghep_rf_s42",
+    "rq2_ghep_rf_s43",
+    "rq2_ghep_rf_s44",
+    "rq2_ghep_svm_s42",
+    "rq2_ghep_gb_s42",
+    "rq2_ghep_gb_s43",
+    "rq2_ghep_gb_s44"
+  ]
+}
