@@ -1,0 +1,13 @@
+true_label,pred_label,count,pct_of_total_errors,pct_of_true_class,mean_proba_pred,mean_proba_true,high_conf_count,consensus_3models_count,mean_brightness,top_representative_ids
+Normal,Lung_Opacity,144,41.26,9.41,0.6933,0.2928,46,98,128.79,"Normal-9540.png, Normal-4930.png, Normal-8652.png"
+Lung_Opacity,Normal,124,35.53,13.73,0.8127,0.1797,71,101,128.99,"Lung_Opacity-3644.png, Lung_Opacity-2478.png, Lung_Opacity-5495.png"
+Normal,COVID,18,5.16,1.18,0.5989,0.2397,5,5,139.81,"Normal-3652.png, Normal-7599.png, Normal-1709.png"
+Normal,Viral Pneumonia,16,4.58,1.05,0.5813,0.4003,2,4,124.47,"Normal-1387.png, Normal-1292.png, Normal-1154.png"
+COVID,Normal,13,3.72,2.42,0.7411,0.1254,5,9,140.35,"COVID-3419.png, COVID-32.png, COVID-3541.png"
+Lung_Opacity,COVID,12,3.44,1.33,0.6123,0.1808,3,7,137.76,"Lung_Opacity-3062.png, Lung_Opacity-5040.png, Lung_Opacity-195.png"
+COVID,Lung_Opacity,8,2.29,1.49,0.7346,0.143,3,6,125.36,"COVID-1183.png, COVID-329.png, COVID-1084.png"
+Viral Pneumonia,Normal,7,2.01,3.45,0.7106,0.1492,1,6,111.31,"Viral Pneumonia-1072.png, Viral Pneumonia-699.png, Viral Pneumonia-138.png"
+Viral Pneumonia,COVID,4,1.15,1.97,0.7357,0.204,2,3,138.53,"Viral Pneumonia-792.png, Viral Pneumonia-644.png, Viral Pneumonia-175.png"
+COVID,Viral Pneumonia,2,0.57,0.37,0.5719,0.2518,0,0,137.93,"COVID-1177.png, COVID-3579.png"
+Viral Pneumonia,Lung_Opacity,1,0.29,0.49,0.5127,0.2592,0,1,133.1,Viral Pneumonia-622.png
+Lung_Opacity,Viral Pneumonia,0,0.0,0.0,0.0,0.0,0,0,0.0,None
