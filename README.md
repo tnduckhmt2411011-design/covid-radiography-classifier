@@ -40,6 +40,7 @@ Phạm vi đề tài môn Học máy chỉ áp dụng các thuật toán Machine
 │   ├── features_hog_ghep.py      # Trích đặc trưng HOG và nhóm ghép
 │   ├── metrics.py                # Đánh giá độ đo (F1, Accuracy, Confusion Matrix)
 │   ├── rq1_runner.py             # Runner huấn luyện Random Forest cố định cho RQ1
+│   ├── rq2_runner.py             # Runner so sánh 6 bộ phân loại cổ điển cho RQ2
 │   └── utils.py                  # Các hàm tiện ích dùng chung (set_seed, ...)
 ├── .gitignore                    # Chặn dữ liệu, checkpoint, file nhạy cảm
 ├── README.md                     # Tài liệu tổng quan dự án

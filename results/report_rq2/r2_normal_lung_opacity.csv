@@ -1,0 +1,13 @@
+run_id,features,classifier,seed,LO_to_LO,LO_to_Normal,Normal_to_LO,Normal_to_Normal
+rq2_ghep_lr_s42,ghep,lr,42,750,125,201,1227
+rq2_ghep_knn_s42,ghep,knn,42,674,211,157,1356
+rq2_ghep_dt_s42,ghep,dt,42,689,150,321,1092
+rq2_ghep_dt_s43,ghep,dt,43,691,148,325,1094
+rq2_ghep_dt_s44,ghep,dt,44,690,149,327,1090
+rq2_ghep_rf_s42,ghep,rf,42,694,203,137,1378
+rq2_ghep_rf_s43,ghep,rf,43,697,200,138,1378
+rq2_ghep_rf_s44,ghep,rf,44,694,202,135,1383
+rq2_ghep_svm_s42,ghep,svm,42,767,124,144,1353
+rq2_ghep_gb_s42,ghep,gb,42,744,150,172,1328
+rq2_ghep_gb_s43,ghep,gb,43,742,155,165,1337
+rq2_ghep_gb_s44,ghep,gb,44,752,145,166,1334

@@ -1,7 +1,7 @@
 """Module bootstrap.py
 
 Trách nhiệm:
-- Tính khoảng tin cậy bootstrap và bootstrap ghép cặp cho Macro-F1 giữa các mô hình RQ1.
+- Tính khoảng tin cậy bootstrap và bootstrap ghép cặp cho Macro-F1 giữa các mô hình RQ1 và RQ2.
 - Xuất các bảng báo cáo R1, R2, R4, R5 theo quy định trong results/threshold_v3.md.
 """
 
@@ -53,31 +53,12 @@ def macro_f1_from_labels(
     return float(np.mean(f1_per_class))
 
 
-def load_predictions(
-    results_dir: Union[str, Path],
-    features: str,
-    seed: int,
+def _validate_predictions_df(
+    df: pd.DataFrame,
+    run_id: str,
     expected_n: Optional[int] = 3174,
 ) -> pd.DataFrame:
-    """Đọc tệp preds_val.csv của một run và kiểm tra tính hợp lệ dữ liệu.
-
-    Args:
-        results_dir: Thư mục gốc chứa kết quả các run.
-        features: Tên nhóm đặc trưng (hist, glcmlbp, hog, ghep).
-        seed: Seed huấn luyện (42, 43, 44).
-        expected_n: Số dòng kỳ vọng (3174 với tập validation, None nếu bỏ qua).
-
-    Returns:
-        pd.DataFrame: DataFrame đã sắp xếp theo image_id.
-    """
-    run_id = f"rq1_{features}_rf_s{seed}"
-    csv_path = Path(results_dir) / run_id / "preds_val.csv"
-
-    if not csv_path.is_file():
-        raise ValueError(f"Run {run_id}: không tìm thấy tệp {csv_path}")
-
-    df = pd.read_csv(csv_path)
-
+    """Kiểm tra tính hợp lệ của DataFrame preds_val.csv và sắp xếp theo image_id."""
     req_cols = {"image_id", "y_true", "y_pred"}
     if not req_cols.issubset(df.columns):
         missing = req_cols - set(df.columns)
@@ -110,18 +91,74 @@ def load_predictions(
     return df
 
 
+def load_predictions(
+    results_dir: Union[str, Path],
+    features: str,
+    seed: int,
+    expected_n: Optional[int] = 3174,
+) -> pd.DataFrame:
+    """Đọc tệp preds_val.csv của một run RQ1 và kiểm tra tính hợp lệ dữ liệu.
+
+    Args:
+        results_dir: Thư mục gốc chứa kết quả các run.
+        features: Tên nhóm đặc trưng (hist, glcmlbp, hog, ghep).
+        seed: Seed huấn luyện (42, 43, 44).
+        expected_n: Số dòng kỳ vọng (3174 với tập validation, None nếu bỏ qua).
+
+    Returns:
+        pd.DataFrame: DataFrame đã sắp xếp theo image_id.
+    """
+    run_id = f"rq1_{features}_rf_s{seed}"
+    csv_path = Path(results_dir) / run_id / "preds_val.csv"
+
+    if not csv_path.is_file():
+        raise ValueError(f"Run {run_id}: không tìm thấy tệp {csv_path}")
+
+    df = pd.read_csv(csv_path)
+    return _validate_predictions_df(df, run_id=run_id, expected_n=expected_n)
+
+
+def load_rq2_predictions(
+    results_dir: Union[str, Path],
+    features: str,
+    classifier: str,
+    seed: int,
+    expected_n: Optional[int] = 3174,
+) -> pd.DataFrame:
+    """Đọc tệp preds_val.csv của một run RQ2 và kiểm tra tính hợp lệ dữ liệu.
+
+    Args:
+        results_dir: Thư mục gốc chứa kết quả các run.
+        features: Tên nhóm đặc trưng cố định (mặc định 'ghep').
+        classifier: Tên bộ phân loại (lr, knn, dt, rf, svm, gb).
+        seed: Seed huấn luyện (42, 43, 44).
+        expected_n: Số dòng kỳ vọng (3174 với tập validation, None nếu bỏ qua).
+
+    Returns:
+        pd.DataFrame: DataFrame đã sắp xếp theo image_id.
+    """
+    run_id = f"rq2_{features}_{classifier}_s{seed}"
+    csv_path = Path(results_dir) / run_id / "preds_val.csv"
+
+    if not csv_path.is_file():
+        raise ValueError(f"Run {run_id}: không tìm thấy tệp {csv_path}")
+
+    df = pd.read_csv(csv_path)
+    return _validate_predictions_df(df, run_id=run_id, expected_n=expected_n)
+
+
 def align_predictions(
     runs: Dict[str, Dict[int, pd.DataFrame]]
 ) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
     """Căn chỉnh dự đoán giữa tất cả các run để đảm bảo tính nhất quán.
 
     Args:
-        runs: Dict features -> Dict seed -> DataFrame.
+        runs: Dict features/classifier -> Dict seed -> DataFrame.
 
     Returns:
         Tuple chứa:
         - y_true: mảng shape (n,)
-        - preds: dict features -> mảng shape (n_seeds, n) theo thứ tự seed tăng dần.
+        - preds: dict features/classifier -> mảng shape (n_seeds, n) theo thứ tự seed tăng dần.
     """
     if not runs:
         raise ValueError("runs không được để trống")
@@ -330,22 +367,7 @@ def build_report(
     expected_n: Optional[int] = 3174,
     threshold_path: Union[str, Path] = "results/threshold_v3.md",
 ) -> Dict[str, Path]:
-    """Tạo toàn bộ 8 tệp báo cáo R1, R2, R4, R5 theo đặc tả.
-
-    Args:
-        results_dir: Thư mục chứa kết quả các run.
-        out_dir: Thư mục xuất báo cáo.
-        features: Danh sách nhóm đặc trưng cần đánh giá.
-        seeds: Danh sách seed cần tải.
-        reference: Nhóm đặc trưng làm mốc so sánh.
-        n_boot: Số lần rút mẫu bootstrap.
-        rng_seed: Seed sinh số ngẫu nhiên.
-        expected_n: Số lượng mẫu kiểm tra.
-        threshold_path: Đường dẫn tệp quy định ngưỡng.
-
-    Returns:
-        Dict tên tệp -> Đường dẫn Path của tệp đã tạo.
-    """
+    """Tạo toàn bộ 8 tệp báo cáo R1, R2, R4, R5 cho RQ1 theo đặc tả."""
     if reference not in features:
         raise ValueError(f"Nhóm reference '{reference}' không nằm trong danh sách features {features}")
 
@@ -488,6 +510,227 @@ def build_report(
     config_data = {
         "features": list(features),
         "seeds": list(seeds),
+        "reference": reference,
+        "n": int(n),
+        "n_boot": int(n_boot),
+        "rng_seed": int(rng_seed),
+        "expected_n": int(expected_n) if expected_n is not None else None,
+        "numpy_version": str(np.__version__),
+        "pandas_version": str(pd.__version__),
+        "scikit_learn_version": str(sklearn_version),
+    }
+
+    r1_per_seed_path = out_path / "r1_per_seed.csv"
+    df_per_seed.to_csv(r1_per_seed_path, index=False)
+
+    r1_summary_path = out_path / "r1_summary.csv"
+    pd.DataFrame(summary_rows).to_csv(r1_summary_path, index=False)
+
+    r1_cm_path = out_path / "r1_confusion_matrices.json"
+    with open(r1_cm_path, "w", encoding="utf-8") as f:
+        json.dump(confusion_matrices, f, indent=2)
+
+    r1_boot_path = out_path / "r1_bootstrap_vs_reference.csv"
+    pd.DataFrame(boot_vs_ref_rows).to_csv(r1_boot_path, index=False)
+
+    r2_path = out_path / "r2_normal_lung_opacity.csv"
+    pd.DataFrame(r2_rows).to_csv(r2_path, index=False)
+
+    r4_path = out_path / "r4_sampling_error.csv"
+    pd.DataFrame(r4_rows).to_csv(r4_path, index=False)
+
+    r5_path = out_path / "r5_gioi_han.md"
+    with open(r5_path, "w", encoding="utf-8") as f:
+        f.write(r5_content + "\n")
+
+    config_path = out_path / "bootstrap_config.json"
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(config_data, f, indent=2)
+
+    return {
+        "r1_per_seed.csv": r1_per_seed_path,
+        "r1_summary.csv": r1_summary_path,
+        "r1_confusion_matrices.json": r1_cm_path,
+        "r1_bootstrap_vs_reference.csv": r1_boot_path,
+        "r2_normal_lung_opacity.csv": r2_path,
+        "r4_sampling_error.csv": r4_path,
+        "r5_gioi_han.md": r5_path,
+        "bootstrap_config.json": config_path,
+    }
+
+
+def build_rq2_report(
+    results_dir: Union[str, Path],
+    out_dir: Union[str, Path],
+    features: str = "ghep",
+    classifiers: Sequence[str] = ("lr", "knn", "dt", "rf", "svm", "gb"),
+    seeds: Sequence[int] = (42, 43, 44),
+    deterministic_classifiers: Sequence[str] = ("lr", "knn", "svm"),
+    reference: str = "rf",
+    n_boot: int = 2000,
+    rng_seed: int = 42,
+    expected_n: Optional[int] = 3174,
+    threshold_path: Union[str, Path] = "results/threshold_v3.md",
+) -> Dict[str, Path]:
+    """Tạo toàn bộ 8 tệp báo cáo R1, R2, R4, R5 cho RQ2 theo đặc tả."""
+    if reference not in classifiers:
+        raise ValueError(f"Bộ phân loại reference '{reference}' không nằm trong danh sách {classifiers}")
+    if not seeds:
+        raise ValueError("seeds không được để trống")
+
+    det_set = set(deterministic_classifiers)
+    out_path = Path(out_dir)
+    out_path.mkdir(parents=True, exist_ok=True)
+
+    runs: Dict[str, Dict[int, pd.DataFrame]] = {}
+    for clf in classifiers:
+        runs[clf] = {}
+        clf_seeds = [seeds[0]] if clf in det_set else list(seeds)
+        for s in clf_seeds:
+            runs[clf][s] = load_rq2_predictions(
+                results_dir, features=features, classifier=clf, seed=s, expected_n=expected_n
+            )
+
+    y_true, preds = align_predictions(runs)
+    n = len(y_true)
+    num_classes = len(DEFAULT_CLASS_NAMES)
+    n_viral = int(np.sum(y_true == 3))
+
+    per_seed_rows: List[Dict[str, Union[str, int, float]]] = []
+    confusion_matrices: Dict[str, List[List[int]]] = {}
+    r2_rows: List[Dict[str, Union[str, int]]] = []
+    r4_rows: List[Dict[str, Union[str, int, float]]] = []
+
+    for clf in classifiers:
+        clf_seeds = [seeds[0]] if clf in det_set else sorted(seeds)
+        for s in clf_seeds:
+            run_id = f"rq2_{features}_{clf}_s{s}"
+            y_pred = runs[clf][s]["y_pred"].to_numpy(dtype=np.int64)
+
+            idx = y_true * num_classes + y_pred
+            cm = np.bincount(idx, minlength=num_classes * num_classes).reshape((num_classes, num_classes))
+            confusion_matrices[run_id] = cm.tolist()
+
+            tp = np.diag(cm)
+            row_sum = np.sum(cm, axis=1)
+            col_sum = np.sum(cm, axis=0)
+
+            prec = np.where(col_sum > 0, tp / col_sum, 0.0)
+            rec = np.where(row_sum > 0, tp / row_sum, 0.0)
+            denom = row_sum + col_sum
+            f1 = np.where(denom > 0, 2.0 * tp / denom, 0.0)
+            macro_f1 = float(np.mean(f1))
+
+            row: Dict[str, Union[str, int, float]] = {
+                "run_id": run_id,
+                "features": features,
+                "classifier": clf,
+                "seed": s,
+                "macro_f1": macro_f1,
+            }
+            for c_idx, c_name in enumerate(DEFAULT_CLASS_NAMES):
+                row[f"precision_{c_name}"] = float(prec[c_idx])
+                row[f"recall_{c_name}"] = float(rec[c_idx])
+                row[f"f1_{c_name}"] = float(f1[c_idx])
+            per_seed_rows.append(row)
+
+            r2_rows.append({
+                "run_id": run_id,
+                "features": features,
+                "classifier": clf,
+                "seed": s,
+                "LO_to_LO": int(cm[1, 1]),
+                "LO_to_Normal": int(cm[1, 2]),
+                "Normal_to_LO": int(cm[2, 1]),
+                "Normal_to_Normal": int(cm[2, 2]),
+            })
+
+            acc = float(np.sum(tp) / n) if n > 0 else 0.0
+            se_all = sampling_error(acc, n) if n > 0 else 0.0
+            rec_viral = float(rec[3])
+            se_viral = sampling_error(rec_viral, n_viral) if n_viral > 0 else 0.0
+
+            r4_rows.append({
+                "run_id": run_id,
+                "features": features,
+                "classifier": clf,
+                "seed": s,
+                "p_accuracy": acc,
+                "n_all": n,
+                "se_all": se_all,
+                "p_recall_viral": rec_viral,
+                "n_viral": n_viral,
+                "se_viral": se_viral,
+            })
+
+    df_per_seed = pd.DataFrame(per_seed_rows)
+    summary_rows: List[Dict[str, Union[str, int, float, bool]]] = []
+
+    for clf in classifiers:
+        sub = df_per_seed[df_per_seed["classifier"] == clf]
+        n_s = len(sub)
+        is_det = bool(clf in det_set)
+        f1_vals = sub["macro_f1"].to_numpy()
+        f1_mean = float(np.mean(f1_vals))
+        f1_std = float(np.std(f1_vals, ddof=1)) if n_s > 1 else 0.0
+
+        boot_ci = bootstrap_ci_macro_f1(y_true, preds[clf], n_boot=n_boot, rng_seed=rng_seed)
+        ci95_low = boot_ci["ci_low"]
+        ci95_high = boot_ci["ci_high"]
+
+        s_row: Dict[str, Union[str, int, float, bool]] = {
+            "features": features,
+            "classifier": clf,
+            "is_deterministic": is_det,
+            "n_seeds": n_s,
+            "macro_f1_mean": f1_mean,
+            "macro_f1_std": f1_std,
+            "ci95_low": ci95_low,
+            "ci95_high": ci95_high,
+        }
+
+        for metric in ["precision", "recall", "f1"]:
+            for c_name in DEFAULT_CLASS_NAMES:
+                vals = sub[f"{metric}_{c_name}"].to_numpy()
+                s_row[f"{metric}_{c_name}_mean"] = float(np.mean(vals))
+                s_row[f"{metric}_{c_name}_std"] = float(np.std(vals, ddof=1)) if n_s > 1 else 0.0
+
+        summary_rows.append(s_row)
+
+    boot_vs_ref_rows: List[Dict[str, Union[str, int, float, bool]]] = []
+    for cand in classifiers:
+        if cand == reference:
+            continue
+        res_pair = paired_bootstrap_diff(
+            y_true, preds[cand], preds[reference], n_boot=n_boot, rng_seed=rng_seed
+        )
+        boot_vs_ref_rows.append({
+            "candidate": cand,
+            "reference": reference,
+            "point_candidate": res_pair["point_a"],
+            "point_reference": res_pair["point_b"],
+            "point_diff": res_pair["point_diff"],
+            "ci_low": res_pair["ci_low"],
+            "ci_high": res_pair["ci_high"],
+            "contains_zero": res_pair["contains_zero"],
+            "n": res_pair["n"],
+            "n_boot": res_pair["n_boot"],
+            "rng_seed": res_pair["rng_seed"],
+        })
+
+    r5_content = r5_text(threshold_path)
+
+    try:
+        sklearn_version = importlib.metadata.version("scikit-learn")
+    except Exception:
+        sklearn_version = "unknown"
+
+    config_data = {
+        "rq": "rq2",
+        "features": features,
+        "classifiers": list(classifiers),
+        "seeds": list(seeds),
+        "deterministic_classifiers": list(deterministic_classifiers),
         "reference": reference,
         "n": int(n),
         "n_boot": int(n_boot),
