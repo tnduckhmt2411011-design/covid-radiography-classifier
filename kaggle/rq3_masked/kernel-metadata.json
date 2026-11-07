@@ -1,0 +1,19 @@
+{
+  "id": "ductrannguyen/cxr-rq3-masked",
+  "title": "cxr-rq3-masked",
+  "code_file": "run_rq3_masked.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "tawsifurrahman/covid19-radiography-database",
+    "ductrannguyen/cxr-rq3-code"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:81b1e7c4b4f0f2a7e0a33943c95754b1b7af6b30d65221633a284b6b601cd84a"
+}

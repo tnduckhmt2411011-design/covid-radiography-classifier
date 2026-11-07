@@ -15,9 +15,9 @@
     44
   ],
   "deterministic_classifiers": [
-    "svm",
+    "lr",
     "knn",
-    "lr"
+    "svm"
   ],
   "reference": "rf",
   "n": 3174,
