@@ -1,0 +1,58 @@
+{
+  "mode": "full",
+  "commit": "4c0b9cf2db903e76d08235fd83be653366c67ffe",
+  "groups": [
+    "hist",
+    "glcmlbp",
+    "hog",
+    "ghep"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "scored": true,
+  "n_train": 14815,
+  "n_val": 3174,
+  "extract_cpu_seconds": {
+    "train": {
+      "hist": 19.878964737999553,
+      "glcmlbp": 818.562269552999,
+      "hog": 305.3840729460022,
+      "ghep": 841.4865372729993
+    },
+    "val": {
+      "hist": 4.168770440999651,
+      "glcmlbp": 175.14791149199937,
+      "hog": 55.712635842999816,
+      "ghep": 179.8037864310004
+    }
+  },
+  "extract_cpu_seconds_per_image": {
+    "hist": 0.001337,
+    "glcmlbp": 0.05524,
+    "hog": 0.020073,
+    "ghep": 0.056773
+  },
+  "cost_rank": [
+    "hist",
+    "hog",
+    "glcmlbp",
+    "ghep"
+  ],
+  "runs": [
+    "rq1_hist_rf_s42",
+    "rq1_hist_rf_s43",
+    "rq1_hist_rf_s44",
+    "rq1_glcmlbp_rf_s42",
+    "rq1_glcmlbp_rf_s43",
+    "rq1_glcmlbp_rf_s44",
+    "rq1_hog_rf_s42",
+    "rq1_hog_rf_s43",
+    "rq1_hog_rf_s44",
+    "rq1_ghep_rf_s42",
+    "rq1_ghep_rf_s43",
+    "rq1_ghep_rf_s44"
+  ]
+}

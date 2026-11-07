@@ -1,0 +1,86 @@
+run_id: rq1_glcmlbp_rf_s42
+rq: rq1
+mode: full
+features: glcmlbp
+feature_params:
+  glcm:
+    levels: 32
+    distances:
+    - 1
+    - 3
+    - 5
+    angles:
+    - 0.0
+    - 0.7853981633974483
+    - 1.5707963267948966
+    - 2.356194490192345
+    props:
+    - contrast
+    - dissimilarity
+    - homogeneity
+    - energy
+    - correlation
+    symmetric: true
+    normed: true
+    gray_reduction: img // 8
+    correlation_nan: thay bang 0
+  lbp:
+    params:
+    - - 8
+      - 1
+    - - 16
+      - 2
+    method: uniform
+classifier: RandomForestClassifier
+hyperparameters:
+  bootstrap: true
+  ccp_alpha: 0.0
+  class_weight: balanced_subsample
+  criterion: gini
+  max_depth: null
+  max_features: sqrt
+  max_leaf_nodes: null
+  max_samples: null
+  min_impurity_decrease: 0.0
+  min_samples_leaf: 1
+  min_samples_split: 2
+  min_weight_fraction_leaf: 0.0
+  monotonic_cst: null
+  n_estimators: 500
+  n_jobs: -1
+  oob_score: false
+  random_state: 42
+  verbose: 0
+  warm_start: false
+seed: 42
+commit: 4c0b9cf2db903e76d08235fd83be653366c67ffe
+versions:
+  python: 3.13.15
+  numpy: 2.1.3
+  pandas: 2.3.3
+  scikit-learn: 1.6.1
+  scikit-image: 0.25.2
+  opencv-python-headless: 4.14.0.94
+  pyyaml: 6.0.3
+  pillow: 12.3.0
+split:
+  file: /kaggle/input/datasets/ductrannguyen/cxr-rq1-code/split_v1.csv
+  sha256: f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98
+  train_rows: 14815
+  val_rows: 3174
+subset:
+  limit_train: null
+  limit_val: null
+  subset_seed: 0
+evaluation:
+  train_split: train
+  eval_split: val
+  allow_test: false
+extraction:
+  chunk_size: 64
+  train:
+    n_images: 14815
+    glcm_nan_images: 0
+  val:
+    n_images: 3174
+    glcm_nan_images: 0

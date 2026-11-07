@@ -1,0 +1,71 @@
+{
+  "accuracy": 0.8198,
+  "balanced_accuracy": 0.7903,
+  "macro_f1": 0.8175,
+  "weighted_f1": 0.8194,
+  "macro_precision": 0.8528,
+  "macro_recall": 0.7903,
+  "per_class": {
+    "COVID": {
+      "precision": 0.90625,
+      "recall": 0.8100558659217877,
+      "f1": 0.855457227138643,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.7684449489216799,
+      "recall": 0.7497231450719822,
+      "f1": 0.7589686098654709,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8119709794437727,
+      "recall": 0.8772044415414761,
+      "f1": 0.8433281004709576,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.9245283018867925,
+      "recall": 0.7241379310344828,
+      "f1": 0.8121546961325967,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      435,
+      34,
+      63,
+      5
+    ],
+    [
+      9,
+      677,
+      214,
+      3
+    ],
+    [
+      20,
+      164,
+      1343,
+      4
+    ],
+    [
+      16,
+      6,
+      34,
+      147
+    ]
+  ],
+  "run_id": "rq1_glcmlbp_rf_s42",
+  "mode": "full",
+  "n_train": 14815,
+  "n_val": 3174,
+  "seconds": {
+    "extract_cpu_train": 818.562,
+    "extract_cpu_val": 175.148,
+    "fit_cpu": 164.996,
+    "fit_wall": 41.888,
+    "predict_wall": 0.203
+  }
+}

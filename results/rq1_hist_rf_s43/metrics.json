@@ -1,0 +1,71 @@
+{
+  "accuracy": 0.8075,
+  "balanced_accuracy": 0.7551,
+  "macro_f1": 0.7826,
+  "weighted_f1": 0.8053,
+  "macro_precision": 0.8204,
+  "macro_recall": 0.7551,
+  "per_class": {
+    "COVID": {
+      "precision": 0.8765432098765432,
+      "recall": 0.7932960893854749,
+      "f1": 0.8328445747800587,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.7633136094674556,
+      "recall": 0.7142857142857143,
+      "f1": 0.7379862700228833,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8073286052009456,
+      "recall": 0.8922273024167211,
+      "f1": 0.847657461991933,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.8344370860927153,
+      "recall": 0.6206896551724138,
+      "f1": 0.711864406779661,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      426,
+      35,
+      65,
+      11
+    ],
+    [
+      20,
+      645,
+      234,
+      4
+    ],
+    [
+      18,
+      137,
+      1366,
+      10
+    ],
+    [
+      22,
+      28,
+      27,
+      126
+    ]
+  ],
+  "run_id": "rq1_hist_rf_s43",
+  "mode": "full",
+  "n_train": 14815,
+  "n_val": 3174,
+  "seconds": {
+    "extract_cpu_train": 19.879,
+    "extract_cpu_val": 4.169,
+    "fit_cpu": 126.235,
+    "fit_wall": 32.27,
+    "predict_wall": 0.204
+  }
+}

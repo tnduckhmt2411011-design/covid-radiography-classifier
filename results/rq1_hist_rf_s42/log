@@ -1,0 +1,15 @@
+run_id=rq1_hist_rf_s42
+mode=full
+features=hist
+seed=42
+n_train=14815
+n_val=3174
+GLCM correlation NaN (train): 0/14815 anh
+GLCM correlation NaN (val): 0/3174 anh
+Thoi gian trich (giay CPU) nhom hist (train): 19.879
+Thoi gian trich (giay CPU) nhom hist (val): 4.169
+Thoi gian fit (giay CPU): 125.312
+Thoi gian fit (giay, dong ho tuong): 32.059
+Thoi gian du doan (giay, dong ho tuong): 0.215
+classes_=[0, 1, 2, 3]
+macro_f1=0.7842
