@@ -1,0 +1,139 @@
+{
+  "accuracy": 0.8302,
+  "balanced_accuracy": 0.8614,
+  "macro_f1": 0.837,
+  "weighted_f1": 0.8305,
+  "macro_precision": 0.8176,
+  "macro_recall": 0.8614,
+  "per_class": {
+    "COVID": {
+      "precision": 0.827708703374778,
+      "recall": 0.8677839851024208,
+      "f1": 0.8472727272727273,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.7692307692307693,
+      "recall": 0.8305647840531561,
+      "f1": 0.7987220447284346,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8802008608321378,
+      "recall": 0.8014369693011104,
+      "f1": 0.838974358974359,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.7933884297520661,
+      "recall": 0.9458128078817734,
+      "f1": 0.8629213483146068,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      466,
+      24,
+      36,
+      11
+    ],
+    [
+      28,
+      750,
+      125,
+      0
+    ],
+    [
+      64,
+      201,
+      1227,
+      39
+    ],
+    [
+      5,
+      0,
+      6,
+      192
+    ]
+  ],
+  "run_id": "rq2_ghep_lr_s42",
+  "mode": "full",
+  "classifier": "lr",
+  "features": "ghep",
+  "deterministic": true,
+  "n_train": 14815,
+  "n_val": 3174,
+  "selected_params": {
+    "C": 10.0
+  },
+  "cv_best_macro_f1": 0.83354,
+  "cv_best_std": 0.007219,
+  "cv_candidates": [
+    {
+      "params": {
+        "C": 0.01
+      },
+      "fold_scores": [
+        0.7726,
+        0.7635,
+        0.7905,
+        0.7714,
+        0.7601
+      ],
+      "mean_score": 0.77162,
+      "std_score": 0.01179097112200687
+    },
+    {
+      "params": {
+        "C": 0.1
+      },
+      "fold_scores": [
+        0.8027,
+        0.8033,
+        0.8252,
+        0.8138,
+        0.7985
+      ],
+      "mean_score": 0.8087,
+      "std_score": 0.010810411648036368
+    },
+    {
+      "params": {
+        "C": 1.0
+      },
+      "fold_scores": [
+        0.8217,
+        0.8229,
+        0.8351,
+        0.8299,
+        0.8213
+      ],
+      "mean_score": 0.8261800000000001,
+      "std_score": 0.006083748844257113
+    },
+    {
+      "params": {
+        "C": 10.0
+      },
+      "fold_scores": [
+        0.8312,
+        0.8294,
+        0.8446,
+        0.8364,
+        0.8261
+      ],
+      "mean_score": 0.8335400000000002,
+      "std_score": 0.007219279742467404
+    }
+  ],
+  "seconds": {
+    "extract_cpu_train": 1155.273,
+    "extract_cpu_val": 247.594,
+    "cv_cpu": 86.869,
+    "cv_wall": 29.854,
+    "fit_cpu": 185.638,
+    "fit_wall": 46.834,
+    "predict_wall": 0.006
+  }
+}

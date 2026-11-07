@@ -1,0 +1,174 @@
+{
+  "accuracy": 0.7379,
+  "balanced_accuracy": 0.7474,
+  "macro_f1": 0.7255,
+  "weighted_f1": 0.7405,
+  "macro_precision": 0.712,
+  "macro_recall": 0.7474,
+  "per_class": {
+    "COVID": {
+      "precision": 0.7654784240150094,
+      "recall": 0.7597765363128491,
+      "f1": 0.7626168224299066,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.6409302325581395,
+      "recall": 0.7630121816168328,
+      "f1": 0.6966632962588474,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8297872340425532,
+      "recall": 0.713259307642064,
+      "f1": 0.7671232876712328,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.612,
+      "recall": 0.7536945812807881,
+      "f1": 0.6754966887417219,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      408,
+      52,
+      53,
+      24
+    ],
+    [
+      46,
+      689,
+      150,
+      18
+    ],
+    [
+      63,
+      321,
+      1092,
+      55
+    ],
+    [
+      16,
+      13,
+      21,
+      153
+    ]
+  ],
+  "run_id": "rq2_ghep_dt_s42",
+  "mode": "full",
+  "classifier": "dt",
+  "features": "ghep",
+  "deterministic": false,
+  "n_train": 14815,
+  "n_val": 3174,
+  "selected_params": {
+    "max_depth": 10,
+    "min_samples_leaf": 1
+  },
+  "cv_best_macro_f1": 0.72872,
+  "cv_best_std": 0.007724,
+  "cv_candidates": [
+    {
+      "params": {
+        "max_depth": 10,
+        "min_samples_leaf": 1
+      },
+      "fold_scores": [
+        0.7211,
+        0.7382,
+        0.7358,
+        0.7237,
+        0.7248
+      ],
+      "mean_score": 0.72872,
+      "std_score": 0.007723794404306733
+    },
+    {
+      "params": {
+        "max_depth": 10,
+        "min_samples_leaf": 5
+      },
+      "fold_scores": [
+        0.7113,
+        0.7202,
+        0.722,
+        0.709,
+        0.7179
+      ],
+      "mean_score": 0.71608,
+      "std_score": 0.005663656063003812
+    },
+    {
+      "params": {
+        "max_depth": 20,
+        "min_samples_leaf": 1
+      },
+      "fold_scores": [
+        0.7109,
+        0.7242,
+        0.7332,
+        0.7193,
+        0.713
+      ],
+      "mean_score": 0.72012,
+      "std_score": 0.009001499875020823
+    },
+    {
+      "params": {
+        "max_depth": 20,
+        "min_samples_leaf": 5
+      },
+      "fold_scores": [
+        0.7037,
+        0.7111,
+        0.7118,
+        0.6954,
+        0.7015
+      ],
+      "mean_score": 0.7047000000000001,
+      "std_score": 0.006875681784375983
+    },
+    {
+      "params": {
+        "max_depth": null,
+        "min_samples_leaf": 1
+      },
+      "fold_scores": [
+        0.7124,
+        0.729,
+        0.7113,
+        0.7154,
+        0.6996
+      ],
+      "mean_score": 0.7135400000000001,
+      "std_score": 0.01052511282599858
+    },
+    {
+      "params": {
+        "max_depth": null,
+        "min_samples_leaf": 5
+      },
+      "fold_scores": [
+        0.7006,
+        0.7168,
+        0.7131,
+        0.6971,
+        0.7093
+      ],
+      "mean_score": 0.70738,
+      "std_score": 0.008318473417640979
+    }
+  ],
+  "seconds": {
+    "extract_cpu_train": 1155.273,
+    "extract_cpu_val": 247.594,
+    "cv_cpu": 189.601,
+    "cv_wall": 50.554,
+    "fit_cpu": 4.316,
+    "fit_wall": 4.32,
+    "predict_wall": 0.002
+  }
+}

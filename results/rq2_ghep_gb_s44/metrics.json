@@ -1,0 +1,149 @@
+{
+  "accuracy": 0.8749,
+  "balanced_accuracy": 0.8879,
+  "macro_f1": 0.8885,
+  "weighted_f1": 0.8753,
+  "macro_precision": 0.8893,
+  "macro_recall": 0.8879,
+  "per_class": {
+    "COVID": {
+      "precision": 0.951310861423221,
+      "recall": 0.9459962756052142,
+      "f1": 0.9486461251167133,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.8051391862955032,
+      "recall": 0.832779623477298,
+      "f1": 0.8187261839956451,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8857901726427623,
+      "recall": 0.8713259307642064,
+      "f1": 0.8784985182746131,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.915,
+      "recall": 0.9014778325123153,
+      "f1": 0.9081885856079405,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      508,
+      12,
+      15,
+      2
+    ],
+    [
+      6,
+      752,
+      145,
+      0
+    ],
+    [
+      16,
+      166,
+      1334,
+      15
+    ],
+    [
+      4,
+      4,
+      12,
+      183
+    ]
+  ],
+  "run_id": "rq2_ghep_gb_s44",
+  "mode": "full",
+  "classifier": "gb",
+  "features": "ghep",
+  "deterministic": false,
+  "n_train": 14815,
+  "n_val": 3174,
+  "selected_params": {
+    "n_estimators": 200,
+    "learning_rate": 0.1,
+    "max_depth": 5
+  },
+  "cv_best_macro_f1": 0.88032,
+  "cv_best_std": 0.006782,
+  "cv_candidates": [
+    {
+      "params": {
+        "n_estimators": 100,
+        "learning_rate": 0.1,
+        "max_depth": 3
+      },
+      "fold_scores": [
+        0.8315,
+        0.8245,
+        0.8375,
+        0.8239,
+        0.8065
+      ],
+      "mean_score": 0.82478,
+      "std_score": 0.011640103092326987
+    },
+    {
+      "params": {
+        "n_estimators": 100,
+        "learning_rate": 0.1,
+        "max_depth": 5
+      },
+      "fold_scores": [
+        0.8677,
+        0.8711,
+        0.8763,
+        0.8684,
+        0.8623
+      ],
+      "mean_score": 0.8691599999999999,
+      "std_score": 0.0051115555362335665
+    },
+    {
+      "params": {
+        "n_estimators": 200,
+        "learning_rate": 0.1,
+        "max_depth": 3
+      },
+      "fold_scores": [
+        0.8567,
+        0.8604,
+        0.8623,
+        0.8552,
+        0.8428
+      ],
+      "mean_score": 0.85548,
+      "std_score": 0.007633282387020674
+    },
+    {
+      "params": {
+        "n_estimators": 200,
+        "learning_rate": 0.1,
+        "max_depth": 5
+      },
+      "fold_scores": [
+        0.88,
+        0.8865,
+        0.887,
+        0.8774,
+        0.8707
+      ],
+      "mean_score": 0.88032,
+      "std_score": 0.006782108816584987
+    }
+  ],
+  "seconds": {
+    "extract_cpu_train": 1155.273,
+    "extract_cpu_val": 247.594,
+    "cv_cpu": 1765.091,
+    "cv_wall": 489.926,
+    "fit_cpu": 131.465,
+    "fit_wall": 131.515,
+    "predict_wall": 0.104
+  }
+}
