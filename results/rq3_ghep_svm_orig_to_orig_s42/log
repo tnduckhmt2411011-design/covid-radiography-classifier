@@ -1,0 +1,16 @@
+run_id=rq3_ghep_svm_orig_to_orig_s42
+mode=full
+train_mask_mode=original
+eval_mask_mode=original
+mask_resize=nearest_256x256_to_299x299
+features=ghep
+classifier=svm
+n_train=14815
+n_val=3174
+GLCM correlation NaN (train original): 0/14815
+GLCM correlation NaN (val original): 0/3174
+extract_cpu_train=822.533
+extract_cpu_val=176.051
+fit_cpu=59.897
+predict_wall=7.515
+macro_f1=0.9024

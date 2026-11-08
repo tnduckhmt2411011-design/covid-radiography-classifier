@@ -1,0 +1,6 @@
+run_id,scenario,features,classifier,seed,LO_to_LO,LO_to_Normal,Normal_to_LO,Normal_to_Normal
+rq3_ghep_svm_orig_to_orig_s42,orig_to_orig,ghep,svm,42,767,124,144,1353
+rq3_ghep_svm_lung_to_lung_s42,lung_to_lung,ghep,svm,42,735,105,101,1325
+rq3_ghep_svm_out_to_out_s42,out_to_out,ghep,svm,42,751,138,158,1336
+rq3_ghep_svm_orig_to_lung_s42,orig_to_lung,ghep,svm,42,0,1,0,0
+rq3_ghep_svm_orig_to_out_s42,orig_to_out,ghep,svm,42,247,61,169,112

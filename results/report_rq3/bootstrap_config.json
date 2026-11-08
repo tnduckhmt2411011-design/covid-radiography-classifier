@@ -1,0 +1,21 @@
+{
+  "rq": "rq3",
+  "features": "ghep",
+  "classifier": "svm",
+  "seed": 42,
+  "scenarios": [
+    "orig_to_orig",
+    "lung_to_lung",
+    "out_to_out",
+    "orig_to_lung",
+    "orig_to_out"
+  ],
+  "reference": "orig_to_orig",
+  "n": 3174,
+  "n_boot": 2000,
+  "rng_seed": 42,
+  "expected_n": 3174,
+  "numpy_version": "2.5.4",
+  "pandas_version": "2.2.3",
+  "scikit_learn_version": "1.6.1"
+}

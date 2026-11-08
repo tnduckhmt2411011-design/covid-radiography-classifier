@@ -1,0 +1,16 @@
+run_id=rq3_ghep_svm_lung_to_lung_s42
+mode=full
+train_mask_mode=lung_only
+eval_mask_mode=lung_only
+mask_resize=nearest_256x256_to_299x299
+features=ghep
+classifier=svm
+n_train=14815
+n_val=3174
+GLCM correlation NaN (train lung_only): 0/14815
+GLCM correlation NaN (val lung_only): 0/3174
+extract_cpu_train=828.093
+extract_cpu_val=178.134
+fit_cpu=70.561
+predict_wall=9.159
+macro_f1=0.849

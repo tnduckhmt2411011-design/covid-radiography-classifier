@@ -54,17 +54,17 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 07/11/2026
+Cập nhật lần cuối: 08/11/2026 (v3.8 — Hoàn tất S4-07 và RQ3: S5-01, S5-02, S5-03)
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
 | **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong EDA, manifest, S1-01 và S1-02; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
 | **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 6/6 | Xong | Đã xong trích đặc trưng (PR #30, #31), script bootstrap R1-R5 (PR #29), runner và 12 run Random Forest (PR #32, #33), tổng hợp bảng RQ1 và chốt nhóm đặc trưng ghep (152 chiều) cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
-| **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 3/4 | Đang làm | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04) và phân tích lỗi chi tiết (S4-06); còn S4-07 (7 việc, 3 hủy, mẫu số 4) |
-| **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 0/6 | Chưa làm | Đánh giá ảnh che và mở khóa tập test duy nhất một lần (6 việc, 0 hủy, mẫu số 6) |
+| **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
+| **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 3/6 | Đang làm | Đã hoàn tất đánh giá RQ3 trên 3 chế độ che (S5-01), permutation importance (S5-02) và kết luận shortcut learning (S5-03); còn S5-04, S5-05, S5-06 (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **18/33** | **Đang triển khai** | **Đạt 54.5% Xong (18/33 việc), 0 việc Đang làm, 15 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **22/33** | **Đang triển khai** | **Đạt 66.7% Xong (22/33 việc), 0 việc Đang làm, 11 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -129,7 +129,7 @@ Cập nhật lần cuối: 07/11/2026
 | S4-04 | T8 | Chốt cấu hình mô hình tối ưu nhất và đóng băng tham số thực nghiệm | Hạ tầng | Cả nhóm | S | Xong | results/rq2_classifier_selection_record.md, results/rq2_cost_rank_record.md, results/report_rq2/r1_bootstrap_vs_reference.csv, tests/test_rq2_report_and_selection.py | Cấu hình cuối cùng được ghi nhận văn bản và khóa chặt chẽ |
 | S4-05 | T8 | Cài đặt module Grad-CAM trong `src/gradcam.py` và `07_gradcam_lung_attention.ipynb` | RQ3 | Lê Minh | L | Hủy – ngoài phạm vi | Hủy – ngoài phạm vi; bằng chứng cũ lưu ở tag archive-dl-ngoai-pham-vi | Xuất được bản đồ nhiệt Grad-CAM phủ trên ảnh X-quang, đối chiếu trực quan với mask |
 | S4-06 | T8 | Phân tích chi tiết các ca dự đoán sai trên `09_error_analysis.ipynb` | Báo cáo | Lê Minh | M | Xong | notebooks/09_error_analysis.ipynb, results/error_analysis/val_misclassified_cases.csv, results/error_analysis/confusion_pairs_summary.csv, results/error_analysis/typical_clinical_confusions.csv, results/error_analysis/error_analysis_summary.md, tests/test_error_analysis.py | Lập danh sách các ca nhầm lẫn điển hình giữa COVID, Lung Opacity và Pneumonia |
-| S4-07 | T8 | Tạo bộ ảnh che thử nghiệm (chỉ giữ phổi / che ngoài phổi) | RQ3 | Lê Minh (duyệt Minh Thuận) | M | Chưa làm | Chưa có nhánh/PR | Bộ ảnh che được kiểm tra bằng mắt trên ít nhất 20 ảnh mỗi lớp không bị lệch mask; trước đó đo kích thước thật của toàn bộ 21.165 mask (đếm số kích thước khác nhau) và ghi kết quả vào docs/dataset_provenance.md |
+| S4-07 | T8 | Tạo bộ ảnh che thử nghiệm (chỉ giữ phổi / che ngoài phổi) | RQ3 | Lê Minh (duyệt Minh Thuận) | M | Xong | PR #39 và PR #40, src/rq3_runner.py, results/rq3_mask_check/ (80 ảnh kiểm tra trực quan, all_centered=True, 4 contact sheets), results/mask_size_audit.json, results/mask_value_audit.json | Bộ ảnh che được kiểm tra bằng mắt trên 20 ảnh mỗi lớp (80 ảnh) không bị lệch mask; đo kích thước thật của toàn bộ 21.165 mask (256x256 RGB {0,255}) |
 
 ---
 
@@ -140,9 +140,9 @@ Cập nhật lần cuối: 07/11/2026
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
-| S5-01 | T9 | Đánh giá mô hình trên 3 tập (ảnh gốc, chỉ phổi, ngoài phổi) trong `08_rq3_masked_eval.ipynb` | RQ3 | Lê Minh | L | Chưa làm | Chưa có nhánh/PR | Bảng RQ3 trên tập validation thể hiện đầy đủ sự thay đổi độ chính xác trên 3 kiểu che |
-| S5-02 | T9 | Tính permutation importance và so sánh đặc trưng trong phổi với ngoài phổi | RQ3 | Lê Minh | M | Chưa làm | Chưa có nhánh/PR | permutation importance và so sánh macro-F1 của đặc trưng chỉ trong phổi với chỉ ngoài phổi theo R3 của threshold_v3 |
-| S5-03 | T9 | Soạn thảo kết luận nghiên cứu về nguy cơ shortcut learning | RQ3 | Lê Minh | M | Chưa làm | Chưa có nhánh/PR | Kết luận sơ bộ về mức độ shortcut learning dù kết quả có đẹp hay không |
+| S5-01 | T9 | Đánh giá mô hình trên 3 tập (ảnh gốc, chỉ phổi, ngoài phổi) trong `08_rq3_masked_eval.ipynb` | RQ3 | Lê Minh | L | Xong | PR #39 và PR #40, notebooks/08_rq3_masked_eval.ipynb, results/rq3_ghep_svm_*_s42, results/report_rq3/, kernel ductrannguyen/cxr-rq3-masked (version 2) | Bảng RQ3 trên tập validation thể hiện đầy đủ sự thay đổi độ chính xác trên 3 kiểu che kèm khoảng tin cậy 95% bootstrap 2.000 lần |
+| S5-02 | T9 | Tính permutation importance và so sánh đặc trưng trong phổi với ngoài phổi | RQ3 | Lê Minh | M | Xong | results/rq3_permutation_importance.csv, notebooks/08_rq3_masked_eval.ipynb, src/rq3_runner.py | permutation importance 10 khối và so sánh macro-F1 của đặc trưng chỉ trong phổi với chỉ ngoài phổi theo R3 của threshold_v3 |
+| S5-03 | T9 | Soạn thảo kết luận nghiên cứu về nguy cơ shortcut learning | RQ3 | Lê Minh | M | Xong | results/rq3_shortcut_learning_conclusion.md, results/rq3_comparison_protocol_record.md, notebooks/08_rq3_masked_eval.ipynb | Kết luận khoa học về mức độ shortcut learning nghiêm trọng ở vùng ngoài phổi (out_to_out F1=0,8921) và quyết định đóng băng cấu hình cho tập test (S5-04) |
 | S5-04 | T10 | Mở khóa tập test và thực hiện đánh giá DUY NHẤT 1 LẦN trong `10_final_test_eval.ipynb` | Chống rò rỉ | Hải Lý | M | Chưa làm | Chưa có nhánh/PR | Kết quả test ghi đúng 1 lần duy nhất kèm mã hash file split để đảm bảo tính khách quan |
 | S5-05 | T10 | Xuất ma trận nhầm lẫn (Confusion Matrix) và bảng chỉ số trên test | Báo cáo | Hải Lý | S | Chưa làm | Chưa có nhánh/PR | Bảng kết quả test đầy đủ accuracy, macro-F1 và recall từng lớp |
 | S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Chưa làm | Chưa có nhánh/PR | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |

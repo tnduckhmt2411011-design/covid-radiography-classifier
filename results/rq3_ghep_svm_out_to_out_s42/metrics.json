@@ -1,0 +1,77 @@
+{
+  "accuracy": 0.8784,
+  "balanced_accuracy": 0.8995,
+  "macro_f1": 0.8921,
+  "weighted_f1": 0.8784,
+  "macro_precision": 0.8852,
+  "macro_recall": 0.8995,
+  "per_class": {
+    "COVID": {
+      "precision": 0.9339449541284404,
+      "recall": 0.9478584729981379,
+      "f1": 0.9408502772643254,
+      "support": 537
+    },
+    "Lung_Opacity": {
+      "precision": 0.8154180238870793,
+      "recall": 0.831672203765227,
+      "f1": 0.8234649122807017,
+      "support": 903
+    },
+    "Normal": {
+      "precision": 0.8942436412315931,
+      "recall": 0.8726322664924886,
+      "f1": 0.883305785123967,
+      "support": 1531
+    },
+    "Viral Pneumonia": {
+      "precision": 0.897196261682243,
+      "recall": 0.9458128078817734,
+      "f1": 0.920863309352518,
+      "support": 203
+    }
+  },
+  "confusion_matrix": [
+    [
+      509,
+      10,
+      14,
+      4
+    ],
+    [
+      12,
+      751,
+      138,
+      2
+    ],
+    [
+      21,
+      158,
+      1336,
+      16
+    ],
+    [
+      3,
+      2,
+      6,
+      192
+    ]
+  ],
+  "run_id": "rq3_ghep_svm_out_to_out_s42",
+  "rq": "rq3",
+  "mode": "full",
+  "train_mask_mode": "outside_only",
+  "eval_mask_mode": "outside_only",
+  "features": "ghep",
+  "classifier": "svm",
+  "seed": 42,
+  "n_train": 14815,
+  "n_val": 3174,
+  "seconds": {
+    "extract_cpu_train": 823.877,
+    "extract_cpu_val": 177.346,
+    "fit_cpu": 60.452,
+    "fit_wall": 60.475,
+    "predict_wall": 8.499
+  }
+}

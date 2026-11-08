@@ -147,6 +147,33 @@ def load_rq2_predictions(
     return _validate_predictions_df(df, run_id=run_id, expected_n=expected_n)
 
 
+def load_rq3_predictions(
+    results_dir: Union[str, Path],
+    scenario: str,
+    seed: int = 42,
+    expected_n: Optional[int] = 3174,
+) -> pd.DataFrame:
+    """Đọc tệp preds_val.csv của một run RQ3 và kiểm tra tính hợp lệ dữ liệu.
+
+    Args:
+        results_dir: Thư mục gốc chứa kết quả các run.
+        scenario: Tên kịch bản RQ3 (orig_to_orig, orig_to_lung, orig_to_out, lung_to_lung, out_to_out).
+        seed: Seed huấn luyện (mặc định 42).
+        expected_n: Số dòng kỳ vọng (3174 với tập validation, None nếu bỏ qua).
+
+    Returns:
+        pd.DataFrame: DataFrame đã sắp xếp theo image_id.
+    """
+    run_id = f"rq3_ghep_svm_{scenario}_s{seed}"
+    csv_path = Path(results_dir) / run_id / "preds_val.csv"
+
+    if not csv_path.is_file():
+        raise ValueError(f"Run {run_id}: không tìm thấy tệp {csv_path}")
+
+    df = pd.read_csv(csv_path)
+    return _validate_predictions_df(df, run_id=run_id, expected_n=expected_n)
+
+
 def align_predictions(
     runs: Dict[str, Dict[int, pd.DataFrame]]
 ) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
@@ -773,6 +800,252 @@ def build_rq2_report(
         "r1_summary.csv": r1_summary_path,
         "r1_confusion_matrices.json": r1_cm_path,
         "r1_bootstrap_vs_reference.csv": r1_boot_path,
+        "r2_normal_lung_opacity.csv": r2_path,
+        "r4_sampling_error.csv": r4_path,
+        "r5_gioi_han.md": r5_path,
+        "bootstrap_config.json": config_path,
+    }
+
+
+def build_rq3_report(
+    results_dir: Union[str, Path],
+    out_dir: Union[str, Path],
+    scenarios: Sequence[str] = (
+        "orig_to_orig",
+        "lung_to_lung",
+        "out_to_out",
+        "orig_to_lung",
+        "orig_to_out",
+    ),
+    seed: int = 42,
+    reference: str = "orig_to_orig",
+    n_boot: int = 2000,
+    rng_seed: int = 42,
+    expected_n: Optional[int] = 3174,
+    threshold_path: Union[str, Path] = "results/threshold_v3.md",
+) -> Dict[str, Path]:
+    """Tạo toàn bộ các tệp báo cáo R1, R2, R3, R4, R5 cho RQ3 theo đặc tả."""
+    if reference not in scenarios:
+        raise ValueError(
+            f"Kịch bản reference '{reference}' không nằm trong danh sách {scenarios}"
+        )
+
+    out_path = Path(out_dir)
+    out_path.mkdir(parents=True, exist_ok=True)
+
+    runs: Dict[str, Dict[int, pd.DataFrame]] = {}
+    for sc in scenarios:
+        runs[sc] = {
+            seed: load_rq3_predictions(
+                results_dir, scenario=sc, seed=seed, expected_n=expected_n
+            )
+        }
+
+    y_true, preds = align_predictions(runs)
+    n = len(y_true)
+    num_classes = len(DEFAULT_CLASS_NAMES)
+    n_viral = int(np.sum(y_true == 3))
+
+    per_scenario_rows: List[Dict[str, Union[str, int, float]]] = []
+    confusion_matrices: Dict[str, List[List[int]]] = {}
+    r2_rows: List[Dict[str, Union[str, int]]] = []
+    r4_rows: List[Dict[str, Union[str, int, float]]] = []
+    summary_rows: List[Dict[str, Union[str, int, float, bool]]] = []
+
+    for sc in scenarios:
+        run_id = f"rq3_ghep_svm_{sc}_s{seed}"
+        y_pred = runs[sc][seed]["y_pred"].to_numpy(dtype=np.int64)
+
+        idx = y_true * num_classes + y_pred
+        cm = np.bincount(idx, minlength=num_classes * num_classes).reshape(
+            (num_classes, num_classes)
+        )
+        confusion_matrices[run_id] = cm.tolist()
+
+        tp = np.diag(cm)
+        row_sum = np.sum(cm, axis=1)
+        col_sum = np.sum(cm, axis=0)
+
+        prec = np.where(col_sum > 0, tp / col_sum, 0.0)
+        rec = np.where(row_sum > 0, tp / row_sum, 0.0)
+        denom = row_sum + col_sum
+        f1 = np.where(denom > 0, 2.0 * tp / denom, 0.0)
+        macro_f1 = float(np.mean(f1))
+
+        row: Dict[str, Union[str, int, float]] = {
+            "run_id": run_id,
+            "scenario": sc,
+            "features": "ghep",
+            "classifier": "svm",
+            "seed": seed,
+            "macro_f1": macro_f1,
+        }
+        for c_idx, c_name in enumerate(DEFAULT_CLASS_NAMES):
+            row[f"precision_{c_name}"] = float(prec[c_idx])
+            row[f"recall_{c_name}"] = float(rec[c_idx])
+            row[f"f1_{c_name}"] = float(f1[c_idx])
+        per_scenario_rows.append(row)
+
+        boot_ci = bootstrap_ci_macro_f1(
+            y_true, preds[sc], n_boot=n_boot, rng_seed=rng_seed
+        )
+        s_row: Dict[str, Union[str, int, float, bool]] = {
+            "scenario": sc,
+            "features": "ghep",
+            "classifier": "svm",
+            "seed": seed,
+            "is_deterministic": True,
+            "n_seeds": 1,
+            "macro_f1": macro_f1,
+            "ci95_low": boot_ci["ci_low"],
+            "ci95_high": boot_ci["ci_high"],
+        }
+        for c_idx, c_name in enumerate(DEFAULT_CLASS_NAMES):
+            s_row[f"precision_{c_name}"] = float(prec[c_idx])
+            s_row[f"recall_{c_name}"] = float(rec[c_idx])
+            s_row[f"f1_{c_name}"] = float(f1[c_idx])
+        summary_rows.append(s_row)
+
+        r2_rows.append({
+            "run_id": run_id,
+            "scenario": sc,
+            "features": "ghep",
+            "classifier": "svm",
+            "seed": seed,
+            "LO_to_LO": int(cm[1, 1]),
+            "LO_to_Normal": int(cm[1, 2]),
+            "Normal_to_LO": int(cm[2, 1]),
+            "Normal_to_Normal": int(cm[2, 2]),
+        })
+
+        acc = float(np.sum(tp) / n) if n > 0 else 0.0
+        se_all = sampling_error(acc, n) if n > 0 else 0.0
+        rec_viral = float(rec[3])
+        se_viral = sampling_error(rec_viral, n_viral) if n_viral > 0 else 0.0
+
+        r4_rows.append({
+            "run_id": run_id,
+            "scenario": sc,
+            "features": "ghep",
+            "classifier": "svm",
+            "seed": seed,
+            "p_accuracy": acc,
+            "n_all": n,
+            "se_all": se_all,
+            "p_recall_viral": rec_viral,
+            "n_viral": n_viral,
+            "se_viral": se_viral,
+        })
+
+    # Phép so sánh ghép cặp so với tham chiếu (orig_to_orig)
+    boot_vs_ref_rows: List[Dict[str, Union[str, int, float, bool]]] = []
+    for cand in scenarios:
+        if cand == reference:
+            continue
+        res_pair = paired_bootstrap_diff(
+            y_true, preds[cand], preds[reference], n_boot=n_boot, rng_seed=rng_seed
+        )
+        boot_vs_ref_rows.append({
+            "candidate": cand,
+            "reference": reference,
+            "point_candidate": res_pair["point_a"],
+            "point_reference": res_pair["point_b"],
+            "point_diff": res_pair["point_diff"],
+            "ci_low": res_pair["ci_low"],
+            "ci_high": res_pair["ci_high"],
+            "contains_zero": res_pair["contains_zero"],
+            "n": res_pair["n"],
+            "n_boot": res_pair["n_boot"],
+            "rng_seed": res_pair["rng_seed"],
+        })
+
+    # Phép so sánh kiểm tra lối tắt R3 (các cặp tương phản chính)
+    shortcut_pairs = [
+        ("lung_to_lung", "orig_to_orig"),
+        ("lung_to_lung", "out_to_out"),
+        ("orig_to_orig", "out_to_out"),
+        ("orig_to_orig", "orig_to_lung"),
+        ("orig_to_orig", "orig_to_out"),
+    ]
+    shortcut_rows: List[Dict[str, Union[str, int, float, bool]]] = []
+    for sc_a, sc_b in shortcut_pairs:
+        if sc_a in preds and sc_b in preds:
+            res_sc = paired_bootstrap_diff(
+                y_true, preds[sc_a], preds[sc_b], n_boot=n_boot, rng_seed=rng_seed
+            )
+            shortcut_rows.append({
+                "scenario_a": sc_a,
+                "scenario_b": sc_b,
+                "point_a": res_sc["point_a"],
+                "point_b": res_sc["point_b"],
+                "point_diff": res_sc["point_diff"],
+                "ci_low": res_sc["ci_low"],
+                "ci_high": res_sc["ci_high"],
+                "contains_zero": res_sc["contains_zero"],
+                "n": res_sc["n"],
+                "n_boot": res_sc["n_boot"],
+                "rng_seed": res_sc["rng_seed"],
+            })
+
+    r5_content = r5_text(threshold_path)
+
+    try:
+        sklearn_version = importlib.metadata.version("scikit-learn")
+    except Exception:
+        sklearn_version = "unknown"
+
+    config_data = {
+        "rq": "rq3",
+        "features": "ghep",
+        "classifier": "svm",
+        "seed": seed,
+        "scenarios": list(scenarios),
+        "reference": reference,
+        "n": int(n),
+        "n_boot": int(n_boot),
+        "rng_seed": int(rng_seed),
+        "expected_n": int(expected_n) if expected_n is not None else None,
+        "numpy_version": str(np.__version__),
+        "pandas_version": str(pd.__version__),
+        "scikit_learn_version": str(sklearn_version),
+    }
+
+    r1_per_sc_path = out_path / "r1_per_scenario.csv"
+    pd.DataFrame(per_scenario_rows).to_csv(r1_per_sc_path, index=False)
+
+    r1_summary_path = out_path / "r1_summary.csv"
+    pd.DataFrame(summary_rows).to_csv(r1_summary_path, index=False)
+
+    r1_cm_path = out_path / "r1_confusion_matrices.json"
+    with open(r1_cm_path, "w", encoding="utf-8") as f:
+        json.dump(confusion_matrices, f, indent=2)
+
+    r1_boot_path = out_path / "r1_bootstrap_vs_reference.csv"
+    pd.DataFrame(boot_vs_ref_rows).to_csv(r1_boot_path, index=False)
+
+    r3_sc_path = out_path / "r3_shortcut_bootstrap.csv"
+    pd.DataFrame(shortcut_rows).to_csv(r3_sc_path, index=False)
+
+    r2_path = out_path / "r2_normal_lung_opacity.csv"
+    pd.DataFrame(r2_rows).to_csv(r2_path, index=False)
+
+    r4_path = out_path / "r4_sampling_error.csv"
+    pd.DataFrame(r4_rows).to_csv(r4_path, index=False)
+
+    r5_path = out_path / "r5_gioi_han.md"
+    with open(r5_path, "w", encoding="utf-8") as f:
+        f.write(r5_content + "\n")
+
+    config_path = out_path / "bootstrap_config.json"
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(config_data, f, indent=2)
+
+    return {
+        "r1_per_scenario.csv": r1_per_sc_path,
+        "r1_summary.csv": r1_summary_path,
+        "r1_confusion_matrices.json": r1_cm_path,
+        "r1_bootstrap_vs_reference.csv": r1_boot_path,
+        "r3_shortcut_bootstrap.csv": r3_sc_path,
         "r2_normal_lung_opacity.csv": r2_path,
         "r4_sampling_error.csv": r4_path,
         "r5_gioi_han.md": r5_path,
