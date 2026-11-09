@@ -16,6 +16,7 @@ Hai chế độ:
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import hashlib
 import hmac
 import json
@@ -34,6 +35,10 @@ REFERENCE_VAL_MACRO_F1: float = 0.9024
 G5_TOLERANCE: float = 0.002
 # SHA-256 của chuỗi xác nhận mở khóa do người dùng gõ (bản rõ KHÔNG lưu trong repo).
 CONFIRM_STRING_SHA256: str = "PENDING_USER_REGISTRATION"
+FINAL_DIRNAME: str = "final_test"
+DRY_DIRNAME: str = "dry"
+UNLOCK_RECORD_NAME: str = "UNLOCK_RECORD.json"
+CONFIRM_FILE_NAME: str = "CONFIRM_FINAL"
 
 
 def _sha256_file(path: Path) -> str:
@@ -106,3 +111,63 @@ def check_frozen_config(reference_config: Mapping[str, Any]) -> None:
     want_fp = _json_norm(feature_params(FROZEN_FEATURES))
     if got_fp != want_fp:
         raise ValueError("G2: feature_params khac tham so trich dac trung da dong bang.")
+
+
+def check_not_already_unlocked(out_dir: Union[str, Path]) -> None:
+    """G3: từ chối nếu UNLOCK_RECORD.json đã tồn tại trong thư mục đầu ra.
+
+    Lưu ý: trên Kaggle, /kaggle/working không được giữ lại giữa các lần chạy nên G3 chỉ là
+    chốt chặn theo quy trình trong cùng một thư mục đầu ra; không phải biện pháp ngăn tuyệt đối.
+    """
+    record = Path(out_dir) / FINAL_DIRNAME / UNLOCK_RECORD_NAME
+    if record.exists():
+        raise RuntimeError(
+            f"G3: da ton tai {record}; tap test da duoc mo khoa, tu choi chay lan hai."
+        )
+
+
+def check_confirm_final(
+    pkg_dir: Union[str, Path],
+    expected_sha256: str = CONFIRM_STRING_SHA256,
+) -> str:
+    """G4: CONFIRM_FINAL phải chứa đúng chuỗi cố định do người dùng gõ (so khớp theo SHA-256).
+
+    Chỉ cắt CR/LF ở cuối; mọi ký tự khác phải khớp tuyệt đối. Trả về SHA-256 của nội dung đã cắt.
+    """
+    confirm_path = Path(pkg_dir) / CONFIRM_FILE_NAME
+    if not confirm_path.is_file():
+        raise PermissionError(f"G4: thieu tep {CONFIRM_FILE_NAME} trong goi ma nguon.")
+    text = confirm_path.read_bytes().rstrip(b"\r\n")
+    actual = hashlib.sha256(text).hexdigest()
+    if not text or not hmac.compare_digest(actual, expected_sha256.strip().lower()):
+        raise PermissionError(f"G4: noi dung {CONFIRM_FILE_NAME} khong khop chuoi xac nhan da dang ky.")
+    return actual
+
+
+def write_unlock_record(
+    final_dir: Union[str, Path],
+    *,
+    commit: str,
+    split_sha256: str,
+    val_macro_f1: float,
+    confirm_sha256: str,
+) -> Path:
+    """G6: ghi UNLOCK_RECORD.json và flush + fsync TRƯỚC khi nạp ảnh test đầu tiên."""
+    final_path = Path(final_dir)
+    final_path.mkdir(parents=True, exist_ok=True)
+    record_path = final_path / UNLOCK_RECORD_NAME
+    if record_path.exists():
+        raise RuntimeError(f"G3: da ton tai {record_path}; khong ghi de ban ghi mo khoa.")
+    record = {
+        "utc_time": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "commit": commit,
+        "split_sha256": split_sha256,
+        "val_macro_f1": float(val_macro_f1),
+        "confirm_sha256": confirm_sha256,
+    }
+    with open(record_path, "x", encoding="utf-8", newline="\n") as f:
+        json.dump(record, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+        f.flush()
+        os.fsync(f.fileno())
+    return record_path

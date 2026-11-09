@@ -124,3 +124,94 @@ def test_g2_rejects_missing_field() -> None:
     del cfg["hyperparameters"]["probability"]
     with pytest.raises(ValueError):
         check_frozen_config(cfg)
+
+
+# ---------------------------------------------------------------- Task 2: G3, G4, G6
+
+from src.final_test_runner import (  # noqa: E402
+    UNLOCK_RECORD_NAME,
+    check_confirm_final,
+    check_not_already_unlocked,
+    write_unlock_record,
+)
+
+TEST_CONFIRM_TEXT = "CHUOI-XAC-NHAN-DUNG-CHO-KIEM-THU"
+TEST_CONFIRM_SHA = hashlib.sha256(TEST_CONFIRM_TEXT.encode("utf-8")).hexdigest()
+
+
+def test_g3_passes_on_empty_dir(tmp_path: Path) -> None:
+    check_not_already_unlocked(tmp_path)
+
+
+def test_g3_refuses_when_record_exists(tmp_path: Path) -> None:
+    final_dir = tmp_path / "final_test"
+    final_dir.mkdir()
+    (final_dir / UNLOCK_RECORD_NAME).write_text("{}", encoding="utf-8")
+    with pytest.raises(RuntimeError, match="G3"):
+        check_not_already_unlocked(tmp_path)
+
+
+def test_g3_dry_dir_does_not_block(tmp_path: Path) -> None:
+    (tmp_path / "dry").mkdir()
+    (tmp_path / "dry" / "dry_summary.json").write_text("{}", encoding="utf-8")
+    check_not_already_unlocked(tmp_path)
+
+
+def test_g4_missing_file(tmp_path: Path) -> None:
+    with pytest.raises(PermissionError, match="G4"):
+        check_confirm_final(tmp_path, expected_sha256=TEST_CONFIRM_SHA)
+
+
+def test_g4_wrong_string(tmp_path: Path) -> None:
+    (tmp_path / "CONFIRM_FINAL").write_text("SAI-CHUOI", encoding="utf-8")
+    with pytest.raises(PermissionError, match="G4"):
+        check_confirm_final(tmp_path, expected_sha256=TEST_CONFIRM_SHA)
+
+
+def test_g4_empty_string(tmp_path: Path) -> None:
+    (tmp_path / "CONFIRM_FINAL").write_text("", encoding="utf-8")
+    with pytest.raises(PermissionError, match="G4"):
+        check_confirm_final(tmp_path, expected_sha256=TEST_CONFIRM_SHA)
+
+
+def test_g4_rejects_string_with_extra_text(tmp_path: Path) -> None:
+    (tmp_path / "CONFIRM_FINAL").write_text(TEST_CONFIRM_TEXT + " them", encoding="utf-8")
+    with pytest.raises(PermissionError, match="G4"):
+        check_confirm_final(tmp_path, expected_sha256=TEST_CONFIRM_SHA)
+
+
+@pytest.mark.parametrize("tail", ["", "\n", "\r\n"])
+def test_g4_correct_string_accepts_trailing_newline(tmp_path: Path, tail: str) -> None:
+    (tmp_path / "CONFIRM_FINAL").write_bytes((TEST_CONFIRM_TEXT + tail).encode("utf-8"))
+    assert check_confirm_final(tmp_path, expected_sha256=TEST_CONFIRM_SHA) == TEST_CONFIRM_SHA
+
+
+def test_g6_record_contains_fields_and_is_valid_json(tmp_path: Path) -> None:
+    final_dir = tmp_path / "final_test"
+    path = write_unlock_record(
+        final_dir,
+        commit="a" * 40,
+        split_sha256=EXPECTED_SPLIT_SHA256,
+        val_macro_f1=0.9024,
+        confirm_sha256=TEST_CONFIRM_SHA,
+    )
+    assert path == final_dir / UNLOCK_RECORD_NAME
+    rec = json.loads(path.read_text(encoding="utf-8"))
+    assert rec["commit"] == "a" * 40
+    assert rec["split_sha256"] == EXPECTED_SPLIT_SHA256
+    assert rec["val_macro_f1"] == 0.9024
+    assert rec["confirm_sha256"] == TEST_CONFIRM_SHA
+    assert rec["utc_time"].endswith("Z")
+
+
+def test_g6_refuses_to_overwrite_existing_record(tmp_path: Path) -> None:
+    final_dir = tmp_path / "final_test"
+    kwargs = dict(
+        commit="a" * 40,
+        split_sha256=EXPECTED_SPLIT_SHA256,
+        val_macro_f1=0.9024,
+        confirm_sha256=TEST_CONFIRM_SHA,
+    )
+    write_unlock_record(final_dir, **kwargs)
+    with pytest.raises(RuntimeError, match="G3"):
+        write_unlock_record(final_dir, **kwargs)
