@@ -708,3 +708,53 @@ def test_kernel_scripts_hardcode_distinct_modes_and_ids() -> None:
 
     assert 'expected_mode="dry"' in dry_script
     assert 'expected_mode="final"' in final_script
+
+
+# ------------------------------------------------ Task 6: Protocol record & Kiểm toán
+
+PROTOCOL_RECORD_PATH = REPO_ROOT / "results" / "final_test_protocol_record.md"
+
+
+def test_protocol_record_registers_confirm_hash() -> None:
+    assert PROTOCOL_RECORD_PATH.is_file(), "Tệp results/final_test_protocol_record.md chưa được tạo"
+    content = PROTOCOL_RECORD_PATH.read_text(encoding="utf-8")
+    assert CONFIRM_STRING_SHA256 in content
+    assert len(CONFIRM_STRING_SHA256) == 64
+
+
+def test_reference_files_match_constants() -> None:
+    metrics_path = REFERENCE_DIR / "metrics.json"
+    config_path = REFERENCE_DIR / "config.yaml"
+    assert metrics_path.is_file() and config_path.is_file()
+
+    metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+    assert metrics["macro_f1"] == REFERENCE_VAL_MACRO_F1
+
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    assert config["hyperparameters"]["probability"] is True
+
+
+def test_protocol_record_has_incident_rules_and_manual_version_check() -> None:
+    assert PROTOCOL_RECORD_PATH.is_file()
+    content = PROTOCOL_RECORD_PATH.read_text(encoding="utf-8").lower()
+    # Kiểm tra các quy tắc sự cố hạ tầng và điều kiện chưa dùng test
+    assert "sự cố hạ tầng" in content or "su co ha tang" in content
+    assert "chưa dùng test" in content or "chua dung test" in content or "chưa tiêu thụ" in content
+    assert "chỉ người dùng" in content or "chi nguoi dung" in content
+    assert "bằng văn bản" in content or "bang van ban" in content
+    # Kiểm tra kiểm thủ công đúng 1 version
+    assert "1 version" in content or "đúng 1 version" in content or "dung 1 version" in content
+    assert "cxr-final-test" in content
+
+
+def test_no_deep_learning_imports_in_final_runner() -> None:
+    runner_path = REPO_ROOT / "src" / "final_test_runner.py"
+    lines = runner_path.read_text(encoding="utf-8").splitlines()
+    forbidden = {"torch", "tensorflow", "keras", "timm"}
+    for idx, line in enumerate(lines, 1):
+        line_clean = line.strip().lower()
+        if line_clean.startswith("#"):
+            continue
+        for word in forbidden:
+            assert f"import {word}" not in line_clean, f"Dòng {idx} import {word}"
+            assert f"from {word}" not in line_clean, f"Dòng {idx} from {word}"

@@ -44,7 +44,7 @@ EXPECTED_SPLIT_SIZES: Dict[str, int] = {"train": 14815, "val": 3174, "test": 317
 REFERENCE_VAL_MACRO_F1: float = 0.9024
 G5_TOLERANCE: float = 0.002
 # SHA-256 của chuỗi xác nhận mở khóa do người dùng gõ (bản rõ KHÔNG lưu trong repo).
-CONFIRM_STRING_SHA256: str = "PENDING_USER_REGISTRATION"
+CONFIRM_STRING_SHA256: str = "9e935a10a3593fe72a6901ae2edbe232fc7a35f002af13bc9cb33cad02a689a2"
 FINAL_DIRNAME: str = "final_test"
 DRY_DIRNAME: str = "dry"
 UNLOCK_RECORD_NAME: str = "UNLOCK_RECORD.json"
