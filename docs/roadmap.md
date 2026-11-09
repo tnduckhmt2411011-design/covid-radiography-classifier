@@ -64,7 +64,7 @@ Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đ�
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 5/6 | Đang làm | Đã hoàn tất đánh giá RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04) và xuất ma trận nhầm lẫn (S5-05); còn S5-06 (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **24/33** | **Đang triển khai** | **Đạt 72.7% Xong (24/33 việc), 1 việc Đang làm, 8 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **24/33** | **Đang triển khai** | **Đạt 72.7% Xong (24/33 việc), 0 việc Đang làm, 1 việc Chờ duyệt, 8 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -145,7 +145,7 @@ Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đ�
 | S5-03 | T9 | Soạn thảo kết luận nghiên cứu về nguy cơ shortcut learning | RQ3 | Lê Minh | M | Xong | results/rq3_shortcut_learning_conclusion.md, results/rq3_comparison_protocol_record.md, notebooks/08_rq3_masked_eval.ipynb | Kết luận khoa học về mức độ shortcut learning nghiêm trọng ở vùng ngoài phổi (out_to_out F1=0,8921) và quyết định đóng băng cấu hình cho tập test (S5-04) |
 | S5-04 | T10 | Mở khóa tập test và thực hiện đánh giá DUY NHẤT 1 LẦN trong `10_final_test_eval.ipynb` | Chống rò rỉ | Hải Lý | M | Xong | PR #41 (PR A) và PR #42 (PR B), results/final_test/UNLOCK_RECORD.json, results/final_test/final_test_report.json, notebooks/10_final_test_eval.ipynb, kernel ductrannguyen/cxr-final-test (version 1) | Kết quả test ghi đúng 1 lần duy nhất (Macro-F1=0,8714 [0,8579, 0,8840]) kèm mã hash file split để đảm bảo tính khách quan |
 | S5-05 | T10 | Xuất ma trận nhầm lẫn (Confusion Matrix) và bảng chỉ số trên test | Báo cáo | Hải Lý | S | Xong | results/final_test/metrics.json, results/final_test/preds_test.csv, results/final_test/confusion_matrix_test.png, notebooks/10_final_test_eval.ipynb | Bảng kết quả test đầy đủ accuracy (0,8656), macro-F1 (0,8714), recall từng lớp và ma trận con Normal vs Lung_Opacity (R2) |
-| S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Đang làm | Nhánh feat/thai-tu-inference-demo-s506 (chưa có PR); src/inference_demo.py, notebooks/11_inference_demo.ipynb, tests/test_inference_demo.py, tests/test_inference_demo_notebook.py | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |
+| S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Chờ duyệt | PR #43 (feat/thai-tu-inference-demo-s506); src/inference_demo.py, notebooks/11_inference_demo.ipynb, tests/test_inference_demo.py, tests/test_inference_demo_notebook.py | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |
 
 ---
 
