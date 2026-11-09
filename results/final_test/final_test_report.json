@@ -1,0 +1,73 @@
+{
+  "macro_f1": 0.8714357963444281,
+  "ci95_low": 0.8578719532211639,
+  "ci95_high": 0.8839600210788401,
+  "accuracy": 0.8656,
+  "per_class": {
+    "COVID": {
+      "precision": 0.9256505576208178,
+      "recall": 0.9171270718232044,
+      "f1": 0.9213691026827012,
+      "support": 543
+    },
+    "Lung_Opacity": {
+      "precision": 0.8012820512820513,
+      "recall": 0.8296460176991151,
+      "f1": 0.8152173913043478,
+      "support": 904
+    },
+    "Normal": {
+      "precision": 0.884435537742151,
+      "recall": 0.8659254414650098,
+      "f1": 0.8750826173165895,
+      "support": 1529
+    },
+    "Viral Pneumonia": {
+      "precision": 0.8634146341463415,
+      "recall": 0.885,
+      "f1": 0.8740740740740741,
+      "support": 200
+    }
+  },
+  "confusion_matrix": [
+    [
+      498,
+      22,
+      18,
+      5
+    ],
+    [
+      12,
+      750,
+      142,
+      0
+    ],
+    [
+      20,
+      162,
+      1324,
+      23
+    ],
+    [
+      8,
+      2,
+      13,
+      177
+    ]
+  ],
+  "r2_normal_lung_opacity": {
+    "LO_to_LO": 750,
+    "LO_to_Normal": 142,
+    "Normal_to_LO": 162,
+    "Normal_to_Normal": 1324
+  },
+  "r4_sampling_error": {
+    "n_all": 3176,
+    "ci_width": 0.026088067857676145,
+    "n_boot": 2000,
+    "rng_seed": 42
+  },
+  "val_macro_f1": 0.9024447972521963,
+  "test_minus_val": -0.031009000907768147,
+  "interpretation_note": "Moi loi giai thich ve su khac biet giua val va test deu la gia thuyet chua kiem chung; khong suy dien nguyen nhan."
+}
