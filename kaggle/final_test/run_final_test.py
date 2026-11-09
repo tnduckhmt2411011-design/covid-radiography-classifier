@@ -8,25 +8,57 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import shutil
 import sys
+from typing import Tuple
 
-# Đảm bảo đường dẫn import cho src từ gói mã nguồn trên Kaggle
-input_root = Path(os.environ.get("KAGGLE_INPUT_PATH", "/kaggle/input"))
-working_dir = Path(os.environ.get("KAGGLE_WORKING_PATH", "/kaggle/working"))
+SRC_FILES: Tuple[str, ...] = (
+    "dataset.py",
+    "metrics.py",
+    "bootstrap.py",
+    "features_hist_glcm_lbp.py",
+    "features_hog_ghep.py",
+    "rq1_runner.py",
+    "rq2_runner.py",
+    "rq3_runner.py",
+    "final_test_runner.py",
+)
+INPUT_ROOT: Path = Path(os.environ.get("KAGGLE_INPUT_PATH", "/kaggle/input"))
+WORKING_ROOT: Path = Path(os.environ.get("KAGGLE_WORKING_PATH", "/kaggle/working"))
 
-for pat in ("src", "*/src", "*/*/src"):
-    matches = sorted(input_root.glob(pat))
-    if matches:
-        pkg_root = str(matches[0].parent)
-        if pkg_root not in sys.path:
-            sys.path.insert(0, pkg_root)
-        break
 
-from src.final_test_runner import kaggle_main  # noqa: E402
+def find_package_dir(input_root: Path) -> Path:
+    """Tìm thư mục chứa gói mã nguồn dựa trên tệp đánh dấu COMMIT."""
+    patterns = ["COMMIT", "*/COMMIT", "*/*/COMMIT", "*/*/*/COMMIT", "*/*/*/*/COMMIT"]
+    for pat in patterns:
+        matches = sorted(input_root.glob(pat))
+        if matches:
+            return matches[0].parent
+    raise FileNotFoundError(f"Khong tim thay goi ma nguon trong {input_root}")
 
-if __name__ == "__main__":
+
+def main() -> None:
+    package_dir = find_package_dir(INPUT_ROOT)
+    code_root = WORKING_ROOT / "code"
+    src_dir = code_root / "src"
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    for file_name in SRC_FILES:
+        src_path = package_dir / file_name
+        if src_path.is_file():
+            shutil.copyfile(src_path, src_dir / file_name)
+        elif (package_dir / "src" / file_name).is_file():
+            shutil.copyfile(package_dir / "src" / file_name, src_dir / file_name)
+
+    sys.path.insert(0, str(code_root))
+    from src.final_test_runner import kaggle_main
+
     kaggle_main(
-        input_root=input_root,
-        working_dir=working_dir,
+        input_root=INPUT_ROOT,
+        working_dir=WORKING_ROOT,
         expected_mode="final",
     )
+
+
+if __name__ == "__main__":
+    main()
