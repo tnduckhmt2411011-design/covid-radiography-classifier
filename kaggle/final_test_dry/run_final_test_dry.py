@@ -8,10 +8,19 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import sys
 
-# Đảm bảo đường dẫn import cho src
+# Đảm bảo đường dẫn import cho src từ gói mã nguồn trên Kaggle
 input_root = Path(os.environ.get("KAGGLE_INPUT_PATH", "/kaggle/input"))
 working_dir = Path(os.environ.get("KAGGLE_WORKING_PATH", "/kaggle/working"))
+
+for pat in ("src", "*/src", "*/*/src"):
+    matches = sorted(input_root.glob(pat))
+    if matches:
+        pkg_root = str(matches[0].parent)
+        if pkg_root not in sys.path:
+            sys.path.insert(0, pkg_root)
+        break
 
 from src.final_test_runner import kaggle_main  # noqa: E402
 
