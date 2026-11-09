@@ -26,6 +26,7 @@ from src.inference_demo import (
     ensure_not_heldout_image,
     extract_152_features,
     fit_or_load_model,
+    load_benchmark_metrics,
     load_image_grayscale_299,
     plot_probabilities,
     predict_image,
@@ -456,3 +457,22 @@ def test_package_src_is_importable_standalone(tmp_path: Path) -> None:
     )
     assert proc.returncode == 0, proc.stderr
     assert proc.stdout.strip() == "152"
+
+
+def test_load_benchmark_metrics_reads_real_files_without_hardcoding() -> None:
+    bench = load_benchmark_metrics(REPO_ROOT)
+    assert bench["val_macro_f1"] == pytest.approx(0.9024, abs=1e-4)
+    assert bench["test_macro_f1"] == pytest.approx(0.8714, abs=1e-4)
+    assert bench["diff"] == pytest.approx(-0.0310, abs=1e-4)
+    assert "metrics.json" in bench["val_source"]
+    assert "metrics.json" in bench["test_source"]
+
+
+def test_build_inference_code_package_copies_reference_metrics(tmp_path: Path) -> None:
+    out = tmp_path / "pkg_metrics"
+    files = build_inference_code_package(REPO_ROOT, out, commit="f" * 40)
+    assert "reference/val_metrics.json" in files
+    assert "reference/final_test_metrics.json" in files
+    bench = load_benchmark_metrics(out)
+    assert bench["val_macro_f1"] == pytest.approx(0.9024, abs=1e-4)
+    assert bench["test_macro_f1"] == pytest.approx(0.8714, abs=1e-4)

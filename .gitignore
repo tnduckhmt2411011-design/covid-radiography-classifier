@@ -9,6 +9,8 @@ checkpoints/
 *.pth
 *.ckpt
 *.zip
+*.joblib
+*.pkl
 
 # Secrets and environment configs
 kaggle.json

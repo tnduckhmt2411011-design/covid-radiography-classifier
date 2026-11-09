@@ -64,7 +64,7 @@ Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đ�
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 5/6 | Đang làm | Đã hoàn tất đánh giá RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04) và xuất ma trận nhầm lẫn (S5-05); còn S5-06 (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **24/33** | **Đang triển khai** | **Đạt 72.7% Xong (24/33 việc), 0 việc Đang làm, 1 việc Chờ duyệt, 8 việc Chưa làm, 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **24/33** | **Đang triển khai** | **Đạt 72.7% Xong (24/33 việc), 0 việc Đang làm, 1 việc Chờ duyệt, 8 việc Chưa làm (6 việc S6 + S1-03 + S1-04), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 

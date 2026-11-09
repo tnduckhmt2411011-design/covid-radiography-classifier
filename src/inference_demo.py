@@ -226,6 +226,17 @@ def build_inference_code_package(
             raise FileNotFoundError(f"Thieu tep split: {sp_file}")
         shutil.copyfile(sp_file, out_path / fname)
         written.append(fname)
+    # Sao chép tệp metrics tham chiếu đã công bố để notebook đọc động từ tệp (không hard-code số đo)
+    ref_out = out_path / "reference"
+    ref_out.mkdir(parents=True, exist_ok=True)
+    val_metrics_src = repo_path / "results" / "rq3_ghep_svm_orig_to_orig_s42" / "metrics.json"
+    if val_metrics_src.is_file():
+        shutil.copyfile(val_metrics_src, ref_out / "val_metrics.json")
+        written.append("reference/val_metrics.json")
+    test_metrics_src = repo_path / "results" / "final_test" / "metrics.json"
+    if test_metrics_src.is_file():
+        shutil.copyfile(test_metrics_src, ref_out / "final_test_metrics.json")
+        written.append("reference/final_test_metrics.json")
     (out_path / "COMMIT").write_text(commit.strip() + "\n", encoding="utf-8", newline="\n")
     written.append("COMMIT")
     metadata = {
@@ -237,6 +248,47 @@ def build_inference_code_package(
         json.dump(metadata, f, indent=2, ensure_ascii=False)
     written.append("dataset-metadata.json")
     return written
+
+
+def load_benchmark_metrics(code_root: Union[str, Path]) -> Dict[str, Any]:
+    """Đọc các số đo tham chiếu đã công bố trực tiếp từ tệp kết quả (không hard-code).
+
+    Tìm trong results/ hoặc thư mục reference/ của gói mã nguồn.
+    """
+    root = Path(code_root)
+    val_file = None
+    for cand in [
+        root / "results" / "rq3_ghep_svm_orig_to_orig_s42" / "metrics.json",
+        root / "reference" / "val_metrics.json",
+        root / "reference" / "metrics.json",
+    ]:
+        if cand.is_file():
+            val_file = cand
+            break
+
+    test_file = None
+    for cand in [
+        root / "results" / "final_test" / "metrics.json",
+        root / "reference" / "final_test_metrics.json",
+    ]:
+        if cand.is_file():
+            test_file = cand
+            break
+
+    val_data = json.loads(val_file.read_text(encoding="utf-8")) if val_file else {}
+    test_data = json.loads(test_file.read_text(encoding="utf-8")) if test_file else {}
+
+    val_f1 = float(val_data["macro_f1"]) if "macro_f1" in val_data else None
+    test_f1 = float(test_data["macro_f1"]) if "macro_f1" in test_data else None
+    diff = (test_f1 - val_f1) if (test_f1 is not None and val_f1 is not None) else None
+
+    return {
+        "val_macro_f1": val_f1,
+        "test_macro_f1": test_f1,
+        "diff": diff,
+        "val_source": str(val_file) if val_file else "Khong tim thay",
+        "test_source": str(test_file) if test_file else "Khong tim thay",
+    }
 
 
 def predict_image(scaler: StandardScaler, clf: SVC, feats: np.ndarray) -> Dict[str, Any]:

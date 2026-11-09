@@ -78,8 +78,9 @@ def test_notebook_documents_frozen_model_and_d4(nb: dict) -> None:
     for needle in ("StandardScaler", "SVC", "C=10.0", "Histogram 64", "GLCM 60", "LBP 28"):
         assert needle in md, f"Thieu mo ta '{needle}' trong markdown"
     assert D4_RULE in md
-    assert "0.8714" in md and "0.9024" in md
     assert "không phải công cụ chẩn đoán" in md
+    code = "\n".join(_cells(nb, "code"))
+    assert "load_benchmark_metrics" in code, "Notebook phai doc so do tham chieu tu tep metrics, khong hardcode"
 
 
 def test_notebook_has_standalone_bootstrap_for_kaggle(nb: dict) -> None:
