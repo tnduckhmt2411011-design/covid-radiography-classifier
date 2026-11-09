@@ -22,6 +22,7 @@ import hmac
 import json
 import os
 from pathlib import Path
+import shutil
 from typing import Any, Dict, List, Mapping, Tuple, Union
 
 import cv2
@@ -35,7 +36,7 @@ from src.bootstrap import bootstrap_ci_macro_f1, macro_f1_from_labels
 from src.dataset import LABEL_TO_IDX
 from src.features_hog_ghep import extract_groups
 from src.metrics import DEFAULT_CLASS_NAMES, compute_metrics
-from src.rq2_runner import CHUNK_SIZE, feature_params
+from src.rq2_runner import CHUNK_SIZE, feature_params, find_data_root
 from src.rq3_runner import FROZEN_CLASSIFIER, FROZEN_FEATURES, FROZEN_SEED, FROZEN_SVM_PARAMS
 
 EXPECTED_SPLIT_SHA256: str = "f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98"
@@ -48,6 +49,22 @@ FINAL_DIRNAME: str = "final_test"
 DRY_DIRNAME: str = "dry"
 UNLOCK_RECORD_NAME: str = "UNLOCK_RECORD.json"
 CONFIRM_FILE_NAME: str = "CONFIRM_FINAL"
+
+FINAL_PACKAGE_SRC_FILES: Tuple[str, ...] = (
+    "dataset.py",
+    "metrics.py",
+    "bootstrap.py",
+    "features_hist_glcm_lbp.py",
+    "features_hog_ghep.py",
+    "rq1_runner.py",
+    "rq2_runner.py",
+    "rq3_runner.py",
+    "final_test_runner.py",
+)
+FINAL_PACKAGE_SPLIT_FILES: Tuple[str, ...] = (
+    "split_v1.csv",
+    "split_v1.sha256",
+)
 
 
 def _sha256_file(path: Path) -> str:
@@ -466,3 +483,145 @@ def run_final_test(
         "final_dir": str(final_dir),
         "report": report,
     }
+
+
+def build_final_test_code_package(
+    repo_root: Union[str, Path],
+    out_dir: Union[str, Path],
+    commit: str,
+    mode: str,
+    confirm_text: Optional[str] = None,
+    expected_confirm_sha256: str = CONFIRM_STRING_SHA256,
+    dataset_id: Optional[str] = None,
+) -> List[str]:
+    """Đóng gói mã nguồn, manifest split và cấu hình tham chiếu để đẩy lên Kaggle Dataset."""
+    if mode not in ("dry", "final"):
+        raise ValueError(f"Mode '{mode}' khong hop le, chi chap nhan 'dry' hoac 'final'.")
+
+    # Kiểm tra xác nhận TRƯỚC khi tạo hoặc sao chép bất kỳ tệp nào
+    clean_text: Optional[str] = None
+    if mode == "final":
+        if confirm_text is None:
+            raise ValueError("confirm_text khong duoc de trong o che do final.")
+        clean_text = confirm_text.rstrip("\r\n")
+        confirm_hash = hashlib.sha256(clean_text.encode("utf-8")).hexdigest().lower()
+        if not hmac.compare_digest(confirm_hash, expected_confirm_sha256.strip().lower()):
+            raise PermissionError(
+                f"Ma hash cua chuoi xac nhan ({confirm_hash}) khong khop ({expected_confirm_sha256})."
+            )
+
+    repo_path = Path(repo_root)
+    out_path = Path(out_dir)
+    if out_path.exists() and any(out_path.iterdir()):
+        raise ValueError(f"Thu muc '{out_dir}' da ton tai va khong rong.")
+
+    out_path.mkdir(parents=True, exist_ok=True)
+    src_out = out_path / "src"
+    src_out.mkdir(parents=True, exist_ok=True)
+
+    # Sao chép các tệp mã nguồn
+    for fname in FINAL_PACKAGE_SRC_FILES:
+        src_file = repo_path / "src" / fname
+        if not src_file.is_file():
+            raise FileNotFoundError(f"Thieu tep nguon: {src_file}")
+        shutil.copyfile(src_file, src_out / fname)
+        shutil.copyfile(src_file, out_path / fname)
+
+    # Sao chép tệp split
+    for fname in FINAL_PACKAGE_SPLIT_FILES:
+        sp_file = repo_path / "splits" / fname
+        if not sp_file.is_file():
+            raise FileNotFoundError(f"Thieu tep split: {sp_file}")
+        shutil.copyfile(sp_file, out_path / fname)
+
+    # Sao chép cấu hình tham chiếu và metrics tham chiếu
+    ref_out = out_path / "reference"
+    ref_out.mkdir(parents=True, exist_ok=True)
+    ref_src_dir = repo_path / "results" / "rq3_ghep_svm_orig_to_orig_s42"
+    for r_file in ("config.yaml", "metrics.json"):
+        src_f = ref_src_dir / r_file
+        if not src_f.is_file():
+            raise FileNotFoundError(f"Thieu tep tham chieu: {src_f}")
+        shutil.copyfile(src_f, ref_out / r_file)
+
+    # Sao chép threshold_v3.md nếu có
+    thresh_src = repo_path / "results" / "threshold_v3.md"
+    if thresh_src.is_file():
+        shutil.copyfile(thresh_src, out_path / "threshold_v3.md")
+
+    # Ghi tệp điều khiển
+    sha_str = (repo_path / "splits" / "split_v1.sha256").read_text(encoding="utf-8").strip().split()[0]
+    (out_path / "EXPECTED_SHA256").write_text(sha_str + "\n", encoding="utf-8", newline="\n")
+    (out_path / "COMMIT").write_text(commit.strip() + "\n", encoding="utf-8", newline="\n")
+    (out_path / "MODE").write_text(mode.strip() + "\n", encoding="utf-8", newline="\n")
+
+    # Ghi CONFIRM_FINAL nếu ở chế độ final
+    if mode == "final" and clean_text is not None:
+        (out_path / CONFIRM_FILE_NAME).write_text(clean_text + "\n", encoding="utf-8", newline="\n")
+
+    # Ghi dataset-metadata.json
+    if dataset_id is None:
+        dataset_id = (
+            "ductrannguyen/cxr-final-test-dry-code"
+            if mode == "dry"
+            else "ductrannguyen/cxr-final-test-code"
+        )
+    metadata = {
+        "title": dataset_id.split("/")[-1],
+        "id": dataset_id,
+        "licenses": [{"name": "other"}],
+    }
+    with open(out_path / "dataset-metadata.json", "w", encoding="utf-8", newline="\n") as f:
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+    return sorted(p.name for p in out_path.iterdir())
+
+
+def find_final_test_code_package(input_root: Union[str, Path]) -> Path:
+    """Tìm thư mục gói mã nguồn final test trên Kaggle."""
+    input_path = Path(input_root)
+    for pat in ("MODE", "*/MODE", "*/*/MODE", "*/*/*/MODE"):
+        matches = sorted(input_path.glob(pat))
+        if matches:
+            return matches[0].parent
+    for pat in ("COMMIT", "*/COMMIT", "*/*/COMMIT", "*/*/*/COMMIT"):
+        matches = sorted(input_path.glob(pat))
+        if matches:
+            return matches[0].parent
+    raise FileNotFoundError(f"Khong tim thay goi ma nguon final test trong {input_root}")
+
+
+def kaggle_main(
+    input_root: Union[str, Path] = "/kaggle/input",
+    working_dir: Union[str, Path] = "/kaggle/working",
+    expected_mode: str = "dry",
+) -> Dict[str, Any]:
+    """Điểm vào chính khi chạy kernel Kaggle cho S5-04 / S5-05."""
+    input_path = Path(input_root)
+    working_path = Path(working_dir)
+    pkg_dir = find_final_test_code_package(input_path)
+
+    mode_file = pkg_dir / "MODE"
+    if not mode_file.is_file():
+        raise FileNotFoundError(f"Thieu tep MODE trong goi ma: {pkg_dir}")
+    mode = mode_file.read_text(encoding="utf-8").strip()
+    if mode != expected_mode:
+        raise ValueError(
+            f"Che do trong goi ma ({mode}) khong khop voi che do du kien ({expected_mode}) cua kernel."
+        )
+
+    commit_file = pkg_dir / "COMMIT"
+    commit = commit_file.read_text(encoding="utf-8").strip() if commit_file.is_file() else "unknown"
+    ds_root = find_data_root(input_path)
+
+    return run_final_test(
+        mode=mode,
+        dataset_root=ds_root,
+        split_csv=pkg_dir / "split_v1.csv",
+        reference_dir=pkg_dir / "reference",
+        pkg_dir=pkg_dir,
+        out_dir=working_path,
+        commit=commit,
+        threshold_path=pkg_dir / "threshold_v3.md",
+    )

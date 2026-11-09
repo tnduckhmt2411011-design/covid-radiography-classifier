@@ -605,3 +605,106 @@ def test_build_final_report_ci_contains_point_estimate() -> None:
     assert rep["r4_sampling_error"]["n_all"] == 200
     assert len(rep["confusion_matrix"]) == 4
     assert set(rep["r2_normal_lung_opacity"]) == {"LO_to_LO", "LO_to_Normal", "Normal_to_LO", "Normal_to_Normal"}
+
+
+# ------------------------------------------------ Task 5: Đóng gói và kernel
+
+import inspect  # noqa: E402
+from src.final_test_runner import (  # noqa: E402
+    FINAL_PACKAGE_SRC_FILES,
+    build_final_test_code_package,
+    find_final_test_code_package,
+    kaggle_main,
+)
+
+
+def test_package_sync_src_files_exist() -> None:
+    src_dir = REPO_ROOT / "src"
+    for fname in FINAL_PACKAGE_SRC_FILES:
+        assert (src_dir / fname).is_file(), f"Tệp nguồn {fname} không tồn tại"
+
+
+def test_package_dry_has_no_confirm_final(tmp_path: Path) -> None:
+    out_pkg = tmp_path / "pkg_dry"
+    files = build_final_test_code_package(REPO_ROOT, out_pkg, commit="d" * 40, mode="dry")
+    assert "CONFIRM_FINAL" not in files
+    assert not (out_pkg / "CONFIRM_FINAL").exists()
+    assert (out_pkg / "MODE").read_text(encoding="utf-8").strip() == "dry"
+    assert (out_pkg / "reference" / "config.yaml").is_file()
+    assert (out_pkg / "reference" / "metrics.json").is_file()
+    meta = json.loads((out_pkg / "dataset-metadata.json").read_text(encoding="utf-8"))
+    assert meta["id"] == "ductrannguyen/cxr-final-test-dry-code"
+
+
+def test_package_final_requires_matching_confirm_text(tmp_path: Path) -> None:
+    out_pkg = tmp_path / "pkg_final"
+    with pytest.raises(ValueError, match="confirm_text"):
+        build_final_test_code_package(REPO_ROOT, out_pkg, commit="f" * 40, mode="final", confirm_text=None)
+
+
+def test_package_final_writes_confirm_final_only_when_hash_matches(tmp_path: Path) -> None:
+    out_pkg = tmp_path / "pkg_final"
+    # Sai hash
+    with pytest.raises(PermissionError, match="hash"):
+        build_final_test_code_package(
+            REPO_ROOT,
+            out_pkg,
+            commit="f" * 40,
+            mode="final",
+            confirm_text="SAI-CHUOI",
+            expected_confirm_sha256=TEST_CONFIRM_SHA,
+        )
+
+    # Đúng hash
+    files = build_final_test_code_package(
+        REPO_ROOT,
+        out_pkg,
+        commit="f" * 40,
+        mode="final",
+        confirm_text=TEST_CONFIRM_TEXT,
+        expected_confirm_sha256=TEST_CONFIRM_SHA,
+    )
+    assert "CONFIRM_FINAL" in files
+    assert (out_pkg / "CONFIRM_FINAL").read_text(encoding="utf-8").strip() == TEST_CONFIRM_TEXT
+    assert (out_pkg / "MODE").read_text(encoding="utf-8").strip() == "final"
+    meta = json.loads((out_pkg / "dataset-metadata.json").read_text(encoding="utf-8"))
+    assert meta["id"] == "ductrannguyen/cxr-final-test-code"
+
+
+def test_kaggle_main_rejects_mode_mismatch(tmp_path: Path) -> None:
+    pkg_dir = tmp_path / "input" / "cxr-code"
+    pkg_dir.mkdir(parents=True)
+    (pkg_dir / "COMMIT").write_text("c" * 40 + "\n", encoding="utf-8")
+    (pkg_dir / "MODE").write_text("dry\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="khong khop"):
+        kaggle_main(input_root=tmp_path / "input", working_dir=tmp_path / "working", expected_mode="final")
+
+
+def test_kaggle_main_signature_has_no_gate_overrides() -> None:
+    sig = inspect.signature(kaggle_main)
+    params = list(sig.parameters.keys())
+    assert params == ["input_root", "working_dir", "expected_mode"]
+
+
+def test_kernel_scripts_hardcode_distinct_modes_and_ids() -> None:
+    dry_meta_path = REPO_ROOT / "kaggle" / "final_test_dry" / "kernel-metadata.json"
+    dry_script_path = REPO_ROOT / "kaggle" / "final_test_dry" / "run_final_test_dry.py"
+    final_meta_path = REPO_ROOT / "kaggle" / "final_test" / "kernel-metadata.json"
+    final_script_path = REPO_ROOT / "kaggle" / "final_test" / "run_final_test.py"
+
+    assert dry_meta_path.is_file() and dry_script_path.is_file()
+    assert final_meta_path.is_file() and final_script_path.is_file()
+
+    dry_meta = json.loads(dry_meta_path.read_text(encoding="utf-8"))
+    final_meta = json.loads(final_meta_path.read_text(encoding="utf-8"))
+
+    assert dry_meta["id"] == "ductrannguyen/cxr-final-test-dry"
+    assert final_meta["id"] == "ductrannguyen/cxr-final-test"
+    assert dry_meta["enable_internet"] == "false"
+    assert final_meta["enable_internet"] == "false"
+
+    dry_script = dry_script_path.read_text(encoding="utf-8")
+    final_script = final_script_path.read_text(encoding="utf-8")
+
+    assert 'expected_mode="dry"' in dry_script
+    assert 'expected_mode="final"' in final_script
