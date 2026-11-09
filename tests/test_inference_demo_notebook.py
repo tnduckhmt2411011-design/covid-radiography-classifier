@@ -247,9 +247,57 @@ def test_notebook_kaggle_branch_bootstrap(nb: dict, tmp_path: Path, monkeypatch:
     assert ns["ENV_NAME"] == "kaggle"
     assert ns["SPLIT_CSV"] == pkg / "split_v1.csv"
     assert (working / "code" / "src" / "inference_demo.py").is_file()
+    assert (working / "code" / "reference" / "val_metrics.json").is_file()
+    assert (working / "code" / "reference" / "final_test_metrics.json").is_file()
     assert ns["CODE_ROOT"] == working / "code"
     assert ns["DATA_ROOT"] == ds_root
     assert str(ns["CACHE_PATH"]).startswith(str(working))
+
+
+def test_notebook_kaggle_bootstrap_from_real_package(
+    nb: dict, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Kiểm tra mô phỏng Kaggle trực tiếp từ GÓI THẬT outputs/inference_pkg (không dựng tay).
+
+    Xác minh sau khi cell bootstrap chạy, thư mục CODE_ROOT/reference chứa đầy đủ các file metrics
+    và load_benchmark_metrics(CODE_ROOT) đọc thành công (không ném FileNotFoundError).
+    """
+    import shutil
+    import sys
+
+    from src.inference_demo import load_benchmark_metrics
+
+    real_pkg = REPO_ROOT / "outputs" / "inference_pkg"
+    assert real_pkg.is_dir(), "outputs/inference_pkg phai ton tai truoc khi chay test nay"
+    assert (real_pkg / "COMMIT").is_file()
+
+    input_root = tmp_path / "kaggle_input"
+    working = tmp_path / "kaggle_working"
+    working.mkdir()
+    target_pkg = input_root / "cxr-inference-demo-code"
+    shutil.copytree(real_pkg, target_pkg)
+
+    ds_root = input_root / "covid19-radiography-database" / "COVID-19_Radiography_Dataset"
+    (ds_root / "COVID" / "images").mkdir(parents=True)
+
+    monkeypatch.setenv("KAGGLE_INPUT_PATH", str(input_root))
+    monkeypatch.setenv("KAGGLE_WORKING_PATH", str(working))
+    monkeypatch.delenv("CXR_DATA_ROOT", raising=False)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(sys, "path", list(sys.path))
+
+    ns: dict = {"__name__": "__main__"}
+    exec(compile(_find_cell(nb, "def _find_kaggle_code_package"), "cell_bootstrap", "exec"), ns)
+
+    assert ns["ENV_NAME"] == "kaggle"
+    code_root = ns["CODE_ROOT"]
+    assert (code_root / "reference" / "val_metrics.json").is_file()
+    assert (code_root / "reference" / "final_test_metrics.json").is_file()
+
+    bench = load_benchmark_metrics(code_root)
+    assert bench["val_macro_f1"] == pytest.approx(0.9024, abs=1e-4)
+    assert bench["test_macro_f1"] == pytest.approx(0.8714, abs=1e-4)
+    assert bench["diff"] == pytest.approx(-0.0310, abs=1e-4)
 
 
 def test_notebook_kaggle_branch_fails_clearly_without_inference_package(

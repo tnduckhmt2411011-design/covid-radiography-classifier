@@ -468,6 +468,11 @@ def test_load_benchmark_metrics_reads_real_files_without_hardcoding() -> None:
     assert "metrics.json" in bench["test_source"]
 
 
+def test_load_benchmark_metrics_raises_file_not_found_on_missing_dir(tmp_path: Path) -> None:
+    with pytest.raises(FileNotFoundError, match="Khong tim thay"):
+        load_benchmark_metrics(tmp_path)
+
+
 def test_build_inference_code_package_copies_reference_metrics(tmp_path: Path) -> None:
     out = tmp_path / "pkg_metrics"
     files = build_inference_code_package(REPO_ROOT, out, commit="f" * 40)

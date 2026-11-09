@@ -254,40 +254,57 @@ def load_benchmark_metrics(code_root: Union[str, Path]) -> Dict[str, Any]:
     """Đọc các số đo tham chiếu đã công bố trực tiếp từ tệp kết quả (không hard-code).
 
     Tìm trong results/ hoặc thư mục reference/ của gói mã nguồn.
+    Ném FileNotFoundError nếu không tìm thấy tệp metrics thay vì trả về None.
     """
     root = Path(code_root)
     val_file = None
-    for cand in [
+    val_candidates = [
         root / "results" / "rq3_ghep_svm_orig_to_orig_s42" / "metrics.json",
         root / "reference" / "val_metrics.json",
         root / "reference" / "metrics.json",
-    ]:
+    ]
+    for cand in val_candidates:
         if cand.is_file():
             val_file = cand
             break
 
     test_file = None
-    for cand in [
+    test_candidates = [
         root / "results" / "final_test" / "metrics.json",
         root / "reference" / "final_test_metrics.json",
-    ]:
+    ]
+    for cand in test_candidates:
         if cand.is_file():
             test_file = cand
             break
 
-    val_data = json.loads(val_file.read_text(encoding="utf-8")) if val_file else {}
-    test_data = json.loads(test_file.read_text(encoding="utf-8")) if test_file else {}
+    if val_file is None:
+        raise FileNotFoundError(
+            f"Khong tim thay tep metrics val tham chieu tai {root}. Da tim: {[str(c) for c in val_candidates]}"
+        )
+    if test_file is None:
+        raise FileNotFoundError(
+            f"Khong tim thay tep metrics test tham chieu tai {root}. Da tim: {[str(c) for c in test_candidates]}"
+        )
 
-    val_f1 = float(val_data["macro_f1"]) if "macro_f1" in val_data else None
-    test_f1 = float(test_data["macro_f1"]) if "macro_f1" in test_data else None
-    diff = (test_f1 - val_f1) if (test_f1 is not None and val_f1 is not None) else None
+    val_data = json.loads(val_file.read_text(encoding="utf-8"))
+    test_data = json.loads(test_file.read_text(encoding="utf-8"))
+
+    if "macro_f1" not in val_data:
+        raise KeyError(f"Tep {val_file} thieu truong 'macro_f1'")
+    if "macro_f1" not in test_data:
+        raise KeyError(f"Tep {test_file} thieu truong 'macro_f1'")
+
+    val_f1 = float(val_data["macro_f1"])
+    test_f1 = float(test_data["macro_f1"])
+    diff = test_f1 - val_f1
 
     return {
         "val_macro_f1": val_f1,
         "test_macro_f1": test_f1,
         "diff": diff,
-        "val_source": str(val_file) if val_file else "Khong tim thay",
-        "test_source": str(test_file) if test_file else "Khong tim thay",
+        "val_source": str(val_file),
+        "test_source": str(test_file),
     }
 
 
