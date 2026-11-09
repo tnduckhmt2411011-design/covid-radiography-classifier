@@ -29,10 +29,12 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
+import yaml
 
-from src.bootstrap import macro_f1_from_labels
+from src.bootstrap import bootstrap_ci_macro_f1, macro_f1_from_labels
 from src.dataset import LABEL_TO_IDX
 from src.features_hog_ghep import extract_groups
+from src.metrics import DEFAULT_CLASS_NAMES, compute_metrics
 from src.rq2_runner import CHUNK_SIZE, feature_params
 from src.rq3_runner import FROZEN_CLASSIFIER, FROZEN_FEATURES, FROZEN_SEED, FROZEN_SVM_PARAMS
 
@@ -249,3 +251,218 @@ def load_split_features(
 
     feat_dict, info = extract_groups(_gen(), groups=(FROZEN_FEATURES,), chunk_size=CHUNK_SIZE)
     return feat_dict[FROZEN_FEATURES], image_ids, y, info
+
+
+def build_final_report(
+    y_true: Union[Sequence[int], np.ndarray],
+    y_pred: Union[Sequence[int], np.ndarray],
+    val_macro_f1: float,
+    *,
+    n_boot: int = 2000,
+    rng_seed: int = 42,
+    threshold_path: Optional[Union[str, Path]] = None,
+) -> Dict[str, Any]:
+    """Tổng hợp báo cáo đánh giá cuối cùng trên tập test (S5-05).
+
+    Quy tắc D4: Báo cáo đúng số; mọi lời giải thích chỉ là giả thuyết chưa kiểm chứng,
+    không suy diễn nguyên nhân (không dùng trường 'cause' hay 'explanation').
+    """
+    y_true_arr = np.asarray(y_true, dtype=np.int64)
+    y_pred_arr = np.asarray(y_pred, dtype=np.int64)
+
+    metrics = compute_metrics(y_true_arr, y_pred_arr, class_names=DEFAULT_CLASS_NAMES)
+    ci_res = bootstrap_ci_macro_f1(y_true_arr, y_pred_arr, n_boot=n_boot, rng_seed=rng_seed)
+
+    cm = metrics["confusion_matrix"]
+    r2_normal_lung_opacity = {
+        "LO_to_LO": int(cm[1][1]),
+        "LO_to_Normal": int(cm[1][2]),
+        "Normal_to_LO": int(cm[2][1]),
+        "Normal_to_Normal": int(cm[2][2]),
+    }
+
+    r4_sampling_error = {
+        "n_all": int(len(y_true_arr)),
+        "ci_width": float(ci_res["ci_high"] - ci_res["ci_low"]),
+        "n_boot": int(n_boot),
+        "rng_seed": int(rng_seed),
+    }
+
+    test_macro_f1 = float(ci_res["point"])
+    val_macro_f1_flt = float(val_macro_f1)
+
+    report: Dict[str, Any] = {
+        "macro_f1": test_macro_f1,
+        "ci95_low": float(ci_res["ci_low"]),
+        "ci95_high": float(ci_res["ci_high"]),
+        "accuracy": float(metrics["accuracy"]),
+        "per_class": metrics["per_class"],
+        "confusion_matrix": cm,
+        "r2_normal_lung_opacity": r2_normal_lung_opacity,
+        "r4_sampling_error": r4_sampling_error,
+        "val_macro_f1": val_macro_f1_flt,
+        "test_minus_val": float(test_macro_f1 - val_macro_f1_flt),
+        "interpretation_note": (
+            "Moi loi giai thich ve su khac biet giua val va test deu la "
+            "gia thuyet chua kiem chung; khong suy dien nguyen nhan."
+        ),
+    }
+    return report
+
+
+def run_final_test(
+    *,
+    mode: str,
+    dataset_root: Union[str, Path],
+    split_csv: Union[str, Path],
+    reference_dir: Union[str, Path],
+    pkg_dir: Union[str, Path],
+    out_dir: Union[str, Path],
+    commit: str,
+    threshold_path: Optional[Union[str, Path]] = None,
+    feature_loader: Any = load_split_features,
+    expected_split_sha256: str = EXPECTED_SPLIT_SHA256,
+    expected_split_sizes: Mapping[str, int] = EXPECTED_SPLIT_SIZES,
+    reference_val_macro_f1: float = REFERENCE_VAL_MACRO_F1,
+    g5_tolerance: float = G5_TOLERANCE,
+    expected_confirm_sha256: str = CONFIRM_STRING_SHA256,
+    n_boot: int = 2000,
+    rng_seed: int = 42,
+) -> Dict[str, Any]:
+    """Thực thi pipeline đánh giá (dry hoặc final) với đầy đủ các cổng bảo vệ."""
+    if mode not in ("dry", "final"):
+        raise ValueError(f"Che do '{mode}' khong hop le, chi chap nhan 'dry' hoac 'final'.")
+
+    # G1: kiểm tra split_v1.csv
+    split_sha = check_split_integrity(
+        split_csv,
+        expected_sha256=expected_split_sha256,
+        expected_sizes=expected_split_sizes,
+    )
+
+    # G2: kiểm tra cấu hình tham chiếu
+    ref_path = Path(reference_dir) / "config.yaml"
+    ref_config = yaml.safe_load(ref_path.read_text(encoding="utf-8"))
+    check_frozen_config(ref_config)
+
+    # G3, G4: kiểm tra trước khi nạp bất kỳ đặc trưng nào (kể cả train/val)
+    confirm_sha = ""
+    if mode == "final":
+        check_not_already_unlocked(out_dir)
+        confirm_sha = check_confirm_final(pkg_dir, expected_sha256=expected_confirm_sha256)
+
+    # Nạp train và val (không nạp test)
+    split_df = pd.read_csv(split_csv)
+    x_tr, ids_tr, y_tr, info_tr = feature_loader(split_df, "train", dataset_root, allow_test=False)
+    x_va, ids_va, y_va, info_va = feature_loader(split_df, "val", dataset_root, allow_test=False)
+
+    # Fit mô hình duy nhất 1 lần
+    scaler, clf = fit_frozen_model(x_tr, y_tr)
+
+    # Dự đoán trên val
+    y_pred_va, proba_va = predict_with_model(scaler, clf, x_va)
+    val_macro_f1 = float(macro_f1_from_labels(y_va, y_pred_va))
+
+    # G5: kiểm tra Macro-F1 val tái lập
+    check_val_reproduction(val_macro_f1, reference=reference_val_macro_f1, tolerance=g5_tolerance)
+
+    if mode == "dry":
+        dry_dir = Path(out_dir) / DRY_DIRNAME
+        dry_dir.mkdir(parents=True, exist_ok=True)
+        summary = {
+            "mode": "dry",
+            "split_sha256": split_sha,
+            "n_train": len(y_tr),
+            "n_val": len(y_va),
+            "val_macro_f1": val_macro_f1,
+            "reference_val_macro_f1": float(reference_val_macro_f1),
+            "g5_passed": True,
+            "test_read": False,
+            "utc_time": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        }
+        (dry_dir / "dry_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+        return summary
+
+    # mode == "final"
+    final_dir = Path(out_dir) / FINAL_DIRNAME
+    final_dir.mkdir(parents=True, exist_ok=True)
+
+    # G6: Ghi UNLOCK_RECORD.json TRƯỚC TIÊN (chốt chặn nếu hạ tầng gặp sự cố sau đó)
+    write_unlock_record(
+        final_dir,
+        commit=commit,
+        split_sha256=split_sha,
+        val_macro_f1=val_macro_f1,
+        confirm_sha256=confirm_sha,
+    )
+
+    # Đọc test và dự đoán bằng ĐÚNG mô hình đã fit ở G5
+    x_te, ids_te, y_te, info_te = feature_loader(split_df, "test", dataset_root, allow_test=True)
+    y_pred_te, proba_te = predict_with_model(scaler, clf, x_te)
+
+    # Tính toán báo cáo
+    report = build_final_report(
+        y_te,
+        y_pred_te,
+        val_macro_f1,
+        n_boot=n_boot,
+        rng_seed=rng_seed,
+        threshold_path=threshold_path,
+    )
+    metrics = compute_metrics(y_te, y_pred_te, class_names=DEFAULT_CLASS_NAMES)
+
+    # Ghi toàn bộ kết quả vào final_dir
+    (final_dir / "final_test_report.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    (final_dir / "metrics.json").write_text(
+        json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+    (final_dir / "config.yaml").write_text(yaml.safe_dump(ref_config), encoding="utf-8")
+
+    # preds_test.csv
+    preds_df = pd.DataFrame(
+        {
+            "image_id": ids_te,
+            "y_true": y_te,
+            "y_pred": y_pred_te,
+        }
+    )
+    for idx_cls, cls_name in enumerate(DEFAULT_CLASS_NAMES):
+        preds_df[f"prob_{cls_name}"] = proba_te[:, idx_cls]
+    preds_df.to_csv(final_dir / "preds_test.csv", index=False)
+
+    # log
+    log_content = (
+        f"Mode: final\n"
+        f"Commit: {commit}\n"
+        f"Split SHA256: {split_sha}\n"
+        f"G1, G2, G3, G4, G5, G6 passed successfully.\n"
+        f"Val Macro-F1: {val_macro_f1:.4f}\n"
+        f"Test Macro-F1: {report['macro_f1']:.4f}\n"
+        f"N_train: {len(y_tr)}, N_val: {len(y_va)}, N_test: {len(y_te)}\n"
+    )
+    (final_dir / "log").write_text(log_content, encoding="utf-8")
+
+    # r5_gioi_han.md
+    r5_content = (
+        f"# Báo cáo giới hạn (R5) - Đánh giá tập test duy nhất (S5-04, S5-05)\n\n"
+        f"- **Val Macro-F1**: {val_macro_f1:.4f}\n"
+        f"- **Test Macro-F1**: {report['macro_f1']:.4f} (95% CI: [{report['ci95_low']:.4f}, {report['ci95_high']:.4f}])\n"
+        f"- **Hiệu số (Test - Val)**: {report['test_minus_val']:.4f}\n\n"
+        f"## Lưu ý giải thích kết quả (D4):\n"
+        f"{report['interpretation_note']}\n"
+    )
+    (final_dir / "r5_gioi_han.md").write_text(r5_content, encoding="utf-8")
+
+    return {
+        "mode": "final",
+        "n_train": len(y_tr),
+        "n_val": len(y_va),
+        "n_test": len(y_te),
+        "val_macro_f1": val_macro_f1,
+        "test_macro_f1": report["macro_f1"],
+        "test_read": True,
+        "final_dir": str(final_dir),
+        "report": report,
+    }
