@@ -1,0 +1,82 @@
+classifier: SVC
+classifier_tag: svm
+commit: 9ce35960cac5ea48967ce2ef640c56515ed8933b
+deterministic: true
+eval_mask_mode: original
+evaluation:
+  allow_test: false
+  eval_split: val
+  train_split: train
+extraction:
+  eval_mode: original
+  glcm_nan_train: 0
+  glcm_nan_val: 0
+  n_train: 14815
+  n_val: 3174
+  train_mode: original
+feature_params:
+  glcm:
+    angles:
+    - 0.0
+    - 0.7853981633974483
+    - 1.5707963267948966
+    - 2.356194490192345
+    correlation_nan: thay bang 0
+    distances:
+    - 1
+    - 3
+    - 5
+    gray_reduction: img // 8
+    levels: 32
+    normed: true
+    props:
+    - contrast
+    - dissimilarity
+    - homogeneity
+    - energy
+    - correlation
+    symmetric: true
+  hist:
+    bins: 64
+    normalize: sum1
+    range:
+    - 0
+    - 256
+  lbp:
+    method: uniform
+    params:
+    - - 8
+      - 1
+    - - 16
+      - 2
+features: ghep
+hyperparameters:
+  C: 10.0
+  class_weight: balanced
+  gamma: scale
+  kernel: rbf
+  probability: true
+  random_state: 42
+mask_resize: nearest_256x256_to_299x299
+mode: full
+preprocessing:
+  fit_on: train_original_only
+  scaler: StandardScaler
+rq: rq3
+run_id: rq3_ghep_svm_orig_to_orig_s42
+seed: 42
+split:
+  file: /kaggle/input/datasets/ductrannguyen/cxr-rq3-code/split_v1.csv
+  sha256: f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98
+  train_rows: 14815
+  val_rows: 3174
+train_mask_mode: original
+versions:
+  numpy: 2.1.3
+  opencv-python-headless: 4.14.0.94
+  pandas: 2.3.3
+  pillow: 12.3.0
+  python: 3.13.15
+  pyyaml: 6.0.3
+  scikit-image: 0.25.2
+  scikit-learn: 1.6.1

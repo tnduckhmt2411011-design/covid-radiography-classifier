@@ -1,0 +1,7 @@
+Mode: final
+Commit: 5720e4fdb6c1d827b800e51ef8be5559fe191dd6
+Split SHA256: f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98
+G1, G2, G3, G4, G5, G6 passed successfully.
+Val Macro-F1: 0.9024
+Test Macro-F1: 0.8714
+N_train: 14815, N_val: 3174, N_test: 3176
