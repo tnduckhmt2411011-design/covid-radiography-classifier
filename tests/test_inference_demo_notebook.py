@@ -257,25 +257,21 @@ def test_notebook_kaggle_branch_bootstrap(nb: dict, tmp_path: Path, monkeypatch:
 def test_notebook_kaggle_bootstrap_from_real_package(
     nb: dict, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Kiểm tra mô phỏng Kaggle trực tiếp từ GÓI THẬT outputs/inference_pkg (không dựng tay).
+    """Kiểm tra mô phỏng Kaggle từ gói được đóng gói chuẩn bằng build_inference_code_package trong tmp_path.
 
     Xác minh sau khi cell bootstrap chạy, thư mục CODE_ROOT/reference chứa đầy đủ các file metrics
     và load_benchmark_metrics(CODE_ROOT) đọc thành công (không ném FileNotFoundError).
     """
-    import shutil
     import sys
 
-    from src.inference_demo import load_benchmark_metrics
-
-    real_pkg = REPO_ROOT / "outputs" / "inference_pkg"
-    assert real_pkg.is_dir(), "outputs/inference_pkg phai ton tai truoc khi chay test nay"
-    assert (real_pkg / "COMMIT").is_file()
+    from src.inference_demo import build_inference_code_package, load_benchmark_metrics
 
     input_root = tmp_path / "kaggle_input"
     working = tmp_path / "kaggle_working"
     working.mkdir()
     target_pkg = input_root / "cxr-inference-demo-code"
-    shutil.copytree(real_pkg, target_pkg)
+    build_inference_code_package(REPO_ROOT, target_pkg, commit="a" * 40)
+    assert (target_pkg / "COMMIT").is_file()
 
     ds_root = input_root / "covid19-radiography-database" / "COVID-19_Radiography_Dataset"
     (ds_root / "COVID" / "images").mkdir(parents=True)
