@@ -24,9 +24,16 @@ import os
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Tuple, Union
 
+import cv2
+import numpy as np
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
-from src.rq2_runner import feature_params
+from src.bootstrap import macro_f1_from_labels
+from src.dataset import LABEL_TO_IDX
+from src.features_hog_ghep import extract_groups
+from src.rq2_runner import CHUNK_SIZE, feature_params
 from src.rq3_runner import FROZEN_CLASSIFIER, FROZEN_FEATURES, FROZEN_SEED, FROZEN_SVM_PARAMS
 
 EXPECTED_SPLIT_SHA256: str = "f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98"
@@ -171,3 +178,74 @@ def write_unlock_record(
         f.flush()
         os.fsync(f.fileno())
     return record_path
+
+
+def fit_frozen_model(x_train: np.ndarray, y_train: np.ndarray) -> Tuple[StandardScaler, SVC]:
+    """Fit StandardScaler (chỉ trên train) và SVC đóng băng; được gọi đúng MỘT lần trong mỗi lần chạy."""
+    scaler = StandardScaler()
+    x_scaled = scaler.fit_transform(x_train)
+    clf = SVC(**FROZEN_SVM_PARAMS)
+    clf.fit(x_scaled, y_train)
+    return scaler, clf
+
+
+def predict_with_model(
+    scaler: StandardScaler,
+    clf: SVC,
+    x: np.ndarray,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Dự đoán nhãn và xác suất bằng mô hình đã fit (không fit lại)."""
+    x_scaled = scaler.transform(x)
+    y_pred = clf.predict(x_scaled).astype(np.int64)
+    proba = clf.predict_proba(x_scaled)
+    return y_pred, proba
+
+
+def check_val_reproduction(
+    val_macro_f1: float,
+    reference: float = REFERENCE_VAL_MACRO_F1,
+    tolerance: float = G5_TOLERANCE,
+) -> None:
+    """G5: Macro-F1 val tái lập phải bằng giá trị tham chiếu với |Δ| <= tolerance."""
+    diff = round(abs(float(val_macro_f1) - float(reference)), 10)
+    if diff > tolerance:
+        raise RuntimeError(
+            f"G5: Macro-F1 val tai lap = {val_macro_f1:.4f}, tham chieu {reference:.4f}, "
+            f"|delta| = {diff:.4f} > {tolerance}; dung truoc khi doc test."
+        )
+
+
+def load_split_features(
+    split_df: pd.DataFrame,
+    split: str,
+    dataset_root: Union[str, Path],
+    *,
+    allow_test: bool = False,
+) -> Tuple[np.ndarray, List[str], np.ndarray, Dict[str, Any]]:
+    """Đọc ảnh gốc xám 299x299 của một split và trích đặc trưng 'ghep' (152 chiều).
+
+    split == 'test' chỉ được phép khi allow_test=True (do run_final_test truyền sau cổng G6).
+    """
+    if split not in ("train", "val", "test"):
+        raise ValueError(f"Split '{split}' khong hop le, chi chap nhan train, val hoac test.")
+    if split == "test" and not allow_test:
+        raise PermissionError("Tap test bi khoa: can allow_test=True (chi sau cong G6).")
+
+    sub_df = split_df[split_df["split"] == split].reset_index(drop=True)
+    root = Path(dataset_root)
+    image_ids = [str(x) for x in sub_df["image_id"].tolist()]
+    rel_imgs = [str(x) for x in sub_df["rel_image_path"].tolist()]
+    y = np.array([LABEL_TO_IDX[str(lbl)] for lbl in sub_df["label"]], dtype=np.int64)
+
+    def _gen():
+        for rel in rel_imgs:
+            img_path = root / rel
+            img = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
+            if img is None:
+                raise FileNotFoundError(f"Khong the doc anh: {img_path}")
+            if img.shape != (299, 299):
+                raise ValueError(f"Kich thuoc anh {img_path} la {img.shape}, ky vong (299, 299).")
+            yield img
+
+    feat_dict, info = extract_groups(_gen(), groups=(FROZEN_FEATURES,), chunk_size=CHUNK_SIZE)
+    return feat_dict[FROZEN_FEATURES], image_ids, y, info

@@ -215,3 +215,108 @@ def test_g6_refuses_to_overwrite_existing_record(tmp_path: Path) -> None:
     write_unlock_record(final_dir, **kwargs)
     with pytest.raises(RuntimeError, match="G3"):
         write_unlock_record(final_dir, **kwargs)
+
+
+# ------------------------------------------------ Task 3: mô hình, G5, nạp đặc trưng
+
+import cv2  # noqa: E402
+
+from src.final_test_runner import (  # noqa: E402
+    check_val_reproduction,
+    fit_frozen_model,
+    load_split_features,
+    predict_with_model,
+)
+from src.rq3_runner import FROZEN_SVM_PARAMS  # noqa: E402
+
+
+def _toy_xy(n_per_class: int = 12, dims: int = 8, seed: int = 0) -> Tuple[np.ndarray, np.ndarray]:
+    rng = np.random.default_rng(seed)
+    xs, ys = [], []
+    for c in range(4):
+        xs.append(rng.normal(loc=c * 3.0, scale=1.0, size=(n_per_class, dims)))
+        ys.append(np.full(n_per_class, c, dtype=np.int64))
+    return np.vstack(xs), np.concatenate(ys)
+
+
+def test_fit_uses_frozen_params_and_scaler_fit_on_train_only() -> None:
+    x, y = _toy_xy()
+    scaler, clf = fit_frozen_model(x, y)
+    params = clf.get_params()
+    for key, value in FROZEN_SVM_PARAMS.items():
+        assert params[key] == value, key
+    np.testing.assert_allclose(scaler.mean_, x.mean(axis=0))
+    np.testing.assert_allclose(scaler.scale_, x.std(axis=0))
+
+
+def test_predict_with_model_shapes_and_proba_rows_sum_to_one() -> None:
+    x, y = _toy_xy()
+    scaler, clf = fit_frozen_model(x, y)
+    y_pred, proba = predict_with_model(scaler, clf, x)
+    assert y_pred.shape == (len(x),)
+    assert proba.shape == (len(x), 4)
+    np.testing.assert_allclose(proba.sum(axis=1), 1.0, atol=1e-6)
+
+
+@pytest.mark.parametrize(
+    "value,ok",
+    [(0.9024, True), (0.9044, True), (0.9004, True), (0.9045, False), (0.9003, False), (0.0723, False)],
+)
+def test_g5_boundaries(value: float, ok: bool) -> None:
+    if ok:
+        check_val_reproduction(value)
+    else:
+        with pytest.raises(RuntimeError, match="G5"):
+            check_val_reproduction(value)
+
+
+def _write_images(base: Path, per_split: Dict[str, int]) -> pd.DataFrame:
+    """Tạo ảnh xám giả 299x299 cho từng split và trả về split_df."""
+    rng = np.random.default_rng(5)
+    rows: List[Dict[str, Any]] = []
+    classes = ["COVID", "Lung_Opacity", "Normal", "Viral Pneumonia"]
+    for split, n in per_split.items():
+        for i in range(n):
+            label = classes[i % 4]
+            rel = f"{label}/images/{label}-{split}{i}.png"
+            path = base / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            cv2.imwrite(str(path), rng.integers(0, 255, size=(299, 299), dtype=np.uint8))
+            rows.append(
+                {
+                    "image_id": f"{label}-{split}{i}.png",
+                    "label": label,
+                    "rel_image_path": rel,
+                    "split": split,
+                    "group_id": f"G{i}",
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def test_loader_refuses_test_without_allow(tmp_path: Path) -> None:
+    split_df = _write_images(tmp_path, {"train": 4, "val": 4, "test": 4})
+    with pytest.raises(PermissionError, match="allow_test"):
+        load_split_features(split_df, "test", tmp_path)
+
+
+def test_loader_rejects_unknown_split(tmp_path: Path) -> None:
+    split_df = _write_images(tmp_path, {"train": 4})
+    with pytest.raises(ValueError):
+        load_split_features(split_df, "holdout", tmp_path)
+
+
+def test_loader_reads_synthetic_val_with_152_dims(tmp_path: Path) -> None:
+    split_df = _write_images(tmp_path, {"train": 4, "val": 8, "test": 4})
+    x, ids, y, info = load_split_features(split_df, "val", tmp_path)
+    assert x.shape == (8, 152)
+    assert len(ids) == 8 and y.shape == (8,)
+    assert set(y.tolist()) == {0, 1, 2, 3}
+    assert info["n_images"] == 8
+
+
+def test_loader_reads_synthetic_test_only_with_allow(tmp_path: Path) -> None:
+    split_df = _write_images(tmp_path, {"train": 4, "val": 4, "test": 4})
+    x, ids, y, _ = load_split_features(split_df, "test", tmp_path, allow_test=True)
+    assert x.shape == (4, 152)
+    assert all("test" in i for i in ids)
