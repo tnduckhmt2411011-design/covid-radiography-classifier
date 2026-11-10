@@ -54,7 +54,7 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đánh giá tập test một lần và xuất ma trận nhầm lẫn)
+Cập nhật lần cuối: 10/11/2026 (v3.10 — Hoàn tất S5-06: Notebook suy luận độc lập; Sprint 5 đạt 6/6 việc Xong)
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
@@ -62,9 +62,9 @@ Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đ�
 | **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 6/6 | Xong | Đã xong trích đặc trưng (PR #30, #31), script bootstrap R1-R5 (PR #29), runner và 12 run Random Forest (PR #32, #33), tổng hợp bảng RQ1 và chốt nhóm đặc trưng ghep (152 chiều) cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
-| **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 5/6 | Đang làm | Đã hoàn tất đánh giá RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04) và xuất ma trận nhầm lẫn (S5-05); còn S5-06 (6 việc, 0 hủy, mẫu số 6) |
+| **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 6/6 | Xong | Đã hoàn tất toàn bộ 6/6 việc: RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04), xuất ma trận nhầm lẫn (S5-05) và notebook suy luận độc lập S5-06 (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **24/33** | **Đang triển khai** | **Đạt 72.7% Xong (24/33 việc), 0 việc Đang làm, 1 việc Chờ duyệt, 8 việc Chưa làm (6 việc S6 + S1-03 + S1-04), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **25/33** | **Đang triển khai** | **Đạt 75.8% Xong (25/33 việc), 0 việc Đang làm, 0 việc Chờ duyệt, 8 việc Chưa làm (6 việc S6 + S1-03 + S1-04), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -145,7 +145,7 @@ Cập nhật lần cuối: 09/11/2026 (v3.9 — Hoàn tất S5-04 và S5-05: Đ�
 | S5-03 | T9 | Soạn thảo kết luận nghiên cứu về nguy cơ shortcut learning | RQ3 | Lê Minh | M | Xong | results/rq3_shortcut_learning_conclusion.md, results/rq3_comparison_protocol_record.md, notebooks/08_rq3_masked_eval.ipynb | Kết luận khoa học về mức độ shortcut learning nghiêm trọng ở vùng ngoài phổi (out_to_out F1=0,8921) và quyết định đóng băng cấu hình cho tập test (S5-04) |
 | S5-04 | T10 | Mở khóa tập test và thực hiện đánh giá DUY NHẤT 1 LẦN trong `10_final_test_eval.ipynb` | Chống rò rỉ | Hải Lý | M | Xong | PR #41 (PR A) và PR #42 (PR B), results/final_test/UNLOCK_RECORD.json, results/final_test/final_test_report.json, notebooks/10_final_test_eval.ipynb, kernel ductrannguyen/cxr-final-test (version 1) | Kết quả test ghi đúng 1 lần duy nhất (Macro-F1=0,8714 [0,8579, 0,8840]) kèm mã hash file split để đảm bảo tính khách quan |
 | S5-05 | T10 | Xuất ma trận nhầm lẫn (Confusion Matrix) và bảng chỉ số trên test | Báo cáo | Hải Lý | S | Xong | results/final_test/metrics.json, results/final_test/preds_test.csv, results/final_test/confusion_matrix_test.png, notebooks/10_final_test_eval.ipynb | Bảng kết quả test đầy đủ accuracy (0,8656), macro-F1 (0,8714), recall từng lớp và ma trận con Normal vs Lung_Opacity (R2) |
-| S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Chờ duyệt | PR #43 (feat/thai-tu-inference-demo-s506); src/inference_demo.py, notebooks/11_inference_demo.ipynb, tests/test_inference_demo.py, tests/test_inference_demo_notebook.py | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |
+| S5-06 | T10 | Xây dựng notebook suy luận độc lập `11_inference_demo.ipynb` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Xong | PR #43, kernel ductrannguyen/cxr-inference-demo version 3; src/inference_demo.py, notebooks/11_inference_demo.ipynb, tests/test_inference_demo.py, tests/test_inference_demo_notebook.py | Notebook suy luận chạy lại được từ đầu trên một phiên Kaggle mới tinh |
 
 ---
 
@@ -272,3 +272,6 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.5** | 07/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất toàn bộ 6/6 việc Sprint 3 (PR #29, #30, #31, #32, #33, báo cáo R1-R5 trong `results/report_rq1/`, `notebooks/05_rq1_features.ipynb` và chốt nhóm đặc trưng `ghep` 152 chiều cho RQ2 tại `results/rq1_feature_selection_record.md`); tiến độ đạt 15/33 (45.5%). |
 | **v3.6** | 07/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S4-03 và S4-04 của Sprint 4 (PR #35, #36, báo cáo R1-R5 trong `results/report_rq2/`, `notebooks/06_rq2_classifiers.ipynb` và chốt mô hình tối ưu `svm` — `SVC(kernel="rbf", C=10.0, gamma="scale", class_weight="balanced")` kèm `StandardScaler` trên nhóm `ghep` 152 chiều tại `results/rq2_classifier_selection_record.md`); tiến độ đạt 17/33 (51.5%). |
 | **v3.7** | 07/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S4-06: phân tích chi tiết 349 ca dự đoán sai trên tập validation của mô hình đóng băng `rq2_ghep_svm_s42` trong `notebooks/09_error_analysis.ipynb` và `results/error_analysis/`; tiến độ đạt 18/33 (54.5%). |
+| **v3.8** | 08/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S4-07 và RQ3: S5-01, S5-02, S5-03 (PR #39, #40, kết luận shortcut learning tại `results/rq3_shortcut_learning_conclusion.md`); tiến độ đạt 22/33 (66.7%). |
+| **v3.9** | 09/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-04 và S5-05: Đánh giá tập test duy nhất một lần và xuất ma trận nhầm lẫn (PR #41, #42, kết quả tại `results/final_test/`, `notebooks/10_final_test_eval.ipynb`); tiến độ đạt 24/33 (72.7%). |
+| **v3.10** | 10/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-06: Xây dựng notebook suy luận độc lập (PR #43 đã merge, kernel `ductrannguyen/cxr-inference-demo` version 3); Sprint 5 đạt 6/6 việc (100%); tổng tiến độ đạt 25/33 (75.8%). |
