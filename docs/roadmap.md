@@ -54,17 +54,17 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 10/11/2026 (v3.10 — Hoàn tất S5-06: Notebook suy luận độc lập; Sprint 5 đạt 6/6 việc Xong)
+Cập nhật lần cuối: 10/11/2026 (v3.11 — Hoàn tất S1-03 và S1-04 theo xác nhận văn bản của Leader; Sprint 1 đạt 7/7 việc Xong, cập nhật hạn nộp 21/11/2026)
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
-| **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 5/7 | Đang làm | Đã xong EDA, manifest, S1-01 và S1-02; chờ xác nhận S1-03 và S1-04 (7 việc, 0 hủy, mẫu số 7) |
+| **S1** | T1-2 | Môi trường chạy được và hiểu dữ liệu | 7/7 | Xong | Đã xong toàn bộ 7/7 việc: EDA, manifest, setup check (PR #24, #25), S1-03 và S1-04 hoàn tất theo xác nhận văn bản của Leader (7 việc, 0 hủy, mẫu số 7) |
 | **S2** | T3-4 | Khóa test, nạp dữ liệu ảnh xám, baseline và tiêu chí chấp nhận | 4/4 | Xong | Đã xong lọc trùng pHash, chia split 70/15/15 khóa test, lớp CXRDataset ảnh xám (PR #16); 4 việc DL đã hủy; S2-08 xong tại PR #17 (đã merge) (8 việc, 4 hủy, mẫu số 4) |
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 6/6 | Xong | Đã xong trích đặc trưng (PR #30, #31), script bootstrap R1-R5 (PR #29), runner và 12 run Random Forest (PR #32, #33), tổng hợp bảng RQ1 và chốt nhóm đặc trưng ghep (152 chiều) cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 6/6 | Xong | Đã hoàn tất toàn bộ 6/6 việc: RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04), xuất ma trận nhầm lẫn (S5-05) và notebook suy luận độc lập S5-06 (6 việc, 0 hủy, mẫu số 6) |
 | **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **25/33** | **Đang triển khai** | **Đạt 75.8% Xong (25/33 việc), 0 việc Đang làm, 0 việc Chờ duyệt, 8 việc Chưa làm (6 việc S6 + S1-03 + S1-04), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **27/33** | **Đang triển khai** | **Đạt 81.8% Xong (27/33 việc), 0 việc Đang làm, 0 việc Chờ duyệt, 6 việc Chưa làm (thuộc Sprint 6), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -77,8 +77,8 @@ Cập nhật lần cuối: 10/11/2026 (v3.10 — Hoàn tất S5-06: Notebook suy
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | S1-01 | T1 | Kiểm tra môi trường chạy (Kaggle CPU hoặc máy cá nhân), ghi chép cấu hình | Hạ tầng | Lê Minh (duyệt Minh Thuận) | M | Xong | PR #24 và PR #25 đã merge, notebooks/00_setup_check.ipynb, docs/kaggle_setup_notes.md | notebooks/00_setup_check.ipynb viết lại cho CPU (không import torch), in được phiên bản numpy, pandas, scikit-learn, scikit-image, opencv, pillow, gradio và kiểm tra được đường dẫn dữ liệu; cấu hình ghi trong docs/kaggle_setup_notes.md |
 | S1-02 | T1 | Ghim phiên bản thư viện thực tế vào `requirements.txt` | Hạ tầng | Cả nhóm | S | Xong | PR #25 đã merge, requirements.txt | requirements.txt có scikit-image và phiên bản đã ghim của numpy, pandas, scikit-learn, scikit-image, opencv-python-headless, pillow, gradio (lấy từ kết quả setup_check); không còn chú thích '# chưa đo' cho thư viện đã ghim |
-| S1-03 | T1 | 6/6 thành viên clone repo về máy và kiểm tra môi trường cục bộ | Hạ tầng | Cả nhóm | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | 6/6 thành viên chạy notebooks/00_setup_check.ipynb (bản CPU) trên máy cục bộ và ghi lại kết quả; phụ thuộc S1-01 |
-| S1-04 | T1 | Gửi danh sách câu hỏi làm rõ đề tài cho giảng viên | Báo cáo | Nguyễn Đức (Leader) | S | Chưa làm | Chưa có bằng chứng, cần Leader (Nguyễn Đức) xác nhận | Câu hỏi cho giảng viên đã gửi bằng văn bản hoặc email |
+| S1-03 | T1 | 6/6 thành viên clone repo về máy và kiểm tra môi trường cục bộ | Hạ tầng | Cả nhóm | S | Xong | Leader (Nguyễn Đức) xác nhận bằng văn bản: 6/6 thành viên đã clone repo và kiểm tra môi trường chạy đạt yêu cầu | 6/6 thành viên chạy notebooks/00_setup_check.ipynb (bản CPU) trên máy cục bộ và ghi lại kết quả; phụ thuộc S1-01 |
+| S1-04 | T1 | Gửi danh sách câu hỏi làm rõ đề tài cho giảng viên | Báo cáo | Nguyễn Đức (Leader) | S | Xong | Leader (Nguyễn Đức) xác nhận bằng văn bản: đã gửi danh sách câu hỏi; hạn nộp chốt ngày 21/11/2026, rubric chấm điểm chi tiết vẫn đang chờ giảng viên cung cấp | Câu hỏi cho giảng viên đã gửi bằng văn bản hoặc email |
 | S1-05 | T2 | Xây dựng notebook `01_download_and_eda.ipynb` đọc dữ liệu từ Kaggle | Hạ tầng | Nguyễn Đức | M | Xong | PR #1 đã merge, `notebooks/01_download_and_eda.ipynb`, kernel `cxr-eda-manifest` | Notebook tự động tìm dataset, đọc dữ liệu, không có lỗi lập trình |
 | S1-06 | T2 | Tạo file `manifest.csv`, đối chiếu số lượng ảnh và mask 4 lớp | Chống rò rỉ | Nguyễn Đức | M | Xong | PR #1 đã merge, `splits/manifest.csv`, `outputs/eda_manifest/manifest.csv` | Số ảnh mỗi lớp khớp chính xác số biết (21.165 ảnh), báo cáo mask khớp 100% |
 | S1-07 | T2 | Thống kê độ sáng, lưới ảnh mẫu và phát hiện 54 hash trùng lặp | Chống rò rỉ | Nguyễn Đức | S | Xong | PR #1 đã merge, `results/eda/brightness_distribution.png`, `results/eda/samples_grid.png` | Có danh sách nhóm ảnh trùng lặp, phân tích nghi vấn shortcut learning về độ sáng |
@@ -185,7 +185,7 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 | Phương án tải trọng số ImageNet cho kernel huấn luyện | Quyết định | Leader (Nguyễn Đức) | Đóng – ngoài phạm vi (16/10/2026) | Không còn áp dụng sau khi chuyển sang Machine Learning cổ điển |
 | Phân công chủ sở hữu module `src/models.py` | Quyết định | Leader (Nguyễn Đức) | Đã giải quyết | Đã phân công Thái Tú (Hàng Thái Tú) làm chủ sở hữu `src/models.py`, kèm cặp bởi Vũ Thương (Nguyễn Vũ Thương) |
 | Quyết định giữ `split_v1` hay tạo `split_v2` | Quyết định | Leader (Nguyễn Đức) | Mở | `split_v1` đã khóa với ngưỡng T=0 (178 nhóm, 401 ảnh). Đã thống kê 735 cặp gần trùng (Hamming 1-4) khác split (325 Train-Test, 335 Train-Val, 75 Val-Test; 229 khác nhãn, 506 cùng nhãn). Mở cho tới khi Leader (Nguyễn Đức) đánh giá có cần sửa ngưỡng hay không (735 cặp gần trùng là giới hạn đã biết). |
-| Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Chưa có rubric chấm điểm chính thức; nhóm cần liên hệ hỏi giảng viên để bám sát trọng số điểm. |
+| Rubric chấm điểm chi tiết của giảng viên | Rủi ro | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Vẫn chưa có rubric chấm điểm chính thức từ giảng viên; nhóm bám sát đề cương và yêu cầu đồ án để triển khai Sprint 6. |
 | Hình thức sản phẩm nộp cuối kỳ | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Giảng viên đã nêu: sản phẩm nộp gồm ứng dụng demo hoàn chỉnh, kèm báo cáo và bài thuyết trình bảo vệ. Còn chờ giảng viên: định nghĩa "hoàn chỉnh" (chạy trên máy, triển khai trực tuyến hay video demo), hạn nộp, và có bắt buộc dùng Gradio hay không. |
 | Thông tin nguồn gốc của bộ dữ liệu CXR (Shortcut Learning) | Rủi ro | Cả nhóm | Mở | Dataset tổng hợp từ nhiều nguồn, thiếu metadata bệnh nhân (`patient_id`) và thiết bị chụp; độ lệch độ sáng lớp COVID cao hơn rõ rệt; cần ghi rõ giới hạn này trong báo cáo và đánh giá tại RQ3. |
 | Quyết định 1 (chuẩn hóa B2 head-only) | Quyết định | Leader / Cả nhóm | Đóng – ngoài phạm vi (16/10/2026) | Không còn áp dụng sau khi gỡ bỏ toàn bộ baseline Deep Learning B2/B3 |
@@ -193,7 +193,7 @@ Bảng tổng hợp các vấn đề cần giải quyết hoặc quyết định
 | Quyết định 3 (triển khai baseline lối tắt A1) | Quyết định | Leader / Cả nhóm | Đã chốt | Triển khai A1 (histogram độ xám + trung bình và độ lệch chuẩn; CPU) |
 | Quyết định 4 (đo thử nghiệm ngân sách hai kiến trúc RQ1) | Quyết định | Leader / Cả nhóm | Đóng – ngoài phạm vi (16/10/2026) | Không còn áp dụng do không sử dụng DenseNet121, EfficientNet-B0 và GPU |
 | Tiêu chí chấp nhận Threshold v2 | Quyết định | Leader / Cả nhóm | Mở | Đề xuất đã merge (PR #12); đang được thay thế bằng threshold_v3 (PR #17) |
-| Hạn nộp, tiêu chí chấm, hình thức nộp | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đang chờ | Chờ giảng viên phản hồi danh sách câu hỏi làm rõ đề tài (S1-04) |
+| Hạn nộp, tiêu chí chấm, hình thức nộp | Quyết định | Giảng viên / Leader (Nguyễn Đức) | Đã chốt hạn nộp / Đang chờ rubric | Hạn nộp chính thức đã được xác định là ngày 21/11/2026 (Leader xác nhận); rubric chấm điểm chi tiết vẫn đang chờ giảng viên cung cấp. |
 | Chuyển repo sang private | Quyết định | Leader (Nguyễn Đức) | Mở | Chuyển repo sang private sau khi PR tài liệu merge và trước Tuần 7 |
 | Xác minh lưới ảnh mẫu | Rủi ro | Cả nhóm | Mở | `results/eda/samples_grid.png` chưa xác minh có chứa ảnh X-quang hay không |
 
@@ -275,3 +275,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.8** | 08/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S4-07 và RQ3: S5-01, S5-02, S5-03 (PR #39, #40, kết luận shortcut learning tại `results/rq3_shortcut_learning_conclusion.md`); tiến độ đạt 22/33 (66.7%). |
 | **v3.9** | 09/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-04 và S5-05: Đánh giá tập test duy nhất một lần và xuất ma trận nhầm lẫn (PR #41, #42, kết quả tại `results/final_test/`, `notebooks/10_final_test_eval.ipynb`); tiến độ đạt 24/33 (72.7%). |
 | **v3.10** | 10/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-06: Xây dựng notebook suy luận độc lập (PR #43 đã merge, kernel `ductrannguyen/cxr-inference-demo` version 3); Sprint 5 đạt 6/6 việc (100%); tổng tiến độ đạt 25/33 (75.8%). |
+| **v3.11** | 10/11/2026 | Nguyễn Đức (Leader) & Nhóm | Hoàn tất S1-03 và S1-04 theo xác nhận văn bản của Leader; cập nhật hạn nộp chính thức 21/11/2026 tại Mục 5; Sprint 1 đạt 7/7 việc (100%); tổng tiến độ đạt 27/33 (81.8%), chỉ còn lại 6 việc thuộc Sprint 6. |
