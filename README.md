@@ -67,7 +67,7 @@ Nhóm thực hiện tuần tự theo quy trình nghiên cứu từ bước 00 đ
 | 08 | `08_rq3_masked_eval.ipynb` | Câu hỏi nghiên cứu 3: Đánh giá trên ảnh gốc vs chỉ phổi vs ngoài phổi |
 | 09 | `09_error_analysis.ipynb` | Phân tích chi tiết các ca dự đoán sai và nguyên nhân gây nhầm lẫn |
 | 10 | `10_final_test_eval.ipynb` | Mở khoá tập test và đánh giá DUY NHẤT 1 LẦN trên mô hình tối ưu |
-| 11 | `11_inference_demo.ipynb` | Xây dựng giao diện demo suy luận (Gradio) nhận ảnh X-quang và hiển thị kết quả |
+| 11 | `11_inference_demo.ipynb` | Notebook suy luận độc lập: trích 152 đặc trưng thủ công, phân loại 4 lớp với mô hình đóng băng |
 
 ---
 
