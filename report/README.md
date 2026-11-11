@@ -160,5 +160,5 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 ## 5. Trạng thái hiện tại
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
+- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md).
 - Còn thiếu: số đo độ trễ của ứng dụng (5.5.4), MSSV của 6 thành viên, và bảng độ sáng trung bình từng lớp dưới dạng số (2.2 chỉ có hình).
-- Chưa có tệp nội dung báo cáo nào trong thư mục này. Các chương sẽ được thêm khi soạn.

@@ -67,59 +67,72 @@ Mọi tài liệu báo cáo chính thức trong thư mục `report/` bắt buộ
 
 ## Mục 3. Cấu trúc Tổng thể Quyển Báo cáo Đồ án
 
-Quyển báo cáo đồ án được sắp xếp tuần tự theo đúng 3 phần lớn chuẩn mực khoa học:
+Quyển báo cáo được sắp xếp theo 3 phần, tổng cộng **50 mục**: 9 mục phần mở đầu, 37 tiểu mục trong 6 chương, 4 mục phần kết thúc. Bản đồ nguồn số liệu của từng mục nằm tại [`report/README.md`](../report/README.md); mục nào chưa có nguồn thì ghi rõ trong tệp đó chứ không điền số ước lượng.
 
-### 3.1. Phần Mở đầu (Front Matter)
-1. **Trang bìa chính (Bìa cứng/bìa ngoài):**
-   * Tên cơ quan chủ quản: TRƯỜNG ĐẠI HỌC CẦN THƠ (hoặc TRƯỜNG ĐH KỸ THUẬT - CÔNG NGHỆ CẦN THƠ).
-   * Tên Khoa/Trường đào tạo: TRƯỜNG CÔNG NGHỆ THÔNG TIN VÀ TRUYỀN THÔNG (CICT).
-   * Logo chính thức của trường (rõ nét, đúng tỷ lệ, đặt trang trọng ở phía trên).
-   * Dòng chữ: **BÁO CÁO BÀI TẬP LỚN / BÁO CÁO ĐỒ ÁN MÔN HỌC MÁY**.
-   * Tên đề tài: **PHÂN LOẠI ẢNH X-QUANG LỒNG NGỰC BẰNG HỌC MÁY CỔ ĐIỂN VÀ ĐÁNH GIÁ NGUY CƠ SHORTCUT LEARNING TRÊN BỘ DỮ LIỆU COVID-19 RADIOGRAPHY**.
-   * Thông tin cán bộ hướng dẫn: Học hàm, học vị, Họ và tên Giảng viên.
-   * Thông tin sinh viên thực hiện: Họ tên, Mã số sinh viên (MSSV), Lớp, Nhóm thực hiện.
-   * Địa danh và thời gian: Cần Thơ – Tháng 11/2026.
-2. **Trang phụ bìa:** Nội dung hoàn toàn tương tự trang bìa chính nhưng in trên giấy trắng A4 thường.
-3. **Phiếu giao nhiệm vụ đồ án / Phiếu chấp thuận của Giảng viên hướng dẫn.**
-4. **Phiếu nhận xét và đánh giá của Giảng viên phản biện / Hội đồng chấm điểm.**
-5. **Lời cảm ơn.**
-6. **Lời cam đoan liêm chính học thuật:** Cam đoan công trình nghiên cứu là kết quả lao động trung thực của nhóm, toàn bộ số liệu đo đạc thực tế, không sao chép trái phép.
-7. **Tóm tắt đề tài (Abstract):**
-   * Bản tiếng Việt: Tóm tắt bối cảnh, phương pháp luận (đặc trưng thủ công 152 chiều + SVM), kết quả đạt được (Test Macro-F1 = 0.8714) và kết luận khoa học (shortcut learning ngoài vùng phổi).
-   * Bản tiếng Anh: Tương đương bản tiếng Việt.
-8. **Mục lục (Table of Contents):** Liệt kê các chương, mục, tiểu mục kèm số trang chính xác (tạo tự động).
-9. **Danh mục ký hiệu và chữ viết tắt:** Liệt kê theo thứ tự bảng chữ cái (ví dụ: CXR, GLCM, LBP, HOG, SVM, RF, Macro-F1).
-10. **Danh mục bảng biểu (List of Tables).**
-11. **Danh mục hình vẽ, sơ đồ, biểu đồ (List of Figures).**
+### 3.1. Phần Mở đầu (9 mục, đánh số La Mã)
 
-### 3.2. Phần Nội dung Chính (Main Body - 6 Chương chuẩn)
-* **Chương 1: Giới thiệu và Phát biểu Bài toán:**
-  * Bối cảnh y tế về đại dịch COVID-19 và nhu cầu phân loại ảnh X-quang lồng ngực (CXR).
-  * Mục tiêu nghiên cứu và các câu hỏi nghiên cứu cốt lõi (RQ1, RQ2, RQ3).
-  * Đóng góp chính của đề tài (chứng minh ranh giới học máy cổ điển và phát hiện shortcut learning).
-* **Chương 2: Dữ liệu và Phương pháp luận Nghiên cứu:**
-  * Giới thiệu bộ dữ liệu 21.165 ảnh trên 4 lớp (`COVID`, `Lung_Opacity`, `Normal`, `Viral Pneumonia`).
-  * Quy trình cách ly dữ liệu: Lọc trùng pHash T=0 (178 nhóm, 401 ảnh), phân chia 70/15/15 khóa test (SHA-256).
-  * Quy trình trích xuất đặc trưng thủ công: Histogram 64 bin + GLCM 60 chiều + LBP 28 chiều = 152 chiều trên ảnh xám $299 \times 299$.
-  * Chuẩn hóa `StandardScaler` (chỉ fit trên train) và các mô hình học máy cổ điển.
-* **Chương 3: Thực nghiệm và Đánh giá (RQ1 & RQ2):**
-  * RQ1: So sánh thực nghiệm 4 nhóm đặc trưng (Histogram, GLCM+LBP, HOG, Ghép) trên Random Forest 3 seed cố định.
-  * RQ2: So sánh thực nghiệm 6 bộ phân loại (Logistic Regression, k-NN, Decision Tree, Random Forest, SVM, Gradient Boosting) trên nhóm đặc trưng ghép 152 chiều.
-  * Phân tích khoảng tin cậy Bootstrap 95% 2.000 lần lấy mẫu theo tiêu chí chấp nhận `threshold_v3`.
-* **Chương 4: Nghiên cứu Hiện tượng Shortcut Learning (RQ3):**
-  * Thiết kế thực nghiệm che ảnh: Ảnh gốc (`orig_to_orig`), Chỉ giữ phổi (`lung_to_lung`), Chỉ ngoài phổi (`out_to_out`), cùng hai kịch bản nhiễu `orig_to_lung` và `orig_to_out`.
-  * Đo lường độ sụt giảm hiệu năng khi che phổi và phân tích Permutation Importance 10 khối đặc trưng.
-  * Kết luận khoa học về mức độ phụ thuộc vào tín hiệu ngoài phổi của mô hình.
-* **Chương 5: Kết quả Kiểm tra Độc lập và Phân tích Lỗi:**
-  * Kết quả mở khóa tập test DUY NHẤT một lần (S5-04): Macro-F1 = `0.8714` (95% CI: `[0.8579, 0.8840]`).
-  * Đối chiếu Val tái lập (`0.9024`) và độ chênh lệch ($-0.0310$).
-  * Phân tích Ma trận nhầm lẫn test (S5-05) và thống kê cặp nhầm lẫn `Normal` vs `Lung_Opacity` (304/427 lỗi, chiếm 71,19% tổng lỗi).
-  * Triển khai ứng dụng Streamlit trên Hugging Face Spaces/Streamlit Community Cloud: pipeline suy luận, giao diện, cảnh báo y khoa tích hợp.
-* **Chương 6: Giới hạn Nghiên cứu, Cảnh báo Y khoa và Kết luận:**
-  * Báo cáo khách quan theo Quy tắc D4: Giữ nguyên văn các giả thuyết chưa kiểm chứng, không suy diễn nguyên nhân độ chênh.
-  * Giới hạn kỹ thuật của bộ dữ liệu (thiếu metadata bệnh nhân, nguy cơ thiên lệch nguồn ảnh).
-  * Cảnh báo y khoa: Khuyến cáo không sử dụng mô hình trực tiếp trong chẩn đoán lâm sàng thực tế khi chưa có thử nghiệm đa trung tâm.
-  * Tóm tắt kết quả đồ án và hướng phát triển.
+| # | Mục | Ghi chú |
+| :-: | :--- | :--- |
+| 1 | Trang bìa chính | Không đánh số trang; in bìa cứng nếu đơn vị đào tạo yêu cầu |
+| 2 | Trang bìa phụ | Nội dung như bìa chính, giấy A4 thường |
+| 3 | Lời cảm ơn | |
+| 4 | Lời cam đoan liêm chính học thuật | Cam đoan số liệu là kết quả đo đạc thực tế của nhóm |
+| 5 | Tóm tắt tiếng Việt và Abstract tiếng Anh | Mỗi bản không quá một trang: bối cảnh, phương pháp, kết quả test, kết luận |
+| 6 | Mục lục | Tạo tự động, có số trang |
+| 7 | Danh mục ký hiệu và chữ viết tắt | Xếp theo bảng chữ cái: CXR, GLCM, LBP, HOG, SVM, RBF, RF, GB, LR, k-NN, DT, Macro-F1, CI |
+| 8 | Danh mục bảng biểu | Tạo tự động |
+| 9 | Danh mục hình vẽ, sơ đồ, biểu đồ | Tạo tự động |
+
+Thông tin bắt buộc trên bìa: **TRƯỜNG ĐẠI HỌC KỸ THUẬT - CÔNG NGHỆ CẦN THƠ (CTUT)**, khoa Công nghệ Thông tin và Truyền thông (CICT); dòng chữ **BÁO CÁO BÀI TẬP LỚN / BÁO CÁO ĐỒ ÁN MÔN HỌC MÁY**; tên đề tài **PHÂN LOẠI ẢNH X-QUANG LỒNG NGỰC BẰNG HỌC MÁY CỔ ĐIỂN VÀ ĐÁNH GIÁ NGUY CƠ SHORTCUT LEARNING TRÊN BỘ DỮ LIỆU COVID-19 RADIOGRAPHY**; giảng viên hướng dẫn TS. Lê Anh Nhã Uyên; họ tên và MSSV từng sinh viên, lớp, nhóm; địa danh và thời gian: Cần Thơ – Tháng 11/2026.
+
+Phiếu giao nhiệm vụ và phiếu nhận xét của giảng viên, nếu đơn vị đào tạo yêu cầu, đóng trước trang bìa chính; hai phiếu này không tính vào 50 mục và không đánh số trang.
+
+### 3.2. Phần Nội dung Chính (6 chương, 37 tiểu mục)
+
+**Chương 1. Giới thiệu và tổng quan đề tài** — 5 tiểu mục
+* 1.1. Bối cảnh và lý do chọn đề tài.
+* 1.2. Mục tiêu và ba câu hỏi nghiên cứu RQ1–RQ3.
+* 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật (Cổng H7).
+* 1.4. Đóng góp của đề tài.
+* 1.5. Cấu trúc báo cáo.
+
+**Chương 2. Dữ liệu và phương pháp nghiên cứu** — 12 tiểu mục
+* 2.1. Nguồn gốc bộ dữ liệu và độ tin cậy thông tin: 21.165 ảnh, 4 lớp (`COVID`, `Lung_Opacity`, `Normal`, `Viral Pneumonia`).
+* 2.2. Phân tích khám phá dữ liệu và nguy cơ học lối tắt do chênh lệch cường độ sáng.
+* 2.3. Lọc trùng lặp bằng pHash ngưỡng T = 0 (178 nhóm, 401 ảnh).
+* 2.4. Phân chia train/val/test 70/15/15 và cơ chế khóa tập test (Cổng H2, SHA-256).
+* 2.5. Giới hạn tồn tại của dữ liệu.
+* 2.6. Trích xuất đặc trưng thủ công trên ảnh xám 299 × 299, gồm 4 tiểu mục: 2.6.1 histogram 64 chiều; 2.6.2 GLCM 60 chiều và LBP 28 chiều; 2.6.3 HOG 10.404 chiều; 2.6.4 nhóm ghép 152 chiều.
+* 2.7. Chuẩn hóa `StandardScaler` chỉ fit trên train (Cổng H6).
+* 2.8. Sáu thuật toán phân loại và không gian siêu tham số.
+* 2.9. Phương pháp đánh giá thống kê và bootstrap ghép cặp 2.000 lần (khoảng tin cậy 95%).
+
+**Chương 3. Kết quả RQ1 và RQ2 trên tập validation** — 4 tiểu mục
+* 3.1. RQ1: so sánh bốn nhóm đặc trưng trên Random Forest, 3 seed cố định.
+* 3.2. Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2.
+* 3.3. RQ2: so sánh sáu bộ phân loại trên nhóm ghép 152 chiều.
+* 3.4. Đánh giá SVM RBF trên validation và ma trận nhầm lẫn.
+
+**Chương 4. Nghiên cứu hiện tượng học lối tắt, RQ3** — 3 tiểu mục
+* 4.1. Năm kịch bản che mặt nạ phổi: `orig_to_orig`, `lung_to_lung`, `out_to_out`, `orig_to_lung`, `orig_to_out`.
+* 4.2. Tầm quan trọng đặc trưng theo 10 khối (permutation importance).
+* 4.3. Các giả thuyết chưa kiểm chứng về thiên lệch ngoài phổi (Quy tắc D4).
+
+**Chương 5. Kết quả kiểm tra độc lập và triển khai** — 8 tiểu mục
+* 5.1. Kết quả trên tập test độc lập, mở khóa một lần (S5-04): Macro-F1 0,8714, 95% CI [0,8579, 0,8840].
+* 5.2. Chênh lệch validation và test (Quy tắc D4).
+* 5.3. Phân tích lỗi sai và cặp nhầm lẫn `Normal` – `Lung_Opacity` (304/427 lỗi, 71,19%).
+* 5.4. Tính độc lập và khả năng tái lập của thực nghiệm.
+* 5.5. Triển khai ứng dụng, gồm 4 tiểu mục: 5.5.1 pipeline suy luận; 5.5.2 giao diện Streamlit; 5.5.3 cảnh báo y khoa; 5.5.4 độ trễ suy luận.
+
+**Chương 6. Thảo luận, giới hạn và hướng phát triển** — 5 tiểu mục
+* 6.1. Thảo luận kết quả đạt được.
+* 6.2. Giới hạn nghiên cứu.
+* 6.3. Cảnh báo y khoa và đạo đức nghiên cứu.
+* 6.4. Hướng phát triển.
+* 6.5. Kết luận.
+
+Số liệu tập test chỉ trình bày từ Chương 5 trở đi; Chương 1 đến Chương 4 chỉ dùng 3.174 ảnh validation. Mục 5.5.4 hiện chưa có số đo độ trễ, phải ghi rõ trạng thái trong báo cáo thay vì ước lượng.
 
 ### 3.3. Phần Kết thúc (Back Matter)
 * **Tài liệu tham khảo (References):** Trình bày theo chuẩn IEEE hoặc APA.
