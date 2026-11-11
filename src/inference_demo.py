@@ -39,6 +39,18 @@ from src.features_hog_ghep import extract_ghep
 N_FEATURES: int = 152
 IMAGE_SIZE: Tuple[int, int] = (299, 299)
 
+# Artifact kernel-v3 được tạo từ cây làm việc Windows (CRLF) trên Kaggle, còn Streamlit Cloud
+# checkout bằng LF. Băm mã trích đặc trưng được chuẩn hóa về LF; bảng dưới ánh xạ băm CRLF cũ
+# của artifact đã công bố sang băm chuẩn hóa để vẫn kiểm tra được nội dung mã.
+LEGACY_FEATURE_CODE_SHA256_CRLF: str = (
+    "d361534a6370df358dfb9e0373a124202e466619bb2447ee4825f24ba9922b6d"
+)
+FEATURE_CODE_SHA256_ALIASES: Dict[str, str] = {
+    LEGACY_FEATURE_CODE_SHA256_CRLF: (
+        "95a49040119635c7ebe9f12dfc4d8b5c82911884b09f1a131dccd0339b4c554d"
+    ),
+}
+
 
 def load_image_grayscale_299(path: Union[str, Path], *, resize: bool = False) -> np.ndarray:
     """Đọc một ảnh và trả về mảng xám uint8 kích thước 299x299.
@@ -104,13 +116,28 @@ def extract_152_features(img: np.ndarray) -> np.ndarray:
     return feats
 
 
-def _feature_code_sha256() -> str:
-    """Băm mã trích đặc trưng; đổi mã trích đặc trưng sẽ làm bộ nhớ đệm cũ mất hiệu lực."""
+def _feature_code_sha256(src_dir: Optional[Union[str, Path]] = None) -> str:
+    """Băm mã trích đặc trưng sau khi chuẩn hóa xuống dòng về LF.
+
+    Chuẩn hóa để băm không phụ thuộc CRLF/LF giữa Windows và Linux/Streamlit Cloud. Đổi mã trích
+    đặc trưng vẫn làm bộ nhớ đệm cũ mất hiệu lực.
+    """
+    base = Path(src_dir) if src_dir is not None else Path(__file__).resolve().parent
     hasher = hashlib.sha256()
-    src_dir = Path(__file__).resolve().parent
     for name in ("features_hist_glcm_lbp.py", "features_hog_ghep.py"):
-        hasher.update((src_dir / name).read_bytes())
+        data = (base / name).read_bytes()
+        hasher.update(data.replace(b"\r\n", b"\n").replace(b"\r", b"\n"))
     return hasher.hexdigest()
+
+
+def feature_code_matches(stored: Any) -> bool:
+    """Kiểm băm mã trích đặc trưng, chấp nhận băm CRLF cũ của artifact kernel-v3."""
+    if not isinstance(stored, str):
+        return False
+    expected = _feature_code_sha256()
+    if stored == expected:
+        return True
+    return FEATURE_CODE_SHA256_ALIASES.get(stored) == expected
 
 
 def _cache_meta(split_sha256: str, n_train: int) -> Dict[str, Any]:
@@ -150,7 +177,7 @@ def _try_load_cache(
             return None
         if meta.get("svm_params") != dict(_ftr.FROZEN_SVM_PARAMS):
             return None
-        if meta.get("feature_code_sha256") != _feature_code_sha256():
+        if not feature_code_matches(meta.get("feature_code_sha256")):
             return None
     except Exception:
         return None

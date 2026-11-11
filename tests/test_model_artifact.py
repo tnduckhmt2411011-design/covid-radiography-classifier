@@ -17,7 +17,12 @@ from sklearn.svm import SVC
 
 from src.dataset import CLASS_NAMES
 from src.final_test_runner import EXPECTED_SPLIT_SHA256, EXPECTED_SPLIT_SIZES, FROZEN_SVM_PARAMS
-from src.inference_demo import N_FEATURES, _feature_code_sha256
+from src.inference_demo import (
+    LEGACY_FEATURE_CODE_SHA256_CRLF,
+    N_FEATURES,
+    _feature_code_sha256,
+    feature_code_matches,
+)
 from src.model_artifact import (
     DEFAULT_MODEL_FILE,
     DEFAULT_MODEL_SHA256,
@@ -154,6 +159,31 @@ def test_default_model_file_name() -> None:
     assert DEFAULT_MODEL_FILE.endswith(".joblib")
     assert len(DEFAULT_MODEL_SHA256) == 64
     int(DEFAULT_MODEL_SHA256, 16)
+
+
+def test_feature_hash_ignores_crlf_and_lf(tmp_path: Path) -> None:
+    src = REPO_ROOT / "src"
+    names = ("features_hist_glcm_lbp.py", "features_hog_ghep.py")
+    lf_dir = tmp_path / "lf"
+    crlf_dir = tmp_path / "crlf"
+    lf_dir.mkdir()
+    crlf_dir.mkdir()
+    for name in names:
+        canonical = (src / name).read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+        (lf_dir / name).write_bytes(canonical)
+        (crlf_dir / name).write_bytes(canonical.replace(b"\n", b"\r\n"))
+    assert _feature_code_sha256(lf_dir) == _feature_code_sha256(crlf_dir)
+
+
+def test_legacy_crlf_feature_hash_is_accepted(tmp_path: Path) -> None:
+    assert feature_code_matches(LEGACY_FEATURE_CODE_SHA256_CRLF)
+    assert not feature_code_matches("0" * 64)
+    p = _make_payload(
+        tmp_path / "model.joblib",
+        meta_overrides={"feature_code_sha256": LEGACY_FEATURE_CODE_SHA256_CRLF},
+    )
+    _, _, meta = load_model_artifact(p)
+    assert meta["feature_code_sha256"] == LEGACY_FEATURE_CODE_SHA256_CRLF
 
 
 def test_default_model_repo_is_public_project_repo() -> None:

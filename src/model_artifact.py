@@ -25,7 +25,7 @@ from sklearn.svm import SVC
 
 from src import final_test_runner as _ftr
 from src.dataset import CLASS_NAMES
-from src.inference_demo import N_FEATURES, _feature_code_sha256
+from src.inference_demo import N_FEATURES, feature_code_matches
 
 # Tên tệp, băm và kho công khai của artifact kernel-v3 đã dùng cho cổng tương đương
 # 200/200 ảnh val. Có thể ghi đè bằng biến môi trường hoặc Streamlit secrets.
@@ -77,7 +77,7 @@ def _validate_metadata(meta: Any, scaler: StandardScaler, clf: SVC) -> Dict[str,
         f"{meta.get('sklearn_version')!r}, môi trường hiện tại là {sklearn.__version__!r}.",
     )
     _require(
-        meta.get("feature_code_sha256") == _feature_code_sha256(),
+        feature_code_matches(meta.get("feature_code_sha256")),
         "Artifact không khớp băm mã trích đặc trưng (feature_code_sha256).",
     )
     _require(
