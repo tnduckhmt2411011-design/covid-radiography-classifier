@@ -75,12 +75,12 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 2.2 | Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp | `src/eda_brightness.py` (chạy `python -m src.eda_brightness`) đọc `splits/manifest.csv`, ghi `results/eda/brightness_by_class.csv` (thống kê theo lớp + AUC) và `results/eda/brightness_channels.json` (tỉ lệ ảnh trong IQR của Normal, số ảnh theo hệ màu); hình `results/eda/brightness_distribution.png` từ `notebooks/01_download_and_eda.ipynb` cell 6. Kiểm thử: `tests/test_eda_brightness.py` |
 | 2.3 | Gom nhóm ảnh trùng bằng pHash ngưỡng T = 0 | `notebooks/02_duplicates_and_split.ipynb`; 178 nhóm, 401 ảnh, 0 nhóm lệch nhãn (`docs/roadmap.md` dòng 93) |
 | 2.4 | Phân chia train/val/test 70/15/15 và cơ chế khóa tập test (Cổng H2) | `splits/split_v1.csv` (14.815 / 3.174 / 3.176), SHA-256 `f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98`; `results/final_test/UNLOCK_RECORD.json`; `results/final_test_protocol_record.md` mục 2 (G1–G6) |
-| 2.5 | Giới hạn tồn tại của dữ liệu | 735 cặp gần trùng Hamming 1–4 (325 Train–Test, 335 Train–Val, 75 Val–Test; 229 khác nhãn) tại `docs/roadmap.md` dòng 187; thiếu mã bệnh nhân và tuổi chưa xác minh tại `results/report_rq3/r5_gioi_han.md` và `results/threshold_v3.md` Mục 6 (R5) |
+| 2.5 | Giới hạn tồn tại của dữ liệu | 735 cặp gần trùng Hamming 2–4 (325 Train–Test, 335 Train–Val, 75 Val–Test; 229 khác nhãn) tại `docs/roadmap.md` dòng 187; thiếu mã bệnh nhân và tuổi chưa xác minh tại `results/report_rq3/r5_gioi_han.md` và `results/threshold_v3.md` Mục 6 (R5) |
 | 2.6.1 | Đặc trưng histogram cường độ sáng, 64 chiều | `src/features_hist_glcm_lbp.py` |
 | 2.6.2 | Đặc trưng kết cấu GLCM 60 chiều và LBP 28 chiều | `src/features_hist_glcm_lbp.py`. GLCM: 5 thuộc tính × 3 khoảng cách × 4 góc = 60. LBP: R=1/P=8 (10 bin) + R=2/P=16 (18 bin) = 28 |
-| 2.6.3 | Đặc trưng hướng biên HOG, 10.404 chiều | `src/features_hog_ghep.py` dòng 37 (`HOG_DIM = 10404`) || 2.6.4 | Nhóm đặc trưng ghép 152 chiều | `src/features_hog_ghep.py`; `src/inference_demo.py` dòng 39 (`N_FEATURES = 152`) |
-| 2.7 | Chuẩn hóa dữ liệu, StandardScaler chỉ fit trên train (Cổng H6) | `src/rq2_runner.py` dòng 456 và 654 |
-| 2.8 | Sáu thuật toán phân loại và không gian siêu tham số | `src/rq2_runner.py` dòng 59 (`CLASSIFIERS`); `results/rq2_classifier_selection_record.md` |
+| 2.6.3 | Đặc trưng hướng biên HOG, 10.404 chiều | `src/features_hog_ghep.py` (`HOG_DIM = 10404`) || 2.6.4 | Nhóm đặc trưng ghép 152 chiều | `src/features_hog_ghep.py` (`N_FEATURES` = 152; `src/inference_demo.py`) |
+| 2.7 | Chuẩn hóa dữ liệu, StandardScaler chỉ fit trên train (Cổng H6) | `src/rq2_runner.py` |
+| 2.8 | Sáu thuật toán phân loại và không gian siêu tham số | `src/rq2_runner.py` (`CLASSIFIERS`); `results/rq2_classifier_selection_record.md` |
 | 2.9 | Phương pháp đánh giá thống kê và bootstrap ghép cặp 2.000 lần | `src/bootstrap.py`; `results/report_rq1/bootstrap_config.json` |
 
 ### Chương 3. Kết quả RQ1 và RQ2 trên tập validation (4 tiểu mục)
@@ -92,33 +92,33 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868 ± 0,0030; rf 0,8582 ± 0,0033; lr 0,8370; knn 0,8242; dt 0,7271 ± 0,0017), `results/report_rq2/r1_bootstrap_vs_reference.csv` (năm phép so với mốc `rf`: svm +0,0442, CI [+0,0320; +0,0580]; bốn phép còn lại âm và CI không chứa 0), `results/report_rq2/bootstrap_config.json` (n = 3.174, 2.000 lần, seed 42). Cấu hình SVM đã chọn ở `results/rq2_ghep_svm_s42/metrics.json` |
 | 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/rq2_ghep_svm_s42/preds_val.csv` (nhãn thực, nhãn dự đoán và bốn cột xác suất từng ảnh), `results/eda/normal_source_labels.csv` (10.192 ảnh lớp Normal tách theo nguồn RSNA / Mooney, sinh bằng `python -m src.source_labels`), `results/error_analysis/error_analysis_summary.md` (349 lỗi; 240 lỗi đồng thuận; 138 lỗi có `proba_pred` từ 0,80). Hình 3.1 sinh bằng `python -m scripts.report_figures`, ghi ra `report/figures/03_ma_tran_nham_lon_svm_val.png`; kiểm thử `tests/test_report_figures.py` và `tests/test_source_labels.py`. Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
 
-### Chương 4. Mức phụ thuộc vào vùng ngoài phổi (RQ3) (3 tiểu mục)
+### Chương 4. Mức phụ thuộc vào vùng ngoài mặt nạ phổi (RQ3) (3 tiểu mục)
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
 | 4.1 | Năm kịch bản che mặt nạ phổi | `results/report_rq3/r1_summary.csv` (macro-F1, CI, chỉ số từng lớp), `results/report_rq3/r4_sampling_error.csv` (accuracy, sai số chuẩn), `results/report_rq3/r3_shortcut_bootstrap.csv` (năm phép so ghép cặp) và `results/report_rq3/r1_bootstrap_vs_reference.csv` (bốn phép so với mốc `orig_to_orig`), `results/report_rq3/r2_normal_lung_opacity.csv` (cặp nhầm Normal–Lung_Opacity), `results/rq3_comparison_protocol_record.md` (thiết kế kịch bản, quy tắc đóng băng), `results/rq3_shortcut_learning_conclusion.md` mục 1.1 và 2. Mốc nền: `results/b0_majority/metrics.json`, `results/a0_shortcut/metrics.json`, `results/report_rq1/r1_summary.csv`. Hình 4.1 sinh bằng `python -m scripts.report_figures_rq3`, ghi ra `report/figures/04_macro_f1_kich_ban_rq3.png`; kiểm thử `tests/test_report_figures_rq3.py` |
 | 4.2 | Tầm quan trọng đặc trưng theo 10 khối (permutation importance) | `results/rq3_permutation_importance.csv`. Ba khối tổng hợp: hist 64, GLCM 60, LBP 28; 5 tiểu khối GLCM 12 chiều; 2 tiểu khối LBP |
-| 4.3 | Các giả thuyết chưa kiểm chứng về thiên lệch ngoài phổi (Quy tắc D4) | `results/rq3_shortcut_learning_conclusion.md` mục 3.2. Mọi diễn giải phải gắn nhãn giả thuyết |
+| 4.3 | Các giả thuyết chưa kiểm chứng về vùng ngoài mặt nạ phổi | `results/rq3_shortcut_learning_conclusion.md` mục 3.2. Mọi diễn giải phải gắn nhãn giả thuyết |
 
 ### Chương 5. Kết quả kiểm tra độc lập và triển khai (8 tiểu mục)
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
 | 5.1 | Kết quả trên tập test độc lập, mở khóa một lần | `results/final_test/final_test_report.json`, `results/final_test/metrics.json`, `results/final_test/UNLOCK_RECORD.json`. Macro-F1 0,8714, CI [0,8579, 0,8840], Accuracy 86,56% |
-| 5.2 | Chênh lệch validation và test (Quy tắc D4) | `results/final_test/final_test_report.json` (`test_minus_val` = −0,0310). Trích nguyên văn D4, không nêu nguyên nhân |
+| 5.2 | Chênh lệch validation và test | `results/final_test/final_test_report.json` (`test_minus_val` = −0,0310). Không nêu nguyên nhân; cách tính hiệu và ô Bảng 5.3 ghi trong Ghi chú kỹ thuật của chương |
 | 5.3 | Phân tích lỗi sai và cặp nhầm lẫn Normal – Lung_Opacity | Ma trận nhầm lẫn trong `results/final_test/metrics.json`: 427 lỗi, trong đó 304 lỗi thuộc cặp Normal ↔ Lung_Opacity (71,19%). Hình 5.1 sinh bằng `python -m scripts.report_figures_final_test`, kiểm thử `tests/test_report_figures_final_test.py` |
-| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 330 phép kiểm thử trong 25 module (đếm tại thời điểm nộp; số liệu chạy xem Ghi chú kỹ thuật của chương) |
-| 5.5.1 | Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán | `src/inference_demo.py` dòng 55, 110, 187, 338; `src/model_artifact.py` (kho `duc16/cxr-svm-demo`, SHA-256 `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058`, 7.842.399 bytes) |
+| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 334 phép kiểm thử trong 26 module (đếm tại thời điểm nộp; số liệu chạy xem Ghi chú kỹ thuật của chương) |
+| 5.5.1 | Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán | `src/inference_demo.py` (`N_FEATURES`, `IMAGE_SIZE`, các hàm `load_image_grayscale_299`, `extract_152_features`, `fit_or_load_model`, `predict_image`); `src/model_artifact.py` (kho `duc16/cxr-svm-demo`, SHA-256 `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058`, 7.842.399 bytes) |
 | 5.5.2 | Giao diện Streamlit và các thành phần tương tác | `demo/streamlit_app.py`; `demo/README.md` |
 | 5.5.3 | Cảnh báo y khoa tích hợp trong ứng dụng | `demo/streamlit_app.py` dòng 61–63; `demo/README.md` mục giới hạn và an toàn |
-| 5.5.4 | Độ trễ suy luận thực tế | `results/demo_latency_interactive/latency.json` (20 ảnh val, seed 42, một lượt) và `results/demo_latency_sustained/latency.json` (200 ảnh val, seed 42, 3 lượt = 600 phép đo), sinh bằng `python -m src.inference_latency`; kiểm thử `tests/test_inference_latency.py` |
+| 5.5.4 | Độ trễ suy luận thực tế | `results/demo_latency_interactive/latency.json` (20 ảnh val đầu tiên ngay sau khi máy nghỉ, seed 42, một lượt) và `results/demo_latency_sustained/latency.json` (200 ảnh val, seed 42, 3 lượt; Bảng 5.5 thống kê trên trung vị ba lượt của mỗi ảnh, tức 200 giá trị), sinh bằng `python -m src.inference_latency`; kiểm thử `tests/test_inference_latency.py` |
 
 ### Chương 6. Thảo luận, giới hạn và hướng phát triển (5 tiểu mục)
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
 | 6.1 | Thảo luận kết quả đạt được | Tổng hợp từ `results/report_rq1/r1_summary.csv`, `results/report_rq2/r1_summary.csv`, `results/report_rq3/r1_summary.csv`, `results/final_test/final_test_report.json` |
-| 6.2 | Giới hạn nghiên cứu | `results/report_rq3/r5_gioi_han.md`; `results/threshold_v3.md` Mục 6 (R5). Gồm: 735 cặp gần trùng, không chặn Hamming 1–4, thiếu mã bệnh nhân, nguồn và tuổi chưa xác minh, đánh giá trên validation nên số hơi lạc quan |
+| 6.2 | Giới hạn nghiên cứu | `results/report_rq3/r5_gioi_han.md`; `results/threshold_v3.md` Mục 6 (R5). Gồm 11 hạng mục (xem chương 6): 735 cặp gần trùng mà bước chia nhóm pHash không chặn (chỉ chặn trùng tuyệt đối), thiếu mã bệnh nhân, nguồn và tuổi chưa xác minh, đánh giá trên validation nên số có xu hướng cao hơn, phạm vi ngoại suy |
 | 6.3 | Cảnh báo y khoa và đạo đức nghiên cứu | `demo/streamlit_app.py` dòng 61–63. Không quy cho WHO/ACR hay bất kỳ khuyến cáo nào không có trong repo |
 | 6.4 | Hướng phát triển | Viết mới, dựa trên giới hạn ở 6.2 |
 | 6.5 | Kết luận | Viết mới, không thêm số liệu mới |
@@ -129,7 +129,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 1 | Tài liệu tham khảo | IEEE. Tối thiểu: Chowdhury et al. (2020); Kermany et al. (2018); Pedregosa et al. (2011); van der Walt et al. (2014); tài liệu Streamlit; tài liệu Hugging Face Hub |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 275 hàm test trong 23 module (đếm tại thời điểm viết Chương 5, trước khi bộ kiểm thử của Hình 5.1 được thêm) |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 334 phép kiểm thử trong 26 module (đếm tại thời điểm nộp) |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
@@ -158,7 +158,7 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 
 ## 5. Trạng thái hiện tại
 
-- Đã có đủ số liệu cho Chương 3, 4 và 5.
-- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md) và Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md) và Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
-- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục; Chương 5 đã viết đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đã viết đủ 5 tiểu mục kèm Bảng 6.1.
-- Còn thiếu: phần mở đầu và phần cuối quyển (tóm tắt, danh mục, phụ lục A–C), MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Đủ 6 chương đã merge vào `main`: Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md), Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md), Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
+- Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
+- Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 334 phép kiểm thử trong 26 module, 333 pass và 1 bỏ qua.
+- Còn thiếu: phần mở đầu và phần cuối quyển (trang bìa, lời cảm ơn, lời cam đoan, tóm tắt viết sau cùng, mục lục, danh mục ký hiệu/bảng/hình, tài liệu tham khảo gộp, Phụ lục A–C), MSSV của 6 thành viên cho trang bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
