@@ -48,7 +48,7 @@ Dấu RGB cũng không trùng với ranh giới nguồn: cả 1.341 ảnh Normal
 
 Mốc A0 ở mục 1.2 là phép thử trực tiếp cho hai kênh này. Random Forest chỉ dùng độ sáng trung bình và cờ is_rgb đạt macro-F1 0,2397 trên validation, cao hơn mốc 0,1627 của bộ luôn đoán Normal nhưng còn rất xa 0,8599 của nhóm đặc trưng ghép, nên hai kênh này tự chúng không đủ để phân loại. Tuy nhiên A0 chỉ dùng một con số độ sáng, trong khi histogram và các đặc trưng khác giữ nhiều thông tin cường độ hơn. A0 vì thế chỉ là cận dưới của mức lối tắt từ cường độ, chưa loại trừ được nó.
 
-Những quan sát trên mới mô tả dữ liệu và một mốc tham chiếu đơn giản; chúng chưa cho biết mô hình dùng đặc trưng ảnh có dựa vào các dấu hiệu đó hay không. Phép đo này thuộc RQ3: che vùng phổi hoặc chỉ giữ vùng ngoài phổi rồi so macro-F1 với ảnh gốc. Chương 4 trình bày năm kịch bản của phép đo.
+Những quan sát trên mới mô tả dữ liệu và một mốc tham chiếu đơn giản; chúng chưa cho biết mô hình dùng đặc trưng ảnh có dựa vào các dấu hiệu đó hay không. Phép đo này thuộc RQ3: che vùng trong phổi hoặc chỉ giữ vùng ngoài mặt nạ phổi rồi so macro-F1 với ảnh gốc. Chương 4 trình bày năm kịch bản của phép đo.
 
 ## 2.3. Gom nhóm ảnh trùng bằng pHash ngưỡng T = 0
 

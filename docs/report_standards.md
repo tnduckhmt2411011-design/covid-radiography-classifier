@@ -120,10 +120,10 @@ Phiếu giao nhiệm vụ và phiếu nhận xét của giảng viên, nếu đ�
 
 **Chương 5. Kết quả kiểm tra độc lập và triển khai** — 8 tiểu mục
 * 5.1. Kết quả trên tập test độc lập, mở khóa một lần (S5-04): Macro-F1 0,8714, 95% CI [0,8579, 0,8840].
-* 5.2. Chênh lệch validation và test (Quy tắc D4).
+* 5.2. Chênh lệch validation và test.
 * 5.3. Phân tích lỗi sai và cặp nhầm lẫn `Normal` – `Lung_Opacity` (304/427 lỗi, 71,19%).
 * 5.4. Tính độc lập và khả năng tái lập của thực nghiệm.
-* 5.5. Triển khai ứng dụng, gồm 4 tiểu mục: 5.5.1 pipeline suy luận; 5.5.2 giao diện Streamlit; 5.5.3 cảnh báo y khoa; 5.5.4 độ trễ suy luận.
+* 5.5. Triển khai ứng dụng, gồm 4 tiểu mục: 5.5.1 pipeline suy luận; 5.5.2 giao diện Streamlit; 5.5.3 cảnh báo y khoa; 5.5.4 độ trễ suy luận (đã có số đo, xem chương 5).
 
 **Chương 6. Thảo luận, giới hạn và hướng phát triển** — 5 tiểu mục
 * 6.1. Thảo luận kết quả đạt được.

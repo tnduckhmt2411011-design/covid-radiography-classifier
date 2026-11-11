@@ -15,17 +15,12 @@ Quy tắc bắt buộc:
 - Đọc tệp ảnh nằm ngoài đồng hồ (ứng dụng nhận byte từ trình duyệt); đồng hồ chỉ
   bám các bước tính toán.
 
-Hai chế độ đo (phát hiện khi đo thực tế trên máy Windows): sau vài chục ảnh,
-CPU giảm tần và thời gian mỗi ảnh tăng gấp khoảng bốn lần rồi ổn định; nghỉ
-giữa các ảnh không đưa máy về trạng thái lạnh. Vì vậy:
+Hai chế độ đo (phát hiện khi đo thực tế trên máy Windows): sau một đoạn ảnh ngắn, thời gian mỗi ảnh tăng gấp khoảng bốn lần rồi ổn định; ảnh đầu của mỗi đợt đo, chạy ngay sau khi máy nghỉ, vẫn ở mức nhanh. Vì vậy:
 
-- **Chế độ tương tác** (người dùng tải từng ảnh, máy nghỉ giữa các lần): đo bằng
-  lượt **ngắn** (ví dụ ``--n 20``) chạy ngay sau khi máy nghỉ, ghi ra một thư mục
-  riêng (``results/demo_latency_interactive``).
-- **Chế độ chạy liên tục** (xử lý hàng loạt): đo bằng lô dài
-  (``--n 200 --repeats 3``), ghi ra ``results/demo_latency_sustained``.
+- **Chế độ ảnh đầu sau khi máy nghỉ**: đo bằng lượt **ngắn** (mặc định ``--n 20``, ``--repeats 1``) chạy ngay sau khi máy nghỉ, ghi ra một thư mục riêng (``results/demo_latency_interactive``). Lô này không chèn bước nghỉ giữa các ảnh.
+- **Chế độ chạy liên tục** (xử lý hàng loạt): đo bằng lô dài (``--n 200 --repeats 3``), ghi ra ``results/demo_latency_sustained``.
 
-Cùng một script, cùng seed nên hai bản ghi so trực tiếp được.
+Cùng một script, cùng seed, cùng cách chọn ảnh trên split ``val`` nên hai bản ghi so trực tiếp được; hai bản ghi dùng hai cỡ mẫu nên chỉ so ở mức phân phối, không so từng ảnh.
 
 Chạy trên máy cục bộ::
 

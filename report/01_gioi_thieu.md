@@ -10,7 +10,7 @@ Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn
 
 Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng scikit-learn [6] chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng cho biết vai trò của vùng đó.
 
-Đề tài đặt ba câu hỏi nối tiếp trên cùng một tập validation 3.174 ảnh: nhóm đặc trưng nào hiệu quả nhất, bộ phân loại nào phù hợp nhất với nhóm đặc trưng đó, và mô hình còn giữ được hiệu năng bao nhiêu khi vùng phổi bị che hoặc khi chỉ còn vùng ngoài phổi. Câu hỏi thứ ba dùng để kiểm tra nghi vấn lối tắt: nếu mô hình vẫn cho macro-F1 cao khi chỉ còn vùng ngoài phổi thì nhiều khả năng nó dựa vào tín hiệu không liên quan đến tổn thương; nếu macro-F1 giảm mạnh thì vùng phổi đóng góp phần lớn thông tin.
+Đề tài đặt ba câu hỏi nối tiếp trên cùng một tập validation 3.174 ảnh: nhóm đặc trưng nào hiệu quả nhất, bộ phân loại nào phù hợp nhất với nhóm đặc trưng đó, và mô hình còn giữ được hiệu năng bao nhiêu khi vùng phổi bị che hoặc khi chỉ còn vùng ngoài mặt nạ phổi. Câu hỏi thứ ba dùng để kiểm tra nghi vấn lối tắt: nếu mô hình vẫn cho macro-F1 cao khi chỉ còn vùng ngoài mặt nạ phổi thì nhiều khả năng nó dựa vào tín hiệu không liên quan đến tổn thương; nếu macro-F1 giảm mạnh thì vùng phổi đóng góp phần lớn thông tin.
 
 ## 1.2. Mục tiêu và ba câu hỏi nghiên cứu
 
@@ -22,7 +22,7 @@ Bốn nhóm đặc trưng thủ công gồm histogram độ xám 64 chiều, GLC
 
 **RQ2.** Với nhóm đặc trưng tốt nhất từ RQ1, bộ phân loại nào trong sáu ứng viên trên đạt macro-F1 cao nhất?
 
-**RQ3.** Che hoặc cắt ảnh theo mặt nạ phổi có làm thay đổi macro-F1 không, và mức thay đổi đó cho biết gì về mức phụ thuộc của mô hình vào vùng ngoài phổi?
+**RQ3.** Che hoặc cắt ảnh theo mặt nạ phổi có làm thay đổi macro-F1 không, và mức thay đổi đó cho biết gì về mức phụ thuộc của mô hình vào vùng ngoài mặt nạ phổi?
 
 Ba câu hỏi dùng chung một giao thức đọc ảnh: ảnh xám 8-bit kích thước 299 × 299, không resize, không cân bằng histogram. Tham số trích đặc trưng và không gian siêu tham số được chốt trước khi chạy và không sửa sau khi xem điểm. Mọi thành phần ngẫu nhiên dùng seed 42, 43 và 44.
 
@@ -61,7 +61,7 @@ Nằm ngoài phạm vi của đề tài: chẩn đoán lâm sàng, phân đoạn
 
 3. **So sánh sáu bộ phân loại (RQ2).** SVM với kernel RBF (radial basis function) đạt macro-F1 0,9024, cao hơn mốc tham chiếu Random Forest 0,8582. Phần kiểm định và khoảng tin cậy để ở Chương 3.
 
-4. **Đo mức phụ thuộc vào vùng ngoài phổi (RQ3).** Năm kịch bản che mặt nạ phổi kết hợp permutation importance trên 10 khối đặc trưng định lượng phần đóng góp của vùng phổi so với phần còn lại của ảnh. Chương 4 trình bày số đo; mọi diễn giải về chênh lệch đều ghi là giả thuyết chưa kiểm chứng (Quy tắc D4).
+4. **Đo mức phụ thuộc vào vùng ngoài mặt nạ phổi (RQ3).** Năm kịch bản che mặt nạ phổi kết hợp permutation importance trên 10 khối đặc trưng định lượng phần đóng góp của vùng phổi so với phần còn lại của ảnh. Chương 4 trình bày số đo; mọi diễn giải về chênh lệch đều ghi là giả thuyết chưa kiểm chứng (Quy tắc D4).
 
 5. **Ứng dụng minh hoạ.** Ứng dụng Streamlit nhận một ảnh CXR, trả về xác suất bốn lớp và dùng lại đúng hàm trích đặc trưng đã đánh giá.
 
@@ -75,7 +75,7 @@ Chương 5 công bố kết quả trên 3.176 ảnh test, phân tích ma trận 
 
 ## Tài liệu tham khảo phát sinh trong chương
 
-Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; tài liệu của các chương sau đánh tiếp từ [7].
+Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; tài liệu của các chương sau đánh tiếp từ [9].
 
 [1] M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. Al-Emadi, M. B. I. Reaz, and M. T. Islam, "Can AI help in screening viral and COVID-19 pneumonia?," *IEEE Access*, vol. 8, pp. 132665–132676, 2020, doi: 10.1109/ACCESS.2020.3010287.
 

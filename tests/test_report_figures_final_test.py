@@ -15,8 +15,8 @@ import pytest
 from scripts.report_figures_final_test import (
     CLASS_LABELS,
     build,
-    cell_labels,
     load_metrics,
+    normalize_rows,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -111,21 +111,24 @@ def test_load_metrics_rejects_wrong_matrix_shape(tmp_path: Path) -> None:
         load_metrics(path)
 
 
-def test_cell_labels_are_strings_of_matrix_counts(tmp_path: Path) -> None:
-    """Chữ ghi trong từng ô hình phải là đúng số đếm của ma trận nguồn."""
+def test_row_normalization_matches_source_recall(tmp_path: Path) -> None:
+    """Hàng chuẩn hóa phải cho đúng recall từng lớp như tệp nguồn (ô chéo)."""
     path = tmp_path / "metrics.json"
     _write_metrics(path)
     metrics = load_metrics(path)
 
-    labels: List[List[str]] = cell_labels(metrics["confusion_matrix"])
+    shares = normalize_rows(metrics["confusion_matrix"])
 
-    assert len(labels) == 4 and all(len(row) == 4 for row in labels)
-    assert labels[0][0] == "498"
-    assert labels[1][1] == "750"
-    assert labels[2][3] == "23"
-    assert labels[3][3] == "177"
-    # Mỗi ô đúng một giá trị, không kèm ký tự khác.
-    assert all(value.isdigit() for row in labels for value in row)
+    assert len(shares) == 4 and all(len(row) == 4 for row in shares)
+    for i in range(4):
+        total = sum(metrics["confusion_matrix"][i])
+        assert sum(shares[i]) == pytest.approx(1.0)
+        for j in range(4):
+            assert shares[i][j] == pytest.approx(
+                metrics["confusion_matrix"][i][j] / total
+            )
+    # Hàng tổng 0 không gây lỗi chia.
+    assert normalize_rows([[0, 0], [1, 1]]) == [[0.0, 0.0], [0.5, 0.5]]
 
 
 def test_build_writes_figure_and_returns_source_values(tmp_path: Path) -> None:
@@ -158,10 +161,10 @@ def test_build_uses_real_metrics_file(tmp_path: Path) -> None:
     assert info["per_class"]["COVID"]["support"] == pytest.approx(543)
 
 
-def test_figure_annotations_pinned_to_repo_file(tmp_path: Path) -> None:
-    """Chữ trong ô hình phải khớp từng ô với metrics.json trong repo.
+def test_figure_rows_pinned_to_repo_file(tmp_path: Path) -> None:
+    """Hàng chuẩn hóa trên hình phải khớp từng ô với metrics.json trong repo.
 
-    Đây là chốt chặn chép nhầm: nếu ai sửa tay số trong hình hoặc trong chương
+    Đây là chốt chặn chép nhầm: nếu ai sửa tay nhãn trong hình hoặc trong chương
     lệch với tệp nguồn, kiểm thử này fail.
     """
     if not METRICS.exists():
@@ -169,11 +172,16 @@ def test_figure_annotations_pinned_to_repo_file(tmp_path: Path) -> None:
     source = json.loads(METRICS.read_text(encoding="utf-8"))
     matrix: List[List[int]] = source["confusion_matrix"]
 
-    labels = cell_labels(matrix)
+    shares = normalize_rows(matrix)
 
     for i, row in enumerate(matrix):
+        total = sum(row)
         for j, value in enumerate(row):
-            assert labels[i][j] == str(value)
+            assert shares[i][j] == pytest.approx(value / total)
+    # Ô chéo chính là recall lớp đó trong per_class của tệp nguồn.
+    for i, label in enumerate(CLASS_LABELS):
+        recall = float(source["per_class"][label]["recall"])
+        assert shares[i][i] == pytest.approx(recall)
 
 
 def test_supports_sum_to_test_size(tmp_path: Path) -> None:
