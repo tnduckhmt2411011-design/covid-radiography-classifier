@@ -88,10 +88,10 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 3.1 | RQ1: so sánh bốn nhóm đặc trưng trên Random Forest | `results/report_rq1/r1_summary.csv` (macro-F1: ghep 0,8599; glcmlbp 0,8156; hist 0,7829; hog 0,7625) và `results/rq1_feature_selection_record.md` (có thêm thời gian CPU/ảnh) |
-| 3.2 | Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2 | `results/report_rq1/r1_bootstrap_vs_reference.csv`: ghep − hist = +0,0770, CI [+0,0611, +0,0925], ngưỡng chấp nhận +0,005; `results/rq1_feature_selection_record.md` mục 3–4 |
-| 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868; rf 0,8582; lr 0,8370; knn 0,8242; dt 0,7271); `results/report_rq2/r1_bootstrap_vs_reference.csv` |
-| 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json`; `results/error_analysis/error_analysis_summary.md` (349/3.174 lỗi; Normal ↔ Lung_Opacity chiếm 268 ca = 76,79%) |
+| 3.1 | RQ1: so sánh bốn nhóm đặc trưng trên Random Forest | `results/report_rq1/r1_summary.csv` (macro-F1 TB ± SD 3 seed và 95% CI: ghep 0,8599 ± 0,0030; glcmlbp 0,8156 ± 0,0023; hist 0,7829 ± 0,0013; hog 0,7625 ± 0,0038), `r1_per_seed.csv` (điểm từng seed), `results/rq1_cost_rank_record.md` (giây CPU mỗi ảnh). Bảng 3.1 trong báo cáo lấy từ `r1_summary.csv`; cột recall lớp Viral Pneumonia lấy từ cùng tệp |
+| 3.2 | Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2 | `results/report_rq1/r1_bootstrap_vs_reference.csv`: ghep − hist = +0,0770, CI [+0,0611; +0,0925], không chứa 0; glcmlbp − hist = +0,0328, CI [+0,0131; +0,0513]; hog − hist = −0,0203, CI [−0,0419; +0,0014], chứa 0. Ngưỡng chấp nhận +0,005 ghi ở Bảng 1.1 của Chương 1 (`results/threshold_v3.md`). Quyết định chọn `ghep` sang RQ2 ở `results/rq1_feature_selection_record.md` mục 4 |
+| 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868 ± 0,0030; rf 0,8582 ± 0,0033; lr 0,8370; knn 0,8242; dt 0,7271 ± 0,0017), `results/report_rq2/r1_bootstrap_vs_reference.csv` (năm phép so với mốc `rf`: svm +0,0442, CI [+0,0320; +0,0580]; bốn phép còn lại âm và CI không chứa 0), `results/report_rq2/bootstrap_config.json` (n = 3.174, 2.000 lần, seed 42). Cấu hình SVM đã chọn ở `results/rq2_ghep_svm_s42/metrics.json` |
+| 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/error_analysis/error_analysis_summary.md` (349/3.174 lỗi; Normal ↔ Lung_Opacity 268 ca = 76,79%; 240 ca sai cả 3 mô hình; 138 ca có độ tin cậy từ 0,80). Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
 
 ### Chương 4. Nghiên cứu hiện tượng học lối tắt, RQ3 (3 tiểu mục)
 
@@ -130,7 +130,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 1 | Tài liệu tham khảo | IEEE. Tối thiểu: Chowdhury et al. (2020); Kermany et al. (2018); Pedregosa et al. (2011); van der Walt et al. (2014); tài liệu Streamlit; tài liệu Hugging Face Hub |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 275 tests |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 286 tests |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
@@ -160,5 +160,6 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 ## 5. Trạng thái hiện tại
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
-- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md).
-- Còn thiếu: số đo độ trễ của ứng dụng (5.5.4), MSSV của 6 thành viên.
+- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md) và Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md).
+- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục.
+- Còn thiếu: Chương 4, Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên.
