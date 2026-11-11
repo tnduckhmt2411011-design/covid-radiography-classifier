@@ -127,10 +127,10 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 1 | Tài liệu tham khảo | IEEE. Tối thiểu: Chowdhury et al. (2020); Kermany et al. (2018); Pedregosa et al. (2011); van der Walt et al. (2014); tài liệu Streamlit; tài liệu Hugging Face Hub |
-| 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 334 phép kiểm thử trong 26 module (đếm tại thời điểm nộp) |
-| 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
+| 1 | Tài liệu tham khảo (IEEE `[1]`–`[8]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); gộp từ danh mục cuối Chương 1 (`[1]`–`[6]`) và Chương 5 (`[7]`, `[8]`) |
+| 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục A; `demo/README.md`; `src/model_artifact.py` |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục B; `tests/`; 334 phép kiểm thử trong 26 module (đếm tại thời điểm nộp), sinh bởi `scripts/report_appendix_b.py` |
+| 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục C; `src/rq2_runner.py` (`PARAM_GRIDS`); `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
 
@@ -161,4 +161,4 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 - Đủ 6 chương đã merge vào `main`: Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md), Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md), Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
 - Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
 - Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 334 phép kiểm thử trong 26 module, 333 pass và 1 bỏ qua.
-- Còn thiếu: phần mở đầu và phần cuối quyển (trang bìa, lời cảm ơn, lời cam đoan, tóm tắt viết sau cùng, mục lục, danh mục ký hiệu/bảng/hình, tài liệu tham khảo gộp, Phụ lục A–C), MSSV của 6 thành viên cho trang bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Còn thiếu: phần mở đầu quyển (trang bìa chính và bìa phụ, lời cảm ơn, lời cam đoan, tóm tắt tiếng Việt và Abstract viết sau cùng, mục lục, danh mục ký hiệu và chữ viết tắt, danh mục bảng biểu, danh mục hình ảnh) và MSSV của 6 thành viên cho trang bìa. Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`–`[8]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md). Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
