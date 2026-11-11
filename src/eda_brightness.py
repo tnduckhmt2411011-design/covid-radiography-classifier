@@ -52,7 +52,11 @@ def load_manifest(path: Path) -> pd.DataFrame:
 
 
 def summarize_by_class(df: pd.DataFrame) -> pd.DataFrame:
-    """Thống kê độ sáng theo lớp: n, trung bình, độ lệch chuẩn, trung vị, tứ phân vị, min, max, AUC."""
+    """Thống kê độ sáng theo lớp: n, trung bình, độ lệch chuẩn, trung vị, tứ phân vị, min, max, AUC.
+
+    Cột ``auc_distance_to_half`` là khoảng cách từ AUC đến 0,5, dùng để so mức tách lớp giữa các
+    lớp mà không phải diễn giải chiều của phép so sánh.
+    """
     rows: List[Dict[str, object]] = []
     for label in CLASS_ORDER:
         values = df.loc[df["label"] == label, "mean_brightness"].to_numpy(dtype=float)
@@ -70,6 +74,7 @@ def summarize_by_class(df: pd.DataFrame) -> pd.DataFrame:
                 "min": float(values.min()),
                 "max": float(values.max()),
                 "auc_vs_rest": auc_against_rest(df, label),
+                "auc_distance_to_half": abs(auc_against_rest(df, label) - 0.5),
             }
         )
     return pd.DataFrame(rows)
@@ -147,14 +152,15 @@ def format_vn(value: float, decimals: int = 1) -> str:
 def format_markdown_table(summary: pd.DataFrame) -> str:
     """Kết xuất bảng Markdown để dán vào báo cáo, độ sáng một chữ số thập phân, AUC bốn."""
     lines = [
-        "| Lớp | n | Trung bình ± SD | Trung vị | Khoảng tứ phân vị | AUC so với ba lớp còn lại |",
-        "| :--- | ---: | ---: | ---: | ---: | ---: |",
+        "| Lớp | n | Trung bình ± SD | Trung vị | Khoảng tứ phân vị | Nhỏ nhất | AUC so với ba lớp còn lại |",
+        "| :--- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for _, row in summary.iterrows():
         lines.append(
             f"| {row['label']} | {format_vn(row['n'], 0)} | "
             f"{format_vn(row['mean'])} ± {format_vn(row['sd'])} | {format_vn(row['median'])} | "
-            f"{format_vn(row['q1'])}–{format_vn(row['q3'])} | {format_vn(row['auc_vs_rest'], 4)} |"
+            f"{format_vn(row['q1'])}–{format_vn(row['q3'])} | {format_vn(row['min'])} | "
+            f"{format_vn(row['auc_vs_rest'], 4)} |"
         )
     return "\n".join(lines)
 

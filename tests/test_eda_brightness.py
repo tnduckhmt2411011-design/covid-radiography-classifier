@@ -237,7 +237,23 @@ def test_committed_csv_reproduces_from_manifest() -> None:
 
     assert list(committed.index) == CLASS_ORDER
     assert int(committed["n"].sum()) == 21165
-    for column in ("mean", "sd", "median", "q1", "q3", "min", "max", "auc_vs_rest"):
+    # Khoảng cách đến 0,5 phải là trị tuyệt đối của hiệu, không phải AUC đảo chiều.
+    pd.testing.assert_series_equal(
+        committed["auc_distance_to_half"].astype(float).round(6),
+        (committed["auc_vs_rest"].astype(float) - 0.5).abs().round(6),
+        check_names=False,
+    )
+    for column in (
+        "mean",
+        "sd",
+        "median",
+        "q1",
+        "q3",
+        "min",
+        "max",
+        "auc_vs_rest",
+        "auc_distance_to_half",
+    ):
         pd.testing.assert_series_equal(
             committed[column].astype(float),
             expected[column].astype(float),
