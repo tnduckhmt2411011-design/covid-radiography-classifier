@@ -15,7 +15,7 @@ Ba câu hỏi nghiên cứu (mục 1.2) được trả lời trên 3.174 ảnh v
 | Weighted F1 | 0,8659 |
 | Macro precision | 0,8687 |
 
-Mô hình đoán đúng 2.749 trong 3.176 ảnh; 427 ảnh còn lại bị đoán sai, bằng 13,45% tập test. Balanced accuracy bằng macro recall vì cả hai đều là trung bình cộng recall của bốn lớp.
+Mô hình đoán đúng 2.749 trong 3.176 ảnh (Bảng 5.1); 427 ảnh còn lại bị đoán sai, bằng 13,45% tập test. Balanced accuracy bằng macro recall vì cả hai đều là trung bình cộng recall của bốn lớp.
 
 **Bảng 5.2: Precision, Recall và F1 theo lớp của mô hình trên tập test**
 
@@ -28,7 +28,7 @@ Mô hình đoán đúng 2.749 trong 3.176 ảnh; 427 ảnh còn lại bị đoá
 
 *(Số ảnh là support của từng lớp trên tập test; số lỗi là tổng các ô ngoài đường chéo của hàng lớp đó trong Bảng 5.4.)*
 
-F1 của bốn lớp nằm trong khoảng 0,8152 (Lung_Opacity) đến 0,9214 (COVID). Lung_Opacity có recall và F1 thấp nhất; Normal là lớp đông nhất, có 205 lỗi thô, nhiều nhất trong bốn lớp.
+F1 của bốn lớp (Bảng 5.2) nằm trong khoảng 0,8152 (Lung_Opacity) đến 0,9214 (COVID). Lung_Opacity có recall và F1 thấp nhất; Normal là lớp đông nhất, có 205 lỗi thô, nhiều nhất trong bốn lớp.
 
 ## 5.2. Chênh lệch validation và test (Quy tắc D4)
 
@@ -43,9 +43,9 @@ Cùng một cấu hình cho ra macro-F1 0,9024 trên validation và 0,8714 trên
 | Normal | 1.531 | 88,37% | 1.529 | 86,59% | −1,78 |
 | Viral Pneumonia | 203 | 94,09% | 200 | 88,50% | −5,59 |
 
-Recall giảm ở cả bốn lớp, mạnh nhất ở Viral Pneumonia (−5,59 điểm) và nhẹ nhất ở Normal (−1,78 điểm). Số ảnh của mỗi lớp giữa hai tập lệch vài đơn vị; phân chia được thực hiện theo tỷ lệ đã đăng ký (mục 2.4). Biên bản đánh giá không đăng ký khoảng tin cậy cho hiệu số test − val, nên con số −0,0310 là phép trừ trực tiếp hai giá trị đã ghi.
+Recall giảm ở cả bốn lớp (Bảng 5.3), mạnh nhất ở Viral Pneumonia (−5,59 điểm) và nhẹ nhất ở Normal (−1,78 điểm). Số ảnh của mỗi lớp giữa hai tập lệch vài đơn vị; phân chia được thực hiện theo tỷ lệ đã đăng ký (mục 2.4). Biên bản đánh giá không đăng ký khoảng tin cậy cho hiệu số test − val, nên con số −0,0310 là phép trừ trực tiếp hai giá trị đã ghi.
 
-Quyết định D4 trong biên bản đánh giá tập test giữ nguyên văn: *"Mọi lời giải thích về sự khác biệt giữa val và test đều là giả thuyết chưa kiểm chứng, không nêu nguyên nhân."* Chương này vì thế dừng ở mức số đo: các con số ở trên là kết quả tính học giữa hai lần đánh giá, không kèm diễn giải nguyên nhân.
+Quyết định thứ tư trong biên bản đánh giá tập test giữ nguyên văn: *"Mọi lời giải thích về sự khác biệt giữa val và test đều là giả thuyết chưa kiểm chứng, không nêu nguyên nhân."* Chương này vì thế dừng ở mức số đo: các con số ở trên là kết quả tính học giữa hai lần đánh giá, không kèm diễn giải nguyên nhân.
 
 ## 5.3. Phân tích lỗi sai và cặp nhầm lẫn Normal – Lung_Opacity
 
@@ -64,13 +64,13 @@ Quyết định D4 trong biên bản đánh giá tập test giữ nguyên văn: 
 
 Trong Hình 5.1, hàng là nhãn thực, cột là nhãn dự đoán, ô càng đậm khi số ảnh càng lớn; số đếm gốc của từng ô nằm ở Bảng 5.4.
 
-Lỗi dồn về một cặp: 304 trong 427 lỗi (71,19%) thuộc cặp Normal – Lung_Opacity, gồm 162 ảnh Normal bị đoán thành Lung_Opacity và 142 ảnh theo chiều ngược lại. Trên tổng 2.433 ảnh của hai lớp này, tỷ lệ lỗi cặp là 12,49%; cùng một phép tính trên validation cho 11,01% (Bảng 4.3 của Chương 4). 123 lỗi còn lại thuộc năm cặp còn lại, nhiều nhất là cặp Normal – COVID (38 ảnh). Không có ảnh Lung_Opacity nào bị đoán thành Viral Pneumonia. Các con số ở mục này là phép đo trên từng tập; phần nguyên nhân của chênh lệch giữa hai tập không được nêu theo quy tắc D4.
+Lỗi dồn về một cặp: 304 trong 427 lỗi (71,19%) thuộc cặp Normal – Lung_Opacity, gồm 162 ảnh Normal bị đoán thành Lung_Opacity và 142 ảnh theo chiều ngược lại. Trên tổng 2.433 ảnh của hai lớp này, tỷ lệ lỗi cặp là 12,49%; cùng một phép tính trên validation cho 11,01% (Bảng 4.3 của Chương 4). 123 lỗi còn lại thuộc năm cặp còn lại, nhiều nhất là cặp Normal – COVID (38 ảnh). Không có ảnh Lung_Opacity nào bị đoán thành Viral Pneumonia. Các con số ở mục này là phép đo trên từng tập; phần nguyên nhân của chênh lệch giữa hai tập không được nêu theo quy tắc đã đăng ký.
 
 ## 5.4. Tính độc lập và khả năng tái lập của thực nghiệm
 
 **Độc lập.** Quy trình đánh giá tập test được đăng ký và khóa trước khi mở khóa, gồm bốn quyết định: huấn luyện một mô hình duy nhất trên toàn bộ 14.815 ảnh train (D1); đánh giá đúng một mô hình trên đúng 3.176 ảnh test, không đánh giá thêm cấu hình che mặt nạ hay cấu hình train+val (D2); báo cáo một lần đầy đủ chỉ số, khoảng tin cậy, ma trận nhầm lẫn và giới hạn (D3); báo cáo trung thực số đo và không nêu nguyên nhân chênh lệch val–test (D4). Sáu cổng chạy theo thứ tự, cổng nào lỗi thì dừng trước khi đọc ảnh test: kiểm tra băm SHA-256 của tệp phân chia cùng ba cỡ mẫu (G1); đối chiếu cấu hình đóng băng (G2); từ chối chạy lần hai nếu đã tồn tại bản ghi mở khóa (G3); yêu cầu chuỗi xác nhận do người dùng gõ, chỉ đối chiếu qua băm SHA-256 (G4); tái lập macro-F1 validation trong dung sai 0,002 quanh mốc 0,9024 (G5); ghi bản ghi mở khóa ra đĩa trước khi đọc ảnh test đầu tiên (G6).
 
-Bản ghi mở khóa lưu mốc thời gian, mã commit, băm SHA-256 của tệp phân chia và của chuỗi xác nhận. Giá trị macro-F1 validation tái lập ở cổng G5 là 0,9024, nằm trong đoạn cho phép [0,9004; 0,9044]. Kernel chạy đánh giá trên Kaggle giữ đúng một phiên bản duy nhất, theo bản ghi tiến độ S5-04; quy trình kiểm toán phiên bản thủ công được đăng ký trong biên bản.
+Bản ghi mở khóa lưu mốc thời gian, mã commit, băm SHA-256 của tệp phân chia và của chuỗi xác nhận. Giá trị macro-F1 validation tái lập ở cổng tái lập là 0,9024, nằm trong đoạn cho phép [0,9004; 0,9044]. Kernel chạy đánh giá trên Kaggle giữ đúng một phiên bản duy nhất, theo bản ghi tiến độ S5-04; quy trình kiểm toán phiên bản thủ công được đăng ký trong biên bản.
 
 **Tái lập.** Hai lớp bằng chứng cho phép người khác kiểm lại kết quả mà không cần đọc lại ảnh. Thứ nhất, notebook đánh giá chỉ đọc các tệp kết quả đã công bố, mỗi bước tương ứng một bảng hoặc một hình trong báo cáo này. Thứ hai, bộ kiểm thử tự động gồm 275 hàm test trong 23 module. Các bộ gắn trực tiếp với tuyến test ép từng cổng: bộ kiểm thử của bộ chạy đánh giá (cấu trúc sáu cổng, chống chạy lần hai, dựng gói mã cuối), bộ kiểm thử tệp kết quả và notebook (đủ bảy tệp kết quả bắt buộc, nội dung bản ghi mở khóa, 3.176 dòng dự đoán với bốn cột xác suất có tổng 1, notebook đã được thực thi và không import framework học sâu), và các bộ kiểm thử artifact với giao diện (kiểm băm trước khi nạp mô hình, cổng từ chối theo tên tệp, cảnh báo y khoa).
 
@@ -86,7 +86,7 @@ Giao diện viết bằng Streamlit [8]. Khu tải ảnh nhận PNG/JPG tối đ
 
 ### 5.5.3. Cảnh báo y khoa tích hợp trong ứng dụng
 
-Cảnh báo hiện ở đầu trang, cuối trang và trong thanh bên, với nội dung chính: *"KHÔNG DÙNG ĐỂ CHẨN ĐOÁN. Đây là demo học thuật của mô hình học máy truyền thống, không phải thiết bị y tế và chưa được kiểm định lâm sàng."* Ứng dụng còn nhắc người dùng chỉ tải ảnh đã ẩn danh, không tải ảnh bệnh nhân thật hoặc ảnh có thông tin định danh, và hiển thị lại quy tắc D4 cùng giới hạn về ảnh khác nguồn. Phần giới hạn và đạo đức được thảo luận thêm ở mục 6.3.
+Cảnh báo hiện ở đầu trang, cuối trang và trong thanh bên, với nội dung chính: *"KHÔNG DÙNG ĐỂ CHẨN ĐOÁN. Đây là demo học thuật của mô hình học máy truyền thống, không phải thiết bị y tế và chưa được kiểm định lâm sàng."* Ứng dụng còn nhắc người dùng chỉ tải ảnh đã ẩn danh, không tải ảnh bệnh nhân thật hoặc ảnh có thông tin định danh, và hiển thị lại quy tắc đã đăng ký về chênh lệch giữa hai tập cùng giới hạn về ảnh khác nguồn. Phần giới hạn và đạo đức được thảo luận thêm ở mục 6.3.
 
 ### 5.5.4. Độ trễ suy luận thực tế
 
@@ -101,7 +101,7 @@ Cảnh báo hiện ở đầu trang, cuối trang và trong thanh bên, với n�
 | Suy luận (scaler + SVC) | 9,2 ms | 9,5 ms | 9,6 ms |
 | **Đầu-cuối** | **131,8 ms** | **140,5 ms** | **144,5 ms** |
 
-Chi phí trích đặc trưng chiếm khoảng 90% thời gian đầu-cuối. Suy luận của riêng bộ phân loại tốn 9,2 ms ở mức trung vị; mô hình có 6.180 vector hỗ trợ. Thời gian nạp artifact từ đĩa, sau khi kiểm băm, là 5,2 ms.
+Chi phí trích đặc trưng chiếm khoảng 90% thời gian đầu-cuối (Bảng 5.5). Suy luận của riêng bộ phân loại tốn 9,2 ms ở mức trung vị; mô hình có 6.180 vector hỗ trợ. Thời gian nạp artifact từ đĩa, sau khi kiểm băm, là 5,2 ms.
 
 Đo một lượt cho thấy điểm cần nói rõ: ảnh đầu tiên sau khi máy nghỉ chỉ mất 28–30 ms, nhưng sau vài chục ảnh liên tiếp, thời gian mỗi ảnh lên quanh 125–140 ms rồi ổn định. Hiện tượng đo được là CPU giảm tần sau khi hết thời gian boost; việc nghỉ một giây giữa các ảnh không đưa máy về trạng thái ban đầu (đã thử và không hiệu quả). Cả hai chế độ đều được ghi thành bản ghi riêng, cùng một script và cùng mẫu nên so trực tiếp được.
 
