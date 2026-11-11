@@ -36,7 +36,7 @@ Ba câu hỏi dùng chung một giao thức đọc ảnh: ảnh xám 8-bit kích
 
 Khoảng tin cậy trong Bảng 1.1 tính bằng bootstrap ghép cặp 2.000 lần trên cùng chỉ số ảnh, seed 42. Quy tắc này chỉ dùng để chọn cấu hình đi tiếp; các cấu hình còn lại vẫn được báo cáo đầy đủ. Mọi cấu hình phải vượt thêm mốc nền thứ hai là A0 = 0,2397, tức Random Forest huấn luyện trên metadata của tệp ảnh, không dùng nội dung ảnh. Nếu đặc trưng ảnh không vượt được một mô hình chỉ đọc metadata thì kết quả đó phải được nêu rõ trong báo cáo.
 
-Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số được chọn bằng kiểm định chéo 5 fold trên lưới gồm 300 và 500 cây, kết quả chọn 300 cây. Vì vậy hai lần chạy cho 0,8599 và 0,8582, chênh nhau 0,0017.
+Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số được chọn bằng kiểm định chéo 5 fold trên lưới gồm 300 và 500 cây, kết quả chọn 300 cây. Vì vậy hai lần chạy cho 0,8599 và 0,8582, chênh nhau xấp xỉ 0,002.
 
 ## 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
 
