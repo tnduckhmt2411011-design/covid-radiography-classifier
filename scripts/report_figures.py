@@ -1,8 +1,9 @@
-"""Sinh Hình 3.1 cho báo cáo: ma trận nhầm lẫn chuẩn hóa theo hàng.
+"""Sinh Hình 3.1 cho báo cáo: tỷ lệ lỗi theo hàng của ma trận nhầm lẫn.
 
 Số liệu đọc từ ``results/rq2_ghep_svm_s42/metrics.json`` (khóa ``confusion_matrix``),
 đã commit và không đọc ảnh. Mỗi hàng chia cho tổng hàng, nên ô trên đường chéo là recall
-của lớp đó. Hình ghi kèm số đếm gốc trong ngoặc để bảng và hình không lệch nhau.
+của lớp đó. Hình chỉ hiện tỷ lệ; số đếm gốc nằm ở Bảng 3.5 của báo cáo để hai chỗ không
+lặp lại cùng một thông tin.
 
 Chạy: ``python -m scripts.report_figures``
 """
@@ -47,32 +48,22 @@ def normalize_rows(matrix: np.ndarray) -> np.ndarray:
     return matrix / safe
 
 
-def draw(matrix: np.ndarray, out_path: Path, title: str) -> Path:
-    """Vẽ heatmap recall theo hàng cho ma trận nhầm lẫn."""
+def draw(matrix: np.ndarray, out_path: Path) -> Path:
+    """Vẽ heatmap tỷ lệ lỗi theo hàng cho ma trận nhầm lẫn."""
     row_normalized = normalize_rows(matrix)
-    fig, ax = plt.subplots(figsize=(6.4, 5.2))
+    fig, ax = plt.subplots(figsize=(6.0, 5.0))
     image = ax.imshow(row_normalized, cmap="Blues", vmin=0.0, vmax=1.0)
 
     ax.set_xticks(range(4), CLASS_NAMES, rotation=20, ha="right")
     ax.set_yticks(range(4), CLASS_NAMES)
-    ax.set_xlabel("Nhãn dự đoán")
-    ax.set_ylabel("Nhãn thực")
-    ax.set_title(title)
+    ax.set_xlabel("Nhan doan")
+    ax.set_ylabel("Nhan thuc")
 
     for i in range(4):
         for j in range(4):
-            value = matrix[i, j]
             share = row_normalized[i, j]
             color = "white" if share > 0.55 else "black"
-            ax.text(
-                j,
-                i,
-                f"{value}\n{share:.0%}",
-                ha="center",
-                va="center",
-                fontsize=9,
-                color=color,
-            )
+            ax.text(j, i, f"{share:.1%}", ha="center", va="center", fontsize=9, color=color)
 
     fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
     ax.set_aspect("equal")
@@ -87,7 +78,7 @@ def draw(matrix: np.ndarray, out_path: Path, title: str) -> Path:
 def build(metrics_path: Path, out_path: Path) -> Dict[str, object]:
     """Đọc số liệu, vẽ hình và trả về thông tin dùng cho báo cáo."""
     matrix = load_confusion(metrics_path)
-    path = draw(matrix, out_path, "Ma trận nhầm lẫn của SVM trên tập validation (3.174 ảnh)")
+    path = draw(matrix, out_path)
     row_normalized = normalize_rows(matrix)
     diagonal = row_normalized.diagonal().tolist()
     return {
@@ -105,8 +96,8 @@ def main(argv: List[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     info = build(args.metrics, args.out)
-    print(f"Đã ghi {info['figure']}")
-    print(f"Recall theo hàng: {info['row_recall']}")
+    print(f"Da ghi {info['figure']}")
+    print(f"Recall theo hang: {info['row_recall']}")
     return 0
 
 
