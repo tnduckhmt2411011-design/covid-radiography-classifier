@@ -1,0 +1,24 @@
+{
+  "source": "splits/manifest.csv",
+  "n_images": 21165,
+  "brightness_scale": "0-255, trung bình mảng điểm ảnh của tệp gốc",
+  "auc_covid_vs_rest": 0.6585,
+  "auc_note": "AUC là xác suất ảnh của lớp sáng hơn một ảnh ngẫu nhiên của ba lớp còn lại",
+  "reference_label_for_iqr": "Normal",
+  "share_in_normal_iqr": 0.4651,
+  "color_mode_counts": {
+    "COVID": {
+      "L": 3616
+    },
+    "Lung_Opacity": {
+      "L": 6012
+    },
+    "Normal": {
+      "L": 10192
+    },
+    "Viral Pneumonia": {
+      "L": 1205,
+      "RGB": 140
+    }
+  }
+}
