@@ -52,7 +52,7 @@ Những quan sát trên mới mô tả dữ liệu và một mốc tham chiếu 
 
 ## 2.3. Gom nhóm ảnh trùng bằng pHash ngưỡng T = 0
 
-Ảnh trùng lặp rơi vào cả train và test sẽ thổi phồng điểm số, nên bước gom nhóm chạy trước phép chia. Mỗi ảnh được tính mã MD5 của tệp và pHash 64-bit DCT; khoảng cách Hamming giữa hai mã pHash được tính theo công thức:
+Ảnh trùng rơi vào cả train và test sẽ thổi phồng điểm số, nên bước gom nhóm chạy trước phép chia. Mỗi ảnh được tính mã MD5 của tệp và pHash 64-bit DCT; khoảng cách Hamming giữa hai mã pHash được tính theo công thức:
 $$D = \frac{64 - u \cdot v}{2} \qquad (2.1)$$
 
 với $u$ và $v$ là hai vector bit đã đổi sang dạng $\{-1, 1\}$. Các ảnh có $D = 0$ được gom vào cùng một nhóm bằng thuật toán Union-Find, và định danh nhóm đó trở thành cột `group_id` trong `splits/split_v1.csv`.

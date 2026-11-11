@@ -6,7 +6,7 @@
 
 Bộ dữ liệu COVID-19 Radiography Database tập hợp 21.165 ảnh CXR thuộc bốn lớp: Normal 10.192 ảnh, Lung_Opacity 6.012 ảnh, COVID 3.616 ảnh và Viral Pneumonia 1.345 ảnh [1], [2]. Lớp lớn nhất nhiều gấp 7,6 lần lớp nhỏ nhất. Với phân bố lệch như vậy, một bộ phân loại luôn dự đoán Normal vẫn đạt accuracy xấp xỉ 48% nhưng chỉ đạt macro-F1 0,1627. Đề tài vì thế lấy macro-F1 làm thước đo chính và ghi mốc B0 = 0,1627 làm ngưỡng tầm thường mà mọi cấu hình phải vượt.
 
-Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney[^mooney]; 1.341 trong số 10.192 ảnh Normal cũng từ nguồn này, còn 18.479 ảnh do Chowdhury và cộng sự tập hợp [1], [2]. Nhiều khả năng các ảnh của Mooney là X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Nhãn Viral Pneumonia trùng hoàn toàn với một nguồn, nên mô hình có thể đạt điểm cao trên lớp này nhờ nhận ra khung viền, độ sáng nền, cách xử lý hậu kỳ hoặc kích thước ảnh đặc trưng của nguồn đó, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [4]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [5]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế, và đề tài đo nó trực tiếp.
+Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney[^mooney]; 1.341 trong số 10.192 ảnh Normal cũng từ nguồn này, còn 18.479 ảnh do Chowdhury và cộng sự tập hợp [1], [2]. Nhiều khả năng các ảnh của Mooney là X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Nhãn Viral Pneumonia trùng với một nguồn duy nhất, nên mô hình có thể đạt điểm cao trên lớp này nhờ nhận ra khung viền, độ sáng nền, cách xử lý hậu kỳ hoặc kích thước ảnh đặc trưng của nguồn đó, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [4]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [5]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế, và đề tài đo nó trực tiếp.
 
 Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng scikit-learn [6] chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng cho biết vai trò của vùng đó.
 
@@ -40,7 +40,7 @@ Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số 
 
 ## 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
 
-Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trùng hoàn toàn không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
+Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
 
 Đề tài không dùng học sâu (ràng buộc H7): một bài kiểm thử tự động quét mọi lệnh import trong `src/` và `notebooks/`, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
 
@@ -56,8 +56,7 @@ Nằm ngoài phạm vi của đề tài: chẩn đoán lâm sàng, phân đoạn
 
 ## 1.4. Đóng góp của đề tài
 
-1. **Phép chia tập có kiểm soát ảnh trùng.** Bước lọc trùng pHash ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh trùng hoàn toàn, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15.
-
+1. **Phép chia tập có kiểm soát ảnh trùng.** Bước gom nhóm pHash ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15.
 2. **So sánh bốn nhóm đặc trưng thủ công (RQ1).** Trên 3.174 ảnh validation, nhóm ghép 152 chiều đạt macro-F1 0,8599, cao hơn GLCM kết hợp LBP 0,8156, histogram 0,7829 và HOG 0,7625.
 
 3. **So sánh sáu bộ phân loại (RQ2).** SVM với kernel RBF (radial basis function) đạt macro-F1 0,9024, cao hơn mốc tham chiếu Random Forest 0,8582. Phần kiểm định và khoảng tin cậy để ở Chương 3.
