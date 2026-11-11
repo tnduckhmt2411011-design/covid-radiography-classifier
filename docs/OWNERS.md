@@ -38,8 +38,8 @@ Nhóm áp dụng mô hình ghép cặp (Pairing Mechanism) nhằm đảm bảo c
 | `src/metrics.py` | **Hải Lý** | Nguyễn Đức | Xây dựng module tính toán chỉ số đánh giá và ma trận nhầm lẫn |
 | `notebooks/10_final_test_eval.ipynb` | **Hải Lý** | Nguyễn Đức | Thực hiện đánh giá DUY NHẤT 1 LẦN trên tập test |
 | `notebooks/11_inference_demo.ipynb` | **Thái Tú** | Vũ Thương | Xây dựng notebook suy luận và ứng dụng demo |
-| `demo/` | **Thái Tú** | Vũ Thương | Quản lý mã nguồn và triển khai ứng dụng demo Gradio; dùng lại đúng hàm trích đặc trưng đã đánh giá |
-| `report/` | **Nguyễn Đức** (tổng hợp) | Hải Lý | Tổng hợp nội dung và hoàn thiện báo cáo bài tập lớn; mỗi thành viên viết phần của việc mình làm |
+| `demo/` | **Nguyễn Đức & Thái Tú** | Vũ Thương | Quản lý mã nguồn và triển khai ứng dụng demo Streamlit; dùng lại đúng hàm trích đặc trưng đã đánh giá |
+| `report/` | **Nguyễn Đức** (tổng hợp) | Hải Lý | Soạn toàn bộ báo cáo bài tập lớn; các thành viên cung cấp số liệu phần mình phụ trách |
 
 ---
 
