@@ -2,23 +2,23 @@
 
 ## 1.1. Bối cảnh và lý do chọn đề tài
 
-Ảnh X-quang lồng ngực (chest X-ray, CXR) là phương tiện chẩn đoán hình ảnh phổ biến nhất trong bệnh viện: thiết bị rẻ, thời gian chụp ngắn, chi phí thấp hơn nhiều so với cắt lớp vi tính. Khi dịch COVID-19 bùng phát, lượng bệnh nhân cần chụp và đọc phim tăng nhanh hơn năng lực của khoa chẩn đoán hình ảnh, nên bài toán phân loại ảnh X-quang tự động được nghiên cứu nhiều [1]. Tổn thương phổi do SARS-CoV-2 thường là các vùng mờ đục kính mờ và đông đặc, phân bố chủ yếu ở ngoại vi phổi. Những dấu hiệu này không đặc hiệu: viêm phổi do virus khác, viêm phổi không điển hình và cả vùng mờ phổi không do nhiễm trùng đều tạo ra hình ảnh tương tự [1], [2], khiến bài toán bốn lớp khó hơn bài toán hai lớp "COVID hay không COVID".
+Ảnh X-quang lồng ngực (chest X-ray, CXR) là phương tiện chẩn đoán hình ảnh có sẵn ở hầu hết cơ sở y tế: thời gian chụp ngắn, chi phí thấp hơn nhiều so với cắt lớp vi tính. Khi dịch COVID-19 bùng phát, lượng bệnh nhân cần chụp và đọc phim tăng nhanh hơn năng lực của khoa chẩn đoán hình ảnh, nên bài toán phân loại ảnh X-quang tự động được nghiên cứu nhiều [1]. Tổn thương phổi do SARS-CoV-2 thường là các vùng mờ đục kính mờ và đông đặc, phân bố chủ yếu ở ngoại vi phổi. Những dấu hiệu này không đặc hiệu: viêm phổi do virus khác, viêm phổi không điển hình và cả vùng mờ phổi không do nhiễm trùng đều tạo ra hình ảnh tương tự [1], [2], khiến bài toán bốn lớp khó hơn bài toán hai lớp "COVID hay không COVID".
 
 Bộ dữ liệu COVID-19 Radiography Database tập hợp 21.165 ảnh CXR thuộc bốn lớp: Normal 10.192 ảnh, Lung_Opacity 6.012 ảnh, COVID 3.616 ảnh và Viral Pneumonia 1.345 ảnh [1], [2]. Lớp lớn nhất nhiều gấp 7,6 lần lớp nhỏ nhất. Với phân bố lệch như vậy, một bộ phân loại luôn dự đoán Normal vẫn đạt accuracy xấp xỉ 48% nhưng chỉ đạt macro-F1 0,1627. Đề tài vì thế lấy macro-F1 làm thước đo chính và ghi mốc B0 = 0,1627 làm ngưỡng tầm thường mà mọi cấu hình phải vượt.
 
-Nhãn lớp trong bộ dữ liệu không độc lập với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia và 1.341 trong số 10.192 ảnh Normal lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney, tách khỏi 18.479 ảnh còn lại do Chowdhury và cộng sự tập hợp [1], [2]; nhiều khả năng đây là ảnh X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Sự trùng khớp giữa nhãn và nguồn dẫn tới một lối tắt: mô hình có thể đạt điểm cao nhờ nhận ra khung viền, độ sáng nền, cách xử lý hậu kỳ hoặc kích thước ảnh đặc trưng của từng nguồn, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [4]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [5]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế, và đề tài đo nó trực tiếp.
+Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney[^mooney]; 1.341 trong số 10.192 ảnh Normal cũng từ nguồn này, còn 18.479 ảnh do Chowdhury và cộng sự tập hợp [1], [2]. Nhiều khả năng các ảnh của Mooney là X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Nhãn Viral Pneumonia trùng hoàn toàn với một nguồn, nên mô hình có thể đạt điểm cao trên lớp này nhờ nhận ra khung viền, độ sáng nền, cách xử lý hậu kỳ hoặc kích thước ảnh đặc trưng của nguồn đó, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [4]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [5]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế, và đề tài đo nó trực tiếp.
 
-Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng scikit-learn [6] chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng phản ánh trực tiếp vai trò của vùng đó.
+Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng scikit-learn [6] chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng cho biết vai trò của vùng đó.
 
-Đề tài đặt ba câu hỏi nối tiếp trên cùng một tập validation 3.174 ảnh: nhóm đặc trưng nào hiệu quả nhất, bộ phân loại nào phù hợp nhất với nhóm đặc trưng đó, và mô hình còn giữ được hiệu năng bao nhiêu khi vùng phổi bị che hoặc khi chỉ còn vùng ngoài phổi. Câu hỏi thứ ba dùng để kiểm tra nghi vấn lối tắt: nếu mô hình vẫn cho macro-F1 cao khi chỉ còn vùng ngoài phổi thì nó đang dựa vào tín hiệu không liên quan đến tổn thương; nếu macro-F1 giảm mạnh thì vùng phổi đang đóng góp thông tin thật.
+Đề tài đặt ba câu hỏi nối tiếp trên cùng một tập validation 3.174 ảnh: nhóm đặc trưng nào hiệu quả nhất, bộ phân loại nào phù hợp nhất với nhóm đặc trưng đó, và mô hình còn giữ được hiệu năng bao nhiêu khi vùng phổi bị che hoặc khi chỉ còn vùng ngoài phổi. Câu hỏi thứ ba dùng để kiểm tra nghi vấn lối tắt: nếu mô hình vẫn cho macro-F1 cao khi chỉ còn vùng ngoài phổi thì nhiều khả năng nó dựa vào tín hiệu không liên quan đến tổn thương; nếu macro-F1 giảm mạnh thì vùng phổi đóng góp phần lớn thông tin.
 
 ## 1.2. Mục tiêu và ba câu hỏi nghiên cứu
 
-Mục tiêu của đề tài là xây dựng pipeline phân loại bốn lớp ảnh CXR chỉ bằng học máy cổ điển, đánh giá pipeline trên tập validation theo một giao thức cố định, rồi kiểm tra một lần trên tập test độc lập. Ba câu hỏi nghiên cứu (research question, viết tắt RQ) đặt ra như sau.
+Mục tiêu của đề tài là xây dựng pipeline phân loại bốn lớp ảnh CXR chỉ bằng học máy cổ điển, đánh giá pipeline trên tập validation theo một giao thức cố định, rồi kiểm tra một lần trên tập test độc lập. Mục tiêu này được cụ thể hoá thành ba câu hỏi nghiên cứu (research question, viết tắt RQ).
 
 Bốn nhóm đặc trưng thủ công gồm histogram độ xám 64 chiều, GLCM (Gray-Level Co-occurrence Matrix) kết hợp LBP (Local Binary Pattern) 88 chiều, HOG (Histogram of Oriented Gradients) 10.404 chiều và nhóm ghép 152 chiều. Sáu bộ phân loại ứng viên gồm Logistic Regression, k-NN, Decision Tree, Random Forest, SVM (Support Vector Machine) và Gradient Boosting.
 
-**RQ1.** Nhóm đặc trưng nào trong bốn nhóm trên cho macro-F1 cao nhất trên tập validation khi dùng một bộ phân loại cố định chọn trước?
+**RQ1.** Nhóm đặc trưng nào trong bốn nhóm trên cho macro-F1 cao nhất trên tập validation khi dùng một bộ phân loại cố định chọn trước (Random Forest, 500 cây)?
 
 **RQ2.** Với nhóm đặc trưng tốt nhất từ RQ1, bộ phân loại nào trong sáu ứng viên trên đạt macro-F1 cao nhất?
 
@@ -36,19 +36,18 @@ Ba câu hỏi dùng chung một giao thức đọc ảnh: ảnh xám 8-bit kích
 
 Khoảng tin cậy trong Bảng 1.1 tính bằng bootstrap ghép cặp 2.000 lần trên cùng chỉ số ảnh, seed 42. Quy tắc này chỉ dùng để chọn cấu hình đi tiếp; các cấu hình còn lại vẫn được báo cáo đầy đủ. Mọi cấu hình phải vượt thêm mốc nền thứ hai là A0 = 0,2397, tức Random Forest huấn luyện trên metadata của tệp ảnh, không dùng nội dung ảnh. Nếu đặc trưng ảnh không vượt được một mô hình chỉ đọc metadata thì kết quả đó phải được nêu rõ trong báo cáo.
 
-Random Forest xuất hiện ở cả RQ1 và RQ2 nhưng không cùng cấu hình: RQ1 cố định 500 cây, còn RQ2 chọn siêu tham số bằng kiểm định chéo 5 fold trên lưới gồm 300 và 500 cây, kết quả chọn 300. Cùng một thuật toán, hai cấu hình cho 0,8599 và 0,8582; chênh lệch 0,0016 này là do cấu hình, không phải sai số tính toán.
+Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số được chọn bằng kiểm định chéo 5 fold trên lưới gồm 300 và 500 cây, kết quả chọn 300 cây. Vì vậy hai lần chạy cho 0,8599 và 0,8582, chênh nhau 0,0017.
 
 ## 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
 
 Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trùng hoàn toàn không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
 
-Đề tài không dùng học sâu. Một bài kiểm thử tự động quét mọi lệnh import trong `src/` và `notebooks/`, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
+Đề tài không dùng học sâu (ràng buộc H7): một bài kiểm thử tự động quét mọi lệnh import trong `src/` và `notebooks/`, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
 
 **Bảng 1.2: Ràng buộc kỹ thuật và cơ chế kiểm soát**
 
 | Ràng buộc | Cơ chế kiểm soát |
 | --- | --- |
-| Không dùng học sâu dưới mọi hình thức (H7) | Bài kiểm thử quét import trong `src/` và `notebooks/` |
 | Không đọc tập test cho bất kỳ quyết định nào trong RQ1–RQ3 (H2) | Mã nguồn mặc định từ chối đọc test; SHA-256 của tệp split; lần mở khóa duy nhất ghi kèm commit và thời điểm |
 | Mọi bước học từ dữ liệu chỉ fit trên train (H6) | `StandardScaler` nằm trong pipeline, fit trên 14.815 ảnh train |
 | Ảnh xám 8-bit 299 × 299, không resize, không cân bằng histogram | Chốt trong văn bản tiêu chí chấp nhận trước khi chạy |
@@ -57,7 +56,7 @@ Nằm ngoài phạm vi của đề tài: chẩn đoán lâm sàng, phân đoạn
 
 ## 1.4. Đóng góp của đề tài
 
-1. **Phép chia tập có kiểm soát ảnh trùng.** Bước lọc trùng pHash ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh trùng hoàn toàn, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15; tệp split được băm SHA-256 và không đổi trong suốt quá trình thực nghiệm.
+1. **Phép chia tập có kiểm soát ảnh trùng.** Bước lọc trùng pHash ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh trùng hoàn toàn, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15.
 
 2. **So sánh bốn nhóm đặc trưng thủ công (RQ1).** Trên 3.174 ảnh validation, nhóm ghép 152 chiều đạt macro-F1 0,8599, cao hơn GLCM kết hợp LBP 0,8156, histogram 0,7829 và HOG 0,7625.
 
@@ -99,5 +98,8 @@ Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chươn
 - **Bảng:** tiêu đề đặt phía trên, cỡ 10–11 pt, in đậm; bảng theo kiểu Booktabs, không kẻ đường dọc.
 - **Mã hiệu:** H2, H6, H7 và Quy tắc D4 chỉ dùng trong ngoặc để tra cứu chéo với `results/threshold_v3.md`; nội dung đã diễn giải bằng lời trong chương. `UNLOCK_RECORD.json` là biên bản ghi lần mở khóa tập test duy nhất, có commit và thời điểm.
 - **Trích dẫn:** số thứ tự [1]–[6] theo thứ tự xuất hiện. Nếu chèn thêm tài liệu vào chương này, phải đánh lại toàn bộ số về sau.
+- **Chú thích chân trang:** `[^mooney]` là nguồn của bộ dữ liệu Kaggle, không tính vào danh mục [1]–[6] nên không làm lệch số thứ tự; khi chuyển sang Word thì chèn thành footnote tại chỗ.
 - **Nguồn số liệu:** 21.165 ảnh và phân bố bốn lớp đếm từ `splits/split_v1.csv`; B0, A0 từ `results/threshold_v3.md` mục 3; macro-F1 của RQ1 và RQ2 từ `results/report_rq1/r1_summary.csv` và `results/report_rq2/r1_summary.csv`; khoảng tin cậy từ `results/report_rq1/r1_bootstrap_vs_reference.csv` và `results/report_rq2/r1_bootstrap_vs_reference.csv`; SHA-256 tệp split từ `splits/`; 178 nhóm và 401 ảnh từ `docs/roadmap.md`.
 - **Chưa đưa vào chương:** số liệu tập test, để dành cho Chương 5.
+
+[^mooney]: P. Mooney, "Chest X-Ray Images (Pneumonia)," Kaggle, 2018, https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia.
