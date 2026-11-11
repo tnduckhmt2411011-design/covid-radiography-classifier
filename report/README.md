@@ -92,7 +92,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868 ± 0,0030; rf 0,8582 ± 0,0033; lr 0,8370; knn 0,8242; dt 0,7271 ± 0,0017), `results/report_rq2/r1_bootstrap_vs_reference.csv` (năm phép so với mốc `rf`: svm +0,0442, CI [+0,0320; +0,0580]; bốn phép còn lại âm và CI không chứa 0), `results/report_rq2/bootstrap_config.json` (n = 3.174, 2.000 lần, seed 42). Cấu hình SVM đã chọn ở `results/rq2_ghep_svm_s42/metrics.json` |
 | 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/rq2_ghep_svm_s42/preds_val.csv` (nhãn thực, nhãn dự đoán và bốn cột xác suất từng ảnh), `results/eda/normal_source_labels.csv` (10.192 ảnh lớp Normal tách theo nguồn RSNA / Mooney, sinh bằng `python -m src.source_labels`), `results/error_analysis/error_analysis_summary.md` (349 lỗi; 240 lỗi đồng thuận; 138 lỗi có `proba_pred` từ 0,80). Hình 3.1 sinh bằng `python -m scripts.report_figures`, ghi ra `report/figures/03_ma_tran_nham_lon_svm_val.png`; kiểm thử `tests/test_report_figures.py` và `tests/test_source_labels.py`. Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
 
-### Chương 4. Nghiên cứu hiện tượng học lối tắt, RQ3 (3 tiểu mục)
+### Chương 4. Mức phụ thuộc vào vùng ngoài phổi (RQ3) (3 tiểu mục)
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |

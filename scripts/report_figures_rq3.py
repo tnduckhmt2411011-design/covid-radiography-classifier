@@ -4,10 +4,10 @@ Số liệu đọc từ các tệp đã commit, không đọc ảnh:
 
 - ``results/report_rq3/r1_summary.csv`` (macro-F1 và khoảng tin cậy 95% của năm kịch bản);
 - ``results/b0_majority/metrics.json`` (mốc tầm thường B0);
-- ``results/a0_shortcut/metrics.json`` (mốc metadata A0);
-- ``results/report_rq1/r1_summary.csv`` (macro-F1 nhóm histogram với Random Forest, lô full RQ1).
+- ``results/a0_shortcut/metrics.json`` (mốc metadata A0).
 
-Ba đường mốc nằm ngoài cột nên được trừ từ cùng các tệp này, không ghi số trực tiếp trong hình.
+Hai đường mốc nằm ngoài cột nên được trừ từ cùng các tệp này, không ghi số trực tiếp trong hình.
+Nhãn trục x dùng tên mô tả tiếng Việt thay cho mã kịch bản, khớp với cách gọi trong chương.
 
 Chạy: ``python -m scripts.report_figures_rq3``
 """
@@ -37,10 +37,18 @@ SCENARIO_ORDER: Sequence[str] = (
     "orig_to_out",
 )
 
+# Nhan tieng Viet cho truc x, theo thu tu SCENARIO_ORDER.
+SCENARIO_LABELS: Sequence[str] = (
+    "Ảnh gốc\ncả hai tập",
+    "Chỉ phổi\ncả hai tập",
+    "Chỉ ngoài phổi\ncả hai tập",
+    "Gốc học,\nphổi đánh giá",
+    "Gốc học,\nngoài phổi đánh giá",
+)
+
 DEFAULT_SUMMARY = REPO_ROOT / "results" / "report_rq3" / "r1_summary.csv"
 DEFAULT_B0 = REPO_ROOT / "results" / "b0_majority" / "metrics.json"
 DEFAULT_A0 = REPO_ROOT / "results" / "a0_shortcut" / "metrics.json"
-DEFAULT_HIST = REPO_ROOT / "results" / "report_rq1" / "r1_summary.csv"
 DEFAULT_OUT = REPO_ROOT / "report" / "figures" / "04_macro_f1_kich_ban_rq3.png"
 
 
@@ -61,24 +69,13 @@ def load_scenarios(summary_path: Path) -> List[Dict[str, float]]:
     return [{"scenario": name, **rows[name]} for name in SCENARIO_ORDER]
 
 
-def load_baselines(
-    b0_path: Path, a0_path: Path, hist_path: Path
-) -> Dict[str, float]:
-    """Doc ba moc nen: B0, A0 va histogram–RF cua lo full RQ1."""
+def load_baselines(b0_path: Path, a0_path: Path) -> Dict[str, float]:
+    """Doc hai moc nen: B0 va A0."""
     b0 = json.loads(b0_path.read_text(encoding="utf-8"))
     a0 = json.loads(a0_path.read_text(encoding="utf-8"))
-    hist_value = None
-    with hist_path.open(newline="", encoding="utf-8") as handle:
-        for record in csv.DictReader(handle):
-            if record["features"].strip() == "hist":
-                hist_value = float(record["macro_f1_mean"])
-                break
-    if hist_value is None:
-        raise ValueError(f"{hist_path} khong co dong features = hist")
     return {
         "b0": float(b0["macro_f1"]),
         "a0": float(a0["random_forest"]["macro_f1"]),
-        "hist": hist_value,
     }
 
 
@@ -87,13 +84,12 @@ def draw(
     baselines: Dict[str, float],
     out_path: Path,
 ) -> Path:
-    """Ve bieu do cot macro-F1 kem que khoang tin cậy va ba duong moc nen."""
-    names = [str(row["scenario"]) for row in rows]
+    """Ve bieu do cot macro-F1 kem que khoang tin cậy va hai duong moc nen."""
     values = np.array([float(row["macro_f1"]) for row in rows], dtype=float)
     lows = np.array([float(row["ci95_low"]) for row in rows], dtype=float)
     highs = np.array([float(row["ci95_high"]) for row in rows], dtype=float)
 
-    fig, ax = plt.subplots(figsize=(7.2, 4.6))
+    fig, ax = plt.subplots(figsize=(7.6, 4.6))
     positions = np.arange(len(rows))
     ax.bar(positions, values, width=0.58, color="#4C72B0", zorder=2)
     ax.errorbar(
@@ -107,27 +103,26 @@ def draw(
         zorder=3,
     )
 
+    # Nho ruong ben phai de dat nhan moc nen, tranh de len cot va que khoang tin cậy.
+    right_edge = len(rows) - 0.5 + 1.9
+    ax.set_xlim(-0.6, right_edge)
     lines = [
         (baselines["b0"], "Mốc tầm thường B0", "#C44E52"),
         (baselines["a0"], "Mốc metadata A0", "#DD8452"),
-        (baselines["hist"], "Histogram RF (RQ1, lô full)", "#55A868"),
     ]
-    # Nho ruong ben phai de dat nhan moc nen, tranh de len cot va que khoang tin cậy.
-    right_edge = len(rows) - 0.5 + 1.7
-    ax.set_xlim(-0.6, right_edge)
     for value, label, color in lines:
         ax.axhline(value, linestyle="--", linewidth=1.1, color=color, zorder=1)
         ax.text(
             len(rows) - 0.35,
-            value,
+            value + 0.012,
             label,
             color=color,
             fontsize=8,
             ha="left",
-            va="center",
+            va="bottom",
         )
 
-    ax.set_xticks(positions, names, rotation=15, ha="right")
+    ax.set_xticks(positions, SCENARIO_LABELS, fontsize=8)
     ax.set_ylim(0.0, 1.0)
     ax.set_ylabel("Macro-F1 (3.174 ảnh validation)")
     ax.set_xlabel("Kịch bản")
@@ -144,12 +139,11 @@ def build(
     summary_path: Path,
     b0_path: Path,
     a0_path: Path,
-    hist_path: Path,
     out_path: Path,
 ) -> Dict[str, object]:
     """Doc so lieu, ve hinh va tra ve thong tin dung cho bao cao."""
     rows = load_scenarios(summary_path)
-    baselines = load_baselines(b0_path, a0_path, hist_path)
+    baselines = load_baselines(b0_path, a0_path)
     path = draw(rows, baselines, out_path)
     return {
         "figure": path.as_posix(),
@@ -167,11 +161,10 @@ def main(argv: List[str] | None = None) -> int:
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY)
     parser.add_argument("--b0", type=Path, default=DEFAULT_B0)
     parser.add_argument("--a0", type=Path, default=DEFAULT_A0)
-    parser.add_argument("--hist", type=Path, default=DEFAULT_HIST)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args(argv)
 
-    info = build(args.summary, args.b0, args.a0, args.hist, args.out)
+    info = build(args.summary, args.b0, args.a0, args.out)
     print(f"Da ghi {info['figure']}")
     print(f"Kich ban: {info['scenarios']}")
     print(f"Macro-F1: {info['macro_f1']}")

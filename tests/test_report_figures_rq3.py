@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from scripts.report_figures_rq3 import (
+    SCENARIO_LABELS,
     SCENARIO_ORDER,
     build,
     load_baselines,
@@ -19,7 +20,6 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 SUMMARY = REPO_ROOT / "results" / "report_rq3" / "r1_summary.csv"
 B0 = REPO_ROOT / "results" / "b0_majority" / "metrics.json"
 A0 = REPO_ROOT / "results" / "a0_shortcut" / "metrics.json"
-HIST = REPO_ROOT / "results" / "report_rq1" / "r1_summary.csv"
 
 
 def _write_summary(path: Path) -> None:
@@ -72,8 +72,8 @@ def test_load_scenarios_rejects_missing_scenario(tmp_path: Path) -> None:
         load_scenarios(summary)
 
 
-def test_load_baselines_reads_three_files(tmp_path: Path) -> None:
-    """Ba mốc nền phải đọc đúng khóa từ tệp nguồn tương ứng."""
+def test_load_baselines_reads_two_files(tmp_path: Path) -> None:
+    """Hai mốc nền phải đọc đúng khóa từ tệp nguồn tương ứng."""
     b0_path = tmp_path / "b0.json"
     b0_path.write_text(
         json.dumps({"accuracy": 0.4824, "macro_f1": 0.1627}), encoding="utf-8"
@@ -82,20 +82,14 @@ def test_load_baselines_reads_three_files(tmp_path: Path) -> None:
     a0_path.write_text(
         json.dumps({"random_forest": {"macro_f1": 0.2397}}), encoding="utf-8"
     )
-    hist_path = tmp_path / "r1_summary.csv"
-    with hist_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
-        writer.writerow(["features", "n_seeds", "macro_f1_mean"])
-        writer.writerow(["hog", "3", "0.7625"])
-        writer.writerow(["hist", "3", "0.7829"])
 
-    baselines = load_baselines(b0_path, a0_path, hist_path)
+    baselines = load_baselines(b0_path, a0_path)
 
-    assert baselines == {"b0": pytest.approx(0.1627), "a0": pytest.approx(0.2397), "hist": pytest.approx(0.7829)}
+    assert baselines == {"b0": pytest.approx(0.1627), "a0": pytest.approx(0.2397)}
 
 
 def test_build_writes_figure_and_returns_values(tmp_path: Path) -> None:
-    """Hàm build phải ghi tệp hình và trả về đúng năm kịch bản cùng ba mốc nền."""
+    """Hàm build phải ghi tệp hình và trả về đúng năm kịch bản cùng hai mốc nền."""
     summary = tmp_path / "r1_summary.csv"
     _write_summary(summary)
     b0_path = tmp_path / "b0.json"
@@ -104,28 +98,29 @@ def test_build_writes_figure_and_returns_values(tmp_path: Path) -> None:
     a0_path.write_text(
         json.dumps({"random_forest": {"macro_f1": 0.2397}}), encoding="utf-8"
     )
-    hist_path = tmp_path / "hist.csv"
-    with hist_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
-        writer.writerow(["features", "macro_f1_mean"])
-        writer.writerow(["hist", "0.7829"])
     out = tmp_path / "fig.png"
 
-    info = build(summary, b0_path, a0_path, hist_path, out)
+    info = build(summary, b0_path, a0_path, out)
 
     assert out.exists()
     assert info["scenarios"] == list(SCENARIO_ORDER)
     assert info["macro_f1"][0] == 0.9024
-    assert info["baselines"] == {"b0": 0.1627, "a0": 0.2397, "hist": 0.7829}
+    assert info["baselines"] == {"b0": 0.1627, "a0": 0.2397}
+
+
+def test_scenario_labels_cover_all_scenarios() -> None:
+    """Mỗi kịch bản phải có đúng một nhãn tiếng Việt để vẽ trục x."""
+    assert len(SCENARIO_LABELS) == len(SCENARIO_ORDER)
+    assert all(label.strip() for label in SCENARIO_LABELS)
 
 
 @pytest.mark.skipif(
-    not SUMMARY.exists() or not B0.exists() or not A0.exists() or not HIST.exists(),
-    reason="Thiếu tệp nguồn RQ3/B0/A0/RQ1",
+    not SUMMARY.exists() or not B0.exists() or not A0.exists(),
+    reason="Thiếu tệp nguồn RQ3/B0/A0",
 )
 def test_baselines_match_repo_files() -> None:
-    """Ba mốc nền trong hình phải trùng với giá trị đọc trực tiếp từ tệp trong repo."""
-    baselines = load_baselines(B0, A0, HIST)
+    """Hai mốc nền trong hình phải trùng với giá trị đọc trực tiếp từ tệp trong repo."""
+    baselines = load_baselines(B0, A0)
 
     assert baselines["b0"] == pytest.approx(
         json.loads(B0.read_text(encoding="utf-8"))["macro_f1"]
@@ -133,6 +128,3 @@ def test_baselines_match_repo_files() -> None:
     assert baselines["a0"] == pytest.approx(
         json.loads(A0.read_text(encoding="utf-8"))["random_forest"]["macro_f1"]
     )
-    with HIST.open(newline="", encoding="utf-8") as handle:
-        hist_row = next(r for r in csv.DictReader(handle) if r["features"] == "hist")
-    assert baselines["hist"] == pytest.approx(float(hist_row["macro_f1_mean"]))
