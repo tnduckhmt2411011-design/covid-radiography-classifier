@@ -54,7 +54,7 @@ Mỗi công việc ở trạng thái "Xong" hoặc "Chờ duyệt" bắt buộc 
 
 ## Mục 2. Tổng quan tiến độ
 
-Cập nhật lần cuối: 10/11/2026 (v3.11 — Hoàn tất S1-03 và S1-04 theo xác nhận văn bản của Leader; Sprint 1 đạt 7/7 việc Xong, cập nhật hạn nộp 21/11/2026)
+Cập nhật lần cuối: 11/11/2026 (v3.12 — Hoàn tất S6-02: ứng dụng demo Streamlit, PR #46 đã merge; tổng tiến độ 28/33)
 
 | Sprint | Tuần | Mục tiêu sprint | Số việc Xong/Mẫu số | Trạng thái sprint | Ghi chú |
 | :---: | :---: | :--- | :---: | :---: | :--- |
@@ -63,8 +63,8 @@ Cập nhật lần cuối: 10/11/2026 (v3.11 — Hoàn tất S1-03 và S1-04 the
 | **S3** | T5-6 | RQ1: so sánh nhóm đặc trưng thủ công | 6/6 | Xong | Đã xong trích đặc trưng (PR #30, #31), script bootstrap R1-R5 (PR #29), runner và 12 run Random Forest (PR #32, #33), tổng hợp bảng RQ1 và chốt nhóm đặc trưng ghep (152 chiều) cho RQ2 (9 việc, 3 hủy, mẫu số 6) |
 | **S4** | T7-8 | RQ2: so sánh bộ phân loại và chuẩn bị RQ3 | 4/4 | Xong | Đã xong so sánh 6 bộ phân loại RQ2 (PR #35, #36, #37), chốt mô hình SVM nhân RBF trên nhóm ghep (S4-03, S4-04), phân tích lỗi chi tiết (S4-06) và kiểm tra căn chỉnh mặt nạ phổi S4-07 (7 việc, 3 hủy, mẫu số 4) |
 | **S5** | T9-10 | RQ3 (shortcut learning), đánh giá test MỘT lần, notebook suy luận | 6/6 | Xong | Đã hoàn tất toàn bộ 6/6 việc: RQ3 (S5-01, S5-02, S5-03), đánh giá test DUY NHẤT một lần (S5-04), xuất ma trận nhầm lẫn (S5-05) và notebook suy luận độc lập S5-06 (6 việc, 0 hủy, mẫu số 6) |
-| **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 0/6 | Chưa làm | Hoàn thiện báo cáo tổng kết, ứng dụng Gradio và slide bảo vệ (6 việc, 0 hủy, mẫu số 6) |
-| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **27/33** | **Đang triển khai** | **Đạt 81.8% Xong (27/33 việc), 0 việc Đang làm, 0 việc Chờ duyệt, 6 việc Chưa làm (thuộc Sprint 6), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
+| **S6** | T11-12 | Báo cáo, slide, demo, dự phòng, nộp, tập bảo vệ | 1/6 | Đang làm | Đã xong demo Streamlit (S6-02, PR #46); còn báo cáo, slide, rà soát, diễn tập và nộp bài (6 việc, 0 hủy, mẫu số 6) |
+| **Tổng** | **T1-12** | **Toàn bộ 6 sprint của đồ án** | **28/33** | **Đang triển khai** | **Đạt 84.8% Xong (28/33 việc), 1 việc Đang làm (Sprint 6), 0 việc Chờ duyệt, 5 việc Chưa làm (thuộc Sprint 6), 10 việc Hủy – ngoài phạm vi (Tổng 43 việc, 10 hủy, mẫu số 33)** |
 
 ---
 
@@ -150,12 +150,12 @@ Cập nhật lần cuối: 10/11/2026 (v3.11 — Hoàn tất S1-03 và S1-04 the
 ---
 
 ### Sprint 6 (Tuần 11 - 12): Báo cáo, Demo, Bảo vệ và Hoàn tất
-**Sprint Goal:** Hoàn thiện toàn diện báo cáo bài tập lớn, ứng dụng demo Gradio, slide thuyết trình; diễn tập bảo vệ và nộp sản phẩm đúng hạn.
+**Sprint Goal:** Hoàn thiện toàn diện báo cáo bài tập lớn, ứng dụng demo Streamlit, slide thuyết trình; diễn tập bảo vệ và nộp sản phẩm đúng hạn.
 
 | ID | Tuần | Công việc | Gắn với | Phụ trách | Size | Trạng thái | Bằng chứng | Tiêu chí nghiệm thu |
 | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :--- | :--- |
 | S6-01 | T11 | Soạn thảo báo cáo bài tập lớn trong thư mục `report/` | Báo cáo | Nguyễn Đức (duyệt Hải Lý) | L | Chưa làm | Chưa có nhánh/PR | Báo cáo trình bày đầy đủ RQ1-3, giới hạn nghiên cứu và cảnh báo y khoa |
-| S6-02 | T11 | Xây dựng ứng dụng demo Gradio tương tác trong `demo/` | Hạ tầng | Thái Tú (duyệt Vũ Thương) | M | Chưa làm | Chưa có nhánh/PR | Một thành viên không phụ trách phần đó chạy lại được app và suy luận thành công |
+| S6-02 | T11 | Xây dựng ứng dụng demo Streamlit tương tác trong `demo/` | Hạ tầng | Nguyễn Đức (duyệt Vũ Thương) | M | Xong | PR #46 đã merge (merge commit `c4b8da6`): `demo/streamlit_app.py`, `src/model_artifact.py`, `demo/verify_model_equivalence.py`, `demo/requirements.txt`, `tests/test_streamlit_app.py`, `tests/test_model_artifact.py`; 273 test pass; cổng tương đương val 200/200; artifact công khai tại <https://huggingface.co/duc16/cxr-svm-demo>; app tại <https://covid-xray-classifier.streamlit.app> (deploy từ `main`) | Một thành viên không phụ trách phần đó chạy lại được app và suy luận thành công |
 | S6-03 | T11 | Hoàn thiện slide thuyết trình bảo vệ đề tài trong `slides/` | Báo cáo | Nguyễn Đức (duyệt Hải Lý) | M | Chưa làm | Chưa có nhánh/PR | Slide ngắn gọn, đầy đủ biểu đồ thực nghiệm và cấu trúc đề cương |
 | S6-04 | T12 | Rà soát toàn bộ sản phẩm, code và định dạng theo yêu cầu giảng viên | Báo cáo | Cả nhóm | S | Chưa làm | Chưa có nhánh/PR | Đúng định dạng file, tiêu chuẩn kỹ thuật mà giảng viên yêu cầu |
 | S6-05 | T12 | Tổ chức diễn tập thuyết trình và trả lời câu hỏi phản biện | Báo cáo | Cả nhóm | M | Chưa làm | Chưa có nhánh/PR | Diễn tập thuyết trình hoàn chỉnh ít nhất 1 lần trước buổi bảo vệ chính thức |
@@ -276,3 +276,4 @@ Khung theo dõi đánh giá và rút kinh nghiệm cuối mỗi sprint (điền 
 | **v3.9** | 09/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-04 và S5-05: Đánh giá tập test duy nhất một lần và xuất ma trận nhầm lẫn (PR #41, #42, kết quả tại `results/final_test/`, `notebooks/10_final_test_eval.ipynb`); tiến độ đạt 24/33 (72.7%). |
 | **v3.10** | 10/11/2026 | Kỹ sư ML & Nhóm | Hoàn tất S5-06: Xây dựng notebook suy luận độc lập (PR #43 đã merge, kernel `ductrannguyen/cxr-inference-demo` version 3); Sprint 5 đạt 6/6 việc (100%); tổng tiến độ đạt 25/33 (75.8%). |
 | **v3.11** | 10/11/2026 | Nguyễn Đức (Leader) & Nhóm | Hoàn tất S1-03 và S1-04 theo xác nhận văn bản của Leader; cập nhật hạn nộp chính thức 21/11/2026 tại Mục 5; Sprint 1 đạt 7/7 việc (100%); tổng tiến độ đạt 27/33 (81.8%), chỉ còn lại 6 việc thuộc Sprint 6. |
+| **v3.12** | 11/11/2026 | Nguyễn Đức (Leader) & Nhóm | Hoàn tất S6-02: ứng dụng demo Streamlit (PR #46 đã merge, `demo/streamlit_app.py`, cổng tương đương val 200/200, 273 test pass, artifact công khai trên Hugging Face); đổi phụ trách S6-02 từ Thái Tú sang Nguyễn Đức và đổi Gradio thành Streamlit; tổng tiến độ đạt 28/33 (84.8%), còn 5 việc thuộc Sprint 6. |
