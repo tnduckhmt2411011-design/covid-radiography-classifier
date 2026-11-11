@@ -46,7 +46,7 @@ Hai kịch bản nhiễu suy luận thì rơi xuống gần hoặc dưới các 
 
 *(Mỗi lần lấy mẫu dùng một tập vị trí ảnh chung cho cả hai kịch bản nên phép so là ghép cặp. Phép so chính và phép bắt buộc trình bày được đăng ký trong biên bản trước khi chạy; các dòng còn lại do pipeline báo cáo tính thêm.)*
 
-Phép so chính của RQ3 được chốt trước khi xem điểm: đối chiếu "chỉ phổi" với "ảnh gốc" theo quy tắc quen thuộc từ RQ1 và RQ2, tức chênh lệch phải đạt ít nhất +0,005 và khoảng tin cậy 95% không chứa 0. Kết quả là "chỉ phổi" thấp hơn "ảnh gốc" 0,0535, với khoảng [−0,0691; −0,0392]. Như vậy việc chỉ giữ vùng phổi làm macro-F1 giảm có ý nghĩa thống kê, và cấu hình này không đủ điều kiện thay thế. Cấu hình "ảnh gốc" được giữ làm cấu hình chính thức để đánh giá một lần trên tập test (kết quả ở Chương 5).
+Phép so chính của RQ3 được chốt trước khi xem điểm: đối chiếu "chỉ phổi" với "ảnh gốc" theo quy tắc quen thuộc từ RQ1 và RQ2, tức chênh lệch phải đạt ít nhất +0,005 và khoảng tin cậy 95% không chứa 0. Kết quả là "chỉ phổi" thấp hơn "ảnh gốc" 0,0535 (Bảng 4.2), với khoảng [−0,0691; −0,0392]. Như vậy việc chỉ giữ vùng phổi làm macro-F1 giảm có ý nghĩa thống kê, và cấu hình này không đủ điều kiện thay thế. Cấu hình "ảnh gốc" được giữ làm cấu hình chính thức để đánh giá một lần trên tập test (kết quả ở Chương 5).
 
 Giữa "ảnh gốc" và "chỉ ngoài phổi", chênh lệch là +0,0103 và khoảng tin cậy [−0,0017; +0,0220] chứa 0. Kết quả này chưa đủ để nói hai mô hình khác nhau, nhưng cũng chưa đủ để nói chúng tương đương, vì cận trên +0,0220 vẫn lớn hơn ngưỡng 0,005 của quy tắc trên. Mô hình "chỉ ngoài phổi" còn cao hơn mô hình "chỉ phổi" 0,0431 [+0,0281; +0,0582]. Phép so này không thuộc phép so chính; biên bản RQ3 vẫn yêu cầu trình bày nó, nên đây là khảo sát bổ sung có đăng ký trước.
 
@@ -64,7 +64,7 @@ Hai kịch bản nhiễu suy luận đi theo hướng khác. Khi bộ phân lo�
 
 *(Mẫu số cố định cho cả ba kịch bản là 903 ảnh Lung_Opacity và 1.531 ảnh Normal. Hai kịch bản nhiễu suy luận không đưa vào bảng vì mô hình đã không còn phân loại được các lớp: 99,9% ảnh bị đoán thành COVID khi đánh giá bằng ảnh chỉ phổi, và 80,2% khi đánh giá bằng ảnh chỉ ngoài phổi.)*
 
-Cặp nhầm nặng nhất ở Chương 3 giảm khi mô hình chỉ nhìn vùng phổi, từ 268 lỗi xuống 206, và giảm ở cả hai chiều. Khi chỉ nhìn ngoài phổi, cặp này lại tăng lên 296 lỗi. Tuy vậy "chỉ phổi" không tốt hơn: tổng lỗi của nó là 462, trong đó 256 lỗi nằm ngoài cặp Normal – Lung_Opacity (ảnh gốc chỉ có 81). Điều này khớp với mức giảm macro-F1 0,0535. Chương này không giải thích được vì sao phép che làm lệch cặp nhầm theo hướng đó.
+Cặp nhầm nặng nhất ở Chương 3 giảm khi mô hình chỉ nhìn vùng phổi, từ 268 lỗi xuống 206 (Bảng 4.3), và giảm ở cả hai chiều. Khi chỉ nhìn ngoài phổi, cặp này lại tăng lên 296 lỗi. Tuy vậy "chỉ phổi" không tốt hơn: tổng lỗi của nó là 462, trong đó 256 lỗi nằm ngoài cặp Normal – Lung_Opacity (ảnh gốc chỉ có 81). Điều này khớp với mức giảm macro-F1 0,0535. Chương này không giải thích được vì sao phép che làm lệch cặp nhầm theo hướng đó.
 
 **Bảng 4.4: Phép tách theo nguồn ảnh trên ba kịch bản cùng chế độ**
 
@@ -113,7 +113,7 @@ Mười khối gồm ba khối tổng hợp (histogram 64 chiều, GLCM 60 chi�
 
 *(Baseline của ba chế độ là 0,9024, 0,8490 và 0,8921.)*
 
-Trên ảnh gốc, ba khối tổng hợp xếp theo mức sụt như sau: LBP 0,3590, GLCM 0,3264, histogram 0,2863. Khoảng cách giữa khối đầu và khối cuối là 0,0727, hơn sáu lần dao động giữa các lần xáo trộn. Khi chỉ còn vùng phổi, thứ tự đổi: GLCM nhảy lên 0,4960 (tăng 0,1696 so với ảnh gốc) và vượt LBP (0,4283). Hai thuộc tính dẫn đầu ở chế độ này là dissimilarity (0,4655) và contrast (0,3163). Khi chỉ còn vùng ngoài phổi, thứ tự quay về gần giống ảnh gốc: LBP 0,3590, GLCM 0,3526, histogram 0,2656. Trong bảy tiểu khối, LBP bán kính 2 (0,2746) cao nhất.
+Trên ảnh gốc, ba khối tổng hợp xếp theo mức sụt (Bảng 4.5) như sau: LBP 0,3590, GLCM 0,3264, histogram 0,2863. Khoảng cách giữa khối đầu và khối cuối là 0,0727, hơn sáu lần dao động giữa các lần xáo trộn. Khi chỉ còn vùng phổi, thứ tự đổi: GLCM nhảy lên 0,4960 (tăng 0,1696 so với ảnh gốc) và vượt LBP (0,4283). Hai thuộc tính dẫn đầu ở chế độ này là dissimilarity (0,4655) và contrast (0,3163). Khi chỉ còn vùng ngoài phổi, thứ tự quay về gần giống ảnh gốc: LBP 0,3590, GLCM 0,3526, histogram 0,2656. Trong bảy tiểu khối, LBP bán kính 2 (0,2746) cao nhất.
 
 Dissimilarity và contrast đo độ chênh cường độ giữa các cặp điểm ảnh kề nhau. Khi phần lớn ảnh là nền đen, hai thuộc tính này có thể chủ yếu đo độ dài đường viền của vùng bị che. Khả năng đó chưa được loại trừ, nên chưa thể nói chúng đang đo kết cấu nhu mô phổi.
 
