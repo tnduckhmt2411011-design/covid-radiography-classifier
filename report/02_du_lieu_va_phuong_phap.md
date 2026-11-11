@@ -94,11 +94,61 @@ Trước khi đánh giá trên tập test, pipeline phải vượt sáu bước 
 
 Danh sách sáu bước ở dạng bảng nằm trong `results/final_test_protocol_record.md`.
 
+## 2.5. Giới hạn tồn tại của dữ liệu
+
+Phép gom nhóm theo pHash chỉ loại được ảnh trùng khít. Toàn bộ dữ liệu còn 1.570 cặp có khoảng cách Hamming từ 1 đến 4, trong đó 735 cặp nằm ở hai tập khác nhau. Số liệu này được thống kê riêng sau khi phép chia đã chốt, nên nó không làm thay đổi `splits/split_v1.csv` mà chỉ mô tả phần rủi ro còn lại.
+
+**Bảng 2.4: 735 cặp gần trùng nằm ở hai tập khác nhau**
+
+| Cặp tập | Số cặp |
+| :--- | ---: |
+| Train – Validation | 335 |
+| Train – Test | 325 |
+| Validation – Test | 75 |
+| **Tổng cộng** | **735** |
+
+Về nhãn, 229 trong 735 cặp là lệch nhãn, 506 cặp còn lại cùng nhãn. Phân bố theo khoảng cách Hamming tập trung ở mức 4 (665 cặp); khoảng cách 1 và 3 không xuất hiện, đúng như tính đối xứng của pHash DCT.
+
+Một phần của hiện tượng trên không thể xử lý được bằng kỹ thuật. Bộ dữ liệu không cung cấp mã bệnh nhân, nên không có cách nào gom ảnh của cùng một người chụp ở các ngày khác nhau; bài báo nêu bộ dữ liệu có khoảng 15.000 bệnh nhân nhưng chỉ công bố 21.165 ảnh [2]. Thông tin nhân khẩu học và thiết bị chụp cũng thiếu, trừ một nguồn con của lớp COVID. Các giới hạn này được xét lại ở Chương 6 khi đánh giá phạm vi áp dụng của mô hình.
+
+## 2.6. Trích xuất đặc trưng thủ công trên ảnh xám 299 × 299
+
+Bốn nhóm đặc trưng đều tính trên ảnh xám 8-bit 299 × 299 sau khi pipeline đã ép toàn bộ ảnh về một kênh; không resize, không cân bằng histogram. Thứ tự và số chiều của bốn nhóm được tóm tắt ở Bảng 2.5.
+
+**Bảng 2.5: Bốn nhóm đặc trưng và số chiều**
+
+| Nhóm | Nội dung | Số chiều |
+| :--- | :--- | ---: |
+| Histogram | Phân bố mức xám | 64 |
+| GLCM và LBP | Kết cấu và mẫu nhị phân cục bộ | 88 |
+| HOG | Hướng biên | 10.404 |
+| Ghép | Histogram + GLCM + LBP | 152 |
+
+### 2.6.1. Đặc trưng histogram cường độ sáng, 64 chiều
+
+Ảnh được chia thành 64 bin trên khoảng mức xám từ 0 đến 255, mỗi bin rộng 4 mức xám. Mỗi bin chia cho tổng số điểm ảnh, nên tổng vector bằng 1. Nhóm này chỉ mô tả ảnh có sáng hay tối và độ tương phản phân bố thế nào, không mang thông tin vị trí.
+
+### 2.6.2. Đặc trưng kết cấu GLCM 60 chiều và LBP 28 chiều
+
+GLCM (Gray-Level Co-occurrence Matrix) đo mối quan hệ giữa các cặp điểm ảnh. Mức xám được giảm từ 256 xuống 32 mức (mỗi mức gộp 8 giá trị gốc) để ma trận không quá thưa. Ma trận được tính ở ba khoảng cách 1, 3 và 5 điểm ảnh, theo bốn hướng 0°, 45°, 90° và 135°. Mỗi hướng và khoảng cách cho năm thuộc tính: contrast, dissimilarity, homogeneity, energy và correlation. Năm thuộc tính nhân ba khoảng cách nhân bốn hướng cho ra 60 chiều.
+
+Riêng thuộc tính correlation cho giá trị không xác định khi một trong hai mức xám không xuất hiện trong ảnh; các giá trị đó được thay bằng 0 và số lượng được đếm để theo dõi.
+
+LBP (Local Binary Pattern) ghi nhận mẫu cục bộ quanh mỗi điểm ảnh. Đề tài dùng hai bộ tham số: 8 điểm lân cận bán kính 1 và 16 điểm lân cận bán kính 2, đều ở dạng uniform. Histogram của hai bộ cho 10 bin và 18 bin, chia cho tổng số điểm ảnh rồi nối lại thành vector 28 chiều.
+
+### 2.6.3. Đặc trưng hướng biên HOG, 10.404 chiều
+
+HOG (Histogram of Oriented Gradients) tính gradient tại mỗi điểm ảnh rồi thống kê hướng gradient trên từng ô. Đề tài dùng ô 16 × 16 điểm ảnh, mỗi khối 2 × 2 ô, bình thường hóa theo chuẩn L2-Hys và 9 bin hướng cho mỗi ô. Với ảnh 299 × 299, số khối được tính là ((299 // 16) − 1)² = 289, mỗi khối cho 4 × 9 = 36 giá trị, tức 289 × 36 = 10.404 chiều.
+
+### 2.6.4. Nhóm đặc trưng ghép 152 chiều
+
+Nhóm ghép lấy histogram 64 chiều, GLCM 60 chiều và LBP 28 chiều rồi nối thẳng lại, cho 152 chiều. Nhóm này không gồm HOG, nên kích thước của nó cách biệt hoàn toàn với nhóm 10.404 chiều; hệ quả của chênh lệch số chiều đối với kết quả được xét ở Chương 3.
+
 ---
 
 ## Ghi chú kỹ thuật (không thuộc nội dung báo cáo)
 
-- **Chương này chưa đủ mục.** Hiện đã có 2.1–2.4; các mục 2.5 và 2.6–2.9 theo đề cương trong [`report/README.md`](README.md) sẽ viết tiếp. Số bảng, số hình và số công thức đánh theo thứ tự xuất hiện trong chương, không theo số mục: Bảng 2.1 nằm ở mục 2.1, Bảng 2.2 và Hình 2.1 nằm ở mục 2.2, Bảng 2.3 ở mục 2.4, công thức (2.1) ở mục 2.3.
+- **Chương này chưa đủ mục.** Hiện đã có 2.1–2.6.4; các mục 2.7–2.9 theo đề cương trong [`report/README.md`](README.md) sẽ viết tiếp. Số bảng, số hình và số công thức đánh theo thứ tự xuất hiện trong chương, không theo số mục: Bảng 2.1–2.3 (2.1, 2.2, 2.4), Bảng 2.4 (2.5), Bảng 2.5 (2.6), Hình 2.1 (2.2), công thức (2.1) (2.3).
 - **Tiêu đề mục 2.2 đã đổi** thành "từ độ sáng và metadata tệp" vì phát hiện về định dạng RGB không nằm trong khái niệm cường độ sáng. Tiêu đề cũng được đổi ở `docs/report_standards.md` mục 3.2 và `report/README.md` dòng 2.2, cả ba chỗ giờ khớp nhau. Tiêu đề mục 2.3 đổi từ "Lọc trùng lặp" thành "Gom nhóm ảnh trùng" vì bước này không loại bỏ ảnh nào.
 - **Nguồn số liệu:** số trong Bảng 2.1 và các số dẫn xuất (AUC, khoảng cách đến 0,5, 46,5%, 140 ảnh RGB) sinh bằng `python -m src.eda_brightness` từ `splits/manifest.csv`, ghi ra `results/eda/brightness_by_class.csv` và `results/eda/brightness_channels.json`. Kiểm thử `tests/test_eda_brightness.py` đối chiếu CSV với manifest. Bảng trong văn bản lấy từ `format_markdown_table` của script rồi dán sang, nên nếu sửa tay một ô thì phải đối chiếu lại CSV; test không bắt được lỗi gõ lại.
 - **Nguồn mục 2.1:** `docs/dataset_provenance.md` mục 2.1 (thành phần bốn lớp, số lượng từng nguồn), mục 2.2 (giấy phép, tệp `.metadata.xlsx`), mục 3.2 (kích thước ảnh 299 × 299, mask 256 × 256, `mask_match_size = False`) và mục 3.1 (nhãn kế thừa, thiếu `patient_id`, tuổi, thiết bị). Số đếm 21.165 / 10.192 / 6.012 / 3.616 / 1.345 đối chiếu lại bằng pandas trên `splits/split_v1.csv`. Chênh lệch 3.615 so với 3.616 của lớp COVID ghi ở `docs/dataset_provenance.md` mục 2.3 hàng 1.
@@ -107,6 +157,9 @@ Danh sách sáu bước ở dạng bảng nằm trong `results/final_test_protoc
 - **Nguồn mục 2.3:** `splits/README.md` mục 3 (phương pháp MD5 + pHash + Union-Find, 178 nhóm, 401 ảnh, 0 nhóm lệch nhãn ở $T = 0$) và `notebooks/02_duplicates_and_split.ipynb` cell 4–5. Số 172 nhóm lệch nhãn ở $T = 4$ và 107 nhóm ở $T = 8$ lấy từ `outputs/split_check/duplicates_summary.json`, tệp do notebook cell 5 sinh. Số nhóm trùng cả MD5 (39 trên 178) và số nhóm chỉ trùng pHash (139) tính trực tiếp bằng pandas trên cột `file_hash` của `splits/split_v1.csv`. Lưu ý cách đọc số: `splits/README.md` ghi "20.764 ảnh duy nhất", nhưng đếm trên `splits/split_v1.csv` cho thấy 20.764 là số *nhóm chỉ có một ảnh*, còn tổng số nhóm là 20.942 (178 + 20.764); `duplicates_summary.json` cũng ghi `num_unique_images = 20764`. Báo cáo ghi theo cách thứ hai để không hiểu nhầm.
 - **Nguồn mục 2.4:** `splits/README.md` mục 2 (bảng phân bố theo lớp, lệch tối đa $\pm 0,1\%$) và mục 5 (khóa tập test, một lần mở duy nhất); chia 14/3/3 fold từ `notebooks/02_duplicates_and_split.ipynb` cell 6 (`if f < 14: train; elif f < 17: val; else: test`); SHA-256 từ `splits/split_v1.sha256`; lần mở khóa và macro-F1 0,9024 từ `results/final_test/UNLOCK_RECORD.json`; sáu bước kiểm soát G1–G6 từ `results/final_test_protocol_record.md` mục 2. Thân bài chỉ nêu bốn điều kiện chính rồi dẫn đường dẫn tới danh sách đầy đủ. Không đưa bất kỳ số liệu nào của tập test vào chương này.
 - **Cách tính 16,92%:** 537 ảnh COVID trong validation chia cho 3.174 ảnh validation. Tỷ lệ cùng lớp trên toàn bộ dữ liệu là 3.616/21.165 = 17,09%. `splits/README.md` ghi độ lệch $\pm 0,1\%$, nhưng đó là độ lệch giữa tỷ lệ *ảnh của một lớp rơi vào một tập* với 70/15/15; báo cáo dùng cách thứ nhất và nói rõ cách tính trong câu.
+- **Nguồn mục 2.5:** `docs/roadmap.md` dòng 187 (735 cặp: 325 Train–Test, 335 Train–Val, 75 Val–Test; 229 lệch nhãn, 506 cùng nhãn) và `results/report_rq3/r5_gioi_han.md` (thiếu mã bệnh nhân, nguồn và tuổi chưa xác minh, chỉ đánh giá trên validation). Con số 1.570 cặp tổng và phân bố 665 cặp ở $D = 4$, 70 cặp ở $D = 2$ lấy từ `splits/README.md` mục 4; mức "khoảng 15.000 bệnh nhân cho 21.165 ảnh" lấy từ [2] theo `docs/dataset_provenance.md` mục 2.4 hàng H4. Câu về chênh lệch số chiều ảnh hưởng tới xếp hạng RQ1 nằm sẵn trong `results/report_rq3/r5_gioi_han.md`; báo cáo chỉ đặt vấn đề, kết luận thuộc Chương 3.
+- **Nguồn mục 2.6:** `src/features_hist_glcm_lbp.py` (histogram 64 bin khoảng (0, 256), mỗi bin 4 mức xám, chuẩn hóa tổng bằng 1; GLCM giảm về 32 mức bằng `img // 8`, ba khoảng cách, bốn hướng, năm thuộc tính, `symmetric=True`, `normed=True`; LBP hai bộ (8, 1) và (16, 2), `method="uniform"`, 10 bin và 18 bin) và `src/features_hog_ghep.py` (HOG 9 bin hướng, ô 16 × 16, khối 2 × 2, `block_norm="L2-Hys"`, công thức `((h//16)-1)*((w//16)-1)*2*2*9`; `GLCMLBP_DIM = 88`, `GHEP_DIM = 152`).
+- **Kiểm chứng công thức HOG:** tính tay cho ảnh 299 × 299: $299 // 16 = 18$, trừ 1 được 17 ô mỗi chiều, tức $17 \times 17 = 289$ khối; mỗi khối $2 \times 2 \times 9 = 36$ giá trị; $289 \times 36 = 10.404$. Lần viết đầu tôi ghi nhầm 196 khối và đã sửa trong cùng lượt.
 - **Chữ viết tắt:** pHash (perceptual hash, băm tri giác), MD5, DCT (discrete cosine transform, biến đổi cosine rời rạc), SD (độ lệch chuẩn mẫu), AUC, PNG, RF/GB/LR/k-NN/DT sẽ được giải thích ở lần xuất hiện đầu trong các mục còn lại, khớp danh mục ký hiệu ở phần mở đầu.
 - **Định nghĩa độ sáng:** trung bình mảng điểm ảnh của tệp gốc, thang 0–255, do `notebooks/01_download_and_eda.ipynb` cell 3 tính. Manifest ghi cả 21.165 ảnh đều 299 × 299, nên khác biệt độ sáng không đến từ kích thước ảnh.
 - **Làm tròn:** độ sáng một chữ số thập phân, AUC bốn chữ số, số gốc sáu chữ số nằm trong CSV; một số giá trị rơi đúng mốc ,xx5 (trung vị 142,595, q1 126,885, 0,6585 − 0,5 = 0,1585) nên bảng dừng ở đó thay vì làm tròn thêm.
