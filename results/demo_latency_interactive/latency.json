@@ -1,0 +1,106 @@
+{
+ "record": "demo_inference_latency",
+ "generated_utc": "2026-11-11T18:43:41Z",
+ "method": {
+  "split": "val",
+  "split_sha256": "f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98",
+  "n_images": 20,
+  "seed": 42,
+  "repeats": 1,
+  "warmup_images": 1,
+  "timer": "time.perf_counter (wall)",
+  "call_path": "cv2.imdecode -> extract_152_features -> predict_image",
+  "decode_timed_on_bytes_in_memory": true,
+  "percentile_method": "numpy.percentile (linear)",
+  "stats_note": "thong ke tren trung vi tung anh qua cac luot do"
+ },
+ "environment": {
+  "os": "Windows-11-10.0.26300-SP0",
+  "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+  "cores": 12,
+  "ram_gb": 15.7,
+  "python": "3.12.7",
+  "numpy": "2.0.2",
+  "scikit_learn": "1.6.1",
+  "scikit_image": "0.25.2",
+  "opencv": "4.13.0.92",
+  "joblib": "1.6.0",
+  "pandas": "2.3.3",
+  "pyyaml": "6.0.3"
+ },
+ "artifact": {
+  "path": "D:/Use Antigravity/Medical Vision/outputs/k_v3_out/cxr_inference_model_cache.joblib",
+  "sha256": "3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058",
+  "bytes": 7842399,
+  "load_seconds": 0.004278,
+  "n_train": 14815,
+  "split_sha256": "f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98",
+  "sklearn_version": "1.6.1",
+  "n_support_vectors": 6180,
+  "classes": [
+   0,
+   1,
+   2,
+   3
+  ]
+ },
+ "sample_class_distribution": {
+  "Normal": 12,
+  "COVID": 4,
+  "Lung_Opacity": 3,
+  "Viral Pneumonia": 1
+ },
+ "warmup_seconds": [
+  {
+   "image_id": "Normal-5793.png",
+   "decode_seconds": 0.003518,
+   "features_seconds": 0.134531,
+   "inference_seconds": 0.009442,
+   "total_seconds": 0.147492
+  }
+ ],
+ "stats": {
+  "per_image_median_seconds": {
+   "decode_seconds": {
+    "n": 20,
+    "mean": 0.0016879500000000001,
+    "median": 0.000737,
+    "p90": 0.0035111000000000005,
+    "p95": 0.00369775,
+    "min": 0.000664,
+    "max": 0.003807
+   },
+   "features_seconds": {
+    "n": 20,
+    "mean": 0.0637817,
+    "median": 0.026671,
+    "p90": 0.12577860000000002,
+    "p95": 0.12627300000000002,
+    "min": 0.024004,
+    "max": 0.132828
+   },
+   "inference_seconds": {
+    "n": 20,
+    "mean": 0.00528875,
+    "median": 0.002394,
+    "p90": 0.0099278,
+    "p95": 0.0105401,
+    "min": 0.001835,
+    "max": 0.011093
+   },
+   "total_seconds": {
+    "n": 20,
+    "mean": 0.07075820000000001,
+    "median": 0.0295675,
+    "p90": 0.1399969,
+    "p95": 0.14041745,
+    "min": 0.02704,
+    "max": 0.14586
+   }
+  }
+ },
+ "totals": {
+  "measurements": 20,
+  "wall_seconds": 1.427
+ }
+}

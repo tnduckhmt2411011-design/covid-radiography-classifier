@@ -111,7 +111,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 5.5.1 | Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán | `src/inference_demo.py` dòng 55, 110, 187, 338; `src/model_artifact.py` (kho `duc16/cxr-svm-demo`, SHA-256 `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058`, 7.842.399 bytes) |
 | 5.5.2 | Giao diện Streamlit và các thành phần tương tác | `demo/streamlit_app.py`; `demo/README.md` |
 | 5.5.3 | Cảnh báo y khoa tích hợp trong ứng dụng | `demo/streamlit_app.py` dòng 61–63; `demo/README.md` mục giới hạn và an toàn |
-| 5.5.4 | Độ trễ suy luận thực tế | `[CHƯA ĐO]`. Repo chưa có tệp ghi thời gian phản hồi. Nếu cần số, phải đo và ghi vào `results/` trước khi trích |
+| 5.5.4 | Độ trễ suy luận thực tế | `results/demo_latency_interactive/latency.json` (20 ảnh val, seed 42, một lượt) và `results/demo_latency_sustained/latency.json` (200 ảnh val, seed 42, 3 lượt = 600 phép đo), sinh bằng `python -m src.inference_latency`; kiểm thử `tests/test_inference_latency.py` |
 
 ### Chương 6. Thảo luận, giới hạn và hướng phát triển (5 tiểu mục)
 
