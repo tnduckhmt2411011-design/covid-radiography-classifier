@@ -40,7 +40,7 @@ Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số 
 
 ## 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
 
-Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
+Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm trùng pHash không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
 
 Đề tài không dùng học sâu (ràng buộc H7): một bài kiểm thử tự động quét mọi lệnh import trong `src/` và `notebooks/`, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
 
@@ -56,7 +56,7 @@ Nằm ngoài phạm vi của đề tài: chẩn đoán lâm sàng, phân đoạn
 
 ## 1.4. Đóng góp của đề tài
 
-1. **Phép chia tập có kiểm soát ảnh trùng.** Bước gom nhóm pHash ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15.
+1. **Phép chia tập có kiểm soát ảnh trùng pHash.** Bước gom nhóm ở ngưỡng T = 0 xác định 178 nhóm gồm 401 ảnh trùng pHash, và toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15.
 2. **So sánh bốn nhóm đặc trưng thủ công (RQ1).** Trên 3.174 ảnh validation, nhóm ghép 152 chiều đạt macro-F1 0,8599, cao hơn GLCM kết hợp LBP 0,8156, histogram 0,7829 và HOG 0,7625.
 
 3. **So sánh sáu bộ phân loại (RQ2).** SVM với kernel RBF (radial basis function) đạt macro-F1 0,9024, cao hơn mốc tham chiếu Random Forest 0,8582. Phần kiểm định và khoảng tin cậy để ở Chương 3.
