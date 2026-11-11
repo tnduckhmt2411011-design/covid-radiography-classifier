@@ -42,7 +42,7 @@ Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số 
 
 Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm trùng pHash không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
 
-Đề tài không dùng học sâu (ràng buộc H7): một bài kiểm thử tự động quét mọi lệnh import trong `src/` và `notebooks/`, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
+Đề tài không dùng học sâu (ràng buộc H7): một bài kiểm thử tự động quét mọi lệnh import trong mã nguồn và notebook, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
 
 **Bảng 1.2: Ràng buộc kỹ thuật và cơ chế kiểm soát**
 

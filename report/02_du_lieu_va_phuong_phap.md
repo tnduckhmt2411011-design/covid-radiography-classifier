@@ -21,7 +21,7 @@ Bộ dữ liệu được phát hành với nhãn giấy phép `copyright-author
 
 ## 2.2. Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp
 
-Với một bộ dữ liệu ghép từ nhiều nguồn, độ sáng là thuộc tính cần xem trước tiên, vì mô hình có thể nhận ra lớp nhờ nền ảnh sáng hay tối thay vì nhờ tổn thương phổi. Độ sáng được đo bằng trung bình mảng điểm ảnh của tệp gốc trên thang 0–255, tính một lần cho 21.165 ảnh và lưu trong `splits/manifest.csv`; mọi số dưới đây tính từ tệp đó. Bảng 2.2 tổng hợp theo lớp, Hình 2.1 vẽ phân bố đầy đủ.
+Với một bộ dữ liệu ghép từ nhiều nguồn, độ sáng là thuộc tính cần xem trước tiên, vì mô hình có thể nhận ra lớp nhờ nền ảnh sáng hay tối thay vì nhờ tổn thương phổi. Độ sáng được đo bằng trung bình mảng điểm ảnh của tệp gốc trên thang 0–255, tính một lần cho 21.165 ảnh và lưu trong bảng manifest của phép phân tích khám phá; mọi số dưới đây tính từ tệp đó. Bảng 2.2 tổng hợp theo lớp, Hình 2.1 vẽ phân bố đầy đủ.
 
 **Bảng 2.2: Độ sáng trung bình theo lớp (thang 0–255)**
 
@@ -55,7 +55,7 @@ Những quan sát trên mới mô tả dữ liệu và một mốc tham chiếu 
 Ảnh trùng rơi vào cả train lẫn test sẽ thổi phồng điểm số, nên bước gom nhóm được chạy trước phép chia. Mỗi ảnh được tính mã MD5 của tệp và pHash 64-bit DCT; khoảng cách Hamming giữa hai mã pHash tính theo công thức:
 $$D = \frac{64 - u \cdot v}{2} \qquad (2.1)$$
 
-với $u$ và $v$ là hai vector bit đã đổi sang dạng $\{-1, 1\}$. Các ảnh có $D = 0$ được gom vào cùng một nhóm bằng thuật toán Union-Find, và định danh nhóm trở thành cột `group_id` trong `splits/split_v1.csv`.
+với $u$ và $v$ là hai vector bit đã đổi sang dạng $\{-1, 1\}$. Các ảnh có $D = 0$ được gom vào cùng một nhóm bằng thuật toán Union-Find, và định danh nhóm trở thành một cột riêng (`group_id`) trong tệp phân chia.
 
 Trên 21.165 ảnh, kết quả là 20.942 nhóm, trong đó 178 nhóm có nhiều hơn một ảnh với tổng cộng 401 ảnh, còn lại 20.764 nhóm chỉ có một ảnh. Không nhóm nào chứa ảnh của hai lớp khác nhau. Toàn bộ ảnh trong một nhóm được gán về cùng một tập trước khi chia 70/15/15, nên ảnh trùng pHash không thể xuất hiện đồng thời ở hai tập.
 
@@ -67,7 +67,7 @@ Lựa chọn này có cái giá của nó: các cặp có khoảng cách Hamming
 
 ## 2.4. Phân chia train/val/test 70/15/15 và cơ chế khóa tập test
 
-Phép chia dùng StratifiedGroupKFold với 20 fold và `random_state = 42`, giữ nguyên `group_id` trong mỗi tập và phân tầng theo nhãn. Trong 20 fold, 14 fold làm train (70%), 3 fold làm validation (15%) và 3 fold làm test (15%). Kết quả ghi trong `splits/split_v1.csv` và tóm tắt ở Bảng 2.3.
+Phép chia dùng StratifiedGroupKFold với 20 fold và `random_state = 42`, giữ nguyên `group_id` trong mỗi tập và phân tầng theo nhãn. Trong 20 fold, 14 fold làm train (70%), 3 fold làm validation (15%) và 3 fold làm test (15%). Kết quả ghi trong tệp phân chia và tóm tắt ở Bảng 2.3.
 
 **Bảng 2.3: Phân bố bốn lớp theo tập train, validation và test**
 
@@ -81,7 +81,7 @@ Phép chia dùng StratifiedGroupKFold với 20 fold và `random_state = 42`, gi�
 
 Tỷ lệ từng lớp trong validation và trong test đều lệch dưới 0,2 điểm phần trăm so với tỷ lệ của lớp đó trong toàn bộ dữ liệu; chẳng hạn COVID chiếm 16,92% của validation và 17,10% của test, so với 17,08% của cả bộ. Tệp split được băm SHA-256 với giá trị `f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98`. Một bài kiểm thử tự động đối chiếu mã băm này cùng số dòng của từng tập, nên chỉ cần tệp split thay đổi là bộ kiểm thử sẽ thất bại.
 
-Tập test bị khóa trong suốt các giai đoạn chọn đặc trưng và chọn bộ phân loại. Mã nguồn mặc định từ chối đọc tập test, và mọi quyết định của RQ1 đến RQ3 chỉ dùng 3.174 ảnh validation. Tập test được mở đúng một lần, vào lúc 07:43:34 UTC ngày 09/11/2026. Tệp `results/final_test/UNLOCK_RECORD.json` ghi lại lần mở khóa đó cùng commit, mã băm SHA-256 của tệp split, mã băm của chuỗi xác nhận do tác giả ký, và macro-F1 validation 0,9024 của mô hình dùng cho lần chạy, chính là mốc được trình bày lại ở Chương 3.
+Tập test bị khóa trong suốt các giai đoạn chọn đặc trưng và chọn bộ phân loại. Mã nguồn mặc định từ chối đọc tập test, và mọi quyết định của RQ1 đến RQ3 chỉ dùng 3.174 ảnh validation. Tập test được mở đúng một lần, vào lúc 07:43:34 UTC ngày 09/11/2026. Bản ghi mở khóa lưu lần mở khóa đó cùng commit, mã băm SHA-256 của tệp split, mã băm của chuỗi xác nhận do tác giả ký, và macro-F1 validation 0,9024 của mô hình dùng cho lần chạy, chính là mốc được trình bày lại ở Chương 3.
 
 Trước khi đánh giá trên tập test, pipeline phải vượt sáu bước kiểm soát:
 
@@ -92,11 +92,11 @@ Trước khi đánh giá trên tập test, pipeline phải vượt sáu bước 
 5. Macro-F1 validation phải tái lập được trên cùng cấu hình.
 6. Báo cáo phải công bố đầy đủ các chỉ số đã đăng ký trước.
 
-Danh sách sáu bước ở dạng bảng nằm trong `results/final_test_protocol_record.md`.
+Danh sách sáu bước ở dạng bảng nằm trong biên bản của quy trình mở khóa.
 
 ## 2.5. Giới hạn còn lại của dữ liệu
 
-Phép gom nhóm theo pHash chỉ xử lý được các ảnh trùng pHash. Trên toàn bộ dữ liệu vẫn còn 1.570 cặp có khoảng cách Hamming lớn hơn 0 và không quá 4, trong đó 735 cặp nằm ở hai tập khác nhau (Bảng 2.4). Số liệu này được thống kê riêng sau khi phép chia đã chốt, nên không làm thay đổi `splits/split_v1.csv` mà chỉ mô tả phần rủi ro còn lại.
+Phép gom nhóm theo pHash chỉ xử lý được các ảnh trùng pHash. Trên toàn bộ dữ liệu vẫn còn 1.570 cặp có khoảng cách Hamming lớn hơn 0 và không quá 4, trong đó 735 cặp nằm ở hai tập khác nhau (Bảng 2.4). Số liệu này được thống kê riêng sau khi phép chia đã chốt, nên không làm thay đổi tệp phân chia mà chỉ mô tả phần rủi ro còn lại.
 
 **Bảng 2.4: 735 cặp gần trùng nằm ở hai tập khác nhau**
 

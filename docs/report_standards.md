@@ -111,12 +111,12 @@ Phiếu giao nhiệm vụ và phiếu nhận xét của giảng viên, nếu đ�
 * 3.1. RQ1: so sánh bốn nhóm đặc trưng trên Random Forest, 3 seed cố định.
 * 3.2. Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2.
 * 3.3. RQ2: so sánh sáu bộ phân loại trên nhóm ghép 152 chiều.
-* 3.4. Đánh giá SVM RBF trên validation và ma trận nhầm lẫn.
+* 3.4. Đánh giá SVM RBF trên validation.
 
-**Chương 4. Nghiên cứu hiện tượng học lối tắt, RQ3** — 3 tiểu mục
+**Chương 4. Mức phụ thuộc vào vùng ngoài mặt nạ phổi (RQ3)** — 3 tiểu mục
 * 4.1. Năm kịch bản che mặt nạ phổi: `orig_to_orig`, `lung_to_lung`, `out_to_out`, `orig_to_lung`, `orig_to_out`.
 * 4.2. Tầm quan trọng đặc trưng theo 10 khối (permutation importance).
-* 4.3. Các giả thuyết chưa kiểm chứng về thiên lệch ngoài phổi (Quy tắc D4).
+* 4.3. Các giả thuyết chưa kiểm chứng về vùng ngoài mặt nạ phổi.
 
 **Chương 5. Kết quả kiểm tra độc lập và triển khai** — 8 tiểu mục
 * 5.1. Kết quả trên tập test độc lập, mở khóa một lần (S5-04): Macro-F1 0,8714, 95% CI [0,8579, 0,8840].
@@ -132,7 +132,7 @@ Phiếu giao nhiệm vụ và phiếu nhận xét của giảng viên, nếu đ�
 * 6.4. Hướng phát triển.
 * 6.5. Kết luận.
 
-Số liệu tập test chỉ trình bày từ Chương 5 trở đi; Chương 1 đến Chương 4 chỉ dùng 3.174 ảnh validation. Mục 5.5.4 hiện chưa có số đo độ trễ, phải ghi rõ trạng thái trong báo cáo thay vì ước lượng.
+Số liệu tập test chỉ trình bày từ Chương 5 trở đi; Chương 1 đến Chương 4 chỉ dùng 3.174 ảnh validation. Mục 5.5.4 đã có số đo độ trễ (hai bản ghi trong `results/demo_latency_*`, sinh bằng `python -m src.inference_latency`), trình bày ở Chương 5.
 
 ### 3.3. Phần Kết thúc (Back Matter)
 * **Tài liệu tham khảo (References):** Trình bày theo chuẩn IEEE hoặc APA.
@@ -161,6 +161,8 @@ Số liệu tập test chỉ trình bày từ Chương 5 trở đi; Chương 1 �
 * **Đánh số thứ tự:** Đánh số gắn liền với số chương, in đậm: **Hình X.Y: Tên hình**.
   * *Ví dụ:* **Hình 5.1: Ma trận nhầm lẫn của mô hình SVM trên 3.176 ảnh tập kiểm tra độc lập**.
 * Mọi hình ảnh và bảng biểu bắt buộc phải được dẫn chiếu trực tiếp trong văn bản (ví dụ: *"như được minh họa tại Hình 5.1..."*).
+* **Không ghi đường dẫn tệp trong thân bài:** thân bài dùng tên mô tả (tệp phân chia, bản ghi mở khóa, kịch bản đo độ trễ, biên bản quy trình); đường dẫn chính xác đến tệp nguồn, kịch bản và bài kiểm thử đặt trong phần ghi chú kỹ thuật của chương. Duy nhất: đường dẫn trong cú pháp nhúng hình (dạng `../figures/...`) là ngoại lệ cần thiết để hiển thị hình.
+* **Mã nội bộ** (D1–D4, G1–G6, H2, R1–R5, S5-04, PR #...) chỉ xuất hiện trong ngoặc để tra cứu; ưu tiên mô tả bằng lời. Danh sách mã và đối chiếu nguồn đặt trong ghi chú kỹ thuật của chương.
 
 ### 4.3. Công thức Toán học (Equations)
 * **Công cụ soạn thảo:** Sử dụng Equation Editor chuẩn trong Microsoft Word hoặc KaTeX/LaTeX.
