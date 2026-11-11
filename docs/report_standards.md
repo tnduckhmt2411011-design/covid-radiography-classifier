@@ -2,6 +2,7 @@
 
 > **Tài liệu tham chiếu chuẩn mực học thuật của Đồ án Phân loại Ảnh X-quang Lồng ngực (COVID-19 Radiography Classifier)**  
 > **Cơ sở tham chiếu:** Tổng hợp các quy định, quyết định và biểu mẫu chính thức từ Trường Đại học Cần Thơ (**CTU**) và Trường Đại học Kỹ thuật – Công nghệ Cần Thơ (**CTUT**).  
+> **Phạm vi áp dụng:** Báo cáo được nộp tại CTUT (khoa CICT), nên văn bản của CTUT là căn cứ ràng buộc. Văn bản của CTU chỉ dùng tham khảo về thể thức ở những nội dung CTUT không quy định, và phải ghi rõ nguồn khi viện dẫn.  
 > **Áp dụng cho:** Công việc **S6-01** (Soạn thảo báo cáo bài tập lớn trong thư mục `report/`) và **S6-04** (Rà soát định dạng sản phẩm cuối kỳ).
 
 ---
@@ -14,7 +15,7 @@ Tài liệu này được xây dựng dựa trên việc trích xuất và chu�
    * **Quyết định số 1799/QĐ-ĐHCT:** Hướng dẫn viết và trình bày luận văn, đề án, đồ án khoa học tại Trường Đại học Cần Thơ (Khoa Sau đại học & Đào tạo Đại học).
    * **Quyết định số 535/QĐ-BK (ngày 04/09/2026):** Quy định và quy trình nộp, nghiệm thu luận văn/đồ án tốt nghiệp của Trường Bách khoa (COE – CTU).
    * **Quyết định số 263/QĐ-ĐHCT:** Quy định trình bày Chuyên đề, Tiểu luận, Đồ án và Luận văn tốt nghiệp.
-   * **Quyết định số 06/QĐ-NXB ĐHCT (ngày 18/09/2024):** Quy trình kiểm tra mức độ trùng lặp văn bản học thuật và bảo đảm liêm chính khoa học.
+   * **Quy chế liêm chính học thuật và kiểm soát trùng lặp của đơn vị đào tạo:** Yêu cầu minh bạch nguồn gốc câu chữ và báo cáo tỷ lệ trùng lặp. Con số và số hiệu văn bản nội bộ chỉ được nêu sau khi đối chiếu bản chính thức; tài liệu này không quy định một ngưỡng trùng lặp cụ thể.
    * **Đề cương học phần Niên luận/Đồ án (Trường CNTT&TT - CICT):** Quy định chuẩn đầu ra báo cáo kỹ thuật ngành Công nghệ thông tin và Khoa học máy tính.
 
 2. **Trường Đại học Kỹ thuật – Công nghệ Cần Thơ (CTUT):**
@@ -170,11 +171,11 @@ Quyển báo cáo đồ án được sắp xếp tuần tự theo đúng 3 phầ
   * **Website / Dataset:** `[4] M. E. H. Chowdhury et al., "COVID-19 Radiography Database," Kaggle, 2020. [Online]. Available: https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database.`
 
 ### 5.2. Các Cổng Kiểm soát Nghiêm ngặt của Dự án
-Tập báo cáo bài tập lớn phải tuân thủ tuyệt đối 3 nguyên tắc kiểm soát của đề tài:
+Tập báo cáo bài tập lớn phải tuân thủ tuyệt đối 5 nguyên tắc kiểm soát của đề tài:
 1. **Cổng H7 (Cấm Deep Learning):** Toàn bộ bài báo cáo trình bày trung thực phương pháp luận học máy cổ điển; không sử dụng kết quả, không đề cập việc import hay huấn luyện các kiến trúc Deep Learning (`torch`, `tensorflow`, `keras`, `timm`).
 2. **Cổng H2 (Khóa tập test duy nhất):** Số liệu trên tập test (3.176 ảnh) chỉ được công bố đúng một lần từ kết quả của run S5-04; phản ánh đúng độ chênh lệch thực tế giữa validation và test.
 3. **Quy tắc D4 (Báo cáo khách quan):** Giữ nguyên văn quy tắc: *"Mọi lời giải thích về sự khác biệt giữa val và test đều là giả thuyết chưa kiểm chứng, không nêu nguyên nhân."* Tuyệt đối không suy diễn chủ quan về sự suy giảm hiệu năng.
-4. **Kiểm tra trùng lặp (Anti-Plagiarism):** Toàn bộ câu từ do nhóm tự chấp bút, trích dẫn rõ nguồn gốc; tỷ lệ trùng lặp văn bản qua Turnitin/phần mềm kiểm tra nội bộ phải dưới 20% theo quy định QĐ 06/QĐ-NXB ĐHCT.
+4. **Kiểm tra trùng lặp (Anti-Plagiarism):** Toàn bộ câu từ do nhóm tự chấp bút, trích dẫn rõ nguồn gốc; kiểm tra trùng lặp bằng Turnitin hoặc phần mềm nội bộ trước khi nộp, kèm báo cáo tỷ lệ trùng lặp theo yêu cầu của đơn vị đào tạo.
 5. **Chuẩn mực Văn phong Khoa học Tiếng Việt & Tránh AI Slop:** Bắt buộc tuân thủ cẩm nang tại [`docs/academic_writing_guide.md`](file:///d:/Use%20Antigravity/Medical%20Vision/docs/academic_writing_guide.md) (triệt tiêu văn dịch máy sáo rỗng, nhồi nhét liên từ, danh từ hóa rườm rà; bảo đảm nhịp điệu câu đa dạng và lập luận dựa trên bằng chứng thực nghiệm).
 
 ---

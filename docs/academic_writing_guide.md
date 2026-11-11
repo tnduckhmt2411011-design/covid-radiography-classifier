@@ -2,9 +2,9 @@
 
 > **Tài liệu hướng dẫn kỹ thuật hành văn cho Báo cáo Bài tập lớn / Đồ án Tốt nghiệp**  
 > **Cơ sở tham chiếu:**  
-> * Phong cách ngôn ngữ khoa học tiếng Việt & Nghị định 30/2020/NĐ-CP của Chính phủ.  
-> * Thông tư số 49/2026/TT-BGDĐT của Bộ Giáo dục & Đào tạo về ứng dụng công nghệ và liêm chính học thuật.  
-> * Quyết định số 06/QĐ-NXB ĐHCT của Trường Đại học Cần Thơ về kiểm soát trùng lặp và liêm chính khoa học.  
+> * Phong cách ngôn ngữ khoa học tiếng Việt & Nghị định 30/2020/NĐ-CP của Chính phủ về công tác văn thư.  
+> * Thông tư số 49/2026/TT-BGDĐT của Bộ Giáo dục và Đào tạo (ban hành 30/6/2026, hiệu lực 15/8/2026) quy định về ứng dụng công nghệ trong giáo dục đại học và giáo dục nghề nghiệp.  
+> * Quy chế liêm chính học thuật và kiểm soát trùng lặp của đơn vị đào tạo. Văn bản nội bộ chỉ được trích dẫn số hiệu sau khi đối chiếu bản chính thức do trường phát hành.  
 > * Nghiên cứu quốc tế về "vết tích ngôn ngữ AI" (*Science Advances* 2025, Stanford / ICML 2024).  
 > **Áp dụng trực tiếp:** Thư mục báo cáo `report/` (công việc **S6-01**) và rà soát định dạng (**S6-04**).
 
@@ -17,7 +17,7 @@
 
 Trong môi trường học thuật đại học Việt Nam, việc để văn bản báo cáo vướng phải "AI Slop" gây ra 3 tác hại nghiêm trọng:
 1. **Mất độ tin cậy khoa học:** Hội đồng chấm điểm và giảng viên phản biện nhận diện ngay giọng điệu máy móc, dẫn đến nghi ngờ về tính xác thực của số liệu thực nghiệm.
-2. **Vi phạm liêm chính học thuật:** Vi phạm Thông tư 49/2026/TT-BGDĐT và quy chế của Đại học Cần Thơ (QĐ 06/QĐ-NXB ĐHCT) nếu sử dụng văn bản AI tạo sẵn mà không có sự kiểm chứng và lao động trí tuệ của sinh viên.
+2. **Vi phạm liêm chính học thuật:** Vi phạm Thông tư 49/2026/TT-BGDĐT và quy chế liêm chính học thuật của đơn vị đào tạo nếu sử dụng văn bản AI tạo sẵn mà không có sự kiểm chứng và lao động trí tuệ của sinh viên.
 3. **Phá vỡ tính chuẩn mực của Tiếng Việt khoa học:** Biến bài báo cáo kỹ thuật thành bài văn quảng cáo (marketing copy) hoặc văn dịch máy thô thiển.
 
 ---
