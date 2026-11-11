@@ -176,11 +176,13 @@ Siêu tham số được chọn bằng kiểm định chéo 5 fold trên 14.815 
 
 Trọng số lớp được dùng ở bốn bộ: Logistic Regression, Decision Tree, Random Forest và SVM, đều qua tham số cân bằng lớp của scikit-learn; Random Forest dùng biến thể cân bằng theo mẫu. k-NN không có cơ chế này. Gradient Boosting không nhận tham số tương tự nên đề tài gán trọng số cho từng mẫu rồi truyền vào bước fit. Cách này làm các lớp có trọng số tương đương trong hàm mất mát, phù hợp với macro-F1 nhưng không đảm bảo tối ưu nó.
 
+Random Forest xuất hiện ở cả RQ1 và RQ2 nhưng không cùng cấu hình. RQ1 dùng một cấu hình cố định chốt trước: 500 cây và `class_weight = balanced_subsample`. Riêng RQ2 cho số cây là siêu tham số và lưới ở Bảng 2.6 áp dụng cho RQ2.
+
 ## 2.9. Phương pháp đánh giá thống kê và bootstrap ghép cặp
 
 Thước đo chính là macro-F1: trung bình cộng của F1 của bốn lớp. Khoảng tin cậy được tính bằng bootstrap ghép cặp 2.000 lần trên chính 3.174 ảnh validation, với seed 42. Mỗi lần lấy mẫu lấy lại cả ảnh lẫn kết quả dự đoán của hai cấu hình đang so, để hai bên luôn nhìn cùng một tập ảnh; cách này gọi là ghép cặp. Khoảng tin cậy 95% lấy phân vị 2,5% và 97,5% của 2.000 hiệu số.
 
-Ở RQ1, mỗi nhóm đặc trưng chạy trên ba seed 42, 43 và 44, rồi kết quả của một seed được ghép cặp với kết quả cùng seed của các nhóm khác trước khi bootstrap. Kết quả công bố là trung bình của ba seed, còn khoảng tin cậy phản ánh biến thiên giữa các ảnh trên mỗi seed. Quy tắc quyết định của RQ1 đòi chênh lệch phải vượt 0,005 và khoảng tin cậy 95% không chứa 0, tức để chấp nhận một nhóm đặc trưng vượt nhóm histogram thì cả mức chênh lệch lẫn độ chắc chắn của nó phải đạt yêu cầu.
+Ở RQ1, mỗi nhóm đặc trưng chạy trên ba seed 42, 43 và 44. Trong mỗi lần lấy mẫu bootstrap, một tập vị trí ảnh duy nhất được dùng cho cả ba seed và cho cả hai nhóm đang so; macro-F1 tính cho từng seed rồi lấy trung bình, và khoảng tin cậy lấy phân vị 2,5% cùng 97,5% của 2.000 giá trị trung bình đó. Quy tắc quyết định của RQ1 đòi chênh lệch phải vượt 0,005 và khoảng tin cậy 95% không chứa 0, tức để chấp nhận một nhóm đặc trưng vượt nhóm histogram thì cả mức chênh lệch lẫn độ chắc chắn của nó phải đạt yêu cầu.
 
 Khoảng tin cậy này chỉ phản ánh dao động do chọn mẫu 3.174 ảnh validation; nó không phản ánh dao động giữa các lần huấn luyện với seed khác, giữa các tập dữ liệu khác, hay giữa validation và test. Câu hỏi mô hình khái quát ra sao trên ảnh chưa từng thấy thuộc về Chương 4 và Chương 5.
 

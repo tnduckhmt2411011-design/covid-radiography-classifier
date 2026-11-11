@@ -78,8 +78,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 2.5 | Giới hạn tồn tại của dữ liệu | 735 cặp gần trùng Hamming 1–4 (325 Train–Test, 335 Train–Val, 75 Val–Test; 229 khác nhãn) tại `docs/roadmap.md` dòng 187; thiếu mã bệnh nhân và tuổi chưa xác minh tại `results/report_rq3/r5_gioi_han.md` và `results/threshold_v3.md` Mục 6 (R5) |
 | 2.6.1 | Đặc trưng histogram cường độ sáng, 64 chiều | `src/features_hist_glcm_lbp.py` |
 | 2.6.2 | Đặc trưng kết cấu GLCM 60 chiều và LBP 28 chiều | `src/features_hist_glcm_lbp.py`. GLCM: 5 thuộc tính × 3 khoảng cách × 4 góc = 60. LBP: R=1/P=8 (10 bin) + R=2/P=16 (18 bin) = 28 |
-| 2.6.3 | Đặc trưng hướng biên HOG, 10.404 chiều | `src/features_hog_ghep.py` dòng 37 (`HOG_DIM = 10404`) |
-| 2.6.4 | Nhóm đặc trưng ghép 152 chiều | `src/features_hog_ghep.py`; `src/inference_demo.py` dòng 39 (`N_FEATURES = 152`) |
+| 2.6.3 | Đặc trưng hướng biên HOG, 10.404 chiều | `src/features_hog_ghep.py` dòng 37 (`HOG_DIM = 10404`) || 2.6.4 | Nhóm đặc trưng ghép 152 chiều | `src/features_hog_ghep.py`; `src/inference_demo.py` dòng 39 (`N_FEATURES = 152`) |
 | 2.7 | Chuẩn hóa dữ liệu, StandardScaler chỉ fit trên train (Cổng H6) | `src/rq2_runner.py` dòng 456 và 654 |
 | 2.8 | Sáu thuật toán phân loại và không gian siêu tham số | `src/rq2_runner.py` dòng 59 (`CLASSIFIERS`); `results/rq2_classifier_selection_record.md` |
 | 2.9 | Phương pháp đánh giá thống kê và bootstrap ghép cặp 2.000 lần | `src/bootstrap.py`; `results/report_rq1/bootstrap_config.json` |
@@ -91,7 +90,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 3.1 | RQ1: so sánh bốn nhóm đặc trưng trên Random Forest | `results/report_rq1/r1_summary.csv` (macro-F1 TB ± SD 3 seed và 95% CI: ghep 0,8599 ± 0,0030; glcmlbp 0,8156 ± 0,0023; hist 0,7829 ± 0,0013; hog 0,7625 ± 0,0038), `r1_per_seed.csv` (điểm từng seed), `results/rq1_cost_rank_record.md` (giây CPU mỗi ảnh). Bảng 3.1 trong báo cáo lấy từ `r1_summary.csv`; cột recall lớp Viral Pneumonia lấy từ cùng tệp |
 | 3.2 | Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2 | `results/report_rq1/r1_bootstrap_vs_reference.csv`: ghep − hist = +0,0770, CI [+0,0611; +0,0925], không chứa 0; glcmlbp − hist = +0,0328, CI [+0,0131; +0,0513]; hog − hist = −0,0203, CI [−0,0419; +0,0014], chứa 0. Ngưỡng chấp nhận +0,005 ghi ở Bảng 1.1 của Chương 1 (`results/threshold_v3.md`). Quyết định chọn `ghep` sang RQ2 ở `results/rq1_feature_selection_record.md` mục 4 |
 | 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868 ± 0,0030; rf 0,8582 ± 0,0033; lr 0,8370; knn 0,8242; dt 0,7271 ± 0,0017), `results/report_rq2/r1_bootstrap_vs_reference.csv` (năm phép so với mốc `rf`: svm +0,0442, CI [+0,0320; +0,0580]; bốn phép còn lại âm và CI không chứa 0), `results/report_rq2/bootstrap_config.json` (n = 3.174, 2.000 lần, seed 42). Cấu hình SVM đã chọn ở `results/rq2_ghep_svm_s42/metrics.json` |
-| 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/error_analysis/error_analysis_summary.md` (349/3.174 lỗi; Normal ↔ Lung_Opacity 268 ca = 76,79%; 240 ca sai cả 3 mô hình; 138 ca có độ tin cậy từ 0,80). Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
+| 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/error_analysis/error_analysis_summary.md` (349/3.174 lỗi; Normal ↔ Lung_Opacity 268 ca = 76,79%; 240 ca sai cả 3 mô hình; 138 ca có độ tin cậy từ 0,80), `results/rq2_ghep_svm_s42/preds_val.csv` (xác suất bốn lớp từng ảnh, dùng cho phép đối chiếu nhóm RGB). Hình 3.1 sinh bằng `python -m scripts.report_figures`, ghi ra `report/figures/03_ma_tran_nham_lon_svm_val.png`; kiểm thử `tests/test_report_figures.py`. Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
 
 ### Chương 4. Nghiên cứu hiện tượng học lối tắt, RQ3 (3 tiểu mục)
 
@@ -130,7 +129,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 1 | Tài liệu tham khảo | IEEE. Tối thiểu: Chowdhury et al. (2020); Kermany et al. (2018); Pedregosa et al. (2011); van der Walt et al. (2014); tài liệu Streamlit; tài liệu Hugging Face Hub |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 286 tests |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 291 tests |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
