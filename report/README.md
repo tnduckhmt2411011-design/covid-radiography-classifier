@@ -161,4 +161,4 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
 - Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md) và Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md).
 - Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục.
-- Còn thiếu: Chương 4, Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên.
+- Còn thiếu: Chương 4, Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.

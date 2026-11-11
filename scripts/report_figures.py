@@ -1,8 +1,9 @@
-"""Sinh Hình 3.1 cho báo cáo: tỷ lệ lỗi theo hàng của ma trận nhầm lẫn.
+"""Sinh Hình 3.1 cho báo cáo: ma trận nhầm lẫn của SVM chuẩn hóa theo hàng.
 
 Số liệu đọc từ ``results/rq2_ghep_svm_s42/metrics.json`` (khóa ``confusion_matrix``),
 đã commit và không đọc ảnh. Mỗi hàng chia cho tổng hàng, nên ô trên đường chéo là recall
-của lớp đó. Hình chỉ hiện tỷ lệ; số đếm gốc nằm ở Bảng 3.5 của báo cáo để hai chỗ không
+của lớp đó và tổng hàng là 100% (lệch tối đa 0,1 điểm phần trăm sau làm tròn một chữ số
+thập phân). Hình chỉ hiện tỷ lệ; số đếm gốc nằm ở Bảng 3.5 của báo cáo để hai chỗ không
 lặp lại cùng một thông tin.
 
 Chạy: ``python -m scripts.report_figures``
@@ -56,8 +57,8 @@ def draw(matrix: np.ndarray, out_path: Path) -> Path:
 
     ax.set_xticks(range(4), CLASS_NAMES, rotation=20, ha="right")
     ax.set_yticks(range(4), CLASS_NAMES)
-    ax.set_xlabel("Nhan doan")
-    ax.set_ylabel("Nhan thuc")
+    ax.set_xlabel("Nhãn dự đoán")
+    ax.set_ylabel("Nhãn thực")
 
     for i in range(4):
         for j in range(4):
@@ -65,12 +66,13 @@ def draw(matrix: np.ndarray, out_path: Path) -> Path:
             color = "white" if share > 0.55 else "black"
             ax.text(j, i, f"{share:.1%}", ha="center", va="center", fontsize=9, color=color)
 
-    fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    colorbar.set_label("Tỷ lệ trong hàng nhãn thực", fontsize=9)
     ax.set_aspect("equal")
     fig.tight_layout()
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_path, dpi=200)
+    fig.savefig(out_path, dpi=200, bbox_inches="tight")
     plt.close(fig)
     return out_path
 

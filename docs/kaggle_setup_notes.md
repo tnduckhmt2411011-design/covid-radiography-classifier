@@ -103,3 +103,28 @@ $env:PYTHONUTF8=1
 * **Chế độ tính toán:** Thuần CPU (không dùng GPU theo biên bản họp 16/10/2026 mục 3.8).
 * **Hạn mức CPU:** theo xác nhận của nhóm trong biên bản họp 16/10/2026 mục 3.8, phiên CPU không giới hạn giờ (chưa kiểm trên trang usage của Kaggle).
 * **Trạng thái kết nối mạng:** `Internet off` (`"enable_internet": false`).
+
+---
+
+## 7. Ghi chú kỹ thuật: tệp xác thực Kaggle và phép tách nguồn ảnh Normal
+
+Nhật ký kỹ thuật, không thuộc nội dung báo cáo. Nguồn số liệu tương ứng trong báo cáo ghi ở mục "Ghi chú kỹ thuật" của `report/03_ket_qua_rq1_rq2.md` (mục 3.4).
+
+* **Tệp `kaggle.json`** dùng để tùy chọn tải metadata nằm ở `~/.kaggle/`, đã nằm trong `.gitignore`, không vào repo.
+* **Lệnh tải metadata tách nguồn lớp Normal:**
+
+```powershell
+.\.venv\Scripts\kaggle.exe datasets download tawsifurrahman/covid19-radiography-database -f COVID-19_Radiography_Dataset/Normal.metadata.xlsx -p outputs/normal_metadata --force
+```
+
+* **Sinh `results/eda/normal_source_labels.csv`:**
+
+```powershell
+.\.venv\Scripts\python.exe -m src.source_labels --xlsx <tep vừa tải>
+```
+
+  Đầu ra 10.192 dòng: 8.851 `rsna` và 1.341 `mooney`, khớp với `docs/dataset_provenance.md` mục 2.1–2.2.
+
+* **Vì sao không thêm `openpyxl`:** tệp xlsx không nằm trong repo (W4: kho chỉ giữ CSV và JSON đã chốt), nên `src/source_labels.py` đọc bằng thư viện chuẩn (`zipfile` + `xml.etree`) thay vì thêm một phụ thuộc mới chỉ để dùng một lần. Bộ kiểm thử `tests/test_source_labels.py` tự dựng một xlsx giả nên parser được kiểm trên CI.
+
+* **Chưa đưa vào báo cáo (việc cần làm, không phải nguồn số liệu):** thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, và phân tích lỗi theo mức độ tin cậy chi tiết hơn.
