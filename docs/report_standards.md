@@ -98,7 +98,7 @@ Phiếu giao nhiệm vụ và phiếu nhận xét của giảng viên, nếu đ�
 
 **Chương 2. Dữ liệu và phương pháp nghiên cứu** — 12 tiểu mục
 * 2.1. Nguồn gốc bộ dữ liệu và độ tin cậy thông tin: 21.165 ảnh, 4 lớp (`COVID`, `Lung_Opacity`, `Normal`, `Viral Pneumonia`).
-**2.2. Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp.**
+* 2.2. Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp.
 * 2.3. Lọc trùng lặp bằng pHash ngưỡng T = 0 (178 nhóm, 401 ảnh).
 * 2.4. Phân chia train/val/test 70/15/15 và cơ chế khóa tập test (Cổng H2, SHA-256).
 * 2.5. Giới hạn tồn tại của dữ liệu.
