@@ -96,7 +96,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 4.1 | Năm kịch bản che mặt nạ phổi | `results/report_rq3/r1_summary.csv`; `results/report_rq3/r3_shortcut_bootstrap.csv`; bảng đã đồng bộ trong `results/rq3_shortcut_learning_conclusion.md` mục 1.1 |
+| 4.1 | Năm kịch bản che mặt nạ phổi | `results/report_rq3/r1_summary.csv` (macro-F1, CI, chỉ số từng lớp), `results/report_rq3/r4_sampling_error.csv` (accuracy, sai số chuẩn), `results/report_rq3/r3_shortcut_bootstrap.csv` (năm phép so ghép cặp) và `results/report_rq3/r1_bootstrap_vs_reference.csv` (bốn phép so với mốc `orig_to_orig`), `results/report_rq3/r2_normal_lung_opacity.csv` (cặp nhầm Normal–Lung_Opacity), `results/rq3_comparison_protocol_record.md` (thiết kế kịch bản, quy tắc đóng băng), `results/rq3_shortcut_learning_conclusion.md` mục 1.1 và 2. Mốc nền: `results/b0_majority/metrics.json`, `results/a0_shortcut/metrics.json`, `results/report_rq1/r1_summary.csv`. Hình 4.1 sinh bằng `python -m scripts.report_figures_rq3`, ghi ra `report/figures/04_macro_f1_kich_ban_rq3.png`; kiểm thử `tests/test_report_figures_rq3.py` |
 | 4.2 | Tầm quan trọng đặc trưng theo 10 khối (permutation importance) | `results/rq3_permutation_importance.csv`. Ba khối tổng hợp: hist 64, GLCM 60, LBP 28; 5 tiểu khối GLCM 12 chiều; 2 tiểu khối LBP |
 | 4.3 | Các giả thuyết chưa kiểm chứng về thiên lệch ngoài phổi (Quy tắc D4) | `results/rq3_shortcut_learning_conclusion.md` mục 3.2. Mọi diễn giải phải gắn nhãn giả thuyết |
 
@@ -159,6 +159,6 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 ## 5. Trạng thái hiện tại
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
-- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md) và Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md).
-- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục.
-- Còn thiếu: Chương 4, Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md) và Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md).
+- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục.
+- Còn thiếu: Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
