@@ -14,11 +14,13 @@ Thực nghiệm trên mô hình tối ưu đã đóng băng từ RQ2: `SVC(kerne
 
 | Kịch bản (`scenario`) | Tập Train | Tập Val | Macro-F1 (Điểm ước lượng) | Khoảng tin cậy 95% Bootstrap | Accuracy | Recall COVID | Recall Lung Opacity | Recall Normal | Recall Viral Pneumonia |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **`orig_to_orig`** *(Chuẩn)* | `original` | `original` | **0,9024** | **[0,8909, 0,9129]** | 89,00% | 94,83% | 85,25% | 88,42% | 95,07% |
-| **`lung_to_lung`** *(Chỉ phổi)* | `lung_only` | `lung_only` | **0,8490** | **[0,8333, 0,8625]** | 83,96% | 89,30% | 76,05% | 84,76% | 93,10% |
-| **`out_to_out`** *(Ngoài phổi)* | `outside_only` | `outside_only` | **0,8921** | **[0,8807, 0,9031]** | 87,81% | 92,99% | 82,93% | 87,44% | 96,55% |
-| **`orig_to_lung`** *(Nhiễu RQ3-A)* | `original` | `lung_only` | **0,0723** | **[0,0677, 0,0770]** | 6,33% | 0,00% | 0,00% | 0,33% | 100,00% |
-| **`orig_to_out`** *(Nhiễu RQ3-A)* | `original` | `outside_only` | **0,2084** | **[0,1953, 0,2220]** | 20,48% | 0,00% | 1,89% | 38,72% | 89,66% |
+| **`orig_to_orig`** *(Chuẩn)* | `original` | `original` | **0,9024** | **[0,8909, 0,9129]** | 89,00% | 95,72% | 84,94% | 88,37% | 94,09% |
+| **`lung_to_lung`** *(Chỉ phổi)* | `lung_only` | `lung_only` | **0,8490** | **[0,8333, 0,8625]** | 85,44% | 86,59% | 81,40% | 86,54% | 92,12% |
+| **`out_to_out`** *(Ngoài phổi)* | `outside_only` | `outside_only` | **0,8921** | **[0,8807, 0,9031]** | 87,84% | 94,79% | 83,17% | 87,26% | 94,58% |
+| **`orig_to_lung`** *(Nhiễu RQ3-A)* | `original` | `lung_only` | **0,0723** | **[0,0677, 0,0770]** | 16,89% | 99,81% | 0,00% | 0,00% | 0,00% |
+| **`orig_to_out`** *(Nhiễu RQ3-A)* | `original` | `outside_only` | **0,2084** | **[0,1953, 0,2220]** | 27,22% | 93,85% | 27,35% | 7,32% | 0,49% |
+
+*Nguồn: `results/report_rq3/r1_summary.csv` (Macro-F1, khoảng tin cậy, Precision/Recall/F1 từng lớp) và `results/report_rq3/r4_sampling_error.csv` (Accuracy). Kiểm thử `tests/test_rq3_report_and_selection.py::test_rq3_shortcut_learning_conclusion_table_matches_csv` đối chiếu từng ô với hai tệp này.*
 
 ---
 
@@ -37,33 +39,33 @@ Thực nghiệm trên mô hình tối ưu đã đóng băng từ RQ2: `SVC(kerne
 
 ## 3. Bằng chứng Thực nghiệm về Hiện tượng Học Lối tắt (Shortcut Learning — Bắt buộc R3)
 
-Kết quả thực nghiệm trên cung cấp những bằng chứng khoa học đanh thép về hiện tượng **Shortcut Learning** và sự thiên lệch nguồn dữ liệu của bộ ảnh `COVID-19 Radiography Database`:
+Kết quả thực nghiệm trên cho thấy hiện tượng **Shortcut Learning** và thiên lệch nguồn dữ liệu của bộ ảnh `COVID-19 Radiography Database`:
 
 ### 3.1. Nghịch lý Mô hình chỉ nhìn vùng ngoài phổi (`out_to_out`)
-- Một mô hình SVM hoàn toàn **bị che đen 100% vùng nhu mô phổi** (chỉ nhìn thấy viền xương ngực, bờ vai, chữ in ký hiệu thiết bị và phông nền đen/xám bên ngoài lồng ngực) vẫn đạt **Macro-F1 = 0,8921** (Accuracy = 87,81%)!
+- Một mô hình SVM hoàn toàn **bị che đen 100% vùng nhu mô phổi** (chỉ nhìn thấy viền xương ngực, bờ vai, chữ in ký hiệu thiết bị và phông nền đen/xám bên ngoài lồng ngực) vẫn đạt **Macro-F1 = 0,8921** (Accuracy = 87,84%).
 - So sánh ghép cặp giữa mô hình nhìn toàn bộ ảnh (`orig_to_orig`) và mô hình chỉ nhìn ngoài phổi (`out_to_out`):
   $$\Delta = \text{Macro-F1}(\text{orig\_to\_orig}) - \text{Macro-F1}(\text{out\_to\_out}) = +0,0103$$
   $$\text{95\% CI} = [-0,0017, +0,0220] \quad (\text{contains\_zero} = \text{True}!)$$
-- **Phát hiện quan trọng:** Khoảng tin cậy 95% chứa số 0! Điều này chứng minh rằng **về mặt thống kê, không có sự khác biệt có ý nghĩa giữa một mô hình nhìn toàn bộ ảnh và một mô hình chỉ nhìn vùng ngoài phổi**.
+- **Phát hiện quan trọng:** Khoảng tin cậy 95% chứa số 0, nên dữ liệu **chưa đủ để kết luận** hiệu năng của mô hình nhìn toàn bộ ảnh khác mô hình chỉ nhìn vùng ngoài phổi. Đây là kết luận thống kê theo khoảng tin cậy, không phải bằng chứng về sự tương đương.
 - Hơn thế nữa, `out_to_out` đạt Macro-F1 cao hơn đáng kể so với `lung_to_lung` ($\Delta = +0,0431$, 95% CI `[+0,0281, +0,0582]`, không chứa 0).
 
 ### 3.2. Căn nguyên Y sinh và Nguồn gốc Dữ liệu của Lối tắt
 1. **Thiên lệch lứa tuổi ở lớp `Viral Pneumonia`:**
-   - 100% ảnh `Viral Pneumonia` (1.345 ảnh) và 1.341 ảnh `Normal` thuộc bộ Kaggle của Paul Mooney là ảnh **bệnh nhi 1–5 tuổi** (Kermany et al., 2018).
-   - Ngay cả khi bị xóa đen vùng phổi, mô hình `out_to_out` nhận diện lớp `Viral Pneumonia` với **Recall lên tới 96,55%** (cao nhất trong cả 5 kịch bản!).
-   - Mô hình học được các đặc trưng hình học lồng ngực trẻ em: xương sườn nằm ngang và mảnh, vòm hoành cao, tỷ lệ lồng ngực nhỏ so với kích thước khung hình `299×299`, hoàn toàn khác biệt với lồng ngực người lớn trong các lớp còn lại.
+   - 100% ảnh `Viral Pneumonia` (1.345 ảnh) và 1.341 ảnh `Normal` thuộc bộ Kaggle của Paul Mooney. Nhiều khả năng đây là ảnh **bệnh nhi 1–5 tuổi** từ nghiên cứu gốc của Kermany và cộng sự (2018) — đây là suy luận từ nguồn dữ liệu, không phải thông tin tuổi được ghi trực tiếp trong metadata (`docs/dataset_provenance.md`, mục 3.3).
+   - Ngay cả khi bị xóa đen vùng phổi, mô hình `out_to_out` nhận diện lớp `Viral Pneumonia` với **Recall 94,58%**, cao nhất trong cả 5 kịch bản.
+   - Giả thuyết: mô hình có thể đang dựa vào các đặc trưng hình học lồng ngực trẻ em — xương sườn nằm ngang và mảnh, vòm hoành cao, tỷ lệ lồng ngực nhỏ so với khung hình `299×299` — khác với lồng ngực người lớn ở các lớp còn lại. Giả thuyết này chưa được kiểm chứng riêng.
 2. **Ký hiệu thiết bị chụp và nhãn nguồn ảnh ở lớp `COVID`:**
-   - Ảnh COVID thu thập từ các kho BIMCV, SIRM, Hannover có các ký hiệu máy chụp kỹ thuật số (`DX`, `CX`), ký hiệu định hướng `L`/`R` in đậm ngoài thành ngực, và độ tương phản nền đặc trưng.
-   - Mô hình `out_to_out` phân loại COVID đạt Recall **92,99%** mà không cần nhìn vào tổn thương đông đặc kính mờ trong phổi.
+   - Ảnh COVID thu thập từ các kho BIMCV, SIRM, trường y tại Đức có các ký hiệu máy chụp kỹ thuật số (`DX`, `CX`), ký hiệu định hướng `L`/`R` in đậm ngoài thành ngực, và độ tương phản nền đặc trưng.
+   - Mô hình `out_to_out` phân loại COVID đạt Recall **94,79%** mà không cần nhìn vào tổn thương đông đặc kính mờ trong phổi.
 3. **Sự sụp đổ khi che ngoài phổi lúc suy luận (`orig_to_lung`):**
-   - Khi mô hình huấn luyện trên ảnh gốc (`orig_to_orig`) gặp ảnh bị che ngoài phổi (`orig_to_lung`), Macro-F1 sụp đổ hoàn toàn về **0,0723** (gần bằng 0). Do các đặc trưng toàn cục (Histogram 64 bin, GLCM, LBP) bị thống trị bởi vùng giá trị 0 màu đen bao quanh, dẫn đến dịch chuyển phân phối đầu vào nghiêm trọng (*covariate shift*).
+   - Khi mô hình huấn luyện trên ảnh gốc (`orig_to_orig`) gặp ảnh bị che ngoài phổi (`orig_to_lung`), Macro-F1 giảm còn **0,0723**. Giả thuyết: các đặc trưng toàn cục (Histogram 64 bin, GLCM, LBP) bị chi phối bởi vùng giá trị 0 màu đen bao quanh, tạo dịch chuyển phân phối đầu vào (*covariate shift*); giả thuyết này chưa được kiểm chứng riêng.
 
 ### 3.3. Phân tích Độ quan trọng Hoán vị Khối (Permutation Importance — S5-02)
 - Khi huấn luyện trên **`lung_only`** (buộc phải tìm tổn thương trong phổi):
   - Khối **GLCM (đặc trưng kết cấu)** tăng vọt mức độ quan trọng lên hàng đầu: $\Delta \text{Macro-F1} = 0,4960 \pm 0,0035$, trong đó tiểu khối `glcm_dissimilarity_12` đóng góp $\Delta = 0,4655$ và `glcm_contrast_12` đóng góp $\Delta = 0,3163$.
-  - Điều này giải thích tại sao trong phổi, sự biến thiên tương phản giữa các tổn thương thâm nhiễm mờ và nhu mô phổi lành là tín hiệu bệnh lý thực sự.
+  - Diễn giải: khi chỉ còn nhu mô phổi, tương phản giữa tổn thương thâm nhiễm mờ và vùng phổi lành là tín hiệu mà GLCM ghi nhận trực tiếp. Đây là diễn giải dựa trên kết quả hoán vị khối, chưa có thí nghiệm tách riêng để kiểm chứng.
 - Ngược lại, trên **`outside_only`**:
-  - Khối **LBP (kết cấu vi biên cục bộ)** và Histogram chi phối chính ($\Delta = 0,3590$ và $\Delta = 0,2656$), nắm bắt các đường viền xương sườn, viền ảnh và ký hiệu chữ in.
+  - Ba khối tổng hợp có mức sụt giảm Macro-F1 lớn nhất lần lượt là LBP 0,3590, GLCM 0,3526 và Histogram 0,2656. Kết cấu bề mặt (LBP và GLCM) chiếm ưu thế so với phân bố cường độ sáng, phù hợp với việc mô hình khai thác đường viền xương sườn, viền ảnh và ký hiệu chữ in ở vùng ngoài phổi.
 
 ---
 

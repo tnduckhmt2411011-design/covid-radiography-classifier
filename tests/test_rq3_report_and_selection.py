@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import math
+import re
 from pathlib import Path
 
 import numpy as np
@@ -172,6 +174,102 @@ def test_rq3_shortcut_learning_conclusion_exists_and_valid() -> None:
     assert "0.8921" in content or "0,8921" in content
     assert "0.8490" in content or "0,8490" in content
     assert "S5-04" in content
+
+
+_RQ3_SCENARIO_RE = re.compile(r"(orig_to_orig|orig_to_lung|orig_to_out|lung_to_lung|out_to_out)")
+
+
+def _parse_vn_number(text: str) -> float:
+    """Chuyển '0,9024', '95,72%', '**0,9024**' thành float."""
+    cleaned = text.replace("*", "").replace("%", "").replace(",", ".").strip()
+    return float(cleaned)
+
+
+def _parse_rq3_conclusion_table(md_text: str) -> dict[str, dict[str, float]]:
+    """Đọc bảng tổng hợp 5 kịch bản RQ3 trong tệp kết luận thành dict theo tên kịch bản."""
+    parsed: dict[str, dict[str, float]] = {}
+    for line in md_text.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        cells = [c.strip() for c in stripped.strip("|").split("|")]
+        if len(cells) != 10:
+            continue
+        match = _RQ3_SCENARIO_RE.search(cells[0])
+        if match is None:
+            continue
+        ci_numbers = re.findall(r"\d+[.,]\d+", cells[4])
+        assert len(ci_numbers) == 2, f"Không đọc được CI ở dòng: {stripped}"
+        ci_low, ci_high = ci_numbers
+        parsed[match.group(1)] = {
+            "macro_f1": _parse_vn_number(cells[3]),
+            "ci95_low": _parse_vn_number(ci_low),
+            "ci95_high": _parse_vn_number(ci_high),
+            "accuracy": _parse_vn_number(cells[5]) / 100.0,
+            "recall_COVID": _parse_vn_number(cells[6]) / 100.0,
+            "recall_Lung_Opacity": _parse_vn_number(cells[7]) / 100.0,
+            "recall_Normal": _parse_vn_number(cells[8]) / 100.0,
+            "recall_Viral Pneumonia": _parse_vn_number(cells[9]) / 100.0,
+        }
+    return parsed
+
+
+def test_rq3_shortcut_learning_conclusion_table_matches_csv() -> None:
+    """Bảng trong tệp kết luận RQ3 phải khớp số liệu gốc, không được chép tay lệch.
+
+    Bảng này từng bị lệch Accuracy/Recall ở cả 5 kịch bản dù Macro-F1 vẫn đúng, nên
+    kiểm thử đối chiếu từng ô với report_rq3/r1_summary.csv và r4_sampling_error.csv.
+    """
+    conc_path = REPO_ROOT / "results" / "rq3_shortcut_learning_conclusion.md"
+    table = _parse_rq3_conclusion_table(conc_path.read_text(encoding="utf-8"))
+
+    summary = pd.read_csv(REPO_ROOT / "results" / "report_rq3" / "r1_summary.csv")
+    sampling = pd.read_csv(REPO_ROOT / "results" / "report_rq3" / "r4_sampling_error.csv")
+    summary = summary.set_index("scenario")
+    sampling = sampling.set_index("scenario")
+
+    expected_scenarios = {"orig_to_orig", "lung_to_lung", "out_to_out", "orig_to_lung", "orig_to_out"}
+    assert set(table) == expected_scenarios, f"Bảng thiếu hoặc thừa kịch bản: {sorted(table)}"
+
+    columns = (
+        "macro_f1",
+        "ci95_low",
+        "ci95_high",
+        "accuracy",
+        "recall_COVID",
+        "recall_Lung_Opacity",
+        "recall_Normal",
+        "recall_Viral Pneumonia",
+    )
+    for scenario in sorted(expected_scenarios):
+        row = summary.loc[scenario]
+        expected = {
+            "macro_f1": float(row["macro_f1"]),
+            "ci95_low": float(row["ci95_low"]),
+            "ci95_high": float(row["ci95_high"]),
+            "accuracy": float(sampling.loc[scenario]["p_accuracy"]),
+            "recall_COVID": float(row["recall_COVID"]),
+            "recall_Lung_Opacity": float(row["recall_Lung_Opacity"]),
+            "recall_Normal": float(row["recall_Normal"]),
+            "recall_Viral Pneumonia": float(row["recall_Viral Pneumonia"]),
+        }
+        for column in columns:
+            assert math.isclose(table[scenario][column], expected[column], abs_tol=6e-5), (
+                f"{scenario}.{column}: bảng ghi {table[scenario][column]:.6f}, "
+                f"CSV gốc {expected[column]:.6f}"
+            )
+
+
+def test_rq3_shortcut_learning_conclusion_reports_glcm_on_outside_only() -> None:
+    """Nhận định permutation importance ở outside_only phải nêu cả GLCM, không chỉ LBP và Histogram."""
+    content = (REPO_ROOT / "results" / "rq3_shortcut_learning_conclusion.md").read_text(encoding="utf-8")
+    perm = pd.read_csv(REPO_ROOT / "results" / "rq3_permutation_importance.csv")
+    outside = perm[(perm["mask_mode"] == "outside_only") & (perm["block_name"].isin(["hist_64", "glcm_60", "lbp_28"]))]
+    values = dict(zip(outside["block_name"], outside["importance_mean"]))
+    assert set(values) == {"hist_64", "glcm_60", "lbp_28"}
+    assert "0,3526" in content or "0.3526" in content, (
+        "Thiếu giá trị GLCM 0,3526 trong nhận định outside_only"
+    )
 
 
 def test_notebook_08_rq3_masked_eval_structure_and_execution() -> None:
