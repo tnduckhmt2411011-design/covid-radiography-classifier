@@ -106,8 +106,8 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 5.1 | Kết quả trên tập test độc lập, mở khóa một lần | `results/final_test/final_test_report.json`, `results/final_test/metrics.json`, `results/final_test/UNLOCK_RECORD.json`. Macro-F1 0,8714, CI [0,8579, 0,8840], Accuracy 86,56% |
 | 5.2 | Chênh lệch validation và test (Quy tắc D4) | `results/final_test/final_test_report.json` (`test_minus_val` = −0,0310). Trích nguyên văn D4, không nêu nguyên nhân |
-| 5.3 | Phân tích lỗi sai và cặp nhầm lẫn Normal – Lung_Opacity | Ma trận nhầm lẫn trong `results/final_test/metrics.json`: 427 lỗi, trong đó 304 lỗi thuộc cặp Normal ↔ Lung_Opacity (71,19%) |
-| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 275 tests |
+| 5.3 | Phân tích lỗi sai và cặp nhầm lẫn Normal – Lung_Opacity | Ma trận nhầm lẫn trong `results/final_test/metrics.json`: 427 lỗi, trong đó 304 lỗi thuộc cặp Normal ↔ Lung_Opacity (71,19%). Hình 5.1 sinh bằng `python -m scripts.report_figures_final_test`, kiểm thử `tests/test_report_figures_final_test.py` |
+| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 275 hàm test trong 23 module (đếm tại thời điểm viết chương; nguồn và cảnh báo môi trường xem Ghi chú kỹ thuật của chương) |
 | 5.5.1 | Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán | `src/inference_demo.py` dòng 55, 110, 187, 338; `src/model_artifact.py` (kho `duc16/cxr-svm-demo`, SHA-256 `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058`, 7.842.399 bytes) |
 | 5.5.2 | Giao diện Streamlit và các thành phần tương tác | `demo/streamlit_app.py`; `demo/README.md` |
 | 5.5.3 | Cảnh báo y khoa tích hợp trong ứng dụng | `demo/streamlit_app.py` dòng 61–63; `demo/README.md` mục giới hạn và an toàn |
@@ -129,7 +129,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 1 | Tài liệu tham khảo | IEEE. Tối thiểu: Chowdhury et al. (2020); Kermany et al. (2018); Pedregosa et al. (2011); van der Walt et al. (2014); tài liệu Streamlit; tài liệu Hugging Face Hub |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 296 tests |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | `tests/`; 275 hàm test trong 23 module (đếm tại thời điểm viết Chương 5, trước khi bộ kiểm thử của Hình 5.1 được thêm) |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
@@ -159,6 +159,6 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 ## 5. Trạng thái hiện tại
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
-- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md) và Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md).
-- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục.
-- Còn thiếu: Chương 5 và Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md) và Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md).
+- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục; Chương 5 đã viết đủ 8 tiểu mục kèm Hình 5.1.
+- Còn thiếu: Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
