@@ -61,44 +61,48 @@ def load_metrics(metrics_path: Path) -> Dict[str, object]:
     return metrics
 
 
-def cell_labels(matrix: Sequence[Sequence[int]]) -> List[List[str]]:
-    """Chữ ghi trong từng ô hình: đúng số đếm của ma trận nguồn."""
-    return [[str(int(value)) for value in row] for row in matrix]
+def normalize_rows(matrix: Sequence[Sequence[int]]) -> List[List[float]]:
+    """Chuẩn hóa từng hàng cho tổng hàng; hàng tổng 0 giữ 0 để tránh chia cho 0."""
+    out: List[List[float]] = []
+    for row in matrix:
+        total = float(sum(int(value) for value in row))
+        if total <= 0.0:
+            out.append([0.0] * len(row))
+            continue
+        out.append([float(int(value)) / total for value in row])
+    return out
 
 
 def draw(metrics: Dict[str, object], out_path: Path) -> Path:
-    """Vẽ biểu đồ nhiệt ma trận nhầm lẫn, chữ thể hiện số đếm từng ô."""
+    """Vẽ biểu đồ nhiệt ma trận nhầm lẫn, chuẩn hóa theo hàng (ô chéo = recall)."""
     matrix = np.array(metrics["confusion_matrix"], dtype=int)
-    labels = cell_labels(matrix)
+    row_normalized = np.array(normalize_rows(matrix))
 
-    fig, ax = plt.subplots(figsize=(5.6, 4.6))
-    image = ax.imshow(matrix, cmap="Blues", vmin=0, vmax=int(matrix.max()))
-    colorbar = fig.colorbar(image, ax=ax, fraction=0.045, pad=0.04)
-    colorbar.set_label("Số ảnh", fontsize=9)
-    colorbar.ax.tick_params(labelsize=8)
+    fig, ax = plt.subplots(figsize=(6.0, 5.0))
+    image = ax.imshow(row_normalized, cmap="Blues", vmin=0.0, vmax=1.0)
 
-    threshold = float(matrix.max()) / 2.0
-    for i in range(len(CLASS_LABELS)):
-        for j in range(len(CLASS_LABELS)):
-            value = matrix[i, j]
-            ax.text(
-                j,
-                i,
-                str(value),
-                ha="center",
-                va="center",
-                fontsize=10,
-                color="white" if value > threshold else "#1A1A1A",
-            )
-
-    ax.set_xticks(range(len(CLASS_LABELS)), CLASS_LABELS, fontsize=9)
+    ax.set_xticks(range(len(CLASS_LABELS)), CLASS_LABELS, rotation=20, ha="right", fontsize=9)
     ax.set_yticks(range(len(CLASS_LABELS)), CLASS_LABELS, fontsize=9)
     ax.set_xlabel("Nhãn dự đoán", fontsize=10)
     ax.set_ylabel("Nhãn thực", fontsize=10)
-    ax.set_xticks(np.arange(-0.5, len(CLASS_LABELS), 1), minor=True)
-    ax.set_yticks(np.arange(-0.5, len(CLASS_LABELS), 1), minor=True)
-    ax.grid(which="minor", color="white", linewidth=1.2)
-    ax.tick_params(which="minor", length=0)
+
+    for i in range(len(CLASS_LABELS)):
+        for j in range(len(CLASS_LABELS)):
+            share = row_normalized[i, j]
+            color = "white" if share > 0.55 else "#1A1A1A"
+            ax.text(
+                j,
+                i,
+                f"{share:.1%}",
+                ha="center",
+                va="center",
+                fontsize=9,
+                color=color,
+            )
+
+    colorbar = fig.colorbar(image, ax=ax, fraction=0.046, pad=0.04)
+    colorbar.set_label("Tỷ lệ trong hàng nhãn thực", fontsize=9)
+    ax.set_aspect("equal")
     fig.tight_layout()
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

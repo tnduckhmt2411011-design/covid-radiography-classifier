@@ -35,7 +35,7 @@ Chênh lệch giữa các nhóm được kiểm bằng bootstrap ghép cặp 2.0
 | GLCM kết hợp LBP | +0,0328 | [+0,0131; +0,0513] | Không | Có |
 | HOG | −0,0203 | [−0,0419; +0,0014] | Có | Không |
 
-Nhóm ghép hơn histogram 0,0770, gấp 15,4 lần ngưỡng 0,005, và toàn bộ khoảng tin cậy nằm ở phía dương. GLCM kết hợp LBP cũng đạt cả hai điều kiện, nhưng nhóm ghép có macro-F1 cao hơn nên được đưa sang RQ2. HOG không đạt điều kiện nào: chênh lệch âm và khoảng tin cậy chứa 0.
+Nhóm ghép hơn histogram 0,0770 (Bảng 3.2), gấp 15,4 lần ngưỡng 0,005, và toàn bộ khoảng tin cậy nằm ở phía dương. GLCM kết hợp LBP cũng đạt cả hai điều kiện, nhưng nhóm ghép có macro-F1 cao hơn nên được đưa sang RQ2. HOG không đạt điều kiện nào: chênh lệch âm và khoảng tin cậy chứa 0.
 
 Giao thức chỉ so từng ứng viên với histogram, nên phép so giữa nhóm ghép và GLCM kết hợp LBP (chênh 0,0443) nằm ngoài giao thức đã chốt và không được kiểm định.
 
@@ -54,7 +54,7 @@ Sáu bộ phân loại được so trên nhóm ghép 152 chiều và cùng tập
 | k-NN | 0,8242 | — | 1 | [0,8075; 0,8397] |
 | Decision Tree | 0,7271 | 0,0017 | 3 | [0,7090; 0,7449] |
 
-Cả sáu bộ đều vượt B0 = 0,1627 và A0 = 0,2397. SVM đứng đầu và là bộ duy nhất vượt mức 0,90.
+Cả sáu bộ trong Bảng 3.3 đều vượt B0 = 0,1627 và A0 = 0,2397. SVM đứng đầu và là bộ duy nhất vượt mức 0,90.
 
 Phép so chính của RQ2 đặt bộ tốt nhất cạnh mốc Random Forest, bằng bootstrap ghép cặp 2.000 lần. SVM hơn mốc 0,0442, khoảng tin cậy 95% là [+0,0320; +0,0580] và không chứa 0. Gradient Boosting cũng hơn mốc 0,0286 với khoảng [+0,0183; +0,0399]. Ba bộ còn lại đều thấp hơn mốc, chênh từ −0,0213 đến −0,1312, và khoảng tin cậy của cả ba đều không chứa 0. Đề tài vì thế chọn SVM RBF làm mô hình chính.
 
@@ -79,7 +79,7 @@ Trên 3.174 ảnh validation, mô hình đạt accuracy 89,00%, balanced accurac
 | Normal | 1.531 | 0,9038 | 0,8837 | 0,8937 |
 | Viral Pneumonia | 203 | 0,9139 | 0,9409 | 0,9272 |
 
-F1 của các lớp dao động từ 0,8415 (Lung_Opacity) đến 0,9475 (COVID). Đáng chú ý là lớp nhỏ nhất, Viral Pneumonia với 203 ảnh, có F1 cao thứ hai, trong khi lớp đông thứ hai (903 ảnh) lại thấp nhất.
+F1 của các lớp trong Bảng 3.4 dao động từ 0,8415 (Lung_Opacity) đến 0,9475 (COVID). Đáng chú ý là lớp nhỏ nhất, Viral Pneumonia với 203 ảnh, có F1 cao thứ hai, trong khi lớp đông thứ hai (903 ảnh) lại thấp nhất.
 
 **Bảng 3.5: Ma trận nhầm lẫn của SVM trên validation**
 

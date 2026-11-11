@@ -29,8 +29,7 @@ def _cells(nb: dict, kind: str) -> List[str]:
 
 
 def test_notebook_is_valid_nbformat(nb: dict) -> None:
-    import nbformat
-
+    nbformat = pytest.importorskip("nbformat")
     nbformat.validate(nbformat.from_dict(nb))
 
 
