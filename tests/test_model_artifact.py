@@ -156,6 +156,12 @@ def test_default_model_file_name() -> None:
     int(DEFAULT_MODEL_SHA256, 16)
 
 
+def test_default_model_repo_is_public_project_repo() -> None:
+    from src.model_artifact import DEFAULT_MODEL_REPO
+
+    assert DEFAULT_MODEL_REPO == "duc16/cxr-svm-demo"
+
+
 @pytest.mark.skipif(
     not (REPO_ROOT / "outputs" / "k_v3_out" / DEFAULT_MODEL_FILE).is_file(),
     reason="artifact cục bộ không có trong môi trường này",

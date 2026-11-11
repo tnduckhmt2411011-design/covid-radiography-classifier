@@ -38,6 +38,7 @@ from src.inference_demo import (  # noqa: E402
 )
 from src.model_artifact import (  # noqa: E402
     DEFAULT_MODEL_FILE,
+    DEFAULT_MODEL_REPO,
     DEFAULT_MODEL_SHA256,
     ENV_HF_TOKEN,
     ENV_MODEL_FILE,
@@ -86,7 +87,7 @@ def resolve_model_file() -> Path:
     if override:
         return Path(str(override)).expanduser()
 
-    repo_id = read_setting(ENV_MODEL_REPO)
+    repo_id = read_setting(ENV_MODEL_REPO, DEFAULT_MODEL_REPO)
     if not repo_id:
         raise ModelArtifactError(
             f"Chưa cấu hình kho mô hình. Đặt biến môi trường {ENV_MODEL_REPO} "

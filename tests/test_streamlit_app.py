@@ -146,6 +146,22 @@ def test_metrics_are_read_from_repo_json_not_hardcoded() -> None:
     )
 
 
+def test_resolve_model_file_uses_public_default(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("CXR_MODEL_PATH", raising=False)
+    monkeypatch.delenv("CXR_MODEL_REPO", raising=False)
+    target = tmp_path / "model.joblib"
+    target.write_bytes(b"x")
+    seen = {}
+
+    def fake(repo_id: str, **kwargs):
+        seen["repo_id"] = repo_id
+        return target
+
+    monkeypatch.setattr(app, "download_and_verify_model", fake)
+    assert app.resolve_model_file() == target
+    assert seen["repo_id"] == "duc16/cxr-svm-demo"
+
+
 def test_app_source_has_no_hardcoded_metrics() -> None:
     source = (DEMO_DIR / "streamlit_app.py").read_text(encoding="utf-8")
     assert "0.9024" not in source

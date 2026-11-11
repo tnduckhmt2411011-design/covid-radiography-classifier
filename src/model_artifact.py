@@ -27,7 +27,9 @@ from src import final_test_runner as _ftr
 from src.dataset import CLASS_NAMES
 from src.inference_demo import N_FEATURES, _feature_code_sha256
 
-# Tên tệp và băm của artifact kernel-v3 đã dùng cho cổng tương đương 200/200 ảnh val.
+# Tên tệp, băm và kho công khai của artifact kernel-v3 đã dùng cho cổng tương đương
+# 200/200 ảnh val. Có thể ghi đè bằng biến môi trường hoặc Streamlit secrets.
+DEFAULT_MODEL_REPO: str = "duc16/cxr-svm-demo"
 DEFAULT_MODEL_FILE: str = "cxr_inference_model_cache.joblib"
 DEFAULT_MODEL_SHA256: str = (
     "3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058"

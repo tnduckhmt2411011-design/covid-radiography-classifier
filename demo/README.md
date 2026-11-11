@@ -16,9 +16,11 @@ split `test`.
 | Artifact | `cxr_inference_model_cache.joblib` (kernel v3) |
 | SHA-256 | `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058` |
 
-Artifact không nằm trong git (`.gitignore` chặn `*.joblib`). Ứng dụng tải artifact từ một kho
-Hugging Face công khai và kiểm SHA-256 trước khi gọi `joblib.load`; sau đó kiểm thêm băm split,
-phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm mã trích đặc trưng.
+Artifact không nằm trong git (`.gitignore` chặn `*.joblib`). Ứng dụng tải artifact từ kho
+Hugging Face công khai **<https://huggingface.co/duc16/cxr-svm-demo>** và kiểm SHA-256 trước khi
+gọi `joblib.load`; sau đó kiểm thêm băm split, phiên bản scikit-learn, số mẫu train, siêu tham số
+SVM và băm mã trích đặc trưng. Kho đã được kiểm tra tải ẩn danh: HTTP 200, đúng 7 842 399 byte và
+SHA-256 khớp.
 
 ## Chạy cục bộ
 
@@ -38,39 +40,43 @@ set CXR_MODEL_PATH=outputs\k_v3_out\cxr_inference_model_cache.joblib
 streamlit run demo/streamlit_app.py
 ```
 
-Hoặc chạy với kho Hugging Face:
+Hoặc chạy với kho Hugging Face (mặc định dùng kho công khai của dự án):
 
 ```bash
-set CXR_MODEL_REPO=<tai-khoan>/<ten-kho>
-set CXR_MODEL_FILE=cxr_inference_model_cache.joblib
-set CXR_MODEL_REVISION=main
-set CXR_MODEL_SHA256=3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058
 streamlit run demo/streamlit_app.py
 ```
+
+Có thể trỏ sang kho khác bằng `CXR_MODEL_REPO`, `CXR_MODEL_FILE`, `CXR_MODEL_REVISION`,
+`CXR_MODEL_SHA256` như bảng dưới.
 
 ## Cấu hình
 
 | Biến môi trường / khóa secrets | Bắt buộc | Ý nghĩa |
 |---|---|---|
 | `CXR_MODEL_PATH` | Không | Đường dẫn artifact cục bộ; nếu đặt thì bỏ qua tải mạng |
-| `CXR_MODEL_REPO` | Có, nếu không có `CXR_MODEL_PATH` | Kho Hugging Face dạng `tai-khoan/ten-kho` |
+| `CXR_MODEL_REPO` | Không | Kho Hugging Face dạng `tai-khoan/ten-kho`; mặc định `duc16/cxr-svm-demo` |
 | `CXR_MODEL_FILE` | Không | Tên tệp trong kho, mặc định `cxr_inference_model_cache.joblib` |
 | `CXR_MODEL_REVISION` | Không | Nhánh/tag/commit của kho, mặc định nhánh mặc định |
 | `CXR_MODEL_SHA256` | Không | Băm kỳ vọng, mặc định băm đã công bố ở trên |
 | `HF_TOKEN` | Không | Chỉ cần nếu kho mô hình là private |
 
-Với Streamlit Community Cloud, khai báo trong **App settings → Secrets** (tệp
-`.streamlit/secrets.toml` đã được `.gitignore` chặn):
+Với Streamlit Community Cloud, không bắt buộc khai báo secrets vì app mặc định dùng kho
+`duc16/cxr-svm-demo`. Chỉ đặt secrets khi muốn dùng kho khác (tệp `.streamlit/secrets.toml` đã được
+`.gitignore` chặn):
 
 ```toml
-CXR_MODEL_REPO = "tai-khoan/ten-kho"
-CXR_MODEL_FILE = "cxr_inference_model_cache.joblib"
-CXR_MODEL_REVISION = "main"
-CXR_MODEL_SHA256 = "3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058"
+# Không bắt buộc — giá trị mặc định đã trỏ tới kho công khai của dự án.
+# CXR_MODEL_REPO = "tai-khoan/ten-kho"
+# CXR_MODEL_FILE = "cxr_inference_model_cache.joblib"
+# CXR_MODEL_REVISION = "main"
+# CXR_MODEL_SHA256 = "3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058"
 # HF_TOKEN = "..."   # chỉ khi kho private
 ```
 
 ## Đưa artifact lên Hugging Face
+
+Kho mặc định <https://huggingface.co/duc16/cxr-svm-demo> đã có artifact và model card. Nếu cần
+dùng kho riêng:
 
 1. Tạo model repo công khai, ví dụ `tai-khoan/cxr-svm-demo`.
 2. Tạo token có quyền ghi (**Settings → Access Tokens**) rồi đăng nhập:
@@ -84,8 +90,8 @@ CXR_MODEL_SHA256 = "3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e1573
 2. Đăng nhập <https://share.streamlit.io> bằng tài khoản GitHub có quyền với repo.
 3. **Create app** → chọn repo, branch, entrypoint `demo/streamlit_app.py`.
 4. Chọn Python **3.12**; Streamlit Cloud tự dùng `demo/requirements.txt` đặt cạnh entrypoint.
-5. Dán secrets như trên rồi **Deploy**.
-6. Kiểm tra log khởi động không có lỗi tải/kiểm băm; thử một ảnh val để xác nhận app trả nhãn.
+5. Không cần secrets nếu dùng kho mặc định; bấm **Deploy**.
+6. Kiểm tra log khởi động không có lỗi tải/kiểm băm; thử ba ảnh val để xác nhận app trả nhãn.
 
 Repo hiện là private: tài khoản triển khai cần quyền admin với repo và cấp OAuth scope `repo`.
 Người triển khai phải là chủ tài khoản Streamlit; PR này không tự triển khai.
