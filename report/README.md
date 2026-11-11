@@ -72,8 +72,8 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
 | 2.1 | Nguồn gốc bộ dữ liệu và độ tin cậy thông tin | `docs/dataset_provenance.md`. Quy mô 21.165 ảnh: Normal 10.192, Lung_Opacity 6.012, COVID 3.616, Viral Pneumonia 1.345 (đếm từ `splits/split_v1.csv`) |
-| 2.2 | Phân tích khám phá dữ liệu và nguy cơ học lối tắt do chênh lệch cường độ sáng | `notebooks/01_download_and_eda.ipynb` cell 6; hình `results/eda/brightness_distribution.png`. Lưu ý: repo không lưu bảng số độ sáng trung bình, chỉ có hình |
-| 2.3 | Lọc trùng lặp bằng pHash ngưỡng T = 0 | `notebooks/02_duplicates_and_split.ipynb`; 178 nhóm, 401 ảnh, 0 cặp trùng khác nhãn (`docs/roadmap.md` dòng 93) |
+| 2.2 | Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp | `src/eda_brightness.py` (chạy `python -m src.eda_brightness`) đọc `splits/manifest.csv`, ghi `results/eda/brightness_by_class.csv` (thống kê theo lớp + AUC) và `results/eda/brightness_channels.json` (tỉ lệ ảnh trong IQR của Normal, số ảnh theo hệ màu); hình `results/eda/brightness_distribution.png` từ `notebooks/01_download_and_eda.ipynb` cell 6. Kiểm thử: `tests/test_eda_brightness.py` |
+| 2.3 | Gom nhóm ảnh trùng bằng pHash ngưỡng T = 0 | `notebooks/02_duplicates_and_split.ipynb`; 178 nhóm, 401 ảnh, 0 nhóm lệch nhãn (`docs/roadmap.md` dòng 93) |
 | 2.4 | Phân chia train/val/test 70/15/15 và cơ chế khóa tập test (Cổng H2) | `splits/split_v1.csv` (14.815 / 3.174 / 3.176), SHA-256 `f99e03d3d5cfc32f2bbc9befbdef45a07a256458a837a6d420a6658ed7583d98`; `results/final_test/UNLOCK_RECORD.json`; `results/final_test_protocol_record.md` mục 2 (G1–G6) |
 | 2.5 | Giới hạn tồn tại của dữ liệu | 735 cặp gần trùng Hamming 1–4 (325 Train–Test, 335 Train–Val, 75 Val–Test; 229 khác nhãn) tại `docs/roadmap.md` dòng 187; thiếu mã bệnh nhân và tuổi chưa xác minh tại `results/report_rq3/r5_gioi_han.md` và `results/threshold_v3.md` Mục 6 (R5) |
 | 2.6.1 | Đặc trưng histogram cường độ sáng, 64 chiều | `src/features_hist_glcm_lbp.py` |
@@ -161,4 +161,4 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
 - Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md).
-- Còn thiếu: số đo độ trễ của ứng dụng (5.5.4), MSSV của 6 thành viên, và bảng độ sáng trung bình từng lớp dưới dạng số (2.2 chỉ có hình).
+- Còn thiếu: số đo độ trễ của ứng dụng (5.5.4), MSSV của 6 thành viên.
