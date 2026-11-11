@@ -15,6 +15,7 @@ checkpoints/
 # Secrets and environment configs
 kaggle.json
 .env
+.streamlit/secrets.toml
 
 # Python / Jupyter / OS cache
 __pycache__/

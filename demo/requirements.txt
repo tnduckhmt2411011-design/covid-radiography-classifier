@@ -1,0 +1,14 @@
+# Phụ thuộc cho ứng dụng Streamlit S6-02.
+# Streamlit Community Cloud tự nhận tệp requirements.txt nằm cạnh entrypoint (demo/streamlit_app.py)
+# và ưu tiên tệp này hơn requirements.txt ở gốc repo. Phiên bản ghim khớp môi trường đã chạy test
+# cục bộ (Python 3.12) và artifact scikit-learn 1.6.1.
+numpy==2.0.2
+pandas==2.3.3
+scikit-learn==1.6.1
+scikit-image==0.25.2
+pillow==11.3.0
+opencv-python-headless==4.13.0.92
+matplotlib==3.11.2
+joblib==1.6.0
+streamlit==1.66.1
+huggingface-hub==2.1.1
