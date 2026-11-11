@@ -159,6 +159,6 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 ## 5. Trạng thái hiện tại
 
 - Đã có đủ số liệu cho Chương 3, 4 và 5.
-- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md) và Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md).
-- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục; Chương 5 đã viết đủ 8 tiểu mục kèm Hình 5.1.
-- Còn thiếu: Chương 6 chưa viết; số đo độ trễ của ứng dụng (5.5.4); MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Đã có bản nháp Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md) và Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md) và Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
+- Chương 2 đã viết đủ 12 tiểu mục; Chương 3 đã viết đủ 4 tiểu mục; Chương 4 đã viết đủ 3 tiểu mục; Chương 5 đã viết đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đã viết đủ 5 tiểu mục kèm Bảng 6.1.
+- Còn thiếu: phần mở đầu và phần cuối quyển (tóm tắt, danh mục, phụ lục A–C), MSSV của 6 thành viên. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
