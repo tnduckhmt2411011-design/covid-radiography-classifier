@@ -157,7 +157,8 @@ def test_appendix_b2_matches_pytest_collect() -> None:
     for line in r.stdout.splitlines():
         s = line.strip()
         if s.startswith("tests/") and "::" in s:
-            per[s.split("::")[0]] = per.get(s.split("::")[0], 0) + 1
+            key = s.split("::")[0].removeprefix("tests/")
+            per[key] = per.get(key, 0) + 1
     n_modules = len(list((REPO_ROOT / "tests").glob("test_*.py")))
     if len(per) < n_modules:
         pytest.skip("Moi truong khong thu thap du module test (thieu thu vien); chi kiem tra tren moi truong day du")
