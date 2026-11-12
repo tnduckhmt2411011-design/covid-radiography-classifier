@@ -4,8 +4,11 @@ Chay: python scripts/report_appendix_b.py
 
 So phep kiem thu cua tung module dem theo dau ra `pytest --collect-only -q`
 (cung cach do voi so ghi trong Chuong 5: mot phep kiem thu la mot node pytest,
-nen test tham so hoa duoc dem theo tung bo tham so). Tong cong phai khop voi
-334 phep kiem thu trong 26 module ghi trong Chuong 5 va report/README.md.
+nen test tham so hoa duoc dem theo tung bo tham so). Danh sach module lay tu
+`git ls-files tests/test_*.py` (nhat quan voi Bang B.1, cung dem theo git):
+tep test chua track trong thu muc lam viec khong thuoc kho nen khong dem.
+Tong cong va so module duoc doc tai thoi diem chay; bao cao ghi so nay o
+Chuong 5, Phu luc B va report/README.md.
 """
 from __future__ import annotations
 
@@ -49,13 +52,17 @@ def main() -> int:
             reconfigure(encoding="utf-8", errors="replace")
 
     tests_dir = REPO_ROOT / "tests"
-    modules = sorted(tests_dir.glob("test_*.py"))
+    tracked = subprocess.run(
+        ["git", "ls-files", "tests/test_*.py"], cwd=REPO_ROOT,
+        capture_output=True, text=True,
+    ).stdout.split()
+    modules = sorted(tests_dir / Path(p).name for p in tracked)
     if not modules:
         print("Khong tim thay module test")
         return 1
 
     r = subprocess.run(
-        [sys.executable, "-m", "pytest", "--collect-only", "-q"],
+        [sys.executable, "-m", "pytest", "--collect-only", "-q", *tracked],
         cwd=REPO_ROOT, capture_output=True, text=True, encoding="utf-8",
     )
     counts: dict[str, int] = {}
