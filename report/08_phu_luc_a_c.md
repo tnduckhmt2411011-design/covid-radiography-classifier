@@ -94,7 +94,7 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `src/` | 15 | Mã nguồn: nạp dữ liệu, trích đặc trưng, bộ chạy RQ1–RQ3, metrics, bootstrap, suy luận, đo độ trễ, kiểm artifact |
 | `notebooks/` | 9 | Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận |
 | `demo/` | 6 | Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện |
-| `tests/` | 26 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
+| `tests/` | 27 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
 | `scripts/` | 6 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa |
 | `results/` | 186 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
@@ -109,7 +109,7 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 26 module kiểm thử và số phép kiểm thử (334 phép)**
+**Bảng B.2: 27 module kiểm thử và số phép kiểm thử (337 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
@@ -139,9 +139,10 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_source_labels.py` | 5 |
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
-| **Tổng cộng** | **334** |
+| `test_val_near_duplicate_subset.py` | 3 |
+| **Tổng cộng** | **337** |
 
-Chạy đầy đủ trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 333 pass và 1 bỏ qua; phần bỏ qua là bộ kiểm thử notebook khi môi trường không có `nbformat`. Bảng này được sinh bằng:
+Chạy đầy đủ trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 336 pass và 1 bỏ qua; phần bỏ qua là bộ kiểm thử notebook khi môi trường không có `nbformat`. Tổng cộng 337 phép kiểm thử trong 27 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py

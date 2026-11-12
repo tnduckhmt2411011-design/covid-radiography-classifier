@@ -1,0 +1,28 @@
+{
+  "method": "Hamming distance between cross-split pHash values (64-bit, distance 2 or 4); distinct validation images involved in at least one such pair",
+  "counts": {
+    "pairs_total": 735,
+    "pairs_train_test": 325,
+    "pairs_train_val": 335,
+    "pairs_val_test": 75,
+    "pairs_d2": 70,
+    "pairs_d4": 665,
+    "pairs_cross_label": 229,
+    "val_images": 273,
+    "test_images": 243
+  },
+  "preds_source": "results/rq2_ghep_svm_s42/preds_val.csv",
+  "n_val_total": 3174,
+  "n_val_subset": 273,
+  "n_val_complement": 2901,
+  "macro_f1_full": 0.9024,
+  "macro_f1_subset": 0.9068,
+  "macro_f1_complement": 0.9017,
+  "subset_share_percent": 8.6,
+  "subset_per_class": {
+    "COVID": 64,
+    "Lung_Opacity": 41,
+    "Normal": 164,
+    "Viral Pneumonia": 4
+  }
+}
