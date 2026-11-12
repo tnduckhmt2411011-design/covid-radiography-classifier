@@ -61,3 +61,15 @@ def test_chapter1_has_no_internal_codes_or_overclaim() -> None:
         assert not re.search(rf"\b{code}\b", body), code
     for phrase in ("giải quyết RQ3", "đo nó trực tiếp", "hoặc cắt"):
         assert phrase not in body, phrase
+
+
+def test_appendix_a_table_captions_in_order() -> None:
+    """Bang A.1 (mo hinh dong bang) xuat hien truoc Bang A.2 (bien moi truong)."""
+    body = _body("08_phu_luc_a_c.md")
+    i1 = body.find("**Bảng A.1: Thông số mô hình đóng băng**")
+    i2 = body.find("**Bảng A.2: Biến môi trường của ứng dụng demo**")
+    assert i1 != -1, "thieu Bang A.1 Thong so mo hinh dong bang"
+    assert i2 != -1, "thieu Bang A.2 Bien moi truong"
+    assert i1 < i2, "Bang A.1 phai truoc Bang A.2"
+    sha_row = next(r for r in body.splitlines() if r.startswith("| `CXR_MODEL_SHA256`"))
+    assert "Bảng A.1" in sha_row and "Bảng A.2" not in sha_row, sha_row

@@ -6,7 +6,7 @@ Ba phụ lục này thuộc phần ghi chú kỹ thuật của quyển, nên đ�
 
 ### A.1. Môi trường và cài đặt
 
-Ứng dụng demo (`demo/streamlit_app.py`) chạy trên Python 3.12 — cùng phiên bản mặc định của Streamlit Community Cloud và môi trường đã chạy toàn bộ kiểm thử của đề tài. Các bước:
+Ứng dụng demo (`demo/streamlit_app.py`) chạy trên Python 3.12, cùng phiên bản của môi trường đã chạy toàn bộ kiểm thử của đề tài. Các bước:
 
 ```bash
 python -m venv .venv-demo
@@ -18,9 +18,9 @@ Toàn bộ 344 phép kiểm thử trong 28 module đã chạy được trên mô
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
-Artifact `cxr_inference_model_cache.joblib` (kernel v3) không nằm trong git; ứng dụng tải từ kho Hugging Face công khai `duc16/cxr-svm-demo`. Kho đã được kiểm tra tải ẩn danh: HTTP 200, đúng 7.842.399 byte và băm SHA-256 khớp giá trị công bố.
+Artifact `cxr_inference_model_cache.joblib` không nằm trong git; ứng dụng tải từ kho Hugging Face công khai `duc16/cxr-svm-demo`. Artifact sinh ở bước S5-06 bởi kernel huấn luyện `ductrannguyen/cxr-inference-demo` phiên bản 3. Kho đã được kiểm tra tải ẩn danh tại thời điểm nộp: HTTP 200, đúng 7.842.399 byte và băm SHA-256 khớp giá trị công bố.
 
-**Bảng A.2: Thông số mô hình đóng băng**
+**Bảng A.1: Thông số mô hình đóng băng**
 
 | Thành phần | Giá trị |
 | :--- | :--- |
@@ -32,11 +32,11 @@ Artifact `cxr_inference_model_cache.joblib` (kernel v3) không nằm trong git; 
 | Kích thước tệp | 7.842.399 byte |
 | SHA-256 | `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058` |
 
-Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau đó kiểm thêm băm của tệp split, phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm của mã trích đặc trưng. Trong đó khớp một điều kiện thì ứng dụng dừng và báo lỗi, không nạp mô hình.
+Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau đó kiểm thêm băm của tệp split, phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm của mã trích đặc trưng. Trong đó một điều kiện không khớp thì ứng dụng dừng và báo lỗi, không nạp mô hình.
 
 ### A.3. Biến môi trường
 
-**Bảng A.1: Biến môi trường của ứng dụng demo**
+**Bảng A.2: Biến môi trường của ứng dụng demo**
 
 | Biến | Bắt buộc | Ý nghĩa |
 | :--- | :---: | :--- |
@@ -44,7 +44,7 @@ Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau �
 | `CXR_MODEL_REPO` | Không | Kho Hugging Face dạng `tai-khoan/ten-kho`; mặc định `duc16/cxr-svm-demo` |
 | `CXR_MODEL_FILE` | Không | Tên tệp trong kho; mặc định `cxr_inference_model_cache.joblib` |
 | `CXR_MODEL_REVISION` | Không | Nhánh/tag/commit của kho; mặc định nhánh mặc định |
-| `CXR_MODEL_SHA256` | Không | Băm kỳ vọng; mặc định băm ở Bảng A.2 |
+| `CXR_MODEL_SHA256` | Không | Băm kỳ vọng; mặc định băm ở Bảng A.1 |
 | `HF_TOKEN` | Không | Chỉ cần khi kho mô hình là private |
 
 Với Streamlit Community Cloud, không bắt buộc khai báo secrets vì ứng dụng mặc định dùng kho công khai của dự án; secrets (`.streamlit/secrets.toml`, đã bị `.gitignore` chặn) chỉ cần khi trỏ sang kho khác.
@@ -75,7 +75,7 @@ Hai bộ test gắn với ứng dụng: `tests/test_model_artifact.py` (21 phép
 - Ứng dụng là demo học thuật, không phải thiết bị y tế và chưa kiểm định lâm sàng; kết quả suy luận không được dùng cho quyết định y khoa.
 - Chỉ tải ảnh X-quang đã ẩn danh; ảnh tải lên chỉ nằm trong bộ nhớ của phiên, không ghi xuống đĩa và không ghi vào nhật ký.
 - Ảnh khác 299 × 299 được đổi cỡ kèm cảnh báo; mô hình chỉ được kiểm chứng trên ảnh 299 × 299 của bộ dữ liệu COVID-19 Radiography.
-- Chênh lệch validation – test chỉ được nêu như quan sát, không nêu nguyên nhân (quy ước D4).
+- Chênh lệch validation – test chỉ được nêu như quan sát, không nêu nguyên nhân.
 
 **Ghi chú nguồn Phụ lục A:** `demo/README.md` (toàn văn), `src/model_artifact.py`, `demo/streamlit_app.py`, `demo/verify_model_equivalence.py`, `demo/requirements.txt`.
 
