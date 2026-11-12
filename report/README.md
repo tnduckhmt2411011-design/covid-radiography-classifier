@@ -47,15 +47,15 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 1 | Trang bìa chính | `docs/report_standards.md` mục 3.1 |
-| 2 | Trang bìa phụ | `docs/report_standards.md` mục 3.1 |
-| 3 | Lời cảm ơn | Viết mới |
-| 4 | Lời cam đoan | Viết mới, cam kết trung thực số liệu |
-| 5 | Tóm tắt tiếng Việt và Abstract tiếng Anh | Viết sau cùng, tóm tắt từ Chương 4–6 |
-| 6 | Mục lục | Tạo tự động |
-| 7 | Danh mục ký hiệu và chữ viết tắt | CXR, GLCM, LBP, HOG, SVM, RBF, RF, GB, LR, k-NN, DT, Macro-F1, CI |
-| 8 | Danh mục bảng biểu | Tạo tự động |
-| 9 | Danh mục hình ảnh | Tạo tự động |
+| 1 | Trang bìa chính | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 1; khung viền `report/figures/khung_trang_bia.png` sinh bởi `scripts/make_cover_border.py`; thông tin bắt buộc theo `docs/report_standards.md` mục 3.1 |
+| 2 | Trang bìa phụ | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 2 |
+| 3 | Lời cảm ơn | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 3; viết mới |
+| 4 | Lời cam đoan | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 4; viết mới, cam kết trung thực số liệu |
+| 5 | Tóm tắt tiếng Việt và Abstract tiếng Anh | Viết sau cùng, tóm tắt từ Chương 4–6 (chưa có tệp) |
+| 6 | Mục lục | [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) phần 1, sinh bởi `scripts/report_frontmatter.py` |
+| 7 | Danh mục ký hiệu và chữ viết tắt | [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md); chỉ ký hiệu đã xác minh xuất hiện trong sáu chương |
+| 8 | Danh mục bảng biểu | [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) phần 2 (32 bảng), sinh bởi cùng script |
+| 9 | Danh mục hình ảnh | [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) phần 3 (4 hình), sinh bởi cùng script |
 
 ### Chương 1. Giới thiệu và tổng quan đề tài (5 tiểu mục)
 
@@ -90,7 +90,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 3.1 | RQ1: so sánh bốn nhóm đặc trưng trên Random Forest | `results/report_rq1/r1_summary.csv` (macro-F1 TB ± SD 3 seed và 95% CI: ghep 0,8599 ± 0,0030; glcmlbp 0,8156 ± 0,0023; hist 0,7829 ± 0,0013; hog 0,7625 ± 0,0038), `r1_per_seed.csv` (điểm từng seed), `results/rq1_cost_rank_record.md` (giây CPU mỗi ảnh). Bảng 3.1 trong báo cáo lấy từ `r1_summary.csv`; cột recall lớp Viral Pneumonia lấy từ cùng tệp |
 | 3.2 | Kiểm định thống kê và quyết định chọn nhóm ghép cho RQ2 | `results/report_rq1/r1_bootstrap_vs_reference.csv`: ghep − hist = +0,0770, CI [+0,0611; +0,0925], không chứa 0; glcmlbp − hist = +0,0328, CI [+0,0131; +0,0513]; hog − hist = −0,0203, CI [−0,0419; +0,0014], chứa 0. Ngưỡng chấp nhận +0,005 ghi ở Bảng 1.1 của Chương 1 (`results/threshold_v3.md`). Quyết định chọn `ghep` sang RQ2 ở `results/rq1_feature_selection_record.md` mục 4 |
 | 3.3 | RQ2: so sánh sáu bộ phân loại trên nhóm ghép | `results/report_rq2/r1_summary.csv` (svm 0,9024; gb 0,8868 ± 0,0030; rf 0,8582 ± 0,0033; lr 0,8370; knn 0,8242; dt 0,7271 ± 0,0017), `results/report_rq2/r1_bootstrap_vs_reference.csv` (năm phép so với mốc `rf`: svm +0,0442, CI [+0,0320; +0,0580]; bốn phép còn lại âm và CI không chứa 0), `results/report_rq2/bootstrap_config.json` (n = 3.174, 2.000 lần, seed 42). Cấu hình SVM đã chọn ở `results/rq2_ghep_svm_s42/metrics.json` |
-| 3.4 | Đánh giá SVM RBF trên validation và ma trận nhầm lẫn | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/rq2_ghep_svm_s42/preds_val.csv` (nhãn thực, nhãn dự đoán và bốn cột xác suất từng ảnh), `results/eda/normal_source_labels.csv` (10.192 ảnh lớp Normal tách theo nguồn RSNA / Mooney, sinh bằng `python -m src.source_labels`), `results/error_analysis/error_analysis_summary.md` (349 lỗi; 240 lỗi đồng thuận; 138 lỗi có `proba_pred` từ 0,80). Hình 3.1 sinh bằng `python -m scripts.report_figures`, ghi ra `report/figures/03_ma_tran_nham_lon_svm_val.png`; kiểm thử `tests/test_report_figures.py` và `tests/test_source_labels.py`. Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
+| 3.4 | Đánh giá SVM RBF trên validation | `results/rq2_ghep_svm_s42/metrics.json` (accuracy 89,00%, balanced accuracy 0,9078, macro-F1 0,9024, chỉ số từng lớp, ma trận nhầm lẫn 4×4), `results/rq2_ghep_svm_s42/preds_val.csv` (nhãn thực, nhãn dự đoán và bốn cột xác suất từng ảnh), `results/eda/normal_source_labels.csv` (10.192 ảnh lớp Normal tách theo nguồn RSNA / Mooney, sinh bằng `python -m src.source_labels`), `results/error_analysis/error_analysis_summary.md` (349 lỗi; 240 lỗi đồng thuận; 138 lỗi có `proba_pred` từ 0,80). Hình 3.1 sinh bằng `python -m scripts.report_figures`, ghi ra `report/figures/03_ma_tran_nham_lon_svm_val.png`; kiểm thử `tests/test_report_figures.py` và `tests/test_source_labels.py`. Không dùng `results/final_test/confusion_matrix_test.png` vì thuộc Chương 5 |
 
 ### Chương 4. Mức phụ thuộc vào vùng ngoài mặt nạ phổi (RQ3) (3 tiểu mục)
 
@@ -161,4 +161,6 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 - Đủ 6 chương đã merge vào `main`: Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md), Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md), Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
 - Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
 - Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 334 phép kiểm thử trong 26 module, 333 pass và 1 bỏ qua.
-- Còn thiếu: phần mở đầu quyển (trang bìa chính và bìa phụ, lời cảm ơn, lời cam đoan, tóm tắt tiếng Việt và Abstract viết sau cùng, mục lục, danh mục ký hiệu và chữ viết tắt, danh mục bảng biểu, danh mục hình ảnh) và MSSV của 6 thành viên cho trang bìa. Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`–`[8]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md). Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Còn thiếu: tóm tắt tiếng Việt và Abstract (viết sau cùng, khi mọi chương và phụ lục đóng băng); MSSV đã có đủ và đã ghi trên bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
+- Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`–`[8]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
+- Khung viền bìa: `report/figures/khung_trang_bia.png` (A4, 300 DPI) sinh bởi `python scripts/make_cover_border.py`.
