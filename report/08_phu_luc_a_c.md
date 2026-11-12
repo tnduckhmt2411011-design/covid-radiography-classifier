@@ -99,11 +99,13 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `results/` | 188 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
-| `docs/` | 14 | Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
+| `docs/` | 16 | Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
-| `slides/` | 1 | Chỗ để slide thuyết trình (chưa có nội dung) |
+| `slides/` | 1 | Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
+| **Tổng cộng** | **326** |
 
 ### B.2. Danh sách bài kiểm thử
 
