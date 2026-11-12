@@ -3,7 +3,11 @@ data/
 input/
 
 # Outputs and checkpoints
-outputs/
+outputs/*
+!outputs/split_check/
+outputs/split_check/*
+!outputs/split_check/duplicates_summary.json
+!outputs/split_check/cross_split_hamming_report.json
 checkpoints/
 *.pt
 *.pth
