@@ -75,3 +75,29 @@ Bản đã xuất lần đầu bị chê ở bốn nhóm; các lỗi đã sửa 
   còn đè lên chân trang ở slide 6, 9, 18, 23, 24 và hai slide dự phòng B1, B6;
   slide 16 thay dải mask bằng bộ ba ô (gốc · chỉ phổi · ngoài phổi) của một
   ảnh val; slide 23 ghi rõ CPU đo và ảnh chụp lớn hơn.
+
+## Nâng sàn cỡ chữ lên 18 pt (12/11/2026)
+
+Sàn chữ của bộ slide kế thừa từ quy chuẩn văn bản .docx (14,25 pt) là quá nhỏ
+cho phòng trình chiếu. Căn cứ: PLOS Computational Biology “Ten simple rules for
+effective presentation slides”, MIT CommKit Slide Design, Penn State
+(accessibility), Minnesota ODA, Old Dominion University, WUSTL Presentation
+Accessibility Tips, quy định của ĐH Văn Hiến (tiêu đề 44 pt, nội dung 32 pt) và
+hướng dẫn SoICT Bách khoa Hà Nội — chữ trên slide nên ≥ 18–24 pt.
+
+- Sàn áp dụng: **mọi chữ hiện trên slide ≥ 18 pt (24 px)**, chỉ miễn dòng nguồn
+  ở chân trang và số trang. Cỡ chữ tối thiểu trong `svgkit.py` (`SIZE_SMALL`)
+  là 24 px; bản đồ cỡ chữ cũ → mới: 19→24, 20→24, 21→28, 22→28, 26→30 px, bề
+  dòng 24→28, 26→30, 28→32, 30→34, 34→38, 36→40 px.
+- `audit.py` nâng `MIN_BODY_PT` từ 14,0 lên 18,0 và chỉ miễn hai ô cuối trang.
+- **Biểu đồ (`slides/figures.py`)** sinh PNG đúng kích thước ô ghép trên slide
+  (ghép 1:1, không co), nên cỡ chữ matplotlib quy ra pt slide bằng nhân tố 2,085.
+  Sàn 8,63 pt matplotlib ứng với 18 pt slide; mọi hằng cỡ chữ trong tệp đều
+  ≥ 9,5 pt (≥ 19,7 pt hiệu dụng). Nhãn trục, tên trục, số trên thanh và dòng
+  chú thích trong hình đều nằm trên mức đó. Hình có 6 thanh (RQ2, xáo trộn)
+  cao 270–272 px để mỗi hàng đủ chỗ cho nhãn 26 px.
+- Bố cục của 16 trang viết lại cho vừa chữ 18 pt: 1, 2, 3, 4, 5, 6, 8, 9, 16,
+  18, 20, 22, 24, 25, 26, 27 và bốn slide dự phòng B1, B4, B5, B6.
+- Kiểm lại bằng mắt toàn bộ 34 trang từ `render/p01.png`–`p34.png`; hai cổng
+  (ppt-master `svg_quality_checker` và `slides.audit`) đều 0 lỗi chặn.
+

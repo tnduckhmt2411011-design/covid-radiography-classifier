@@ -33,7 +33,7 @@ REPO = Path(__file__).resolve().parents[1]
 
 SVG = "{http://www.w3.org/2000/svg}"
 PT_PER_PX = 0.75
-MIN_BODY_PT = 14.0
+MIN_BODY_PT = 18.0
 MIN_EDGE_PX = 48  # 0,5 in = 48 px
 
 BANNED = [

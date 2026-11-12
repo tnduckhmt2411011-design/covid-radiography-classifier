@@ -4,8 +4,12 @@ Mỗi hàm ghi rõ tệp nguồn trong docstring. Không hàm nào nhận tham s
 đọc qua ``slides.data`` tại thời điểm dựng. Hình xuất PNG 200 DPI, nền trùng nền
 slide để ghép không thấy khung.
 
-Bố cục: nhãn trục ngang nằm trên dòng nguồn; nguồn ở mép dưới; mốc nền ghi ở góc
-trên phải để không đè lên thanh hay nhãn trục.
+Cỡ chữ: hình ghép vào slide theo tỷ lệ 1:1 (1 px PNG = 1 px khung slide), nên cỡ
+matplotlib quy ra pt slide bằng hệ số 2,085. Sàn 18 pt slide ứng với 8,63 pt
+matplotlib; mọi hằng cỡ chữ bên dưới đều ≥ 9,5 pt (≥ 19,8 pt slide).
+
+Nguồn của mỗi biểu đồ đã ghi ở dòng chân trang của cùng slide, nên dòng chú thích
+trong hình chỉ giữ phần giải thích cách đọc (sai số, mốc nền, màu).
 """
 
 from __future__ import annotations
@@ -34,22 +38,29 @@ AMBER = "#B45309"
 LINE = "#D8D2C4"
 
 DPI = 200
+TICK = 9.5    # nhãn trục
+LABEL = 9.5   # tên trục
+VALUE = 10.0  # số ghi trên thanh / trong ô
+NOTE = 9.5    # chú thích trong vùng vẽ
+CAPTION = 9.5  # dòng chú thích dưới cùng
 
 
 def _comma(value: float, digits: int = 2) -> str:
     return f"{value:.{digits}f}".replace(".", ",")
 
 
-def _frame(width_px: int, height_px: int, *, left: float, bottom: float = 0.30, top: float = 0.90):
+def _frame(width_px: int, height_px: int, *, left: float, bottom: float = 0.40,
+           top: float = 0.97, right: float = 0.12):
+    """Khung hình: kích thước tính bằng px của khung slide (ghép 1:1)."""
     fig = plt.figure(figsize=(width_px / DPI, height_px / DPI), dpi=DPI, facecolor=PAPER)
-    ax = fig.add_axes((left, bottom, 1 - left - 0.035, top - bottom))
+    ax = fig.add_axes((left, bottom, 1 - left - right, top - bottom))
     ax.set_facecolor(PAPER)
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     for side in ("left", "bottom"):
         ax.spines[side].set_color(LINE)
         ax.spines[side].set_linewidth(1.0)
-    ax.tick_params(colors=INK_SOFT, labelsize=7.2, length=0, pad=5)
+    ax.tick_params(colors=INK_SOFT, labelsize=TICK, length=0, pad=6)
     return fig, ax
 
 
@@ -62,15 +73,12 @@ def _save(fig, name: str) -> Path:
 
 
 def _caption(fig, text: str) -> None:
-    fig.text(0.012, 0.030, text, ha="left", va="bottom", fontsize=6.8, color=INK_SOFT)
+    """Dòng chú thích cuối hình: chỉ giải thích cách đọc, không lặp lại nguồn."""
+    fig.text(0.012, 0.022, text, ha="left", va="bottom", fontsize=CAPTION, color=INK_SOFT)
 
 
-def _note(fig, text: str) -> None:
-    fig.text(0.985, 0.955, text, ha="right", va="center", fontsize=6.8, color=AMBER)
-
-
-def _xlabel(ax, text: str, *, size: float = 7.6) -> None:
-    ax.set_xlabel(text, fontsize=size, color=INK_SOFT, labelpad=4)
+def _xlabel(ax, text: str, *, size: float = LABEL) -> None:
+    ax.set_xlabel(text, fontsize=size, color=INK_SOFT, labelpad=7)
 
 
 def _xgrid(ax) -> None:
@@ -82,87 +90,73 @@ def _comma_axis(ax, digits: int = 2) -> None:
     ax.xaxis.set_major_formatter(FuncFormatter(lambda value, _: _comma(value, digits)))
 
 
-def _label_after(ax, y, x, text, *, ha: str = "left") -> None:
+def _label_after(ax, y, x, text, *, ha: str = "left", dy: float = 0) -> None:
     ax.annotate(
         text,
         xy=(x, y),
-        xytext=(7 if ha == "left" else -7, 0),
+        xytext=(8 if ha == "left" else -8, dy),
         textcoords="offset points",
         ha=ha,
         va="center",
-        fontsize=8.4,
+        fontsize=VALUE,
         color=INK,
         fontweight="bold",
         annotation_clip=False,
-        path_effects=[path_effects.withStroke(linewidth=3.0, foreground=PAPER)],
+        path_effects=[path_effects.withStroke(linewidth=3.5, foreground=PAPER)],
     )
 
 
-def _baseline(ax, value: float, short: str | None = None) -> None:
-    ax.axvline(value, color=AMBER, linestyle=(0, (4, 3)), linewidth=1.4, zorder=2)
-    if short is None:
-        return
-    ax.annotate(
-        short,
-        xy=(value, 1.012),
-        xycoords=("data", "axes fraction"),
-        xytext=(2, 0),
-        textcoords="offset points",
-        ha="left",
-        va="bottom",
-        fontsize=7.0,
-        color=AMBER,
-        annotation_clip=False,
-    )
+def _base_lines(ax, baselines, labels) -> None:
+    """Vạch mốc nền: giá trị ghi ở dòng chú thích dưới hình."""
+    for key in labels:
+        ax.axvline(baselines[key], color=AMBER, linestyle=(0, (4, 3)), linewidth=1.6, zorder=2)
 
 
-def _rows(ax, labels, values, errors, colors, height=0.44):
-    bars = ax.barh(
+def _rows(ax, labels, values, errors, colors, height=0.46):
+    return ax.barh(
         labels,
         values,
         height=height,
         color=colors,
         xerr=errors,
-        error_kw={"ecolor": INK, "elinewidth": 1.5, "capsize": 4.5, "capthick": 1.5},
+        error_kw={"ecolor": INK, "elinewidth": 1.5, "capsize": 5.0, "capthick": 1.5},
         zorder=3,
     )
-    return bars
+
+
+def _ci_errors(rows):
+    return [
+        [row["macro_f1"] - row["ci"][0] for row in rows],
+        [row["ci"][1] - row["macro_f1"] for row in rows],
+    ]
 
 
 def fig_rq1_ci() -> Path:
     """Nguồn: results/report_rq1/r1_summary.csv, results/b0_majority, results/a0_shortcut."""
     rows = sorted(D.D["rq1"], key=lambda item: item["macro_f1"])
     labels = {
-        "hist": "Histogram (64)",
-        "glcmlbp": "GLCM + LBP (88)",
-        "hog": "HOG (10.404)",
-        "ghep": "Ghép (152)",
+        "hist": "Histogram 64",
+        "glcmlbp": "GLCM + LBP 88",
+        "hog": "HOG 10.404",
+        "ghep": "Ghép 152",
     }
-    fig, ax = _frame(1000, 372, left=0.205)
-    values = [row["macro_f1"] for row in rows]
-    errors = [
-        [row["macro_f1"] - row["ci"][0] for row in rows],
-        [row["ci"][1] - row["macro_f1"] for row in rows],
-    ]
+    fig, ax = _frame(736, 270, left=0.30)
     bars = _rows(
         ax,
         [labels[row["key"]] for row in rows],
-        values,
-        errors,
+        [row["macro_f1"] for row in rows],
+        _ci_errors(rows),
         [TEAL if row["key"] == "ghep" else TEAL_LIGHT for row in rows],
     )
     for bar, row in zip(bars, rows):
         _label_after(ax, bar.get_y() + bar.get_height() / 2, row["ci"][1], D.fmt(row["macro_f1"]))
-    baselines = D.D["baselines"]
-    _baseline(ax, baselines["b0"], "B0")
-    _baseline(ax, baselines["a0"], "A0")
-    _note(fig, f"mốc nền: B0 = {D.fmt(baselines['b0'])} · A0 = {D.fmt(baselines['a0'])}")
-    ax.set_xlim(0, 1.0)
-    ax.set_ylim(-0.55, 3.55)
-    _xlabel(ax, "Macro-F1 trên validation (n = 3.174 ảnh, 3 seed)")
+    _base_lines(ax, D.D["baselines"], ("b0", "a0"))
+    ax.set_xlim(0, 1.05)
+    ax.set_ylim(-0.6, 3.6)
+    _xlabel(ax, "Macro-F1 validation (3.174 ảnh, 3 seed)")
     _xgrid(ax)
     _comma_axis(ax)
-    _caption(fig, "Nguồn: results/report_rq1/r1_summary.csv · thanh sai số là CI 95% bootstrap 2.000 lần")
+    _caption(fig, "Sai số: CI 95% bootstrap 2.000 lần · vạch cam: B0, A0")
     return _save(fig, "fig_rq1_ci.png")
 
 
@@ -171,7 +165,7 @@ def fig_rq1_delta() -> Path:
     rows = [row for row in D.D["rq1"] if row["delta"]]
     rows.sort(key=lambda item: item["delta"]["diff"])
     labels = {"glcmlbp": "GLCM + LBP", "hog": "HOG", "ghep": "Ghép"}
-    fig, ax = _frame(1000, 330, left=0.145)
+    fig, ax = _frame(736, 260, left=0.245)
     values = [row["delta"]["diff"] for row in rows]
     errors = [
         [row["delta"]["diff"] - row["delta"]["ci"][0] for row in rows],
@@ -183,37 +177,34 @@ def fig_rq1_delta() -> Path:
         values,
         errors,
         [AMBER if row["delta"]["contains_zero"] else TEAL for row in rows],
-        height=0.38,
+        height=0.42,
     )
     for bar, row in zip(bars, rows):
         delta = row["delta"]["diff"]
         anchor = row["delta"]["ci"][1] if delta >= 0 else row["delta"]["ci"][0]
-        _label_after(
-            ax,
-            bar.get_y() + bar.get_height() / 2,
-            anchor,
-            D.fmt_delta(delta),
-            ha="left" if delta >= 0 else "right",
-        )
-    ax.axvline(0, color=INK, linewidth=1.0, zorder=4)
-    ax.axvline(0.005, color=INK_SOFT, linestyle=(0, (2, 3)), linewidth=1.0, zorder=2)
+        _label_after(ax, bar.get_y() + bar.get_height() / 2, anchor, D.fmt_delta(delta),
+                     ha="left" if delta >= 0 else "right",
+                     dy=0)
+    ax.axvline(0, color=INK, linewidth=1.2, zorder=4)
+    ax.axvline(0.005, color=INK_SOFT, linestyle=(0, (2, 3)), linewidth=1.2, zorder=2)
     ax.annotate(
         "ngưỡng Δ ≥ 0,005",
-        xy=(0.005, 1.012),
+        xy=(0.005, 0.015),
         xycoords=("data", "axes fraction"),
         xytext=(2, 0),
         textcoords="offset points",
         ha="left",
         va="bottom",
-        fontsize=7.0,
+        fontsize=NOTE,
         color=INK_SOFT,
         annotation_clip=False,
     )
-    ax.set_xlim(-0.075, 0.125)
-    _xlabel(ax, "Chênh lệch macro-F1 so với histogram (CI 95%)")
+    ax.set_xlim(-0.14, 0.135)
+    ax.set_ylim(-0.6, 2.6)
+    _xlabel(ax, "Chênh macro-F1 so với histogram (CI 95%)")
     _xgrid(ax)
     _comma_axis(ax, 3)
-    _caption(fig, "Nguồn: results/report_rq1/r1_bootstrap_vs_reference.csv · cam = khoảng tin cậy chứa 0")
+    _caption(fig, "Cam: khoảng tin cậy của hiệu chứa 0")
     return _save(fig, "fig_rq1_delta.png")
 
 
@@ -221,37 +212,32 @@ def fig_rq2_ci() -> Path:
     """Nguồn: results/report_rq2/r1_summary.csv."""
     rows = sorted(D.D["rq2"], key=lambda item: item["macro_f1"])
     names = {
-        "lr": "Logistic Regression",
+        "lr": "Logistic Regr.",
         "knn": "k-NN",
         "dt": "Decision Tree",
         "rf": "Random Forest",
-        "gb": "Gradient Boosting",
+        "gb": "Gradient Boost.",
         "svm": "SVM RBF",
     }
-    fig, ax = _frame(1000, 372, left=0.215)
-    values = [row["macro_f1"] for row in rows]
-    errors = [
-        [row["macro_f1"] - row["ci"][0] for row in rows],
-        [row["ci"][1] - row["macro_f1"] for row in rows],
-    ]
+    fig, ax = _frame(736, 272, left=0.30)
     bars = _rows(
         ax,
         [names[row["key"]] for row in rows],
-        values,
-        errors,
+        [row["macro_f1"] for row in rows],
+        _ci_errors(rows),
         [TEAL if row["key"] == "svm" else TEAL_LIGHT for row in rows],
+        height=0.55,
     )
     for bar, row in zip(bars, rows):
         _label_after(ax, bar.get_y() + bar.get_height() / 2, row["ci"][1], D.fmt(row["macro_f1"]))
     rf = next(row for row in D.D["rq2"] if row["key"] == "rf")
-    _baseline(ax, rf["macro_f1"])
-    _note(fig, f"tham chiếu: RF = {D.fmt(rf['macro_f1'])}")
-    ax.set_xlim(0, 1.08)
-    ax.set_ylim(-0.55, 5.55)
-    _xlabel(ax, "Macro-F1 trên validation (nhóm đặc trưng ghép, 152 chiều)")
+    ax.axvline(rf["macro_f1"], color=INK_SOFT, linestyle=(0, (3, 3)), linewidth=1.4, zorder=2)
+    ax.set_xlim(0, 1.07)
+    ax.set_ylim(-0.6, 5.6)
+    _xlabel(ax, "Macro-F1 validation (nhóm ghép, 152 chiều)")
     _xgrid(ax)
     _comma_axis(ax)
-    _caption(fig, "Nguồn: results/report_rq2/r1_summary.csv · SVM là mô hình tất định, chạy một lần")
+    _caption(fig, "SVM tất định, chạy một lần · vạch mờ: Random Forest")
     return _save(fig, "fig_rq2_ci.png")
 
 
@@ -260,13 +246,13 @@ def fig_rq3_scenarios() -> Path:
     order = ["orig_to_orig", "lung_to_lung", "out_to_out", "orig_to_lung", "orig_to_out"]
     names = {
         "orig_to_orig": "Gốc → gốc",
-        "lung_to_lung": "Chỉ phổi → chỉ phổi",
-        "out_to_out": "Ngoài phổi → ngoài phổi",
-        "orig_to_lung": "Gốc → chỉ phổi",
-        "orig_to_out": "Gốc → ngoài phổi",
+        "lung_to_lung": "Phổi → phổi",
+        "out_to_out": "Ngoài → ngoài",
+        "orig_to_lung": "Gốc → phổi",
+        "orig_to_out": "Gốc → ngoài",
     }
     scenarios = D.D["rq3"]["scenarios"]
-    fig, ax = _frame(1000, 380, left=0.265)
+    fig, ax = _frame(736, 270, left=0.28)
     values = [scenarios[key]["macro_f1"] for key in order]
     errors = [
         [scenarios[key]["macro_f1"] - scenarios[key]["ci"][0] for key in order],
@@ -279,20 +265,18 @@ def fig_rq3_scenarios() -> Path:
         values,
         errors,
         [highlight.get(key, TEAL_LIGHT) for key in order],
+        height=0.52,
     )
     for bar, key in zip(bars, order):
-        _label_after(ax, bar.get_y() + bar.get_height() / 2, scenarios[key]["ci"][1], D.fmt(values[order.index(key)]))
-    baselines = D.D["baselines"]
-    ax.set_xlim(0, 1.08)
-    ax.set_ylim(-0.55, 4.55)
-    _xlabel(ax, "Macro-F1 trên validation (n = 3.174 ảnh)")
+        _label_after(ax, bar.get_y() + bar.get_height() / 2, scenarios[key]["ci"][1],
+                     D.fmt(values[order.index(key)]))
+    _base_lines(ax, D.D["baselines"], ("b0", "a0"))
+    ax.set_xlim(0, 1.07)
+    ax.set_ylim(-0.6, 4.6)
+    _xlabel(ax, "Macro-F1 validation (3.174 ảnh)")
     _xgrid(ax)
     _comma_axis(ax)
-    _caption(
-        fig,
-        "Nguồn: results/report_rq3/r1_summary.csv · mốc nền "
-        f"B0 = {D.fmt(baselines['b0'])} · A0 = {D.fmt(baselines['a0'])}",
-    )
+    _caption(fig, "A → B: huấn luyện A, đánh giá B · vạch cam: B0, A0")
     return _save(fig, "fig_rq3_scenarios.png")
 
 
@@ -300,26 +284,27 @@ def fig_rq3_perm() -> Path:
     """Nguồn: results/rq3_permutation_importance.csv."""
     modes = D.D["permutation"]
     blocks = ["hist_64", "glcm_60", "lbp_28"]
-    labels = {"hist_64": "Histogram (64)", "glcm_60": "GLCM (60)", "lbp_28": "LBP (28)"}
+    labels = {"hist_64": "Histogram 64", "glcm_60": "GLCM 60", "lbp_28": "LBP 28"}
     series = {"lung_only": ("Chỉ phổi", TEAL), "outside_only": ("Ngoài phổi", AMBER)}
-    fig, ax = _frame(1000, 340, left=0.175, bottom=0.30, top=0.86)
+    fig, ax = _frame(736, 270, left=0.27, top=0.87)
     height = 0.34
-    top = 0.0
     for offset, (mode, (label, color)) in zip((-height / 2, height / 2), series.items()):
         lookup = {block["block"]: block["importance"] for block in modes[mode]}
         positions = [index + offset for index in range(len(blocks))]
-        bars = ax.barh(positions, [lookup[block] for block in blocks], height=height, color=color, label=label, zorder=3)
+        bars = ax.barh(positions, [lookup[block] for block in blocks], height=height, color=color,
+                       label=label, zorder=3)
         for bar, block in zip(bars, blocks):
             value = lookup[block]
-            top = max(top, value)
             _label_after(ax, bar.get_y() + bar.get_height() / 2, value, D.fmt(value))
     ax.set_yticks(range(len(blocks)), [labels[block] for block in blocks])
-    ax.legend(frameon=False, fontsize=7.4, loc="upper center", bbox_to_anchor=(0.5, 1.20), ncol=2, handlelength=1.2)
-    ax.set_xlim(0, 0.62)
+    ax.legend(frameon=False, fontsize=NOTE, loc="lower right", bbox_to_anchor=(1.0, 1.0), ncol=2,
+              handlelength=1.1, columnspacing=1.4)
+    ax.set_xlim(0, 0.68)
+    ax.set_ylim(-0.55, 2.55)
     _xlabel(ax, "Mức giảm macro-F1 khi xáo trộn khối đặc trưng")
     _xgrid(ax)
     _comma_axis(ax)
-    _caption(fig, "Nguồn: results/rq3_permutation_importance.csv · 10 lần xáo trộn mỗi khối")
+    _caption(fig, "10 lần xáo trộn mỗi khối đặc trưng")
     return _save(fig, "fig_rq3_perm.png")
 
 
@@ -327,19 +312,21 @@ def fig_brightness() -> Path:
     """Nguồn: results/eda/brightness_by_class.csv."""
     order = ["COVID", "Lung_Opacity", "Normal", "Viral Pneumonia"]
     rows = sorted(D.D["brightness"], key=lambda row: order.index(row["label"]))
-    fig, ax = _frame(820, 360, left=0.25, bottom=0.32)
+    fig, ax = _frame(720, 316, left=0.32, right=0.13)
     for index, row in enumerate(rows):
-        ax.plot([row["q1"], row["q3"]], [index, index], color=TEAL_LIGHT, linewidth=11, solid_capstyle="butt", zorder=2)
-        ax.plot([row["mean"], row["mean"]], [index - 0.22, index + 0.22], color=TEAL, linewidth=2.4, zorder=3)
-        _label_after(ax, index, row["q3"] + 2, D.fmt(row["mean"], 1))
+        ax.plot([row["q1"], row["q3"]], [index, index], color=TEAL_LIGHT, linewidth=15,
+                solid_capstyle="butt", zorder=2)
+        ax.plot([row["mean"], row["mean"]], [index - 0.24, index + 0.24], color=TEAL,
+                linewidth=3.0, zorder=3)
+        _label_after(ax, index, row["q3"] + 3, D.fmt(row["mean"], 1))
     ax.set_yticks(range(len(rows)), [D.CLASS_VI[row["label"]] for row in rows])
-    ax.set_xlim(100, 182)
+    ax.set_xlim(100, 195)
     ax.set_ylim(-0.6, 3.6)
-    _xlabel(ax, "Độ sáng trung bình (0–255)", size=7.4)
+    _xlabel(ax, "Độ sáng trung bình (0–255)")
     _xgrid(ax)
     ax.xaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value:.0f}"))
     covid = next(row for row in rows if row["label"] == "COVID")
-    _caption(fig, f"Nguồn: results/eda/brightness_by_class.csv · AUC COVID/nền {D.fmt(covid['auc_vs_rest'])}")
+    _caption(fig, f"Thanh: tứ phân vị · gạch: trung bình · AUC {D.fmt(covid['auc_vs_rest'])}")
     return _save(fig, "fig_brightness.png")
 
 
@@ -347,8 +334,8 @@ def fig_test_confusion() -> Path:
     """Nguồn: results/final_test/metrics.json."""
     matrix = D.D["test"]["matrix"]
     short = ["COVID", "Lung Op.", "Normal", "Viral Pn."]
-    fig = plt.figure(figsize=(700 / DPI, 470 / DPI), dpi=DPI, facecolor=PAPER)
-    ax = fig.add_axes((0.21, 0.315, 0.76, 0.60))
+    fig = plt.figure(figsize=(608 / DPI, 380 / DPI), dpi=DPI, facecolor=PAPER)
+    ax = fig.add_axes((0.24, 0.36, 0.72, 0.58))
     ax.set_facecolor(PAPER)
     peak = max(max(row) for row in matrix)
     for row_index, row in enumerate(matrix):
@@ -372,7 +359,7 @@ def fig_test_confusion() -> Path:
                 f"{value:,}".replace(",", "."),
                 ha="center",
                 va="center",
-                fontsize=8.8,
+                fontsize=VALUE,
                 color=INK,
                 fontweight="bold",
             )
@@ -384,18 +371,18 @@ def fig_test_confusion() -> Path:
                 1,
                 facecolor="none",
                 edgecolor=AMBER,
-                linewidth=2.4,
+                linewidth=2.6,
             )
         )
     ax.set_xlim(0, 4)
     ax.set_ylim(0, 4)
-    ax.set_xticks([i + 0.5 for i in range(4)], short, fontsize=7.4)
-    ax.set_yticks([4 - i - 0.5 for i in range(4)], short, fontsize=7.4)
-    ax.set_xlabel("Cột: nhãn dự đoán · Hàng: nhãn thật", fontsize=7.6, color=INK_SOFT, labelpad=6)
-    ax.tick_params(length=0, colors=INK_SOFT)
+    ax.set_xticks([i + 0.5 for i in range(4)], short, fontsize=TICK)
+    ax.set_yticks([4 - i - 0.5 for i in range(4)], short, fontsize=TICK)
+    ax.set_xlabel("Cột: dự đoán · Hàng: nhãn thật", fontsize=LABEL, color=INK_SOFT, labelpad=8)
+    ax.tick_params(length=0, colors=INK_SOFT, pad=6)
     for spine in ax.spines.values():
         spine.set_visible(False)
-    _caption(fig, "Nguồn: results/final_test/metrics.json · cam: Normal ↔ Lung Opacity")
+    _caption(fig, "Cam: cặp Normal ↔ Lung Opacity")
     return _save(fig, "fig_test_confusion.png")
 
 
@@ -403,28 +390,31 @@ def fig_test_gap() -> Path:
     """Nguồn: results/final_test/final_test_report.json (ci95, macro_f1)."""
     test = D.D["test"]
     low, high = D.D["test_ci"]
-    fig, ax = _frame(900, 310, left=0.045, bottom=0.38, top=0.82)
-    ax.plot([low, high], [0, 0], color=INK, linewidth=1.8, solid_capstyle="round", zorder=3)
-    ax.plot([low, low], [-0.13, 0.13], color=INK, linewidth=1.8, zorder=3)
-    ax.plot([high, high], [-0.13, 0.13], color=INK, linewidth=1.8, zorder=3)
-    ax.scatter([test["macro_f1"]], [0], s=110, color=TEAL, zorder=5)
+    fig, ax = _frame(656, 250, left=0.055, bottom=0.40, top=0.74, right=0.02)
+    ax.plot([low, high], [0, 0], color=INK, linewidth=2.0, solid_capstyle="round", zorder=3)
+    ax.plot([low, low], [-0.13, 0.13], color=INK, linewidth=2.0, zorder=3)
+    ax.plot([high, high], [-0.13, 0.13], color=INK, linewidth=2.0, zorder=3)
+    ax.scatter([test["macro_f1"]], [0], s=130, color=TEAL, zorder=5)
     ax.annotate(
-        f"Test {D.fmt(test['macro_f1'])}  ·  CI 95% {D.fmt_ci(low, high)}",
-        xy=((low + high) / 2, 0),
-        xytext=(0, 26),
+        f"Test {D.fmt(test['macro_f1'])}\nCI 95% {D.fmt_ci(low, high)}",
+        xy=(0.5, 0.0),
+        xycoords=("axes fraction", "data"),
+        xytext=(0, 10),
         textcoords="offset points",
         ha="center",
-        fontsize=8.8,
+        va="bottom",
+        fontsize=VALUE,
         color=INK,
+        linespacing=1.35,
     )
     ax.set_xlim(0.845, 0.915)
     ax.set_ylim(-0.5, 0.5)
     ax.set_yticks([])
     ax.spines["left"].set_visible(False)
-    _xlabel(ax, "Macro-F1 trên 3.176 ảnh test", size=7.8)
+    _xlabel(ax, "Macro-F1 trên 3.176 ảnh test")
     _xgrid(ax)
     _comma_axis(ax, 3)
-    _caption(fig, "Nguồn: results/final_test/final_test_report.json · trục giá trị bắt đầu từ 0,845")
+    _caption(fig, "Trục giá trị bắt đầu từ 0,845")
     return _save(fig, "fig_test_gap.png")
 
 

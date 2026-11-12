@@ -64,15 +64,15 @@ SOFT_ON_DARK = "#9AA6B4"
 RULE_ON_DARK = "#39424F"
 
 # ------------------------------------------------------------------ cỡ chữ
-SIZE_KICKER = 19  # 14,25 pt
+SIZE_KICKER = 24  # 18 pt
 SIZE_TITLE = 42  # 31,5 pt
 SIZE_TITLE_SMALL = 34
-SIZE_BODY = 21  # 15,75 pt
-SIZE_BODY_STRONG = 22
-SIZE_SMALL = 19  # 14,25 pt — sàn 14 pt của quy chuẩn deck
+SIZE_BODY = 28  # 21 pt
+SIZE_BODY_STRONG = 28
+SIZE_SMALL = 24  # 18 pt — sàn chữ trình chiết (xem slides/README.md)
 SIZE_FOOTER = 15  # 11,25 pt
 SIZE_NUMBER = 150
-LINE_H = 30
+LINE_H = 34
 
 # ------------------------------------------------------------------ master/layout
 MASTERS = {
