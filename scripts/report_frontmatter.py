@@ -58,8 +58,8 @@ def captions(name: str) -> list[tuple[str, str, str]]:
     return out
 
 
-def main() -> int:
-    reconfigure()
+def build() -> tuple[list[str], int, int]:
+    """Tra ve (dong tep, so bang, so hinh) — dung cho ca main() va test."""
     chapters = ["01_gioi_thieu.md", "02_du_lieu_va_phuong_phap.md", "03_ket_qua_rq1_rq2.md",
                 "04_hoc_loi_tat_rq3.md", "05_ket_qua_test_va_trien_khai.md",
                 "06_thao_luan_gioi_han_huong_phat_trien.md"]
@@ -140,6 +140,12 @@ def main() -> int:
     lines.append("  khi chuyển Word, chèn ảnh từ đúng đường dẫn đó rồi đặt chú thích Hình 2.1 bên dưới.")
     lines.append("")
 
+    return lines, n_tab, n_fig
+
+
+def main() -> int:
+    reconfigure()
+    lines, n_tab, n_fig = build()
     (REPORT / "00c_muc_luc_va_danh_muc.md").write_text("\n".join(lines), encoding="utf-8")
     print(f"Da ghi report/00c_muc_luc_va_danh_muc.md ({n_tab} bang, {n_fig} hinh)")
     return 0

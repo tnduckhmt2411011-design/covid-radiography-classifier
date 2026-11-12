@@ -115,3 +115,89 @@ def test_table_6_1_reference_ci_matches_rq2_summary() -> None:
     report = pd.read_json(REPO_ROOT / "results/final_test/final_test_report.json", typ="series")
     test_row = next(r for r in rows if cells(r)[0].startswith("Tập test"))
     assert cells(test_row)[1] == f"{float(report['macro_f1']):.4f}".replace(".", ",")
+
+
+# ---------- Phụ lục B.1: số tệp thực tế trong kho ----------
+def test_appendix_b1_counts_match_git_ls_files() -> None:
+    """Bảng B.1 phải khớp `git ls-files` — chặn lệch khi kho thêm tệp mới."""
+    import subprocess
+
+    files = subprocess.run(["git", "ls-files"], cwd=REPO_ROOT, capture_output=True,
+                           text=True).stdout.splitlines()
+    counts: dict[str, int] = {}
+    for line in files:
+        top = line.split("/")[0] if "/" in line else "<root>"
+        counts[top] = counts.get(top, 0) + 1
+    table = read_table_rows("08_phu_luc_a_c.md", r"\*\*Bảng B\.1")
+    for row in table:
+        got = cells(row)
+        label = got[0]
+        if label.startswith(":---") or set(label) <= {":", "-", " "}:
+            continue
+        if "configs" in label:
+            n = counts.get("configs", 0) + counts.get(".github", 0) + counts.get(".streamlit", 0)
+            assert got[1] == str(n), f"{label}: ghi {got[1]}, thuc te {n}"
+            continue
+        m = re.match(r"`([^/]+)/`", label)
+        if m:
+            assert got[1] == str(counts.get(m.group(1), 0)), f"{label}: ghi {got[1]}, thuc te {counts.get(m.group(1), 0)}"
+        elif label.startswith("Tệp gốc"):
+            assert got[1] == str(counts.get("<root>", 0)), f"{label}: ghi {got[1]}, thuc te {counts.get('<root>', 0)}"
+
+
+# ---------- Phụ lục B.2: số phép kiểm thử thực tế ----------
+def test_appendix_b2_matches_pytest_collect() -> None:
+    """Bảng B.2 phải khớp `pytest --collect-only` theo từng module và tổng cộng."""
+    import subprocess
+    import sys
+
+    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"],
+                       cwd=REPO_ROOT, capture_output=True, text=True)
+    per: dict[str, int] = {}
+    for line in r.stdout.splitlines():
+        s = line.strip()
+        if s.startswith("tests/") and "::" in s:
+            per[s.split("::")[0]] = per.get(s.split("::")[0], 0) + 1
+    n_modules = len(list((REPO_ROOT / "tests").glob("test_*.py")))
+    if len(per) < n_modules:
+        pytest.skip("Moi truong khong thu thap du module test (thieu thu vien); chi kiem tra tren moi truong day du")
+    table = read_table_rows("08_phu_luc_a_c.md", r"\*\*Bảng B\.2")
+    table = [r for r in table if not set(cells(r)[0]) <= {":", "-", " "}]
+    rows = {cells(row)[0].strip("`"): cells(row)[1] for row in table if not cells(row)[0].startswith("**Tổng")}
+    assert len(rows) == len(per), f"Bang B.2 co {len(rows)} module, thuc te {len(per)}"
+    for mod, n in rows.items():
+        assert n == str(per.get(mod, 0)), f"{mod}: ghi {n}, thuc te {per.get(mod, 0)}"
+    total = next(cells(row)[1].strip("*") for row in table if cells(row)[0].startswith("**Tổng"))
+    assert total == str(sum(per.values())), f"Tong B.2 ghi {total}, thuc te {sum(per.values())}"
+
+
+# ---------- Mục lục: tệp trong report khớp với sinh lại từ script ----------
+def test_toc_file_matches_generator() -> None:
+    """Tệp `00c_muc_luc_va_danh_muc.md` phải khớp với đầu ra của script sinh mục lục."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("report_frontmatter", REPO_ROOT / "scripts/report_frontmatter.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    lines, n_tab, n_fig = mod.build()
+    actual = (REPORT / "00c_muc_luc_va_danh_muc.md").read_text(encoding="utf-8")
+    assert actual.rstrip("\n") == "\n".join(lines).rstrip("\n"), "Muc luc lech so voi script sinh"
+    assert n_tab == 32 and n_fig == 4
+
+
+# ---------- Số bộ kiểm thử trong Phụ lục A khớp Chương 5 ----------
+def test_appendix_a1_test_count_matches_chapter5() -> None:
+    """Câu về quy mô kiểm thử ở Phụ lục A.1 phải dùng cùng một con số với Chương 5."""
+    import subprocess
+    import sys
+
+    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"],
+                       cwd=REPO_ROOT, capture_output=True, text=True)
+    n_modules = len(list((REPO_ROOT / "tests").glob("test_*.py")))
+    if not re.search(rf"{n_modules} module|tests collected", r.stdout) or r.returncode != 0:
+        pytest.skip("Moi truong khong thu thap du bo kiem thu; chi kiem tra tren moi truong day du")
+    collected = re.search(r"(\d+) tests? collected", r.stdout).group(1)
+    appx = (REPORT / "08_phu_luc_a_c.md").read_text(encoding="utf-8")
+    ch5 = (REPORT / "05_ket_qua_test_va_trien_khai.md").read_text(encoding="utf-8")
+    assert f"{collected} phép kiểm thử trong {n_modules} module" in appx, "Phu luc A.1 lech so bo kiem thu"
+    assert f"{collected} phép kiểm thử trong {n_modules} module" in ch5, "Chuong 5 lech so bo kiem thu"
