@@ -592,7 +592,6 @@ def build() -> dict:
         "normal_lung_test": normal_lung_test,
         "normal_lung_pct": normal_lung_test / test["errors"],
         "features": {"total": 152, "hist": 64, "glcm": 60, "lbp": 28, "hog": 10404},
-        "tests": {"n_tests": 334, "n_modules": 26},
     }
 
 
