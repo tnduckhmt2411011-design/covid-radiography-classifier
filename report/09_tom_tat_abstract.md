@@ -24,7 +24,7 @@ lối tắt.
 
 Mô hình được chọn đo một lần trên tập test: macro-F1 0,8714 [0,8579; 0,8840], accuracy 86,56%,
 thấp hơn validation 0,0310; trong 427 ảnh sai, 304 lỗi (71,19%) thuộc cặp
-Normal – Lung_Opacity. Hệ thống kèm 334 phép kiểm thử trong 26 module và ứng dụng demo kiểm tra
+Normal – Lung_Opacity. Hệ thống kèm 337 phép kiểm thử trong 27 module và ứng dụng demo kiểm tra
 băm SHA-256 trước khi nạp mô hình, độ trễ đầu-cuối trung vị 131,8 ms. Đặc trưng thủ công nhờ đó
 thay được mốc đã đăng ký, song việc mô hình dựa vào vùng ngoài mặt nạ phổi làm nó chưa thể dùng
 như công cụ chẩn đoán ngoài bộ dữ liệu này.
@@ -52,7 +52,7 @@ the study does not conclude that this is shortcut learning.
 
 The selected model was evaluated once on the held-out test set: macro-F1 0.8714 [0.8579; 0.8840],
 accuracy 86.56%, 0.0310 below validation; 304 of 427 misclassified images (71.19%) belong to the
-Normal – Lung_Opacity pair. The system ships 334 automated tests in 26 modules and a demo that
+Normal – Lung_Opacity pair. The system ships 337 automated tests in 27 modules and a demo that
 verifies SHA-256 before loading the model, with a median end-to-end latency of 131.8 ms.
 Hand-crafted features thus replace the registered baseline, while reliance on the outside-mask
 region keeps the model from being usable as a diagnostic tool for images from other institutions.
@@ -68,7 +68,7 @@ region keeps the model from being usable as a diagnostic tool for images from ot
   Forest lấy ở Bảng 3.3 và mục 3.4 của Chương 3; các kịch bản RQ3 (0,8921, 0,8490, +0,0431,
   2.237 ảnh RSNA, 197 ảnh Mooney) lấy ở Bảng 4.1 và Bảng 4.4 của Chương 4; 0,8714 [0,8579; 0,8840],
   accuracy 86,56%, −0,0310, 427 lỗi và 304 lỗi (71,19%) lấy ở mục 5.1–5.3 và Bảng 5.1 của Chương
-  5; 334 phép kiểm thử trong 26 module lấy ở mục 5.4; độ trễ trung vị 131,8 ms lấy ở mục 6.2 của
+  5; 337 phép kiểm thử trong 27 module lấy ở mục 5.4; độ trễ trung vị 131,8 ms lấy ở mục 6.2 của
   Chương 6 (ghi lại từ Bảng 5.5).
 - Hai phần này không đưa thêm số liệu nào ngoài các bảng đã liệt kê; mọi câu mô tả kết quả đều
   tra được về Chương 3–6.
