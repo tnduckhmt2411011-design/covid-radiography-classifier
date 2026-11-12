@@ -14,7 +14,7 @@ Danh mục này gộp toàn bộ tài liệu được trích dẫn trong sáu ch
 
 [6] F. Pedregosa, G. Varoquaux, A. Gramfort, et al., "Scikit-learn: Machine learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
 
-[7] Hugging Face, "Hugging Face Hub documentation," 2026. [Online]. Available: https://huggingface.co/docs/hub/. [Accessed: 12-11-2026].
+[7] Nhóm 10, Lớp Khoa học máy tính 2024, "cxr-svm-demo: artifact bộ phân loại CXR bốn lớp," Hugging Face Hub, 2026. [Online]. Available: https://huggingface.co/duc16/cxr-svm-demo. [Accessed: 12-11-2026].
 
 [8] Streamlit, "Streamlit documentation," 2026. [Online]. Available: https://docs.streamlit.io/. [Accessed: 12-11-2026].
 
