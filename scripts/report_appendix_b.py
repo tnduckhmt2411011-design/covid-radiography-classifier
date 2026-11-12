@@ -17,6 +17,31 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+DESCRIPTIONS = {
+    "src/": "Mã nguồn: nạp dữ liệu, trích đặc trưng, bộ chạy RQ1–RQ3, metrics, bootstrap, suy luận, đo độ trễ, kiểm artifact",
+    "notebooks/": "Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận",
+    "demo/": "Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện",
+    "tests/": "Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2)",
+    "scripts/": "Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa",
+    "results/": "Tệp kết quả và biên bản của các bước S1–S6",
+    "kaggle/": "Mã và biên bản chạy thực nghiệm trên kernel Kaggle",
+    "splits/": "Manifest, tệp phân chia và báo cáo kiểm tra sau chia",
+    "docs/": "Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc",
+    "report/": "Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn",
+    "slides/": "Chỗ để slide thuyết trình",
+}
+ROOT_FILES = "README.md, requirements.txt, pytest.ini, .gitignore, .gitattributes"
+
+
+def count_structure() -> dict[str, int]:
+    r = subprocess.run(["git", "ls-files"], cwd=REPO_ROOT, capture_output=True, text=True)
+    counts: dict[str, int] = {}
+    for line in r.stdout.splitlines():
+        top = line.split("/")[0] if "/" in line else "<root>"
+        counts[top] = counts.get(top, 0) + 1
+    return counts
+
+
 def main() -> int:
     for stream in (sys.stdout, sys.stderr):
         reconfigure = getattr(stream, "reconfigure", None)
@@ -47,6 +72,19 @@ def main() -> int:
     for name in {p.name for p in modules}:
         counts.setdefault(f"tests/{name}", 0)
 
+    struct = count_structure()
+    others = struct.get("configs", 0) + struct.get(".github", 0) + struct.get(".streamlit", 0)
+
+    # ----- Bảng B.1 -----
+    print("| Thu muc / tep | So tep | Noi dung |")
+    print("| :--- | ---: | :--- |")
+    for d in ["src", "notebooks", "demo", "tests", "scripts", "results", "kaggle", "splits", "docs", "report", "slides"]:
+        n = struct.get(d, 0)
+        print(f"| `{d}/` | {n} | {DESCRIPTIONS.get(d + '/', '')} |")
+    print(f"| `configs/`, `.github/`, `.streamlit/` | {others} | Cau hinh co so, mau pull request, cau hinh Streamlit |")
+    print(f"| Tep goc (`{ROOT_FILES}`) | {struct.get('<root>', 0)} | Dieu khien du an va moi truong |")
+    print()
+    # ----- Bảng B.2 -----
     print("| Module | So phep kiem thu |")
     print("| :--- | ---: |")
     total = 0

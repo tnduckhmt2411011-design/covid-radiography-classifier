@@ -95,12 +95,12 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `notebooks/` | 9 | Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận |
 | `demo/` | 6 | Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện |
 | `tests/` | 26 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
-| `scripts/` | 3 | Script sinh hình cho báo cáo và bảng Phụ lục B |
+| `scripts/` | 6 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa |
 | `results/` | 186 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
-| `docs/` | 7 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu |
-| `report/` | 13 | Sáu chương báo cáo, mục lục nguồn, tài liệu tham khảo, phụ lục, hình vẽ |
+| `docs/` | 10 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
 | `slides/` | 1 | Chỗ để slide thuyết trình (chưa có nội dung) |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
@@ -147,7 +147,7 @@ Chạy đầy đủ trên môi trường pin của ứng dụng (`.venv-demo`, c
 python scripts/report_appendix_b.py
 ```
 
-**Ghi chú nguồn Phụ lục B:** đầu ra `git ls-files` cho Bảng B.1; `scripts/report_appendix_b.py` (đọc trực tiếp đầu ra `pytest --collect-only -q`) cho Bảng B.2; số pass/skip ở mục 5.4 của Chương 5.
+**Ghi chú nguồn Phụ lục B:** đầu ra `git ls-files` cho Bảng B.1; `scripts/report_appendix_b.py` (đọc trực tiếp đầu ra `pytest --collect-only -q` cho Bảng B.2 và `git ls-files` cho Bảng B.1) cho cả hai bảng; số pass/skip ở mục 5.4 của Chương 5.
 
 ---
 
