@@ -10,6 +10,7 @@ dựng, nên khi nguồn đổi thì slide đổi theo.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -120,6 +121,25 @@ def load_baselines() -> dict:
         "a0": a0_models[best_key],
         "a0_model": best_key,
         "a0_all": a0_models,
+    }
+
+
+def load_rules() -> dict:
+    """Ng\u01b0\u1ee1ng v\u00e0 quy \u01b0\u1edbc \u0111\u00e3 ch\u1ed1t, \u0111\u1ecdc t\u1eeb
+    ``results/threshold_v3.md``.
+
+    Ng\u01b0\u1ee1ng 0,005 l\u00e0 quy \u01b0\u1edbc c\u1ee7a nh\u00f3m, kh\u00f4ng c\u00f3 c\u0103n c\u1ee9 d\u1eef
+    li\u1ec7u; \u0111i\u1ec1u ki\u1ec7n \u0111i k\u00e8m l\u00e0 kho\u1ea3ng tin c\u1eady 95% c\u1ee7a hi\u1ec7u s\u1ed1
+    kh\u00f4ng ch\u1ee9a 0.
+    """
+    text = (RESULTS / "threshold_v3.md").read_text(encoding="utf-8")
+    threshold = re.search(r">=\s*(\d,\d+)", text)
+    boot = re.search(r"(\d\.\d+)\s*l\u1ea7n", text)
+    folds = re.search(r"cross-validation (\d+) fold", text)
+    return {
+        "delta_threshold": float(threshold.group(1).replace(",", ".")),
+        "bootstrap": int(boot.group(1).replace(".", "")),
+        "cv_folds": int(folds.group(1)),
     }
 
 
@@ -332,6 +352,7 @@ def load_latency() -> dict:
         "n_support_vectors": int(artifact.get("n_support_vectors", 0)),
         "n_train": int(artifact.get("n_train", 0)),
         "cpu": data["environment"]["cpu"],
+        "cpu_short": re.search(r"(i\d-\w+)", data["environment"]["cpu"]).group(1),
         "cores": int(data["environment"]["cores"]),
         "python": data["environment"]["python"],
     }
@@ -368,21 +389,60 @@ def load_unlock() -> dict:
 def load_sources() -> dict:
     """Nguồn ảnh của từng lớp, từ ``results/eda/normal_source_labels.csv`` và ``splits``.
 
-    Normal được gán nhãn nguồn tường minh (RSNA/Mooney). COVID và Viral Pneumonia
-    lấy cỡ lớp từ split; phần còn lại suy ra thành nhóm Chowdhury.
+    Phân chia theo ``docs/dataset_provenance.md`` mục 2.1: ``18.479`` ảnh thuộc bộ
+    ``COVQU`` do Rahman và cộng sự (2021) phát hành — ``3.616`` COVID + ``6.012``
+    Lung Opacity + ``8.851`` Normal RSNA; ``2.686`` ảnh còn lại đến từ bộ Kaggle
+    Chest X-Ray Images (Pneumonia) của Mooney — ``1.345`` Viral Pneumonia +
+    ``1.341`` Normal. Lớp COVID ghép từ nhiều kho ảnh riêng lẻ, nên cùng nhãn
+    COVID không đồng nghĩa cùng một nguồn chụp.
     """
     frame = pd.read_csv(RESULTS / "eda" / "normal_source_labels.csv")
     per_source = frame["source"].value_counts().to_dict()
     split = load_split()
     per_class = split["per_class"]
-    chowdhury = split["total"] - per_source.get("mooney", 0) - per_class["Viral Pneumonia"]
+    rsna = int(per_source.get("rsna", 0))
+    mooney = int(per_source.get("mooney", 0))
+    covqu = per_class["COVID"] + per_class["Lung_Opacity"] + rsna
     return {
-        "normal_rsna": int(per_source.get("rsna", 0)),
-        "normal_mooney": int(per_source.get("mooney", 0)),
+        "covqu": int(covqu),
+        "mooney_total": mooney + per_class["Viral Pneumonia"],
+        "normal_rsna": rsna,
+        "normal_mooney": mooney,
         "viral": per_class["Viral Pneumonia"],
         "covid": per_class["COVID"],
-        "chowdhury": int(chowdhury),
+        "lung_opacity": per_class["Lung_Opacity"],
         "total": split["total"],
+    }
+
+
+def load_svm_cv() -> dict:
+    """Siêu tham số SVM: lưới ứng viên và bộ được chọn, đọc từ ``config.yaml``.
+
+    SVM là bộ tất định nên chỉ chạy một lần, nhưng siêu tham số vẫn chọn bằng
+    cross-validation trên train: lưới có bốn ứng viên và 5-fold
+    ``StratifiedGroupKFold`` chia nhóm theo ``group_id``.
+    """
+    text = (RESULTS / "rq2_ghep_svm_s42" / "config.yaml").read_text(encoding="utf-8")
+    block = text.split("param_grid:", 1)[1].split("selected_params:", 1)[0]
+    candidates = [line for line in block.splitlines() if line.strip().startswith("- C:")]
+    selected = text.split("selected_params:", 1)[1]
+    values = {}
+    for line in selected.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith(("cv_", "hyperparameters:", "selected_index")):
+            break
+        key, _, value = line.partition(":")
+        values[key.strip()] = value.strip()
+    folds = ""
+    for line in text.splitlines():
+        if "n_splits:" in line:
+            folds = line.split(":", 1)[1].strip()
+    return {
+        "n_candidates": len(candidates),
+        "n_splits": folds,
+        "selected": values,
     }
 
 
@@ -520,6 +580,8 @@ def build() -> dict:
         "brightness": load_brightness(),
         "unlock": unlock,
         "sources": load_sources(),
+        "svm_cv": load_svm_cv(),
+        "rules": load_rules(),
         "duplicates": load_duplicates(),
         "rq1_per_seed": load_rq1_per_seed(),
         "rq3_per_scenario": load_rq3_per_scenario(),

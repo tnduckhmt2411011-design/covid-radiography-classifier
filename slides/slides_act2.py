@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from . import svgkit as k
-from .data import D, fmt, fmt_ci, fmt_delta, fmt_int, fmt_pct
+from .data import D, fmt, fmt_ci, fmt_delta, fmt_int, fmt_pct, fmt_seconds
 from .texts import D4
 
 CH3 = "CHƯƠNG 3 · KẾT QUẢ RQ1 VÀ RQ2"
@@ -70,18 +70,22 @@ def slide_10() -> k.Page:
 
 # ------------------------------------------------------------------ slide 11
 def slide_11() -> k.Page:
+    ghep = next(row for row in D["rq1"] if row["key"] == "ghep")
+    rules = D["rules"]
+    ghep = next(row for row in D["rq1"] if row["key"] == "ghep")
+    rules = D["rules"]
     rows = sorted(D["rq1"], key=lambda row: row["macro_f1"], reverse=True)
     cards = [(row["key"], fmt(row["macro_f1"]), f"{_NAME_RQ1[row['key']]} · CI {fmt_ci(*row['ci'])}")
              for row in rows]
     return chart_page(
         "11_rq1.svg", kicker=CH3, page_no=11,
-        title="Nhóm ghép dẫn đầu với 0,8599 ± 0,0030",
+        title=f"Nhóm ghép dẩn đầu với {fmt(ghep['macro_f1'])} ± {fmt(ghep['std'], 4)}",
         source="Nguồn: results/report_rq1/r1_summary.csv · "
                "results/b0_majority, a0_shortcut/metrics.json",
         image="../images/fig_rq1_ci.png", image_w=736, image_h=274,
         cards=cards,
-        note=("Hai mốc nền B0 = 0,1627 và A0 = 0,2397 nằm ngoài khoảng tin cậy của cả bốn "
-              "nhóm đặc trưng.", k.AMBER_PALE),
+        note=(f"Hai mốc nền B0 = {fmt(D['baselines']['b0'])} và A0 = {fmt(D['baselines']['a0'])} nằm ngoài khoảng tin cậy của cả bốn "
+               "nhóm đặc trưng. RQ1 đo với Random Forest cố định 500 cây, không tinh chỉnh siêu tham số.", k.AMBER_PALE),
     )
 
 
@@ -91,6 +95,7 @@ _NAME_RQ1 = {"ghep": "Ghép 152 chiều", "glcmlbp": "GLCM + LBP 88", "hist": "H
 
 # ------------------------------------------------------------------ slide 12
 def slide_12() -> k.Page:
+    rules = D["rules"]
     ghep = next(row for row in D["rq1"] if row["key"] == "ghep")
     hog = next(row for row in D["rq1"] if row["key"] == "hog")
     glcmlbp = next(row for row in D["rq1"] if row["key"] == "glcmlbp")
@@ -104,19 +109,22 @@ def slide_12() -> k.Page:
     ]
     page = chart_page(
         "12_rq1_delta.svg", kicker=CH3, page_no=12,
-        title="Chỉ nói “tốt hơn” khi khoảng tin cậy không chứa 0",
+        title=f"Chỉ ghi nhận “tốt hơn” khi Δ ≥ {fmt(rules['delta_threshold'], 3)} và CI không chứa 0",
         source="Nguồn: results/report_rq1/r1_bootstrap_vs_reference.csv · "
                "results/rq1_cost_rank_record.md",
         image="../images/fig_rq1_delta.png", image_w=736, image_h=244,
         cards=cards,
-        note=(f"Chi phí cũng đi theo cỡ chiều: ghep tốn {fmt(D['rq1_cost']['ratio'], 1)} lần hist "
-              "cho mỗi ảnh. Cam = khoảng tin cậy chứa 0.", k.AMBER_PALE),
+        note=(f"Chi phí do phép trích quyết định, không do số chiều: HOG {fmt_int(D['features']['hog'])} chiều tốn {fmt_seconds(D['rq1_cost']['by_group']['hog']['per_image'])}/ảnh, "
+               f"GLCM + LBP {D['features']['glcm'] + D['features']['lbp']} chiều tốn {fmt_seconds(D['rq1_cost']['by_group']['glcmlbp']['per_image'])}/ảnh. "
+               "Cam = khoảng tin cậy chứa 0.", k.AMBER_PALE),
     )
     return page
 
 
 # ------------------------------------------------------------------ slide 13
 def slide_13() -> k.Page:
+    rf_rq1 = next(row for row in D["rq1"] if row["key"] == "ghep")
+    rf_rq2 = next(row for row in D["rq2"] if row["key"] == "rf")
     svm = next(row for row in D["rq2"] if row["key"] == "svm")
     rf = next(row for row in D["rq2"] if row["key"] == "rf")
     dt = next(row for row in D["rq2"] if row["key"] == "dt")
@@ -136,36 +144,55 @@ def slide_13() -> k.Page:
         note=(f"Δ SVM − RF = {fmt_delta(delta['diff'])} {fmt_ci(*delta['ci'])}; "
               f"validation còn lại {fmt_int(D['val_errors']['n'])} lỗi, trong đó "
               f"{fmt_int(D['val_errors']['normal_lung_opacity'])} lỗi thuộc cặp "
-              "Normal ↔ Lung_Opacity.", k.TEAL_PALE),
+               "Normal ↔ Lung_Opacity. Random Forest ở RQ2 chọn siêu tham số bằng CV nên ra "
+               f"{fmt(rf_rq2['macro_f1'])}, gần bằng Random Forest cố định {fmt(rf_rq1['macro_f1'])} ở RQ1.", k.TEAL_PALE),
     )
 
 
 # ------------------------------------------------------------------ slide 14
 def slide_14() -> k.Page:
     return divider("14_mo_chuong4.svg", chapter="CHƯƠNG 4", page_no=14,
-                   title="Mô hình nhìn vào đâu để phân loại?",
-                   body="Câu hỏi 3: mô hình dựa vào vùng phổi, hay vào vùng xung quanh. "
-                        "Che và cắt vùng phổi rồi đo lại trên chính ảnh đó.")
+                   title="Nếu che mất vùng phổi thì sao?",
+                   body="Câu hỏi 3: che và cắt theo mask phổi có làm "
+                        "đổi macro-F1 không. Năm kịch bản: huần luyện "
+                        "và đánh giá cùng một chế độ ảnh, "
+                        "rồi đo lại trên cùng 3.174 ảnh validation. "
+                        "Kịch bản cho biết vùng đó có đủ tín "
+                        "hiệu không, không cho biết mô hình gốc dựa "
+                        "vào đâu.")
 
 
 # ------------------------------------------------------------------ slide 15
 def slide_15() -> k.Page:
     scenarios = D["rq3"]["scenarios"]
-    drop = D["rq3"]["diffs"][("lung_to_lung", "orig_to_orig")]
+    lung = scenarios["lung_to_lung"]["macro_f1"]
+    outside = scenarios["out_to_out"]["macro_f1"]
+    gap_lung_out = D["rq3"]["diffs"][("lung_to_lung", "out_to_out")]
     cards = [
-        ("orig", fmt(scenarios["orig_to_orig"]["macro_f1"]), "Ảnh gốc · CI " + fmt_ci(*scenarios["orig_to_orig"]["ci"])),
-        ("lung", fmt(scenarios["lung_to_lung"]["macro_f1"]), "Chỉ phổi · CI " + fmt_ci(*scenarios["lung_to_lung"]["ci"])),
-        ("out", fmt(scenarios["out_to_out"]["macro_f1"]), "Ngoài phổi · CI " + fmt_ci(*scenarios["out_to_out"]["ci"])),
+        ("orig", fmt(scenarios["orig_to_orig"]["macro_f1"]),
+         "Gốc → gốc · CI " + fmt_ci(*scenarios["orig_to_orig"]["ci"])),
+        ("lung", fmt(lung),
+         "Chỉ phổi → chỉ phổi · CI "
+         + fmt_ci(*scenarios["lung_to_lung"]["ci"])),
+        ("out", fmt(outside),
+         "Ngoài phổi → ngoài phổi · CI "
+         + fmt_ci(*scenarios["out_to_out"]["ci"])),
     ]
     return chart_page(
         "15_rq3.svg", kicker=CH4, page_no=15,
-        title="Che phổi làm mất 0,0535 macro-F1",
+        title="Giữ lại vùng phổi làm mất "
+              f"{fmt(abs(scenarios['lung_to_lung']['macro_f1'] - scenarios['orig_to_orig']['macro_f1']))}",
         source="Nguồn: results/report_rq3/r1_summary.csv · "
                "results/report_rq3/r3_shortcut_bootstrap.csv",
         image="../images/fig_rq3_scenarios.png", image_w=736, image_h=281,
         cards=cards,
-        note=(f"Δ chỉ phổi − gốc = {fmt_delta(drop['diff'])} "
-              f"{fmt_ci(*drop['ci'])}; khoảng tin cậy không chứa 0.", k.AMBER_PALE),
+        note=(f"Quy ước A → B: huần luyện trên ảnh dạng A, "
+              f"đánh giá trên ảnh dạng B. Chỉ phổi thua gốc "
+              f"{fmt_delta(D['rq3']['diffs'][('lung_to_lung', 'orig_to_orig')]['diff'])}; "
+              f"chỉ ngoài phổi thua chỉ phổi "
+              f"{fmt_delta(gap_lung_out['diff'])} "
+              f"{fmt_ci(*gap_lung_out['ci'])} — không chứa 0.",
+              k.AMBER_PALE),
     )
 
 
@@ -176,51 +203,50 @@ def slide_16() -> k.Page:
     outside = scenarios["out_to_out"]["macro_f1"]
     diff = D["rq3"]["diffs"][("orig_to_orig", "out_to_out")]
     page = k.Page("16_rq3_ngoai_phoi.svg", layout="content", kicker=CH4, page_no=16,
-                  title="Che sạch phổi vẫn còn 0,8921 — và khoảng tin cậy chứa 0",
+                  title=f"Che sạch phổi vẫn còn {fmt(outside)} macro-F1",
                   source="Nguồn: results/report_rq3/r3_shortcut_bootstrap.csv · "
-                         "results/rq3_mask_check/")
-    zone = page.zone("pair", 82, 214, 1116, 244)
+                         "results/rq3_mask_check/ · slides/assets/mask_trio.png")
+    zone = page.zone("trio", 82, 214, 624, 316)
     zone.card()
-    zone.text("pair-full-cap", 112, 258, "Ảnh gốc", size=19, color=k.INK_SOFT)
-    zone.text("pair-full", 112, 342, fmt(full), size=96, color=k.TEAL, weight="bold")
-    zone.text("pair-out-cap", 470, 258, "Chỉ vùng ngoài phổi", size=19, color=k.INK_SOFT)
-    zone.text("pair-out", 470, 342, fmt(outside), size=96, color=k.TEAL, weight="bold")
-    zone.text("pair-delta", 840, 300, f"Δ {fmt_delta(diff['diff'])}", size=44, color=k.AMBER,
-              weight="bold")
-    zone.text("pair-delta-ci", 840, 348, f"{fmt_ci(*diff['ci'])}", size=21, color=k.INK_SOFT)
-    zone.text("pair-delta-flag", 840, 376, "khoảng tin cậy chứa 0", size=19, color=k.AMBER,
-              weight="bold")
-    zone.text("pair-delta-note", 840, 408,
-              "Không đủ căn cứ để nói vùng phổi là nguồn tín hiệu duy nhất.",
-              size=21, color=k.INK, max_width=336, line_h=26)
+    zone.image("trio-image", "../images/mask_trio.png", 98, 238, 592, 197)
+    zone.text("trio-cap", 98, 466, "Ba chế độ của một ảnh validation",
+              size=19, color=k.INK_SOFT)
+    zone.text("trio-cap2", 98, 494,
+              "Ảnh gốc · chỉ giữ vùng phổi · chỉ giữ "
+              "vùng ngoài phổi. Cả ba đều là ảnh split val.",
+              size=19, color=k.INK, max_width=592, line_h=26)
     page.content(zone.done())
 
-    page.content(page.text("mask-label", 82, 476, "CÁCH CHE VÙNG PHỔI TRÊN ẢNH CỦA BỐN LỚP",
-                           size=19, color=k.TEAL, weight="bold"))
-    classes = ["COVID", "Lung_Opacity", "Normal", "Viral_Pneumonia"]
-    for index, label in enumerate(classes):
-        x = 82 + index * 284
-        zone = page.zone(f"mask{index}", x, 500, 276, 108)
-        zone.card()
-        zone.image(f"mask-image{index}", f"../images/mask_strip_{label}.png", x + 10, 510, 256, 26)
-        zone.text(f"mask-cap{index}", x + 14, 570, _MASK_NAME[label], size=19,
-                  color=k.INK_SOFT, max_width=252)
-        page.content(zone.done())
+    zone = page.zone("pair", 730, 214, 468, 396)
+    zone.card()
+    zone.text("pair-full-cap", 756, 252, "Ảnh gốc (gốc → gốc)", size=19,
+              color=k.INK_SOFT)
+    zone.text("pair-full", 756, 316, fmt(full), size=72, color=k.TEAL, weight="bold")
+    zone.text("pair-out-cap", 756, 372,
+              "Chỉ vùng ngoài phổi (ngoài phổi → ngoài phổi)",
+              size=19, color=k.INK_SOFT)
+    zone.text("pair-out", 756, 436, fmt(outside), size=72, color=k.TEAL, weight="bold")
+    zone.line("pair-rule", 756, 476, 1172, 476, stroke=k.LINE)
+    zone.text("pair-delta", 756, 512,
+              f"Δ {fmt_delta(diff['diff'])} {fmt_ci(*diff['ci'])}", size=26, color=k.AMBER,
+              weight="bold")
+    zone.text("pair-delta-flag", 756, 542, "khoảng tin cậy của hiệu chứa 0",
+              size=19, color=k.AMBER, weight="bold")
+    zone.text("pair-note", 756, 566,
+              "Chưa đủ căn cứ để nói vùng phổi là "
+              "nguồn tín hiệu duy nhất.",
+              size=19, color=k.INK, max_width=416, line_h=26)
+    page.content(zone.done())
     return page
-
-
-_MASK_NAME = {
-    "COVID": "COVID-19: ảnh gốc, chỉ phổi, ngoài phổi",
-    "Lung_Opacity": "Lung Opacity: ảnh gốc, chỉ phổi, ngoài phổi",
-    "Normal": "Normal: ảnh gốc, chỉ phổi, ngoài phổi",
-    "Viral_Pneumonia": "Viral Pneumonia: ảnh gốc, chỉ phổi, ngoài phổi",
-}
 
 
 # ------------------------------------------------------------------ slide 17
 def slide_17() -> k.Page:
     blocks = {block["block"]: block for block in D["permutation"]["outside_only"]}
     lung = {block["block"]: block for block in D["permutation"]["lung_only"]}
+    glcm_out, lbp_out = blocks["glcm_60"], blocks["lbp_28"]
+    gap = abs(glcm_out["importance"] - lbp_out["importance"])
+    noise = max(glcm_out["std"], lbp_out["std"])
     cards = [
         ("glcm", fmt(lung["glcm_60"]["importance"]), "Chỉ phổi · GLCM 60 chiều"),
         ("lbp", fmt(blocks["lbp_28"]["importance"]), "Ngoài phổi · LBP 28 chiều"),
@@ -228,56 +254,73 @@ def slide_17() -> k.Page:
     ]
     return chart_page(
         "17_rq3_perm.svg", kicker=CH4, page_no=17,
-        title="Khi buộc nhìn trong phổi, GLCM mới lên tiếng",
+        title=f"GLCM cao nhất khi chỉ nhìn trong phổi: {fmt(lung['glcm_60']['importance'])}",
         source="Nguồn: results/rq3_permutation_importance.csv",
         image="../images/fig_rq3_perm.png", image_w=736, image_h=251,
         cards=cards,
-        note=(f"Xáo trộn GLCM trong vùng phổi làm mất {fmt(lung['glcm_60']['importance'])} "
-              f"macro-F1; xáo trộn LBP ngoài phổi làm mất "
-              f"{fmt(blocks['lbp_28']['importance'])}.", k.TEAL_PALE),
+        note=(f"GLCM ngoài phổi đạt {fmt(glcm_out['importance'])} và LBP "
+              f"{fmt(lbp_out['importance'])}: chênh {fmt(gap, 4)}, nhỏ hơn độ "
+              f"lịch {fmt(noise, 4)} của 10 lần xáo trộn, nên không "
+              f"xếp hạng hai khối này. Mức giảm chưa chuẩn hóa "
+              f"theo cỡ khối (60 chiều so với 28).", k.AMBER_PALE),
     )
 
 
 # ------------------------------------------------------------------ slide 18
 def slide_18() -> k.Page:
     page = k.Page("18_phan_chung.svg", layout="content", kicker=CH4, page_no=18,
-                  title="Ba giả thuyết, bốn điều kiện bác bỏ",
-                  source="Nguồn: report/04 mục 4.3 · results/threshold_v3.md (R3)")
-    page.content(page.text("hyp-label", 82, 222, "BA GIẢ THUYẾT (CHƯA KIỂM CHỨNG)", size=19,
-                           color=k.TEAL, weight="bold"))
+                  title="Ba giả thuyết, bốn câu hỏi cần bằng chứng",
+                  source="Nguồn: report/04_hoc_loi_tat_rq3.md mục 4.3 · "
+                         "results/threshold_v3.md (R3) · results/final_test/r5_gioi_han.md")
+    page.content(page.text("hyp-label", 82, 226, "BA GIẢ THUYẾT (CHƠA KIỂM CHỨNG)",
+                           size=19, color=k.TEAL, weight="bold"))
     hypotheses = [
-        ("Tuổi nhi", "Ảnh bệnh nhi có độ sáng và độ tương phản khác ảnh người lớn"),
-        ("Ký hiệu thiết bị", "Mỗi máy X-quang để lại dấu vận riêng trên ảnh"),
-        ("Covariate shift", "Tập test khác train về phân bố nguồn ảnh"),
+        ("Tuổi nhi", "Giải phẫu lồng ngực trẻ nhỏ ở lớp "
+                          "Viral Pneumonia"),
+        ("Ký hiệu thiết bị", "Dấu vận máy chụp ngoài vùng "
+                                                "phổi ở lớp COVID"),
+        ("Dịch chuyển phân phối", "Che vùng làm đổi phân phối "
+                                                    "cả ba khối đặc trưng"),
     ]
     for index, (name, detail) in enumerate(hypotheses):
-        y = 250 + index * 106
-        zone = page.zone(f"hyp{index}", 82, y, 548, 96)
+        y = 240 + index * 82
+        zone = page.zone(f"hyp{index}", 82, y, 548, 76)
         zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
-        zone.text(f"hyp{index}-name", 102, y + 36, name, size=21, color=k.INK, weight="bold")
-        zone.text(f"hyp{index}-tag", 462, y + 36, "chưa kiểm chứng", size=19, color=k.AMBER,
-                  weight="bold")
-        zone.text(f"hyp{index}-note", 102, y + 64, detail, size=19, color=k.INK_SOFT, max_width=500)
+        zone.text(f"hyp{index}-name", 102, y + 34, name, size=21, color=k.INK, weight="bold")
+        zone.text(f"hyp{index}-tag", 462, y + 34, "chưa kiểm chứng", size=19,
+                  color=k.AMBER, weight="bold")
+        zone.text(f"hyp{index}-note", 102, y + 62, detail, size=19, color=k.INK_SOFT,
+                  max_width=500)
         page.content(zone.done())
 
-    page.content(page.text("fals-label", 640, 222, "BỐN ĐIỀU KIỆN BÁC BỎ", size=19,
-                           color=k.TEAL, weight="bold"))
+    page.content(page.text("fals-label", 640, 226,
+                           "DỰ ĐOÁN NẾU ĐÚNG · BẰNG CHỨNG CẤN",
+                           size=19, color=k.TEAL, weight="bold"))
     conditions = [
-        "Δ của kịch bản “ngoài phổi” mà khoảng tin cậy chứa 0",
-        "Macro-F1 test nằm ngoài khoảng tin cậy của val",
-        "Permutation importance khối ngoài phổi về 0",
-        "Mô hình chỉ ngoài phổi tụng xuống dưới mốc A0",
+        "Chỉ ngoài phổi tụt xuống dưới mốc A0",
+        "Test nằm ngoài khoảng tin cậy của val",
+        "Hiệu gốc − ngoài phổi có CI chứa 0",
+        "Xáo trộn khối ngoài phổi không làm đổi điểm",
     ]
-    zone = page.zone("fals", 640, 250, 558, 218)
+    zone = page.zone("fals", 640, 240, 558, 266)
     zone.card()
     for index, item in enumerate(conditions):
-        y = 292 + index * 42
+        y = 272 + index * 40
         zone.text(f"cond{index}-num", 660, y, f"{index + 1}", size=21, color=k.TEAL_LIGHT,
                   weight="bold")
         zone.text(f"cond{index}-text", 688, y, item, size=21, color=k.INK, max_width=482)
+    zone.line("fals-rule", 660, 414, 1178, 414, stroke=k.LINE)
+    zone.text("fals-status", 660, 436,
+              f"Đã xảy ra: {fmt(D['test']['macro_f1'])} nằm ngoài "
+              f"{fmt_ci(*next(r for r in D['rq2'] if r['key'] == 'svm')['ci'])} của val; CI "
+              f"của hiệu gốc − ngoài phổi chứa 0. Đi ngược: "
+              f"chỉ ngoài phổi đạt "
+              f"{fmt(D['rq3']['scenarios']['out_to_out']['macro_f1'])}.",
+              size=19, color=k.INK, max_width=518, line_h=24)
     page.content(zone.done())
-    page.content(k.note_zone(page, "d4-note", 640, 490, 558,
-                             "Quy tắc D4: " + D4, fill=k.TEAL_PALE, size=21, line_h=30))
+
+    page.content(k.note_zone(page, "d4-note", 82, 522, 1116, "Quy tắc D4: " + D4,
+                             fill=k.TEAL_PALE, size=19, line_h=24))
     return page
 
 

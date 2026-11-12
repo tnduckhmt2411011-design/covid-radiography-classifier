@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from . import svgkit as k
-from .data import CLASS_VI, D, fmt, fmt_int, fmt_pct
+from .data import CLASS_VI, D, fmt, fmt_int, fmt_pct, fmt_seconds
 from .texts import (CLASS, COURSE, FACULTY, MEMBERS, PLACE, SEMESTER, SCHOOL, SUPERVISOR,
                     TITLE)
 
@@ -144,33 +144,40 @@ def slide_03() -> k.Page:
 # ------------------------------------------------------------------ slide 4
 def slide_04() -> k.Page:
     page = k.Page("04_cauhoi.svg", layout="content", kicker=CH1, page_no=4,
-                  title="Ba câu hỏi và một ranh giới: chỉ học máy cổ điển",
-                  source="Nguồn: results/threshold_v3.md · report/01 mục 1.4")
+                  title="Ba câu hỏi và một ranh giới: chỉ học máy cổ điểu",
+                  source="Nguồn: results/threshold_v3.md mục 1 · report/01 mục 1.4")
     questions = [
         ("RQ1", "Nhóm đặc trưng nào lấy được tín hiệu nhất?",
-         "Bốn nhóm: histogram, GLCM+LBP, HOG, ghép; so sánh bằng macro-F1 và CI 95%."),
+         "Bốn nhóm: histogram, GLCM+LBP, HOG, ghép; so bằng macro-F1 và "
+         "CI 95%, với một bộ phân loại cố định."),
         ("RQ2", "Bộ phân loại nào phù hợp với 152 chiều đặc trưng?",
-         "Sáu bộ phân loại cùng một thước đo, mỗi bộ ba seed, chênh lệch có bootstrap."),
-        ("RQ3", "Mô hình dựa vào vùng phổi hay vùng ngoài phổi?",
-         "Che và cắt vùng phổi trên cùng ảnh rồi đo lại macro-F1 từng kịch bản."),
+         "Sáu bộ trên cùng vectơ; siêu tham số chọn bằng "
+         "5-fold CV trên train. DT, RF, GB chạy ba seed, bộ tất định "
+         "một lần."),
+        ("RQ3", "Che và cắt vùng phổi có làm đổi macro-F1 không?",
+         "Năm kịch bản: huần luyện và đánh giá cùng "
+         "một chế độ ảnh, đo lại trên cùng tập "
+         "validation."),
     ]
     for index, (name, question, detail) in enumerate(questions):
         x = 82 + index * 380
-        zone = page.zone(name, x, 214, 352, 244)
+        zone = page.zone(name, x, 208, 352, 296)
         zone.card()
-        zone.text(f"{name}-tag", x + 20, 250, name, size=22, color=k.TEAL, weight="bold")
-        zone.text(f"{name}-q", x + 20, 284, question, size=21, color=k.INK, max_width=312,
+        zone.text(f"{name}-tag", x + 20, 246, name, size=22, color=k.TEAL, weight="bold")
+        zone.text(f"{name}-q", x + 20, 280, question, size=21, color=k.INK, max_width=312,
                   line_h=28)
-        zone.text(f"{name}-d", x + 20, 396, detail, size=19, color=k.INK_SOFT, max_width=312,
+        zone.text(f"{name}-d", x + 20, 392, detail, size=19, color=k.INK_SOFT, max_width=312,
                   line_h=26)
         page.content(zone.done())
 
-    zone = page.zone("h7-band", 82, 482, 1116, 104)
+    zone = page.zone("h7-band", 82, 522, 1116, 88)
     zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
-    zone.text("h7-tag", 102, 520, "RANH GIỚI H7", size=19, color=k.AMBER, weight="bold")
-    zone.text("h7-text", 102, 550,
-              "Chỉ dùng học máy cổ điển với đặc trưng thủ công; ảnh gốc xám 299×299, "
-              "không mạng tích hợp, không dữ liệu ngoài bộ đã công bố.",
+    zone.text("h7-tag", 102, 552, "RANH GIỊI H7", size=19, color=k.AMBER, weight="bold")
+    zone.text("h7-text", 102, 578,
+              "Chỉ dùng học máy cổ điểu với đặc "
+              "trưng thủ công — không Deep Learning (mạng nơ-ron); "
+              "ảnh gốc xám 299×299, không dữ liệu ngoài bộ "
+              "đã công bố.",
               size=19, color=k.INK, max_width=1076, line_h=26)
     page.content(zone.done())
     return page
@@ -183,43 +190,48 @@ def slide_05() -> k.Page:
     page = k.Page("05_nguon.svg", layout="content", kicker=CH2, page_no=5,
                   title="Nhãn lớp không độc lập với nguồn ảnh",
                   source="Nguồn: results/eda/normal_source_labels.csv · splits/split_v1.csv "
-                         "· report/02 mục 2.1")
+                         "· docs/dataset_provenance.md mục 2.1")
     blocks = [
-        ("Chowdhury et al.", fmt_int(sources["chowdhury"]),
-         f"COVID {fmt_int(split['per_class']['COVID'])} · Lung Opacity "
-         f"{fmt_int(split['per_class']['Lung_Opacity'])} · "
+        ("Rahman và cộng sự (2021) — bộ COVQU", fmt_int(sources["covqu"]),
+         f"COVID {fmt_int(sources['covid'])} · Lung Opacity "
+         f"{fmt_int(sources['lung_opacity'])} · "
          f"Normal {fmt_int(sources['normal_rsna'])} (nhóm RSNA)",
-         "một tệp nguồn, ảnh gốc của bộ dữ liệu"),
+         "một bộ phát hành; lớp COVID ghép từ nhiều kho ảnh"),
         ("Mooney et al. — Normal", fmt_int(sources["normal_mooney"]),
-         "mẫu Normal ghi nhãn từ bộ của Mooney",
+         "mẫu Normal ghi nhãn từ bộ Chest X-Ray Images (Pneumonia)",
          f"nằm lẫn trong {fmt_int(split['per_class']['Normal'])} ảnh Normal"),
         ("Mooney et al. — Viral Pneumonia", fmt_int(sources["viral"]),
-         "toàn bộ lớp Viral Pneumonia đến từ một nguồn", "lớp nhỏ nhất, một nguồn duy nhất"),
+         "toàn bộ lớp Viral Pneumonia đến từ một nguồn",
+         "lớp nhỏ nhất, một nguồn duy nhất"),
     ]
     for index, (name, count, detail, note) in enumerate(blocks):
         x = 82 + index * 380
-        zone = page.zone(f"src{index}", x, 214, 352, 240)
+        zone = page.zone(f"src{index}", x, 208, 352, 262)
         zone.card()
-        zone.text(f"src{index}-name", x + 20, 250, name, size=19, color=k.TEAL, weight="bold",
+        zone.text(f"src{index}-name", x + 20, 244, name, size=19, color=k.TEAL, weight="bold",
                   max_width=312)
-        zone.text(f"src{index}-count", x + 20, 308, count, size=46, color=k.INK, weight="bold")
-        zone.text(f"src{index}-detail", x + 20, 344, detail, size=19, color=k.INK_SOFT,
+        zone.text(f"src{index}-count", x + 20, 302, count, size=46, color=k.INK, weight="bold")
+        zone.text(f"src{index}-detail", x + 20, 338, detail, size=19, color=k.INK_SOFT,
                   max_width=312, line_h=26)
-        zone.text(f"src{index}-note", x + 20, 418, note, size=19, color=k.INK, max_width=312,
+        zone.text(f"src{index}-note", x + 20, 412, note, size=19, color=k.INK, max_width=312,
                   line_h=26)
         page.content(zone.done())
 
-    zone = page.zone("src-total", 82, 474, 1116, 112)
+    zone = page.zone("src-total", 82, 488, 1116, 112)
     zone.card(fill=k.TEAL_PALE, stroke=k.TEAL_LIGHT)
-    zone.text("src-total-num", 108, 528, fmt_int(sources["total"]), size=34, color=k.TEAL,
+    zone.text("src-total-num", 108, 542, fmt_int(sources["total"]), size=34, color=k.TEAL,
               weight="bold")
-    zone.text("src-total-text", 244, 522,
-              "ảnh đến từ ít nhất hai nguồn công bố khác nhau, ghép lại trong một bộ dữ liệu.",
-              size=21, color=k.INK, max_width=920, line_h=28)
-    zone.text("src-total-note", 108, 562,
-              "Khớp hai nguồn theo tên lớp chưa đủ: cùng nhãn Normal, hai nguồn có thể khác "
-              "thiết bị, dải sáng và tỉ lệ bệnh.",
-              size=19, color=k.INK_SOFT, max_width=1070, line_h=26)
+    zone.text("src-total-text", 244, 536,
+               f"ảnh đến từ nhiều nguồn công bố khác "
+               "nhau, ghép lại trong một bộ dữ liệu; "
+               f"{fmt_int(sources['mooney_total'])} ảnh trong số đó thuộc "
+               "bộ Kaggle của Mooney.",
+               size=21, color=k.INK, max_width=920, line_h=28)
+    zone.text("src-total-note", 108, 576,
+               "Khớp hai nguồn theo tên lớp chưa đủ: cùng "
+               "nhãn Normal, hai nguồn có thể khác thiết bị, "
+               "dải sáng và tỉ lệ bệnh.",
+               size=19, color=k.INK_SOFT, max_width=1070, line_h=26)
     page.content(zone.done())
     return page
 
@@ -228,8 +240,8 @@ def slide_05() -> k.Page:
 def slide_06() -> k.Page:
     covid = next(row for row in D["brightness"] if row["label"] == "COVID")
     page = k.Page("06_dosang.svg", layout="content", kicker=CH2, page_no=6,
-                  title="Độ sáng và metadata chỉ chạm tới 0,2397",
-                  source="Nguồn: results/eda/brightness_by_class.csv · results/a0_shortcut/metrics.json")
+                  title="A0 chỉ đọc metadata tệp, không nhìn ảnh: 0,2397",
+                  source="Nguồn: results/eda/brightness_by_class.csv · results/a0_shortcut, b0_majority/metrics.json · results/threshold_v3.md mục 3")
     zone = page.zone("chart", 82, 208, 748, 372)
     zone.card()
     zone.image("brightness", "../images/fig_brightness.png", 96, 222, 720, 330)
@@ -239,22 +251,22 @@ def slide_06() -> k.Page:
 
     stats = [
         ("AUC COVID/nền", fmt(covid["auc_vs_rest"]), "phân biệt COVID nhờ độ sáng trung bình"),
-        ("A0 (chỉ metadata)", fmt(D["baselines"]["a0"]), "macro-F1 khi không nhìn ảnh gốc"),
+        ("A0 (chỉ metadata)", fmt(D["baselines"]["a0"]),
+         "macro-F1 khi bộ phân loại chỉ đọc thuộc tính tệp ảnh"),
     ]
     for index, (caption, value, note) in enumerate(stats):
-        y = 214 + index * 178
-        zone = page.zone(f"num{index}", 858, y, 340, 160)
+        y = 208 + index * 162
+        zone = page.zone(f"num{index}", 858, y, 340, 146)
         zone.card()
-        zone.text(f"num{index}-cap", 878, y + 38, caption, size=19, color=k.INK_SOFT)
-        zone.text(f"num{index}-val", 878, y + 82, value, size=46, color=k.TEAL, weight="bold")
-        zone.text(f"num{index}-note", 878, y + 124, note, size=19, color=k.INK, max_width=300,
+        zone.text(f"num{index}-cap", 878, y + 32, caption, size=19, color=k.INK_SOFT)
+        zone.text(f"num{index}-val", 878, y + 76, value, size=46, color=k.TEAL, weight="bold")
+        zone.text(f"num{index}-note", 878, y + 112, note, size=19, color=k.INK, max_width=300,
                   line_h=24)
         page.content(zone.done())
 
     page.content(
-        k.note_zone(page, "meta-note", 858, 566, 340,
-                    f"B0 = {fmt(D['baselines']['b0'])}: chỉ cần độ sáng và nhãn nguồn, "
-                    "không cần nhìn tổn thương."),
+        k.note_zone(page, "meta-note", 858, 528, 340,
+                     f"B0 = {fmt(D['baselines']['b0'])}: bộ dự đoán mọi ảnh là Normal. Cả B0 và A0 đều trên validation."),
     )
     return page
 
@@ -266,8 +278,7 @@ def slide_07() -> k.Page:
     dup = D["duplicates"]
     page = k.Page("07_trunglap.svg", layout="content", kicker=CH2, page_no=7,
                   title="Trùng tuyệt đối bị chặn, gần trùng thì không",
-                  source="Nguồn: outputs/split_check/duplicates_summary.json, "
-                         "cross_split_hamming_report.json · splits/split_v1.csv")
+                  source="Nguồn: splits/README.md mục 3 · splits/split_v1.csv")
     page.content(page.text("split-label", 82, 222, "BA TẬP SAU KHI TÁCH NHÓM", size=19,
                            color=k.TEAL, weight="bold"))
     for index, (name, count) in enumerate([("train", split["per_split"]["train"]),
@@ -317,6 +328,8 @@ def slide_07() -> k.Page:
 
 # ------------------------------------------------------------------ slide 8
 def slide_08() -> k.Page:
+    cost = D["rq1_cost"]["by_group"]
+    hog_cost, glcm_cost = cost["hog"], cost["glcmlbp"]
     features = D["features"]
     split = D["split"]
     hog = next(row for row in D["rq1"] if row["key"] == "hog")
@@ -357,8 +370,9 @@ def slide_08() -> k.Page:
               f"{fmt(hog['macro_f1'])} trên validation.",
               size=21, color=k.INK, max_width=746, line_h=28)
     zone.text("hog-note2", 420, 552,
-              f"Chi phí tính toán cũng đi theo cỡ chiều: ghep tốn {fmt(D['rq1_cost']['ratio'], 1)} "
-              "lần hist cho mỗi ảnh.",
+              f"Chi phí do phép trích quyết định, không do số chiều: HOG {fmt_int(features['hog'])} chiều chỉ tốn "
+              f"{fmt_seconds(hog_cost['per_image'])}/ảnh, còn GLCM + LBP {features['glcm'] + features['lbp']} chiều tốn "
+              f"{fmt_seconds(glcm_cost['per_image'])}/ảnh.",
               size=19, color=k.INK_SOFT, max_width=746, line_h=26)
     page.content(zone.done())
     return page
@@ -366,11 +380,14 @@ def slide_08() -> k.Page:
 
 # ------------------------------------------------------------------ slide 9
 def slide_09() -> k.Page:
+    svm = next(row for row in D["rq2"] if row["key"] == "svm")
+    cv = D["svm_cv"]
     page = k.Page("09_giaithuat.svg", layout="content", kicker=CH2, page_no=9,
-                  title="Sáu bộ phân loại, một thước đo duy nhất",
-                  source="Nguồn: results/report_rq2/r1_summary.csv · "
-                         "results/report_rq2/r2_bootstrap_vs_reference.csv")
-    page.content(page.text("classifiers-label", 82, 222, "SÁU BỘ PHÂN LOẠI TRÊN CÙNG VECTƠ 152 CHIỀU",
+                  title="S\u00e1u b\u1ed9 ph\u00e2n lo\u1ea1i, m\u1ed9t th\u01b0\u1edbc \u0111o duy nh\u1ea5t",
+                  source="Ngu\u1ed3n: results/report_rq2/r1_summary.csv \u00b7 "
+                         "results/report_rq2/r1_bootstrap_vs_reference.csv \u00b7 "
+                         "results/threshold_v3.md m\u1ee5c 3 v\u00e0 5")
+    page.content(page.text("classifiers-label", 82, 222, "S\u00c1U B\u1ed8 PH\u00c2N LO\u1ea0I TR\u00caN C\u00d9NG VECT\u01a0 152 CHI\u1ec0U",
                            size=19, color=k.TEAL, weight="bold"))
     names = ["Logistic Regression", "k-NN", "Decision Tree", "Random Forest", "Gradient Boosting",
              "SVM RBF"]
@@ -386,26 +403,30 @@ def slide_09() -> k.Page:
 
     zone = page.zone("proto", 700, 214, 498, 306)
     zone.card()
-    zone.text("proto-tag", 724, 250, "GIAO THỨC ĐO", size=19, color=k.TEAL, weight="bold")
+    zone.text("proto-tag", 724, 250, "GIAO TH\u1ee8C \u0110O", size=19, color=k.TEAL, weight="bold")
     protocol = [
-        ("Ba seed", "42 · 43 · 44 trên cùng một split"),
-        ("Bootstrap", "2.000 lần, CI 95% cho mỗi macro-F1"),
-        ("Ngưỡng chênh", "Δ ≥ 0,005 mới ghi nhận “tốt hơn”"),
-        ("Mốc tham chiếu", "Random Forest, đối chiếu từng bộ"),
+        ("Si\u00eau tham s\u1ed1", "5-fold StratifiedGroupKFold tr\u00ean train"),
+        ("Seed", "42 \u00b7 43 \u00b7 44 cho DT, RF, GB"),
+        ("Bootstrap", "2.000 l\u1ea7n, CI 95% m\u1ed7i macro-F1"),
+        ("Quy \u01b0\u1edbc nh\u00f3m", "\u0394 \u2265 0,005 v\u00e0 CI kh\u00f4ng ch\u1ee9a 0"),
+        ("Tham chi\u1ebfu", "Random Forest c\u1ee7a RQ1"),
     ]
     for index, (name, detail) in enumerate(protocol):
-        y = 290 + index * 54
+        y = 288 + index * 48
         zone.text(f"proto-name{index}", 724, y, name, size=20, color=k.INK, weight="bold")
-        zone.text(f"proto-detail{index}", 920, y, detail, size=19, color=k.INK_SOFT, max_width=252)
+        zone.text(f"proto-detail{index}", 900, y, detail, size=19, color=k.INK_SOFT,
+                  max_width=274, line_h=24)
     page.content(zone.done())
 
     page.content(
         k.note_zone(page, "proto-note", 82, 462, 520,
-                    "Mọi con số trong chương 3 là macro-F1 trên "
-                    f"{fmt_int(D['split']['per_split']['val'])} ảnh validation."),
-        k.note_zone(page, "proto-note2", 700, 538, 498,
-                    "SVM là bộ tất định: một tham số duy nhất nên chỉ chạy một lần, "
-                    "ba seed áp cho các bộ khác.", fill=k.AMBER_PALE),
+                    "M\u1ecdi con s\u1ed1 trong ch\u01b0\u01a1ng 3 l\u00e0 macro-F1 tr\u00ean "
+                    f"{fmt_int(D['split']['per_split']['val'])} \u1ea3nh validation."),
+        k.note_zone(page, "proto-note2", 700, 530, 498,
+                    f"SVM l\u00e0 b\u1ed9 t\u1ea5t \u0111\u1ecbnh n\u00ean ch\u1ea1y m\u1ed9t l\u1ea7n "
+                    f"(\u0111\u1ed9 l\u1ec7ch chu\u1ea9n {fmt(svm['std'])}); si\u00eau tham s\u1ed1 "
+                    f"c\u1ee7a n\u00f3 ch\u1ecdn t\u1eeb {cv['n_candidates']} \u1ee9ng vi\u00ean b\u1eb1ng "
+                    f"{cv['n_splits']}-fold CV.", fill=k.AMBER_PALE),
     )
     return page
 

@@ -10,12 +10,12 @@ và layout `report_core`.
 - `render/` — ảnh PNG từng trang, dùng để duyệt bằng mắt.
 
 ```
-python -m slides.make_assets   # cắt ảnh val, dải mask, logo, kiểm cổng H2
+python -m slides.make_assets   # cắt ảnh val, bộ ba chế độ mask, logo, kiểm cổng H2
 python -m slides.figures       # sinh 8 biểu đồ từ CSV/JSON trong results/
 python -m slides.build_deck    # sinh 34 SVG vào dự án ppt-master
 python -m slides.export        # kiểm toán → PPTX → PDF → PNG
-python -m slides.audit         # sáu nhóm kiểm: đáy trống, chồng lấn, cỡ chữ,
-                               # lề 0,5 in, nguồn, cổng H2, D4, cụm từ cấm
+python -m slides.audit         # bảy nhóm kiểm: đáy trống, chồng lấn (kể cả ô chân trang),
+                               # cỡ chữ, lề 0,5 in, nguồn, cổng H2, D4, cụm từ cấm
 python -m slides.render        # alias của export --skip-render + vẽ PNG
 pytest tests/test_slides_data.py
 ```
@@ -24,9 +24,24 @@ Cách dựng trang: mỗi slide là một tệp SVG trong
 `s6_03_bao_ve_cuoi_ky_ppt169_20261112/svg_output/`, gắn Master/Layout đã khai
 báo; nền và đường kẻ giữ trên Master. **Không id nào lặp lại** trong toàn bộ
 deck (mỗi id mang tiền tố số trang) và các vùng gốc không chồng lấn — hai điều
-kiện bắt buộc của ppt-master. Phông ghi trong SVG là Segoe UI; sau khi xuất, một
-bước vá ghi tường minh `typeface="Segoe UI"` vào XML slide vì WPS bỏ qua tham
-chiếu `+mj-lt`/`+mn-lt` của theme.
+kiện bắt buộc của ppt-master. Cổng chồng lấn của `audit.py` đối chiếu cả ô
+placeholder chân trang, vì ppt-master chỉ so chồng lấn giữa các vùng nội dung.
+Phông ghi trong SVG là Segoe UI; sau khi xuất, một bước vá ghi tường minh
+`typeface="Segoe UI"` vào XML slide vì WPS bỏ qua tham chiếu `+mj-lt`/`+mn-lt`
+của theme.
+
+**Cổng dữ liệu:** mọi con số đọc từ `slides/data.py`, đọc trực tiếp CSV/JSON
+tại thời điểm dựng; không có số nào gõ cứng, kể cả số trong tiêu đề. Ngay cả
+ngưỡng quy ước Δ ≥ 0,005, cỡ lưới siêu tham số của SVM và tên CPU cũng đọc từ
+`results/threshold_v3.md`, `results/rq2_ghep_svm_s42/config.yaml` và
+`results/demo_latency_sustained/latency.json`. Ảnh minh hoạ đều là ảnh `val`
+(`COVID-1006.png`, `Normal-9540.png`, bộ ba chế độ mask của `COVID-1006.png`),
+không mở ảnh thuộc split `test`.
+
+**Link trên slide cuối:** mã nguồn GitHub, demo Streamlit Community Cloud
+(`covid-xray-classifier.streamlit.app`, đã mở thật và thấy app chạy) và kho
+artifact trên Hugging Face (`huggingface.co/duc16/cxr-svm-demo` — là *model
+repo*, không phải app, nên ghi rõ là artifact).
 
 **Nhất quán với các sprint khác:** S6-05 giữ kịch bản nói riêng; bản S6-03 này
 không nhúng speaker notes. Demo dùng **Streamlit** (`demo/streamlit_app.py`),
@@ -38,7 +53,25 @@ không phải Gradio; ảnh chụp màn hình được lấy từ phiên Streaml
 mang về T1–T3 lặp lại ở slide 2, 20 và 27. Nếu bị rút còn 20 phút, bỏ 8 slide:
 2, 5, 6, 9, 17, 23, 25, 26.
 
-**Cổng dữ liệu:** mọi con số đọc từ `slides/data.py`, đọc trực tiếp CSV/JSON tại
-thời điểm dựng; không có số nào gõ cứng, kể cả số trong tiêu đề. Ảnh minh hoạ
-đều là ảnh `val` (`COVID-1006.png`, `Normal-9540.png`, ảnh kiểm tra mask), không
-mở ảnh thuộc split `test`.
+## Sửa sau đánh giá senior (12/11/2026)
+
+Bản đã xuất lần đầu bị chê ở bốn nhóm; các lỗi đã sửa và kiểm lại:
+
+- **Nội dung sai:** A0 là metadata tệp (không phải độ sáng), B0 là bộ đoán toàn
+  bộ Normal; chi phí trích đặc trưng không đi theo số chiều (HOG 10.404 chiều
+  0,0201 s/ảnh, GLCM+LBP 88 chiều 0,0552 s/ảnh); “mỗi bộ ba seed” chỉ đúng với
+  DT, RF, GB; SVM có lưới 4 ứng viên và chạy một lần vì tất định; quy ước
+  Δ ≥ 0,005 phải kèm “CI không chứa 0”; “Che phổi làm mất 0,0535” là kịch bản
+  `lung_to_lung` (giữ phổi, che ngoài phổi); slide 18 viết lại thành dự đoán và
+  bằng chứng kèm trạng thái; thêm bằng chứng `lung_to_lung − out_to_out` =
+  −0,0431 [−0,0582; −0,0281].
+- **Nguồn dẫn:** D4 nằm ở `results/final_test/r5_gioi_han.md`; bỏ dẫn
+  `outputs/` (nằm trong `.gitignore`) để dẫn `splits/README.md`; đúng tên
+  `r1_bootstrap_vs_reference.csv`; slide dự phòng B2 dẫn đúng
+  `report_rq2/r1_per_seed.csv`.
+- **Thuật ngữ:** “không Deep Learning (mạng nơ-ron)”, “tụt xuống”, “tập huấn
+  luyện”, “tham chiếu: RF” thay cho “mốc nền: RF”.
+- **Trình bày:** nhãn trục của slide 12 ba chữ số thập phân; chú thích không
+  còn đè lên chân trang ở slide 6, 9, 18, 23, 24 và hai slide dự phòng B1, B6;
+  slide 16 thay dải mask bằng bộ ba ô (gốc · chỉ phổi · ngoài phổi) của một
+  ảnh val; slide 23 ghi rõ CPU đo và ảnh chụp lớn hơn.

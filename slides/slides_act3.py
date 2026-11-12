@@ -5,7 +5,7 @@ from __future__ import annotations
 from . import svgkit as k
 from .data import CLASS_VI, D, fmt, fmt_ci, fmt_delta, fmt_int, fmt_pct, fmt_seconds
 from .slides_act2 import divider
-from .texts import D4, DEMO_URL, DISCLAIMER, REPO_URL, TITLE
+from .texts import (ARTIFACT_URL, D4, DEMO_URL, DISCLAIMER, REPO_URL, TITLE)
 
 CH5 = "CHƯƠNG 5 · KIỂM CHỨNG VÀ TRIỂN KHAI"
 CH6 = "CHƯƠNG 6 · GIỚI HẠN VÀ KẾT LUẬN"
@@ -56,7 +56,7 @@ def slide_21() -> k.Page:
     page = k.Page("21_val_vs_test.svg", layout="content", kicker=CH5, page_no=21,
                   title="Val 0,9024, test 0,8714: chênh 0,0310 — chỉ là quan sát",
                   source="Nguồn: results/final_test/final_test_report.json · "
-                         "results/threshold_v3.md (D4)")
+                         "results/final_test/r5_gioi_han.md (D4)")
     zone = page.zone("chart", 82, 214, 700, 300)
     zone.card()
     zone.image("figure", "../images/fig_test_gap.png", 104, 244, 656, 218)
@@ -117,14 +117,19 @@ def slide_22() -> k.Page:
 # ------------------------------------------------------------------ slide 23
 def slide_23() -> k.Page:
     latency = D["latency"]
+    cpu = D["latency"]["cpu_short"]
     detail = D["latency_detail"]["stages"]
     page = k.Page("23_demo.svg", layout="content", kicker=CH5, page_no=23,
-                  title="Demo chạy 0,132 giây một ảnh",
+                  title=f"Demo chạy {fmt_seconds(latency['stages']['total'], 3)} "
+                        f"một ảnh trên laptop {cpu}",
                   source="Nguồn: results/demo_latency_sustained/latency.json · "
                          "slides/assets/screenshot_demo.png")
-    zone = page.zone("shot", 82, 208, 780, 458)
+    note = (f"Trung vị {latency['n_images']} ảnh val, {latency['repeats']} "
+            f"lượt đo; p95 {fmt_seconds(detail['total']['p95'])}.")
+    zone = page.zone("shot", 82, 200, 780, 428)
     zone.card()
-    zone.image("figure", "../images/screenshot_demo.png", 98, 222, 748, 430)
+    zone.image("figure", "../images/screenshot_demo.png", 106, 212, 694, 396)
+    zone.text("lat-cap", 106, 618, note, size=19, color=k.INK_SOFT)
     page.content(zone.done())
 
     rows = [
@@ -134,15 +139,13 @@ def slide_23() -> k.Page:
         ("Tổng mỗi ảnh", latency["stages"]["total"]),
     ]
     for index, (caption, value) in enumerate(rows):
-        y = 214 + index * 92
-        zone = page.zone(f"card{index}", 890, y, 308, 84)
+        y = 206 + index * 96
+        zone = page.zone(f"card{index}", 890, y, 308, 88)
         zone.card()
-        zone.text(f"card{index}-cap", 910, y + 30, caption, size=19, color=k.INK_SOFT)
-        zone.text(f"card{index}-val", 910, y + 74, fmt_seconds(value), size=30,
+        zone.text(f"card{index}-cap", 910, y + 32, caption, size=19, color=k.INK_SOFT)
+        zone.text(f"card{index}-val", 910, y + 76, fmt_seconds(value), size=30,
                   color=k.TEAL if index == 3 else k.INK, weight="bold")
-    note = (f"Trung vị trên {latency['n_images']} ảnh, {latency['repeats']} luỗt đo; "
-            f"p95 {fmt_seconds(detail['total']['p95'])}.")
-    page.content(k.note_zone(page, "lat-note", 890, 594, 308, note, size=19, line_h=26))
+        page.content(zone.done())
     return page
 
 
@@ -152,7 +155,7 @@ def slide_24() -> k.Page:
     correct = cases["COVID-1006.png"]
     error = cases["Normal-9540.png"]
     page = k.Page("24_vi_du.svg", layout="content", kicker=CH5, page_no=24,
-                  title="Một ca đúng, một ca sai: mô hình nhìn gì",
+                  title="Hai ca minh hoạ: một đúng, một sai",
                   source="Nguồn: results/rq2_ghep_svm_s42/preds_val.csv · "
                          "slides/assets/case_correct.png, case_error.png")
     blocks = [
@@ -161,7 +164,7 @@ def slide_24() -> k.Page:
     ]
     for index, (key, case, image, verdict, color, fill) in enumerate(blocks):
         x = 82 + index * 578
-        zone = page.zone(f"case-{key}", x, 214, 538, 330)
+        zone = page.zone(f"case-{key}", x, 208, 538, 332)
         zone.card()
         zone.image(f"case-image-{key}", f"../images/{image}", x + 22, 238, 232, 232)
         zone.text(f"case-id-{key}", x + 288, 262, case["image_id"], size=21, color=k.INK,
@@ -169,47 +172,58 @@ def slide_24() -> k.Page:
         zone.text(f"case-true-{key}", x + 288, 300,
                   f"Nhãn thật: {CLASS_VI[case['y_true']]}", size=19, color=k.INK_SOFT)
         zone.text(f"case-pred-{key}", x + 288, 328,
-                  f"Dự đoán: {CLASS_VI[case['y_pred']]}", size=21, color=color, weight="bold")
+                  f"Dự đoán: {CLASS_VI[case['y_pred']]}", size=21, color=color,
+                  weight="bold")
         zone.text(f"case-proba-{key}", x + 288, 386, fmt(case["probability"]), size=54,
                   color=color, weight="bold")
         zone.text(f"case-proba-cap-{key}", x + 288, 414,
-                  f"xác suất lớp {CLASS_VI[case['y_pred']]}", size=19, color=k.INK_SOFT)
-        zone.text(f"case-verdict-{key}", x + 288, 478, verdict, size=19, color=color, weight="bold")
-        zone.text(f"case-mask-{key}", x + 22, 510,
-                  "Cả hai ảnh thuộc split val; không mở ảnh test.", size=19, color=k.INK_SOFT)
+                  f"xác suất lớp {CLASS_VI[case['y_pred']]}", size=19,
+                  color=k.INK_SOFT)
+        zone.text(f"case-verdict-{key}", x + 288, 480, verdict, size=19, color=color,
+                  weight="bold")
         page.content(zone.done())
-
-    page.content(k.note_zone(page, "mask-note", 82, 556, 1116,
-                             "Ca sai cho thấy mô hình có thể tự tin ở mức cao trên một ca sai: "
-                             "Normal bị đoán thành Lung_Opacity với xác suất "
-                             f"{fmt(error['probability'])}.", fill=k.AMBER_PALE, size=21,
-                             line_h=30))
+    page.content(k.note_zone(page, "case-note", 82, 552, 1116,
+                             f"Ca sai cho thấy mô hình có thể tự tin "
+                             f"ở mức cao trên một ca sai: Normal bị "
+                             f"đoán thành Lung_Opacity với xác suất "
+                             f"{fmt(error['probability'])}. Cả hai ảnh thuộc split "
+                             f"val; chưa có hình minh hoạ vùng ảnh "
+                             f"mô hình dùng để ra quyết định.",
+                             fill=k.AMBER_PALE, size=19, line_h=26))
     return page
 
 
 # ------------------------------------------------------------------ slide 25
 def slide_25() -> k.Page:
     pairs = D["pairs"]
+    svm_ci = next(row for row in D["rq2"] if row["key"] == "svm")["ci"]
     page = k.Page("25_gioi_han.svg", layout="content", kicker=CH6, page_no=25,
                   title="Giới hạn: 735 cặp gần trùng và không có patient_id",
-                  source="Nguồn: results/rq3_mask_check/..r5_gioi_han.md · report/06 mục 6.2")
+                  source="Nguồn: results/report_rq3/r5_gioi_han.md · "
+                         "results/threshold_v3.md mục 6 (R5) · report/06 mục 6.2")
     limits = [
         ("Gần trùng còn sót", fmt_int(pairs["total"]),
          "cặp nằm khác tập, trong đó 229 cặp lệch nhãn"),
         ("Không có patient_id", "thiếu",
          "cùng một bệnh nhân có thể nằm ở cả train và val"),
         ("Nguồn ảnh chưa xác minh", "chưa kiểm chứng",
-         "tuổi nhi và ký hiệu thiết bị chưa được kiểm chứng"),
-        ("Ngoại suy ngoài bộ", "không có giá trị",
-         "đổi nguồn hoặc đổi tiền xử lý thì kết quả không còn giá trị đánh giá"),
+         "tuổi nhi và ký hiệu thiết bị chưa được "
+         "kiểm chứng"),
+        ("Val vừa chọn mô hình vừa báo cáo", "lạc quan",
+         "cùng một tập val được dùng để chọn cấu "
+         "hình và để báo cáo số"),
+        ("Ngoại suy ngoài bộ", "chưa được đánh giá",
+         "đổi nguồn hoặc đổi tiền xử lý thì chưa "
+         "ai đo lại các con số này"),
     ]
     for index, (name, value, note) in enumerate(limits):
-        y = 214 + index * 102
-        zone = page.zone(f"lim{index}", 82, y, 1116, 92)
+        y = 208 + index * 80
+        zone = page.zone(f"lim{index}", 82, y, 1116, 72)
         zone.card()
-        zone.text(f"lim{index}-name", 106, y + 34, name, size=21, color=k.INK, weight="bold")
-        zone.text(f"lim{index}-value", 106, y + 70, value, size=21, color=k.AMBER, weight="bold")
-        zone.text(f"lim{index}-note", 420, y + 52, note, size=21, color=k.INK, max_width=746,
+        zone.text(f"lim{index}-name", 106, y + 30, name, size=21, color=k.INK, weight="bold")
+        zone.text(f"lim{index}-value", 106, y + 62, value, size=19, color=k.AMBER,
+                  weight="bold")
+        zone.text(f"lim{index}-note", 420, y + 44, note, size=21, color=k.INK, max_width=746,
                   line_h=28)
         page.content(zone.done())
     return page
@@ -219,11 +233,12 @@ def slide_25() -> k.Page:
 def slide_26() -> k.Page:
     page = k.Page("26_khong_chan_doan.svg", layout="content", kicker=CH6, page_no=26,
                   title="Không dùng để chẩn đoán",
-                  source="Nguồn: demo/streamlit_app.py (DISCLAIMER) · results/threshold_v3.md (D4)")
+                  source="Nguồn: demo/streamlit_app.py (DISCLAIMER) · "
+                         "results/final_test/r5_gioi_han.md (D4)")
     zone = page.zone("warn", 82, 214, 1116, 200)
     zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
-    zone.text("warn-tag", 106, 262, "TUYÊN BỐ TRONG ỨNG DỤNG DEMO", size=19, color=k.AMBER,
-              weight="bold")
+    zone.text("warn-tag", 106, 262, "TUYÊN BỐ TRONG ỨNG DỤNG DEMO", size=19,
+              color=k.AMBER, weight="bold")
     zone.text("warn-text", 106, 306, DISCLAIMER, size=26, color=k.INK, max_width=1068,
               line_h=36)
     page.content(zone.done())
@@ -233,8 +248,11 @@ def slide_26() -> k.Page:
     zone = page.zone("scope", 82, 534, 1116, 76)
     zone.card()
     zone.text("scope-text", 106, 576,
-              "Thay đổi nguồn ảnh, thiết bị hoặc bước tiền xử lý đều làm mất giá trị đánh giá "
-              "của các con số trong đề tài này.", size=21, color=k.INK, max_width=1068, line_h=28)
+              "Các con số trong đề tài này chỉ được "
+              "đánh giá trên chính bộ dữ liệu và bước "
+              "tiền xử lý đã dùng; đổi nguồn ảnh, "
+              "thiết bị hoặc tiền xử lý thì chưa được "
+              "đo lại.", size=21, color=k.INK, max_width=1068, line_h=28)
     page.content(zone.done())
     return page
 
@@ -244,17 +262,19 @@ def slide_27() -> k.Page:
     from .texts import TAKEAWAYS
 
     test = D["test"]
+    svm_ci = next(row for row in D["rq2"] if row["key"] == "svm")["ci"]
     page = k.Page("27_ket_luan.svg", layout="content", kicker=CH6, page_no=27,
                   title="Ba điểm mang về và việc còn lại",
                   source="Nguồn: tổng hợp từ results/ và report/06")
     keys = {
-        "T1": f"152 đặc trưng thủ công với SVM RBF đạt macro-F1 {fmt(test['macro_f1'])} trên "
-              f"{fmt_int(test['n'])} ảnh test, vượt xa hai mốc nền {fmt(D['baselines']['b0'])} và "
-              f"{fmt(D['baselines']['a0'])}.",
-        "T2": f"Mô hình chỉ nhìn ngoài phổi vẫn đạt "
+        "T1": f"152 đặc trưng thủ công với SVM RBF đạt "
+              f"macro-F1 {fmt(test['macro_f1'])} trên {fmt_int(test['n'])} ảnh test, "
+              f"vượt xa hai mốc nền đo trên validation: B0 = "
+              f"{fmt(D['baselines']['b0'])}, A0 = {fmt(D['baselines']['a0'])}.",
+        "T2": f"Trên validation, mô hình chỉ nhìn ngoài phổi đạt "
               f"{fmt(D['rq3']['scenarios']['out_to_out']['macro_f1'])}, chênh ảnh gốc "
               f"{fmt_delta(D['rq3']['diffs'][('orig_to_orig', 'out_to_out')]['diff'])} nhưng "
-              "khoảng tin cậy chứa 0.",
+              f"khoảng tin cậy của hiệu chứa 0.",
         "T3": TAKEAWAYS["T3"],
     }
     for index, key in enumerate(("T1", "T2", "T3")):
@@ -266,12 +286,16 @@ def slide_27() -> k.Page:
                   line_h=26)
         page.content(zone.done())
 
-    page.content(page.text("next-label", 760, 222, "VIỆC CÒN LẠI", size=19, color=k.TEAL,
-                           weight="bold"))
+    page.content(page.text("next-label", 760, 222, "VIỆC CÒN LẠI", size=19,
+                           color=k.TEAL, weight="bold"))
     nexts = [
-        ("Thay hệ cỡ mẫu", "bộ dữ liệu lớn hơn, có patient_id để chặn rò rỉ bệnh nhân"),
-        ("Gỡ gần trùng", "quy trình tách nhóm cho cả cặp gần trùng, không chỉ trùng tuyệt đối"),
-        ("Kiểm chứng nguồn", "xác minh tuổi nhi và thiết bị để giả thuyết thành phép thử được"),
+        ("Bộ có patient_id", "bộ dữ liệu lớn hơn, có mã bệnh "
+                                    "nhân để chặn rò rỉ bệnh nhân"),
+        ("Gỡ gần trùng", "quy trình tách nhóm cho cả cặp gần "
+                                    "trùng, không chỉ trùng tuyệt đối"),
+        ("Kiểm chứng nguồn", "xác minh tuổi nhi và thiết bị "
+                                       "để giả thuyết thành phép thử "
+                                       "được"),
     ]
     for index, (name, detail) in enumerate(nexts):
         y = 252 + index * 124
@@ -290,19 +314,26 @@ def slide_28() -> k.Page:
                   title=None, numbered=False)
     page.content(
         page.image("logo", "../images/logo_ctut.png", 82, 52, 92, 92),
-        page.text("thanks", 82, 300, "Cảm ơn", size=64, color=k.TEXT_ON_DARK, weight="bold"),
-        page.text("thanks-body", 82, 356, "Mời hội đồng đặt câu hỏi.", size=26,
-                  color=k.SOFT_ON_DARK),
+        page.text("thanks", 82, 300, "Cảm ơn", size=64, color=k.TEXT_ON_DARK,
+                  weight="bold"),
+        page.text("thanks-body", 82, 356, "Mời hội đồng đặt câu hỏi.",
+                  size=26, color=k.SOFT_ON_DARK),
         page.line("thanks-rule", 82, 392, 170, 392, stroke=k.TEAL, width=3),
     )
-    for index, (label, url) in enumerate((("Mã nguồn", REPO_URL), ("Demo", DEMO_URL))):
-        y = 440 + index * 62
+    links = [
+        ("Mã nguồn", REPO_URL),
+        ("Demo (Streamlit)", DEMO_URL),
+        ("Artifact mô hình", ARTIFACT_URL),
+    ]
+    for index, (label, url) in enumerate(links):
+        y = 436 + index * 58
         page.content(
-            page.text(f"url-{index}", 82, y, label, size=19, color=k.TEAL_LIGHT, weight="bold"),
-            page.text(f"url-text-{index}", 220, y, url, size=21, color=k.TEXT_ON_DARK),
+            page.text(f"url-{index}", 82, y, label, size=19, color=k.TEAL_LIGHT,
+                      weight="bold"),
+            page.text(f"url-text-{index}", 300, y, url, size=21, color=k.TEXT_ON_DARK),
         )
     page.content(
-        page.text("credit", 82, 590, TITLE, size=19, color=k.SOFT_ON_DARK, max_width=1000,
+        page.text("credit", 82, 620, TITLE, size=19, color=k.SOFT_ON_DARK, max_width=1000,
                   line_h=24),
     )
     return page

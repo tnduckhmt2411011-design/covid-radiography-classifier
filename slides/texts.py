@@ -44,7 +44,8 @@ DISCLAIMER = (
 )
 
 REPO_URL = "github.com/tnduckhmt2411011-design/covid-radiography-classifier"
-DEMO_URL = "huggingface.co/duc16/cxr-svm-demo"
+ARTIFACT_URL = "huggingface.co/duc16/cxr-svm-demo"
+DEMO_URL = "covid-xray-classifier.streamlit.app"
 
 # Ba điểm mang về, lặp ở slide 2, 20 và 27.
 TAKEAWAYS = {

@@ -130,6 +130,34 @@ def audit_gaps(root: ET.Element, name: str, problems: list[str]) -> None:
             problems.append(f"{name}: cột {label} trống {100 * edge / total:.0f}%")
 
 
+def audit_overlaps(root: ET.Element, name: str, problems: list[str]) -> None:
+    """Chồng lấn giữa các vùng gốc, kể cả ô placeholder chân trang.
+
+    Cổng này bắt lỗi "chú thích đè lên chân trang": ppt-master chỉ so chồng lấn
+    giữa các vùng nội dung, không đối chiếu với ô footer và ô số trang.
+    """
+    boxes: list[tuple[str, tuple[float, float, float, float]]] = []
+    for child in root:
+        bounds = child.get("data-pptx-bounds")
+        if not bounds:
+            continue
+        x, y, w, h = (float(value) for value in bounds.split())
+        boxes.append((child.get("id") or "", (x, y, w, h)))
+    for index, (gid_a, a) in enumerate(boxes):
+        for gid_b, b in boxes[index + 1:]:
+            ax1, ay1, aw, ah = a
+            bx1, by1, bw, bh = b
+            ax2, ay2 = ax1 + aw, ay1 + ah
+            bx2, by2 = bx1 + bw, by1 + bh
+            overlap_x = min(ax2, bx2) - max(ax1, bx1)
+            overlap_y = min(ay2, by2) - max(ay1, by1)
+            if overlap_x > 1 and overlap_y > 1:
+                problems.append(
+                    f"{name}: vùng {gid_a} chồng lấn vùng {gid_b} "
+                    f"({overlap_x:.0f}×{overlap_y:.0f} px)"
+                )
+
+
 def audit_pages(problems: list[str]) -> None:
     files = svg_files()
     if len(files) != 34:
@@ -141,6 +169,7 @@ def audit_pages(problems: list[str]) -> None:
         audit_fonts(root, path.name, problems)
         audit_zones(root, path.name, problems)
         audit_gaps(root, path.name, problems)
+        audit_overlaps(root, path.name, problems)
 
         text = " ".join(node.text or "" for node in root.iter(f"{SVG}tspan"))
         text = " ".join(text.split())

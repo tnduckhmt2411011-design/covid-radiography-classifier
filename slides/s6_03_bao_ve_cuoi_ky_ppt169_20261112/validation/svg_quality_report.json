@@ -4,7 +4,7 @@
   "target": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112",
   "source_fingerprint": {
     "algorithm": "sha256",
-    "digest": "0f4247938fd31b673840f2ffb905a466eafd6f13e8ff8bbbda9ca719c97bc6ae",
+    "digest": "872f679a35693cf93b198d89caa4592025d2d82f39e50f3bc4b239c1abb6cc73",
     "file_count": 34,
     "files": [
       {
@@ -21,27 +21,27 @@
       },
       {
         "file": "04_cauhoi.svg",
-        "sha256": "7a587644372e7ee1aed242c45a9fdeb114102beb440bce997d9c57741f955886"
+        "sha256": "ffae63f7783a08d66ccaca002ad11bec93074da27b935b2aafdbaec1e414a8c4"
       },
       {
         "file": "05_nguon.svg",
-        "sha256": "1633502b9fc4575c44dd3a93af04494e79258443e1a02513c0ad50ed100afde2"
+        "sha256": "2dc951b8f2a4953be114ffb2c19eec65118276e1bb5e3acb18b0e52e387664dd"
       },
       {
         "file": "06_dosang.svg",
-        "sha256": "bfca8274ca5cc3b3a2c43228f274452ca30651f5eb428591ba7e633fd0959b70"
+        "sha256": "048db471baec5f0403f014568d639d6e6ad9b35862637139d1f7e401fa373d5c"
       },
       {
         "file": "07_trunglap.svg",
-        "sha256": "59e1bd611a3ce2fb322899fdcf4eb3eaff159c42162b62b824648d13198183b6"
+        "sha256": "0f843605b40968892dc8339b1b81c1f3e547789e517b4e00719d6279f18838e0"
       },
       {
         "file": "08_dactrung.svg",
-        "sha256": "79a7d418d5eef70c9f885bbf9916a6b9b213711dfc6be1380b86f5aa1ef7153e"
+        "sha256": "7a6d8f3453e3e39ccd9e5ff53495baf16e4032b23de56a1863dfd793d105b3f2"
       },
       {
         "file": "09_giaithuat.svg",
-        "sha256": "262f5ec8d5a2e71e8a0c8f9e5279f5e18b0a1a36201374ca35b9eb4b256208d3"
+        "sha256": "c1d6a8d358753119c71108f2fcdc8ae8399087afab48ae6198bccf457683babf"
       },
       {
         "file": "10_mo_chuong3.svg",
@@ -49,35 +49,35 @@
       },
       {
         "file": "11_rq1.svg",
-        "sha256": "ce42ed4486887fde360d19f35f9ec9108463d8bcd22b0c4286ef91e060814d5b"
+        "sha256": "41e8b1382f2a7bfa0ebee1b90a9c2bf0e1fe7314bea52739a1000ac4790a9b59"
       },
       {
         "file": "12_rq1_delta.svg",
-        "sha256": "e0e1faddea2b4f309a17989bdbe0e8fa21e9054066c83ee60aea4742796cdd8a"
+        "sha256": "f36d02238f1b1df50a86177767bd6041cf4c99c80f8aa10f60ee1521ffe266b3"
       },
       {
         "file": "13_rq2.svg",
-        "sha256": "62b1b22ae62c6fb3b88febbaf8336d171910a7b542eacf3d50cd235c91c927e2"
+        "sha256": "cc183e48da08cdb5c04ed93870cefe273380921360a0da66e129dfb526da3b17"
       },
       {
         "file": "14_mo_chuong4.svg",
-        "sha256": "e0a310f9bb8e91e9a1bccf3d3ee4fd6303c216535338352d913491cd7ca297cf"
+        "sha256": "1b942bb6914d6507841146de8578d5e620158e0f4cc23327f6a41cc358b8f5ac"
       },
       {
         "file": "15_rq3.svg",
-        "sha256": "dd6632f544943930fcd58efa243cb3455d9e2f8834956f9f64d1179f26a5fac5"
+        "sha256": "35b125b7fdeeefa3aed2e5efd3762ccd30bd835b983dbaebbb3c560ae50c10b3"
       },
       {
         "file": "16_rq3_ngoai_phoi.svg",
-        "sha256": "8eee8b4ec91174bbfb8983dc50f104f2f0707d15f33b133e475daccba78f025e"
+        "sha256": "15988739a588764e5fae54029a3168d835aa209f0faa2f513aa1339116789425"
       },
       {
         "file": "17_rq3_perm.svg",
-        "sha256": "277ad3b12aa545adc741784589c74b58e7622a91a7a46e19dc8f22f21f1996e8"
+        "sha256": "0fa38ba2d69882ce8279942c604e53616d592639ba50b7e5ad5fec59efdcc397"
       },
       {
         "file": "18_phan_chung.svg",
-        "sha256": "8c0ea10c016e3c4b5c66c889ddefbd497754721ba035cdebb385a1cc8db45cac"
+        "sha256": "cd852ab168701b38a2f25ff8676d370b705a222f53bb3fc80fd9079314f66d8c"
       },
       {
         "file": "19_mo_chuong5.svg",
@@ -89,7 +89,7 @@
       },
       {
         "file": "21_val_vs_test.svg",
-        "sha256": "b2e962e8053d1deb1da034b7874b1f2649406b5c132bc00a026c2286e548cee1"
+        "sha256": "5914f7fd42ac83e91c968022da3a578f95c88053faf08fa3e5a5c2bff95a37bc"
       },
       {
         "file": "22_loi_test.svg",
@@ -97,51 +97,51 @@
       },
       {
         "file": "23_demo.svg",
-        "sha256": "663617361851e5c847d826c6c45e2706d903dcd26a6e85cfbbb227577f217ca8"
+        "sha256": "4fac77f8cef12885dace3d9b44b2fb11e0025052746d42724979fb7d7ad0f2b3"
       },
       {
         "file": "24_vi_du.svg",
-        "sha256": "75c07435ca3fc68178b37a2a2c3bea99c5785e2379e25fd8e2b40a6d54bc01d3"
+        "sha256": "1235a060bd7186997b77d21c4dc48f4b08dc8876d5e0c7d7490aadfd7f4cdf79"
       },
       {
         "file": "25_gioi_han.svg",
-        "sha256": "ebf0f91915669c9ea6a13e35e2680afa656db20930e68ccd77bd868fd4284775"
+        "sha256": "2cf4f00664d1dccca1f2fd6e9b11f94d354efb3d218a40f2763bdd62eb9cf295"
       },
       {
         "file": "26_khong_chan_doan.svg",
-        "sha256": "8ae047d00a74174bd8059ba11a474984c8b353174dd344f399d479e707decf7f"
+        "sha256": "8ddb34ace2b3712e9b87682847d4e672b32b8e09f7b2605ca07532d46ae16e8f"
       },
       {
         "file": "27_ket_luan.svg",
-        "sha256": "12d896cb320e0c3359651d3f5386bc398208a61502f7a1a5ee557fbebcc19eb8"
+        "sha256": "4166a17546b655774e5360c4eb8643d7faff76d3e9df18928bf5c12d8ed6cfc7"
       },
       {
         "file": "28_cam_on.svg",
-        "sha256": "04c2d9bfce645de370c55987f013701302870245de3d887c4fcda72c5aca3a53"
+        "sha256": "630ca488678efb0cd91ec67fe7b25a3354e2669c6dde499ba5c316768784289f"
       },
       {
         "file": "b1_rq1_per_seed.svg",
-        "sha256": "ea28d028eae05b0ea28b3290976a1c09cb20c8cd9e7413fa212c081ec3cdc7df"
+        "sha256": "a8a27e025393cde80aa05ce45c49512587e7a64e999fd58ac830cdeaeb6175d3"
       },
       {
         "file": "b2_rq2_day_du.svg",
-        "sha256": "1443f7222bb836b516e86b990e92f52dcea203e76b79a7a80857d6fd0102b3bb"
+        "sha256": "49cf8a93e96f79ab8302370b48194fde242776d3ded8c127aeb9ffc390499a03"
       },
       {
         "file": "b3_rq3_day_du.svg",
-        "sha256": "fdf11464d137718cb4f0c176dbf7fe893f743816dbafc2a9b9c2c9d8c3e86466"
+        "sha256": "bf111592cdbbe640c540c8d2399f6cfcb7476e6e5d3e7e0325c886ff7f7c6d80"
       },
       {
         "file": "b4_cap_gan_trung.svg",
-        "sha256": "74ff83c9073d20844ffa9ed78d0c4846fce1cf80bdac8819d76b0e291736bc94"
+        "sha256": "84fe7f17b824d5f05de82e1b6732fdbe5d64fc623753b5988f60ead847caabd7"
       },
       {
         "file": "b5_loi_val.svg",
-        "sha256": "b054da3263fd7c28b842030665fcde7e655939fa9f2be1a50ad079b6787ea496"
+        "sha256": "6c897071a3f75c504ecb7c8b24ba93180610cae9d9fbdf0a95a1583b95a9e00d"
       },
       {
         "file": "b6_latency.svg",
-        "sha256": "6ec66739f10b9741a7ae0529d4867f7edb40cbdcf9745738470438cb3bae78b4"
+        "sha256": "bffdb8092a69c67381e5e52820f9837ae8864bdff3285f955c86d8657c5adc5b"
       }
     ]
   },
@@ -198,11 +198,11 @@
         },
         {
           "file": "04_cauhoi.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (48 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (52 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "05_nguon.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (50 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "06_dosang.svg",
@@ -214,7 +214,7 @@
         },
         {
           "file": "08_dactrung.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (80 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (82 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "08_dactrung.svg",
@@ -226,7 +226,11 @@
         },
         {
           "file": "09_giaithuat.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (66 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (68 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        },
+        {
+          "file": "09_giaithuat.svg",
+          "message": "<text id=\"09-footer-carrier-carrier\"> exceeds <g id=\"footer-slot\"> data-pptx-bounds on the horizontal axis: content (82.0, 635.2)-(987.8, 653.2), container (82.0, 634.0)-(982.0, 658.0), overflow horizontal 0.6%, vertical 0.0% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them; ≈7.6 px per mixed char at 15px incl. headroom; ≈118 chars fit in 900 px"
         },
         {
           "file": "10_mo_chuong3.svg",
@@ -238,19 +242,19 @@
         },
         {
           "file": "11_rq1.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "12_rq1_delta.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
+          "file": "12_rq1_delta.svg",
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[18]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        },
+        {
           "file": "13_rq2.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "14_mo_chuong4.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (8 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '19' -> None; tspan[12]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (12 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '19' -> None; tspan[12]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "14_mo_chuong4.svg",
@@ -258,23 +262,19 @@
         },
         {
           "file": "15_rq3.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "16_rq3_ngoai_phoi.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (42 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[16]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "17_rq3_perm.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "18_phan_chung.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "18_phan_chung.svg",
-          "message": "<text id=\"18-hyp0-note-text\"> exceeds <g id=\"18-hyp0\"> data-pptx-bounds on the vertical axis: content (102.0, 297.9)-(572.9, 350.6), container (82.0, 250.0)-(630.0, 346.0), overflow horizontal 0.0%, vertical 4.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
         },
         {
           "file": "19_mo_chuong5.svg",
@@ -298,15 +298,15 @@
         },
         {
           "file": "23_demo.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (10 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[19]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "24_vi_du.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (38 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (34 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "25_gioi_han.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (36 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "26_khong_chan_doan.svg",
@@ -314,19 +314,19 @@
         },
         {
           "file": "26_khong_chan_doan.svg",
-          "message": "<text id=\"26-scope-text-text\"> exceeds <g id=\"26-scope\"> data-pptx-bounds on the vertical axis: content (106.0, 558.1)-(1143.9, 611.4), container (82.0, 534.0)-(1198.0, 610.0), overflow horizontal 0.0%, vertical 1.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+          "message": "<text id=\"26-scope-text-text\"> exceeds <g id=\"26-scope\"> data-pptx-bounds on the vertical axis: content (106.0, 558.1)-(1147.8, 611.4), container (82.0, 534.0)-(1198.0, 610.0), overflow horizontal 0.0%, vertical 1.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
         },
         {
           "file": "27_ket_luan.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (44 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (48 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "28_cam_on.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (16 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#F2EFE7' -> None; tspan[7]:font-size '64' -> None; tspan[10]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#F2EFE7' -> None; tspan[7]:font-size '64' -> None; tspan[10]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "28_cam_on.svg",
-          "message": "<text id=\"28-url-text-0-text\"> exceeds <g id=\"28-url-text-0\"> data-pptx-bounds on the horizontal axis: content (220.0, 422.1)-(888.4, 447.4), container (220.0, 421.0)-(887.0, 448.0), overflow horizontal 0.2%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈10.6 px per Latin char at 21px incl. headroom; ≈62 chars fit in 667 px"
+          "message": "<text id=\"28-url-text-0-text\"> exceeds <g id=\"28-url-text-0\"> data-pptx-bounds on the horizontal axis: content (300.0, 418.1)-(968.4, 443.4), container (300.0, 417.0)-(967.0, 444.0), overflow horizontal 0.2%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈10.6 px per Latin char at 21px incl. headroom; ≈62 chars fit in 667 px"
         },
         {
           "file": "28_cam_on.svg",
@@ -338,7 +338,7 @@
         },
         {
           "file": "b1_rq1_per_seed.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (6 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "b2_rq2_day_du.svg",
@@ -358,7 +358,7 @@
         },
         {
           "file": "b5_loi_val.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (36 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (40 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "b6_latency.svg",
@@ -387,10 +387,10 @@
     "scope": "informational-not-a-quota",
     "pages": 34,
     "totals": {
-      "text_elements": 532,
-      "image_placements": 17,
+      "text_elements": 562,
+      "image_placements": 14,
       "icons": 0,
-      "svg_geometry_elements": 231,
+      "svg_geometry_elements": 238,
       "preset_shapes": 0,
       "page_frame_elements": 0,
       "marker_uses": 0,
@@ -415,11 +415,11 @@
     "geometry_elements": {
       "circle": 0,
       "ellipse": 0,
-      "line": 64,
+      "line": 66,
       "path": 0,
       "polygon": 0,
       "polyline": 0,
-      "rect": 167
+      "rect": 172
     },
     "preset_names": {},
     "native_objects": {
@@ -430,8 +430,8 @@
       "table": 0
     },
     "image_page_max_frame_share_range": [
-      0.0072,
-      0.349
+      0.0092,
+      0.2982
     ]
   },
   "project_issues": {
@@ -636,7 +636,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (48 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (52 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -685,10 +685,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 15,
-        "tspan_elements": 25
+        "tspan_elements": 27
       },
       "passed": true,
-      "source_sha256": "7a587644372e7ee1aed242c45a9fdeb114102beb440bce997d9c57741f955886"
+      "source_sha256": "ffae63f7783a08d66ccaca002ad11bec93074da27b935b2aafdbaec1e414a8c4"
     },
     {
       "file": "05_nguon.svg",
@@ -696,7 +696,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (50 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -745,10 +745,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 19,
-        "tspan_elements": 24
+        "tspan_elements": 26
       },
       "passed": true,
-      "source_sha256": "1633502b9fc4575c44dd3a93af04494e79258443e1a02513c0ad50ed100afde2"
+      "source_sha256": "2dc951b8f2a4953be114ffb2c19eec65118276e1bb5e3acb18b0e52e387664dd"
     },
     {
       "file": "06_dosang.svg",
@@ -810,7 +810,7 @@
         "tspan_elements": 16
       },
       "passed": true,
-      "source_sha256": "bfca8274ca5cc3b3a2c43228f274452ca30651f5eb428591ba7e633fd0959b70"
+      "source_sha256": "048db471baec5f0403f014568d639d6e6ad9b35862637139d1f7e401fa373d5c"
     },
     {
       "file": "07_trunglap.svg",
@@ -870,7 +870,7 @@
         "tspan_elements": 26
       },
       "passed": true,
-      "source_sha256": "59e1bd611a3ce2fb322899fdcf4eb3eaff159c42162b62b824648d13198183b6"
+      "source_sha256": "0f843605b40968892dc8339b1b81c1f3e547789e517b4e00719d6279f18838e0"
     },
     {
       "file": "08_dactrung.svg",
@@ -878,7 +878,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (80 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (82 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
         "<text id=\"08-st0-note-text\"> exceeds <g id=\"08-st0\"> data-pptx-bounds on the vertical axis: content (96.0, 359.9)-(208.2, 430.6), container (82.0, 214.0)-(248.0, 422.0), overflow horizontal 0.0%, vertical 4.2% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text",
         "<text id=\"08-st5-note-text\"> exceeds <g id=\"08-st5\"> data-pptx-bounds on the vertical axis: content (1036.0, 359.9)-(1161.7, 430.6), container (1022.0, 214.0)-(1188.0, 422.0), overflow horizontal 0.0%, vertical 4.2% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
       ],
@@ -929,10 +929,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 31,
-        "tspan_elements": 41
+        "tspan_elements": 42
       },
       "passed": true,
-      "source_sha256": "79a7d418d5eef70c9f885bbf9916a6b9b213711dfc6be1380b86f5aa1ef7153e"
+      "source_sha256": "7a6d8f3453e3e39ccd9e5ff53495baf16e4032b23de56a1863dfd793d105b3f2"
     },
     {
       "file": "09_giaithuat.svg",
@@ -940,12 +940,13 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (66 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (68 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "<text id=\"09-footer-carrier-carrier\"> exceeds <g id=\"footer-slot\"> data-pptx-bounds on the horizontal axis: content (82.0, 635.2)-(987.8, 653.2), container (82.0, 634.0)-(982.0, 658.0), overflow horizontal 0.6%, vertical 0.0% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them; ≈7.6 px per mixed char at 15px incl. headroom; ≈118 chars fit in 900 px"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 28,
+          "text_elements": 30,
           "images": {
             "placements": 0,
             "files": [],
@@ -988,11 +989,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 28,
-        "tspan_elements": 34
+        "text_elements": 30,
+        "tspan_elements": 35
       },
       "passed": true,
-      "source_sha256": "262f5ec8d5a2e71e8a0c8f9e5279f5e18b0a1a36201374ca35b9eb4b256208d3"
+      "source_sha256": "c1d6a8d358753119c71108f2fcdc8ae8399087afab48ae6198bccf457683babf"
     },
     {
       "file": "10_mo_chuong3.svg",
@@ -1061,7 +1062,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1112,10 +1113,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 14
+        "tspan_elements": 15
       },
       "passed": true,
-      "source_sha256": "ce42ed4486887fde360d19f35f9ec9108463d8bcd22b0c4286ef91e060814d5b"
+      "source_sha256": "41e8b1382f2a7bfa0ebee1b90a9c2bf0e1fe7314bea52739a1000ac4790a9b59"
     },
     {
       "file": "12_rq1_delta.svg",
@@ -1123,7 +1124,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[18]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1174,10 +1175,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 15
+        "tspan_elements": 17
       },
       "passed": true,
-      "source_sha256": "e0e1faddea2b4f309a17989bdbe0e8fa21e9054066c83ee60aea4742796cdd8a"
+      "source_sha256": "f36d02238f1b1df50a86177767bd6041cf4c99c80f8aa10f60ee1521ffe266b3"
     },
     {
       "file": "13_rq2.svg",
@@ -1185,7 +1186,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1236,10 +1237,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 13
+        "tspan_elements": 14
       },
       "passed": true,
-      "source_sha256": "62b1b22ae62c6fb3b88febbaf8336d171910a7b542eacf3d50cd235c91c927e2"
+      "source_sha256": "cc183e48da08cdb5c04ed93870cefe273380921360a0da66e129dfb526da3b17"
     },
     {
       "file": "14_mo_chuong4.svg",
@@ -1247,7 +1248,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (8 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '19' -> None; tspan[12]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (12 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '19' -> None; tspan[12]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
         "1 ungrouped top-level Slide-local element(s) in svg_output (<line id=\"14-divider-rule\">); group only logical content units in a top-level <g id=\"...\">. Keep genuine static page framing as a root primitive and declare a supported data-pptx-role such as \"background\" or \"decoration\""
       ],
       "info": {
@@ -1297,10 +1298,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 4,
-        "tspan_elements": 5
+        "tspan_elements": 7
       },
       "passed": true,
-      "source_sha256": "e0a310f9bb8e91e9a1bccf3d3ee4fd6303c216535338352d913491cd7ca297cf"
+      "source_sha256": "1b942bb6914d6507841146de8578d5e620158e0f4cc23327f6a41cc358b8f5ac"
     },
     {
       "file": "15_rq3.svg",
@@ -1308,7 +1309,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1359,10 +1360,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 11
+        "tspan_elements": 15
       },
       "passed": true,
-      "source_sha256": "dd6632f544943930fcd58efa243cb3455d9e2f8834956f9f64d1179f26a5fac5"
+      "source_sha256": "35b125b7fdeeefa3aed2e5efd3762ccd30bd835b983dbaebbb3c560ae50c10b3"
     },
     {
       "file": "16_rq3_ngoai_phoi.svg",
@@ -1370,21 +1371,18 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (42 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[16]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 17,
+          "text_elements": 13,
           "images": {
-            "placements": 4,
+            "placements": 1,
             "files": [
-              "mask_strip_COVID.png",
-              "mask_strip_Lung_Opacity.png",
-              "mask_strip_Normal.png",
-              "mask_strip_Viral_Pneumonia.png"
+              "mask_trio.png"
             ],
-            "max_frame_share": 0.0072
+            "max_frame_share": 0.1265
           },
           "icons": 0,
           "effects": {
@@ -1395,10 +1393,10 @@
           },
           "geometry": {
             "svg_elements": {
-              "rect": 6,
+              "rect": 3,
               "circle": 0,
               "ellipse": 0,
-              "line": 2,
+              "line": 3,
               "polyline": 0,
               "polygon": 0,
               "path": 0
@@ -1423,11 +1421,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 17,
-        "tspan_elements": 23
+        "text_elements": 13,
+        "tspan_elements": 15
       },
       "passed": true,
-      "source_sha256": "8eee8b4ec91174bbfb8983dc50f104f2f0707d15f33b133e475daccba78f025e"
+      "source_sha256": "15988739a588764e5fae54029a3168d835aa209f0faa2f513aa1339116789425"
     },
     {
       "file": "17_rq3_perm.svg",
@@ -1435,7 +1433,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1486,10 +1484,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 12
+        "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "277ad3b12aa545adc741784589c74b58e7622a91a7a46e19dc8f22f21f1996e8"
+      "source_sha256": "0fa38ba2d69882ce8279942c604e53616d592639ba50b7e5ad5fec59efdcc397"
     },
     {
       "file": "18_phan_chung.svg",
@@ -1497,13 +1495,12 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"18-hyp0-note-text\"> exceeds <g id=\"18-hyp0\"> data-pptx-bounds on the vertical axis: content (102.0, 297.9)-(572.9, 350.6), container (82.0, 250.0)-(630.0, 346.0), overflow horizontal 0.0%, vertical 4.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 24,
+          "text_elements": 25,
           "images": {
             "placements": 0,
             "files": [],
@@ -1521,7 +1518,7 @@
               "rect": 6,
               "circle": 0,
               "ellipse": 0,
-              "line": 2,
+              "line": 3,
               "polyline": 0,
               "polygon": 0,
               "path": 0
@@ -1546,11 +1543,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 24,
+        "text_elements": 25,
         "tspan_elements": 28
       },
       "passed": true,
-      "source_sha256": "8c0ea10c016e3c4b5c66c889ddefbd497754721ba035cdebb385a1cc8db45cac"
+      "source_sha256": "cd852ab168701b38a2f25ff8676d370b705a222f53bb3fc80fd9079314f66d8c"
     },
     {
       "file": "19_mo_chuong5.svg",
@@ -1733,7 +1730,7 @@
         "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "b2e962e8053d1deb1da034b7874b1f2649406b5c132bc00a026c2286e548cee1"
+      "source_sha256": "5914f7fd42ac83e91c968022da3a578f95c88053faf08fa3e5a5c2bff95a37bc"
     },
     {
       "file": "22_loi_test.svg",
@@ -1803,18 +1800,18 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (10 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[19]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 5,
+          "text_elements": 13,
           "images": {
             "placements": 1,
             "files": [
               "screenshot_demo.png"
             ],
-            "max_frame_share": 0.349
+            "max_frame_share": 0.2982
           },
           "icons": 0,
           "effects": {
@@ -1825,7 +1822,7 @@
           },
           "geometry": {
             "svg_elements": {
-              "rect": 3,
+              "rect": 6,
               "circle": 0,
               "ellipse": 0,
               "line": 2,
@@ -1853,11 +1850,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 5,
-        "tspan_elements": 6
+        "text_elements": 13,
+        "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "663617361851e5c847d826c6c45e2706d903dcd26a6e85cfbbb227577f217ca8"
+      "source_sha256": "4fac77f8cef12885dace3d9b44b2fb11e0025052746d42724979fb7d7ad0f2b3"
     },
     {
       "file": "24_vi_du.svg",
@@ -1865,12 +1862,12 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (38 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (34 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 19,
+          "text_elements": 17,
           "images": {
             "placements": 2,
             "files": [
@@ -1916,11 +1913,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 19,
-        "tspan_elements": 20
+        "text_elements": 17,
+        "tspan_elements": 18
       },
       "passed": true,
-      "source_sha256": "75c07435ca3fc68178b37a2a2c3bea99c5785e2379e25fd8e2b40a6d54bc01d3"
+      "source_sha256": "1235a060bd7186997b77d21c4dc48f4b08dc8876d5e0c7d7490aadfd7f4cdf79"
     },
     {
       "file": "25_gioi_han.svg",
@@ -1928,12 +1925,12 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (36 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 16,
+          "text_elements": 19,
           "images": {
             "placements": 0,
             "files": [],
@@ -1948,7 +1945,7 @@
           },
           "geometry": {
             "svg_elements": {
-              "rect": 5,
+              "rect": 6,
               "circle": 0,
               "ellipse": 0,
               "line": 2,
@@ -1976,11 +1973,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 16,
-        "tspan_elements": 16
+        "text_elements": 19,
+        "tspan_elements": 19
       },
       "passed": true,
-      "source_sha256": "ebf0f91915669c9ea6a13e35e2680afa656db20930e68ccd77bd868fd4284775"
+      "source_sha256": "2cf4f00664d1dccca1f2fd6e9b11f94d354efb3d218a40f2763bdd62eb9cf295"
     },
     {
       "file": "26_khong_chan_doan.svg",
@@ -1989,7 +1986,7 @@
       "errors": [],
       "warnings": [
         "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#B45309' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"26-scope-text-text\"> exceeds <g id=\"26-scope\"> data-pptx-bounds on the vertical axis: content (106.0, 558.1)-(1143.9, 611.4), container (82.0, 534.0)-(1198.0, 610.0), overflow horizontal 0.0%, vertical 1.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "<text id=\"26-scope-text-text\"> exceeds <g id=\"26-scope\"> data-pptx-bounds on the vertical axis: content (106.0, 558.1)-(1147.8, 611.4), container (82.0, 534.0)-(1198.0, 610.0), overflow horizontal 0.0%, vertical 1.8% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2041,7 +2038,7 @@
         "tspan_elements": 12
       },
       "passed": true,
-      "source_sha256": "8ae047d00a74174bd8059ba11a474984c8b353174dd344f399d479e707decf7f"
+      "source_sha256": "8ddb34ace2b3712e9b87682847d4e672b32b8e09f7b2605ca07532d46ae16e8f"
     },
     {
       "file": "27_ket_luan.svg",
@@ -2049,7 +2046,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (44 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (48 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2098,10 +2095,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 17,
-        "tspan_elements": 23
+        "tspan_elements": 25
       },
       "passed": true,
-      "source_sha256": "12d896cb320e0c3359651d3f5386bc398208a61502f7a1a5ee557fbebcc19eb8"
+      "source_sha256": "4166a17546b655774e5360c4eb8643d7faff76d3e9df18928bf5c12d8ed6cfc7"
     },
     {
       "file": "28_cam_on.svg",
@@ -2109,15 +2106,15 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (16 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#F2EFE7' -> None; tspan[7]:font-size '64' -> None; tspan[10]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"28-url-text-0-text\"> exceeds <g id=\"28-url-text-0\"> data-pptx-bounds on the horizontal axis: content (220.0, 422.1)-(888.4, 447.4), container (220.0, 421.0)-(887.0, 448.0), overflow horizontal 0.2%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈10.6 px per Latin char at 21px incl. headroom; ≈62 chars fit in 667 px",
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#F2EFE7' -> None; tspan[7]:font-size '64' -> None; tspan[10]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "<text id=\"28-url-text-0-text\"> exceeds <g id=\"28-url-text-0\"> data-pptx-bounds on the horizontal axis: content (300.0, 418.1)-(968.4, 443.4), container (300.0, 417.0)-(967.0, 444.0), overflow horizontal 0.2%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈10.6 px per Latin char at 21px incl. headroom; ≈62 chars fit in 667 px",
         "1 ungrouped top-level Slide-local element(s) in svg_output (<line id=\"28-thanks-rule\">); group only logical content units in a top-level <g id=\"...\">. Keep genuine static page framing as a root primitive and declare a supported data-pptx-role such as \"background\" or \"decoration\"",
         "Mapped page has no placeholder slot and no data-pptx-layer=\"layout\" atom; its Layout exports empty. Generated templates should declare the slots the page actually has (title / subtitle / body / picture / slide-number / footer) and mark the layout key's static framing unless this is intentionally a fixed zero-slot composition. No change or disposition is required."
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 7,
+          "text_elements": 9,
           "images": {
             "placements": 1,
             "files": [
@@ -2162,11 +2159,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 7,
-        "tspan_elements": 8
+        "text_elements": 9,
+        "tspan_elements": 10
       },
       "passed": true,
-      "source_sha256": "04c2d9bfce645de370c55987f013701302870245de3d887c4fcda72c5aca3a53"
+      "source_sha256": "630ca488678efb0cd91ec67fe7b25a3354e2669c6dde499ba5c316768784289f"
     },
     {
       "file": "b1_rq1_per_seed.svg",
@@ -2174,12 +2171,12 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (6 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 4,
+          "text_elements": 24,
           "images": {
             "placements": 0,
             "files": [],
@@ -2194,7 +2191,7 @@
           },
           "geometry": {
             "svg_elements": {
-              "rect": 2,
+              "rect": 6,
               "circle": 0,
               "ellipse": 0,
               "line": 2,
@@ -2222,11 +2219,11 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 4,
-        "tspan_elements": 4
+        "text_elements": 24,
+        "tspan_elements": 24
       },
       "passed": true,
-      "source_sha256": "ea28d028eae05b0ea28b3290976a1c09cb20c8cd9e7413fa212c081ec3cdc7df"
+      "source_sha256": "a8a27e025393cde80aa05ce45c49512587e7a64e999fd58ac830cdeaeb6175d3"
     },
     {
       "file": "b2_rq2_day_du.svg",
@@ -2286,7 +2283,7 @@
         "tspan_elements": 30
       },
       "passed": true,
-      "source_sha256": "1443f7222bb836b516e86b990e92f52dcea203e76b79a7a80857d6fd0102b3bb"
+      "source_sha256": "49cf8a93e96f79ab8302370b48194fde242776d3ded8c127aeb9ffc390499a03"
     },
     {
       "file": "b3_rq3_day_du.svg",
@@ -2346,7 +2343,7 @@
         "tspan_elements": 31
       },
       "passed": true,
-      "source_sha256": "fdf11464d137718cb4f0c176dbf7fe893f743816dbafc2a9b9c2c9d8c3e86466"
+      "source_sha256": "bf111592cdbbe640c540c8d2399f6cfcb7476e6e5d3e7e0325c886ff7f7c6d80"
     },
     {
       "file": "b4_cap_gan_trung.svg",
@@ -2407,7 +2404,7 @@
         "tspan_elements": 24
       },
       "passed": true,
-      "source_sha256": "74ff83c9073d20844ffa9ed78d0c4846fce1cf80bdac8819d76b0e291736bc94"
+      "source_sha256": "84fe7f17b824d5f05de82e1b6732fdbe5d64fc623753b5988f60ead847caabd7"
     },
     {
       "file": "b5_loi_val.svg",
@@ -2415,7 +2412,7 @@
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (36 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (40 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '19' -> None; tspan[15]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2464,10 +2461,10 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 16,
-        "tspan_elements": 19
+        "tspan_elements": 21
       },
       "passed": true,
-      "source_sha256": "b054da3263fd7c28b842030665fcde7e655939fa9f2be1a50ad079b6787ea496"
+      "source_sha256": "6c897071a3f75c504ecb7c8b24ba93180610cae9d9fbdf0a95a1583b95a9e00d"
     },
     {
       "file": "b6_latency.svg",
@@ -2527,7 +2524,7 @@
         "tspan_elements": 28
       },
       "passed": true,
-      "source_sha256": "6ec66739f10b9741a7ae0529d4867f7edb40cbdcf9745738470438cb3bae78b4"
+      "source_sha256": "bffdb8092a69c67381e5e52820f9837ae8864bdff3285f955c86d8657c5adc5b"
     }
   ]
 }

@@ -18,7 +18,8 @@ def _page(filename: str, title: str, source: str, kicker: str) -> k.Page:
 
 def slide_b1() -> k.Page:
     page = _page("b1_rq1_per_seed.svg", "RQ1 từng seed và khoảng tin cậy",
-                 "Nguồn: results/report_rq1/r1_per_seed.csv, r1_summary.csv",
+                 "Nguồn: results/report_rq1/r1_per_seed.csv, r1_summary.csv · "
+                 "results/threshold_v3.md mục 1 (RQ1)",
                  "CHƯƠNG 3 · DỰ PHÒNG")
     names = {"hist": "Histogram 64", "glcmlbp": "GLCM + LBP 88", "hog": "HOG 10.404",
              "ghep": "Ghép 152"}
@@ -29,31 +30,32 @@ def slide_b1() -> k.Page:
     for index, key in enumerate(order):
         values = seeds[key]
         summary = next(item for item in D["rq1"] if item["key"] == key)
-        y = 214 + index * 100
-        zone = page.zone(f"grp{key}", 82, y, 1116, 90)
+        y = 214 + index * 88
+        zone = page.zone(f"grp{key}", 82, y, 1116, 82)
         zone.card()
-        zone.text(f"grp{key}-name", 106, y + 36, names[key], size=21, color=k.TEAL,
+        zone.text(f"grp{key}-name", 106, y + 34, names[key], size=21, color=k.TEAL,
                   weight="bold")
-        zone.text(f"grp{key}-mean", 106, y + 76, f"{fmt(summary['macro_f1'])} ± "
+        zone.text(f"grp{key}-mean", 106, y + 70, f"{fmt(summary['macro_f1'])} ± "
                   f"{fmt(summary['std'])}", size=26, color=k.INK, weight="bold")
-        zone.text(f"grp{key}-seeds", 480, y + 40,
+        zone.text(f"grp{key}-seeds", 480, y + 34,
                   " · ".join(fmt(value) for value in values), size=21, color=k.INK_SOFT,
                   max_width=420, line_h=26)
-        zone.text(f"grp{key}-ci", 480, y + 74, f"CI 95% {fmt_ci(*summary['ci'])}", size=21,
+        zone.text(f"grp{key}-ci", 480, y + 66, f"CI 95% {fmt_ci(*summary['ci'])}", size=21,
                   color=k.INK_SOFT)
-        zone.text(f"grp{key}-seed-label", 950, y + 40, "seed 42 · 43 · 44", size=19,
+        zone.text(f"grp{key}-seed-label", 950, y + 34, "seed 42 · 43 · 44", size=19,
                   color=k.INK_SOFT)
-    page.content(k.note_zone(page, "note", 82, 606, 1116,
-                           "Các seed của cùng một nhóm lệch nhau vài "
-                           "phần nghìn macro-F1; chênh lệch giữa các "
-                           "nhóm lớn hơn nhiều lần.", size=19))
+        page.content(zone.done())
+    note = ("Các seed của cùng một nhóm lệch nhau vài phần "
+            "nghìn macro-F1; chênh lệch giữa các nhóm lớn hơn "
+            "nhiều lần.")
+    page.content(k.note_zone(page, "note", 82, 572, 1116, note, size=19, line_h=24))
     return page
 
 
 def slide_b2() -> k.Page:
     page = _page("b2_rq2_day_du.svg", "RQ2 đầy đủ sáu bộ phân loại",
                  "Nguồn: results/report_rq2/r1_summary.csv · "
-                 "results/report_rq1/r1_per_seed.csv", "CHƯƠNG 3 · DỰ PHÒNG")
+                  "results/report_rq2/r1_per_seed.csv", "CHƯƠNG 3 · DỰ PHÒNG")
     names = {"lr": "Logistic Regression", "knn": "k-NN", "dt": "Decision Tree",
              "rf": "Random Forest", "gb": "Gradient Boosting", "svm": "SVM RBF"}
     for index, row in enumerate(D["rq2"]):
@@ -101,15 +103,15 @@ def slide_b3() -> k.Page:
                   max_width=184, line_h=24)
         page.content(zone.done())
     page.content(k.note_zone(page, "note", 82, 500, 1116,
-                             "Hai kịch bản đầu cuối cùng bị nhầm giữa “ảnh gốc” và “ảnh đã che”; "
-                             "chúng cho thấy phôi đào tạo và phôi đánh giá là hai phân bố khác nhau.",
+                              "Hai kịch bản cuối học trên ảnh gốc nhưng đánh giá trên ảnh đã bị che; "
+                              "chúng cho thấy tập huần luyện và tập đánh giá là hai phân bố khác nhau. Quy ước A → B: huần luyện trên ảnh dạng A, đánh giá trên ảnh dạng B.",
                              size=19))
     return page
 
 
 def slide_b4() -> k.Page:
     page = _page("b4_cap_gan_trung.svg", "735 cặp gần trùng",
-                 "Nguồn: outputs/split_check/cross_split_hamming_report.json · "
+                 "Nguồn: splits/README.md mục 3 · splits/split_v1.csv · "
                  "results/eda", "CHƯƠNG 4 · DỰ PHÒNG")
     detail = D["pairs_detail"]
     page.content(page.text("split-label", 82, 222, "THEO CẶP SPLIT", size=19, color=k.TEAL,
@@ -153,7 +155,8 @@ def slide_b5() -> k.Page:
     items = [
         ("Lỗi trên validation", fmt_int(errors["n"]), "ảnh dự đoán sai trên 3.174 ảnh"),
         ("Lỗi cặp Normal ↔ LO", fmt_int(errors["normal_lung_opacity"]), "cặp nhầm lẫn đông nhất"),
-        ("Lỗi đồng thuận", fmt_int(errors["consensus"]), "lỗi ở cả ba seed"),
+        ("Lỗi đồng thuận", fmt_int(errors["consensus"]),
+         "SVM sai và GB, RF cũng sai (GB, RF lấy đa số 2/3 seed; SVM chạy một seed)"),
         ("Lỗi p ≥ 0,80", fmt_int(errors["high_confidence"]),
          f"{fmt_pct(errors['high_confidence_pct'], 1)} số lỗi tự tin ở mức cao"),
     ]
@@ -179,20 +182,21 @@ def slide_b6() -> k.Page:
                  "CHƯƠNG 5 · DỰ PHÒNG")
     detail = D["latency_detail"]["stages"]
     for index, (key, value) in enumerate(detail.items()):
-        zone = page.zone(f"st{index}", 82, 250 + index * 84, 540, 76)
+        zone = page.zone(f"st{index}", 82, 244 + index * 80, 540, 72)
         zone.card()
-        zone.text(f"st{index}-name", 102, 286 + index * 84, _STAGES[key], size=21,
+        zone.text(f"st{index}-name", 102, 280 + index * 80, _STAGES[key], size=21,
                   color=k.INK)
-        zone.text(f"st{index}-median", 360, 286 + index * 84, fmt_seconds(value["median"]),
+        zone.text(f"st{index}-median", 360, 280 + index * 80, fmt_seconds(value["median"]),
                   size=26, color=k.TEAL, weight="bold", anchor="end")
-        zone.text(f"st{index}-p95", 604, 286 + index * 84, f"p95 {fmt_seconds(value['p95'])}",
+        zone.text(f"st{index}-p95", 604, 280 + index * 80, f"p95 {fmt_seconds(value['p95'])}",
                   size=19, color=k.INK_SOFT, anchor="end")
         page.content(zone.done())
 
     artifact = D["latency"]
-    zone = page.zone("art", 660, 250, 538, 350)
+    zone = page.zone("art", 660, 244, 538, 312)
     zone.card()
-    zone.text("art-tag", 684, 286, "ARTIFACT ĐÓNG BĂNG", size=19, color=k.TEAL, weight="bold")
+    zone.text("art-tag", 684, 280, "ARTIFACT ĐÓNG BĂNG", size=19, color=k.TEAL,
+              weight="bold")
     items = [
         ("Kích thước", fmt(artifact["artifact_bytes"] / 1_000_000, 2) + " MB"),
         ("Số vector hỗ trợ", fmt_int(artifact["n_support_vectors"])),
@@ -201,14 +205,13 @@ def slide_b6() -> k.Page:
         ("Môi trường", artifact["cpu"]),
     ]
     for index, (name, value) in enumerate(items):
-        y = 326 + index * 54
+        y = 314 + index * 48
         zone.text(f"art{index}-name", 684, y, name, size=19, color=k.INK_SOFT)
         zone.text(f"art{index}-value", 880, y, value, size=19, color=k.INK, max_width=290,
                   line_h=24)
     page.content(zone.done())
-    page_content = f"Đo trên {D['latency']['n_images']} ảnh validation, {D['latency']['repeats']} lượt, " \
-                   f"máy {artifact['cpu']}."
-    page.content(k.note_zone(page, "note", 82, 606, 1116, page_content, size=19))
+    note = (f"Đo trên {artifact['n_images']} ảnh validation, {artifact['repeats']} lượt, máy {artifact['cpu']}.")
+    page.content(k.note_zone(page, "note", 82, 570, 1116, note, size=19, line_h=24))
     return page
 
 

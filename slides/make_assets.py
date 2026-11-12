@@ -75,6 +75,29 @@ def mask_strip(source: Path, target: Path, width: int = 1100) -> None:
     strip.save(target)
 
 
+def mask_trio(source: Path, mask_source: Path, target: Path) -> None:
+    """Ba ô cạnh nhau cho một ảnh: ảnh gốc · chỉ giữ vùng phổi · chỉ giữ vùng ngoài phổi.
+
+    Mask gốc 256×256 nội suy về 299×299 bằng láng giềng gần nhất, đúng cách làm của
+    ``src/rq3_runner.py`` khi sinh năm kịch bản RQ3.
+    """
+    import numpy as np
+
+    image = Image.open(source).convert("L").resize((IMAGE_SIZE, IMAGE_SIZE), Image.LANCZOS)
+    mask = Image.open(mask_source).convert("L").resize((IMAGE_SIZE, IMAGE_SIZE),
+                                                       Image.NEAREST)
+    pixels = np.asarray(image, dtype=np.uint8)
+    inside = np.asarray(mask, dtype=np.uint8) > 0
+    lung_only = np.where(inside, pixels, 0).astype(np.uint8)
+    outside_only = np.where(~inside, pixels, 0).astype(np.uint8)
+    strip = Image.new("L", (IMAGE_SIZE * 3, IMAGE_SIZE))
+    strip.paste(image, (0, 0))
+    strip.paste(Image.fromarray(lung_only), (IMAGE_SIZE, 0))
+    strip.paste(Image.fromarray(outside_only), (IMAGE_SIZE * 2, 0))
+    target.parent.mkdir(parents=True, exist_ok=True)
+    strip.save(target)
+
+
 def build() -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     split = load_split()
@@ -118,6 +141,23 @@ def build() -> dict:
     samples = pd.read_csv(MASK_DIR / "mask_visual_check_samples.csv")
     if set(samples["split"]) != {"val"}:
         raise PermissionError("ảnh kiểm tra mask có mẫu không thuộc split val")
+
+    # Ba chế độ của một ảnh val, cho slide 16 (cùng ảnh với ca dự đoán đúng ở slide 24)
+    trio_id = "COVID-1006.png"
+    trio_image = val_image(split, trio_id)
+    label = trio_image.parent.parent.name
+    trio_mask = CXR_ROOT / label / "masks" / trio_id
+    if not trio_mask.exists():
+        raise FileNotFoundError(f"thiếu mask của {trio_id}: {trio_mask}")
+    mask_trio(trio_image, trio_mask, OUT / "mask_trio.png")
+    manifest["mask_trio.png"] = {
+        "source": f"{trio_image} + {trio_mask}",
+        "split": "val",
+        "image_id": trio_id,
+        "sha256": sha256(OUT / "mask_trio.png"),
+        "kind": "mask-trio",
+    }
+
     for label in ("COVID", "Lung_Opacity", "Normal", "Viral_Pneumonia"):
         source = MASK_DIR / f"mask_visual_check_{label}.png"
         if not source.exists():

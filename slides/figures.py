@@ -212,7 +212,7 @@ def fig_rq1_delta() -> Path:
     ax.set_xlim(-0.075, 0.125)
     _xlabel(ax, "Chênh lệch macro-F1 so với histogram (CI 95%)")
     _xgrid(ax)
-    _comma_axis(ax, 2)
+    _comma_axis(ax, 3)
     _caption(fig, "Nguồn: results/report_rq1/r1_bootstrap_vs_reference.csv · cam = khoảng tin cậy chứa 0")
     return _save(fig, "fig_rq1_delta.png")
 
@@ -245,7 +245,7 @@ def fig_rq2_ci() -> Path:
         _label_after(ax, bar.get_y() + bar.get_height() / 2, row["ci"][1], D.fmt(row["macro_f1"]))
     rf = next(row for row in D.D["rq2"] if row["key"] == "rf")
     _baseline(ax, rf["macro_f1"])
-    _note(fig, f"mốc nền: RF = {D.fmt(rf['macro_f1'])}")
+    _note(fig, f"tham chiếu: RF = {D.fmt(rf['macro_f1'])}")
     ax.set_xlim(0, 1.08)
     ax.set_ylim(-0.55, 5.55)
     _xlabel(ax, "Macro-F1 trên validation (nhóm đặc trưng ghép, 152 chiều)")

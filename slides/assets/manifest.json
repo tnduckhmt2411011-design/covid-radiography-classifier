@@ -29,6 +29,13 @@
     "sha256": "737d79b22fb1a729aa1731f1b82c6400e2984b5d6e435889bb562a490fe4b92b",
     "kind": "screenshot"
   },
+  "mask_trio.png": {
+    "source": "D:\\cxr_data\\COVID-19_Radiography_Dataset\\COVID\\images\\COVID-1006.png + D:\\cxr_data\\COVID-19_Radiography_Dataset\\COVID\\masks\\COVID-1006.png",
+    "split": "val",
+    "image_id": "COVID-1006.png",
+    "sha256": "039de4b3ca4e88900ab1d88be1a99664e33bd2f17775a2acc59ed2cfc1250f86",
+    "kind": "mask-trio"
+  },
   "mask_strip_COVID.png": {
     "source": "D:\\Use Antigravity\\Medical Vision\\results\\rq3_mask_check\\mask_visual_check_COVID.png",
     "split": "val",
