@@ -147,11 +147,18 @@ def test_appendix_b1_counts_match_git_ls_files() -> None:
 
 # ---------- Phụ lục B.2: số phép kiểm thử thực tế ----------
 def test_appendix_b2_matches_pytest_collect() -> None:
-    """Bảng B.2 phải khớp `pytest --collect-only` theo từng module và tổng cộng."""
+    """Bảng B.2 phải khớp `pytest --collect-only` theo từng module và tổng cộng.
+
+    Chỉ đếm module đã track (`git ls-files tests/test_*.py`) để báo cáo phản
+    ánh nội dung của kho; tệp test chưa track trong cây làm việc không tính.
+    """
     import subprocess
     import sys
 
-    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"],
+    mods = subprocess.run(["git", "ls-files", "tests/test_*.py"], cwd=REPO_ROOT,
+                          capture_output=True, text=True).stdout.split()
+    assert mods, "Khong doc duoc danh sach module da track"
+    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q", *mods],
                        cwd=REPO_ROOT, capture_output=True, text=True)
     per: dict[str, int] = {}
     for line in r.stdout.splitlines():
@@ -159,8 +166,7 @@ def test_appendix_b2_matches_pytest_collect() -> None:
         if s.startswith("tests/") and "::" in s:
             key = s.split("::")[0].removeprefix("tests/")
             per[key] = per.get(key, 0) + 1
-    n_modules = len(list((REPO_ROOT / "tests").glob("test_*.py")))
-    if len(per) < n_modules:
+    if len(per) < len(mods):
         pytest.skip("Moi truong khong thu thap du module test (thieu thu vien); chi kiem tra tren moi truong day du")
     table = read_table_rows("08_phu_luc_a_c.md", r"\*\*Bảng B\.2")
     table = [r for r in table if not set(cells(r)[0]) <= {":", "-", " "}]
@@ -188,13 +194,20 @@ def test_toc_file_matches_generator() -> None:
 
 # ---------- Số bộ kiểm thử trong Phụ lục A khớp Chương 5 ----------
 def test_appendix_a1_test_count_matches_chapter5() -> None:
-    """Câu về quy mô kiểm thử ở Phụ lục A.1 phải dùng cùng một con số với Chương 5."""
+    """Câu về quy mô kiểm thử ở Phụ lục A.1 phải dùng cùng một con số với Chương 5.
+
+    Chỉ đếm module đã track (`git ls-files tests/test_*.py`) để báo cáo phản
+    ánh nội dung của kho; tệp test chưa track trong cây làm việc không tính.
+    """
     import subprocess
     import sys
 
-    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"],
+    mods = subprocess.run(["git", "ls-files", "tests/test_*.py"], cwd=REPO_ROOT,
+                          capture_output=True, text=True).stdout.split()
+    assert mods, "Khong doc duoc danh sach module da track"
+    r = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q", *mods],
                        cwd=REPO_ROOT, capture_output=True, text=True)
-    n_modules = len(list((REPO_ROOT / "tests").glob("test_*.py")))
+    n_modules = len(mods)
     if not re.search(rf"{n_modules} module|tests collected", r.stdout) or r.returncode != 0:
         pytest.skip("Moi truong khong thu thap du bo kiem thu; chi kiem tra tren moi truong day du")
     collected = re.search(r"(\d+) tests? collected", r.stdout).group(1)
