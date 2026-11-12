@@ -172,7 +172,9 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 | `svm` | `C` ∈ {1,0; 10,0} × `gamma` ∈ {scale; auto} (4) |
 | `gb` | `n_estimators` ∈ {100; 200} × `learning_rate` = 0,1 × `max_depth` ∈ {3; 5} (4) |
 
-Trọng số lớp (`class_weight='balanced'`) là thành phần cố định của bộ phân loại, không nằm trong lưới; `knn` không hỗ trợ trọng số lớp nên dùng cân bằng bằng `weights='distance'`. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
+Trọng số lớp là thành phần cố định, không nằm trong lưới: Logistic Regression, Decision Tree và SVM dùng cân bằng lớp (`class_weight='balanced'`); Random Forest dùng cân bằng theo mẫu (`class_weight='balanced_subsample'`); Gradient Boosting dùng trọng số mẫu cân bằng truyền vào bước fit; k-NN không có cơ chế cân bằng lớp, và trọng số `weights='distance'` trong lưới của `knn` là trọng số theo khoảng cách tới láng giềng chứ không cân bằng lớp. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
+
+Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 (nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
 
 ### C.2. Tham số chọn và kết quả trên tập validation
 
@@ -187,7 +189,7 @@ Trọng số lớp (`class_weight='balanced'`) là thành phần cố định c�
 | 5 | `knn` | `n_neighbors=5, weights='distance'` | 1 | 0,8242 | [0,8075; 0,8397] |
 | 6 | `dt` | `max_depth=10, min_samples_leaf=1` | 3 | 0,7271 ± 0,0017 | [0,7090; 0,7449] |
 
-Ba bộ tất định không có độ lệch chuẩn (cổng H3 của đề tài). Bộ phân loại tham chiếu của RQ2 là `rf` (cấu hình dùng ở RQ1); ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
+Ba bộ tất định về nhãn dự đoán chạy mỗi bộ một lần nên không có độ lệch chuẩn. Bộ phân loại tham chiếu của RQ2 là `rf`, với cấu hình chọn bằng kiểm định chéo (300 cây, độ sâu không giới hạn), khác cấu hình 500 cây cố định dùng ở RQ1; ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
 
 ### C.3. Thứ hạng chi phí huấn luyện
 
@@ -202,6 +204,6 @@ Ba bộ tất định không có độ lệch chuẩn (cổng H3 của đề tà
 | 5 | `gb` | 1.765,091 | 132,789 | 2.163,459 |
 | 6 | `rf` | 3.086,971 | 151,621 | 3.541,833 |
 
-Chi phí của một bộ phân loại là tổng giây CPU huấn luyện (5-fold CV cộng fit trên toàn bộ tập train của các seed tương ứng), không gồm trích đặc trưng: bước trích nhóm `ghep` dùng chung cho cả sáu bộ tốn 1.402,867 giây CPU (1.155,273 giây cho train và 247,594 giây cho validation, tức 0,077985 giây CPU một ảnh). Biên bản thứ hạng chi phí được ghi và commit trước khi mở điểm số của lô chạy.
+Chi phí của một bộ phân loại là tổng giây CPU huấn luyện (5-fold CV cộng fit trên toàn bộ tập train của các seed tương ứng), không gồm trích đặc trưng: bước trích nhóm `ghep` dùng chung cho cả sáu bộ tốn 1.402,867 giây CPU (1.155,273 giây cho train và 247,594 giây cho validation, tức 0,077985 giây CPU một ảnh). Con số này đo ở lần chạy RQ2 (kernel `cxr-rq2-classifiers` phiên bản 3); con số 0,056773 giây CPU một ảnh ở Chương 3 đo ở lần chạy RQ1 (kernel `cxr-rq1-rf` phiên bản 5). Cùng môi trường Kaggle CPU nhưng khác phiên chạy nên hai số không so trực tiếp được. Biên bản thứ hạng chi phí được ghi và commit trước khi mở điểm số của lô chạy.
 
 **Ghi chú nguồn Phụ lục C:** `src/rq2_runner.py` (`PARAM_GRIDS`, `CLASSIFIERS`), `results/rq2_classifier_selection_record.md`, `results/rq2_cost_rank_record.md`, `results/summary_rq2_full.json`.

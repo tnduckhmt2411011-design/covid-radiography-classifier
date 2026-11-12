@@ -73,3 +73,12 @@ def test_appendix_a_table_captions_in_order() -> None:
     assert i1 < i2, "Bang A.1 phai truoc Bang A.2"
     sha_row = next(r for r in body.splitlines() if r.startswith("| `CXR_MODEL_SHA256`"))
     assert "Bảng A.1" in sha_row and "Bảng A.2" not in sha_row, sha_row
+
+
+def test_appendix_c1_class_weight_sentence() -> None:
+    """Cau trong so lop o Phu luc C.1 phai dung co che tung bo phan loai."""
+    body = _body("08_phu_luc_a_c.md")
+    assert "balanced_subsample" in body, "thieu co che balanced_subsample cua Random Forest"
+    assert "trọng số mẫu" in body, "thieu co trong so mau cua Gradient Boosting"
+    assert "cân bằng bằng `weights='distance'`" not in body, "sai: weights='distance' khong can bang lop"
+    assert "cổng H3" not in body, "khong dung ma hieu noi bo trong phu luc"
