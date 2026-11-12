@@ -51,7 +51,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 2 | Trang bìa phụ | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 2 |
 | 3 | Lời cảm ơn | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 3; viết mới |
 | 4 | Lời cam đoan | [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) mục 4; viết mới, cam kết trung thực số liệu |
-| 5 | Tóm tắt tiếng Việt và Abstract tiếng Anh | Viết sau cùng, tóm tắt từ Chương 4–6 (chưa có tệp) |
+| 5 | Tóm tắt tiếng Việt và Abstract tiếng Anh | [`09_tom_tat_abstract.md`](09_tom_tat_abstract.md); mỗi bản không quá một trang: bối cảnh, phương pháp, kết quả test, kết luận; chỉ dùng số liệu đã có ở Chương 3–6 |
 | 6 | Mục lục | [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) phần 1, sinh bởi `scripts/report_frontmatter.py` |
 | 7 | Danh mục ký hiệu và chữ viết tắt | [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md); chỉ ký hiệu đã xác minh xuất hiện trong sáu chương |
 | 8 | Danh mục bảng biểu | [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) phần 2 (32 bảng), sinh bởi cùng script |
