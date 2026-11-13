@@ -107,7 +107,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | 5.1 | Kết quả trên tập test độc lập, mở khóa một lần | `results/final_test/final_test_report.json`, `results/final_test/metrics.json`, `results/final_test/UNLOCK_RECORD.json`. Macro-F1 0,8714, CI [0,8579, 0,8840], Accuracy 86,56% |
 | 5.2 | Chênh lệch validation và test | `results/final_test/final_test_report.json` (`test_minus_val` = −0,0310). Không nêu nguyên nhân; cách tính hiệu và ô Bảng 5.3 ghi trong Ghi chú kỹ thuật của chương |
 | 5.3 | Phân tích lỗi sai và cặp nhầm lẫn Normal – Lung_Opacity | Ma trận nhầm lẫn trong `results/final_test/metrics.json`: 427 lỗi, trong đó 304 lỗi thuộc cặp Normal ↔ Lung_Opacity (71,19%). Hình 5.1 sinh bằng `python -m scripts.report_figures_final_test`, kiểm thử `tests/test_report_figures_final_test.py` |
-| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 344 phép kiểm thử trong 28 module (đếm tại thời điểm nộp; số liệu chạy xem Ghi chú kỹ thuật của chương) |
+| 5.4 | Tính độc lập và khả năng tái lập của thực nghiệm | `notebooks/10_final_test_eval.ipynb`; `results/final_test_protocol_record.md` (D1–D4, G1–G6); `results/final_test/UNLOCK_RECORD.json`. Bộ kiểm thử: 349 phép kiểm thử trong 28 module (đếm tại thời điểm nộp; số liệu chạy xem Ghi chú kỹ thuật của chương) |
 | 5.5.1 | Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán | `src/inference_demo.py` (`N_FEATURES`, `IMAGE_SIZE`, các hàm `load_image_grayscale_299`, `extract_152_features`, `fit_or_load_model`, `predict_image`); `src/model_artifact.py` (kho `duc16/cxr-svm-demo`, SHA-256 `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058`, 7.842.399 bytes) |
 | 5.5.2 | Giao diện Streamlit và các thành phần tương tác | `demo/streamlit_app.py`; `demo/README.md` |
 | 5.5.3 | Cảnh báo y khoa tích hợp trong ứng dụng | `demo/streamlit_app.py` dòng 61–63; `demo/README.md` mục giới hạn và an toàn |
@@ -129,7 +129,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 | :-: | :--- | :--- |
 | 1 | Tài liệu tham khảo (IEEE `[1]`-`[13]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); gộp từ danh mục cuối Chương 1 (`[1]`-`[10]`), Chương 2 (`[11]`) và Chương 5 (`[12]`, `[13]`) |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục A; `demo/README.md`; `src/model_artifact.py` |
-| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục B; `tests/`; 344 phép kiểm thử trong 28 module (đếm tại thời điểm nộp), sinh bởi `scripts/report_appendix_b.py` |
+| 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục B; `tests/`; 349 phép kiểm thử trong 28 module (đếm tại thời điểm nộp), sinh bởi `scripts/report_appendix_b.py` |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục C; `src/rq2_runner.py` (`PARAM_GRIDS`); `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
 
 ---
@@ -160,7 +160,7 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 
 - Đủ 6 chương đã merge vào `main`: Chương 1 tại [`01_gioi_thieu.md`](01_gioi_thieu.md), Chương 2 tại [`02_du_lieu_va_phuong_phap.md`](02_du_lieu_va_phuong_phap.md), Chương 3 tại [`03_ket_qua_rq1_rq2.md`](03_ket_qua_rq1_rq2.md), Chương 4 tại [`04_hoc_loi_tat_rq3.md`](04_hoc_loi_tat_rq3.md), Chương 5 tại [`05_ket_qua_test_va_trien_khai.md`](05_ket_qua_test_va_trien_khai.md), Chương 6 tại [`06_thao_luan_gioi_han_huong_phat_trien.md`](06_thao_luan_gioi_han_huong_phat_trien.md).
 - Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
-- Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 344 phép kiểm thử trong 28 module, 343 pass và 1 bỏ qua.
+- Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 349 phép kiểm thử trong 28 module, 348 pass và 1 bỏ qua.
 - Còn thiếu: tóm tắt tiếng Việt và Abstract (viết sau cùng, khi mọi chương và phụ lục đóng băng); MSSV đã có đủ và đã ghi trên bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
 - Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`-`[13]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
 - Khung viền bìa: `report/figures/khung_trang_bia.png` (A4, 300 DPI) sinh bởi `python scripts/make_cover_border.py`.
