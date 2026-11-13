@@ -40,3 +40,11 @@ Sửa toàn bộ điểm review senior vòng cuối trên sáu chương, tài li
 - Hai tệp JSON `outputs/split_check/` được track làm nguồn ghi chú Chương 2 (ngoại lệ `.gitignore` có kiểm soát).
 - A.4 giữ nguyên câu "Repo ở chế độ private" (đúng cơ chế triển khai); nếu quy định học phần yêu cầu công khai, đổi trước khi nộp.
 - Tóm tắt hai bản vẫn trong một trang mỗi bản sau khi thêm mệnh đề RQ3.
+
+## Xác minh (2026-11-13)
+
+- `pytest` toàn bộ module track (kèm artifact cục bộ trong worktree, không commit): **349 collected, 348 passed, 1 skipped** (`test_inference_demo_notebook` thiếu `nbformat`).
+- Script đối chiếu 68 mốc (N1–N7, chênh số liệu, mục nhỏ, trích dẫn, số 349/327): **TẤT CA PASS**.
+- Idempotent: chạy lại `scripts/report_appendix_b.py` và `scripts/report_frontmatter.py` → `git diff` sạch.
+- Quy ước chữ: không có dấu gạch dài (U+2014) trong `report/`; câu mới dùng phẩy thập phân, chấm hàng nghìn.
+- Không stage `results/report_rq*/bootstrap_config.json` (pytest ghi lại phiên bản thư viện vào các tệp này; đã khôi phục nguyên trạng).
