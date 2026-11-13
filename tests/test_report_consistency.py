@@ -82,3 +82,17 @@ def test_appendix_c1_class_weight_sentence() -> None:
     assert "trọng số mẫu" in body, "thieu co trong so mau cua Gradient Boosting"
     assert "cân bằng bằng `weights='distance'`" not in body, "sai: weights='distance' khong can bang lop"
     assert "cổng H3" not in body, "khong dung ma hieu noi bo trong phu luc"
+
+
+def test_reference_list_contiguous_and_matches_ch5() -> None:
+    """Danh muc 07 phai co [1]..[13] lien tuc; hai muc cuoi khop danh muc Chuong 5."""
+    ref = (REPORT / "07_tai_lieu_tham_khao.md").read_text(encoding="utf-8")
+    numbered: dict[int, str] = {}
+    for line in ref.splitlines():
+        m = re.match(r"\[(\d+)\] ", line)
+        if m:
+            numbered[int(m.group(1))] = line
+    assert sorted(numbered) == list(range(1, 14)), sorted(numbered)
+    ch5 = (REPORT / "05_ket_qua_test_va_trien_khai.md").read_text(encoding="utf-8")
+    for n in (12, 13):
+        assert numbered[n] in ch5, f"[{n}] khong khop danh muc Chuong 5"

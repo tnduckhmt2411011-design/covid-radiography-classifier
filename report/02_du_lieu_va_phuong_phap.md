@@ -156,7 +156,7 @@ Ba bộ phân loại nhạy với thang đo của đặc trưng, gồm Logistic 
 
 Trung bình và độ lệch chuẩn được tính trên 14.815 ảnh train, sau đó áp dụng không đổi cho validation và test. Trong kiểm định chéo, hai hệ số được tính lại trên phần train của từng fold chứ không tính trên cả 14.815 ảnh. Đây là quy tắc chỉ học từ dữ liệu train: nếu hệ số được tính trước khi chia fold thì phần giữ lại của fold đã lọt vào bước chuẩn hóa, và điểm của fold sẽ lạc quan.
 
-Ba bộ phân loại tất định về nhãn dự đoán (Logistic Regression, k-NN, SVM) mỗi bộ chạy một lần với seed 42; riêng bốn cột xác suất của SVM có phụ thuộc seed do nội suy Platt (mục 3.3). Ba bộ còn lại có thành phần ngẫu nhiên nên chạy trên ba seed 42, 43 và 44 rồi lấy trung bình.
+Ba bộ phân loại tất định về nhãn dự đoán (Logistic Regression, k-NN, SVM) mỗi bộ chạy một lần với seed 42; riêng bốn cột xác suất của SVM có phụ thuộc seed do nội suy Platt [11] (mục 3.3). Ba bộ còn lại có thành phần ngẫu nhiên nên chạy trên ba seed 42, 43 và 44 rồi lấy trung bình.
 
 ## 2.8. Sáu thuật toán phân loại và không gian siêu tham số
 
@@ -192,13 +192,17 @@ Bootstrap lấy mẫu theo từng ảnh nên giả định các ảnh validation
 
 ---
 
+## Tài liệu tham khảo phát sinh trong chương
+
+[11] J. Platt, "Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods," in *Advances in Large Margin Classifiers*, A. J. Smola, Ed. Cambridge, MA: MIT Press, 1999, pp. 61–74.
+
 ## Ghi chú kỹ thuật (không thuộc nội dung báo cáo)
 
 - **Chương này đã đủ 12 tiểu mục** theo đề cương trong [`report/README.md`](README.md). Số bảng, số hình và số công thức đánh theo thứ tự xuất hiện trong chương, không theo số mục: Bảng 2.1 (2.1), 2.2 (2.2), 2.3 (2.4), 2.4 (2.5), 2.5 (2.6), 2.6 (2.8); Hình 2.1 (2.2); công thức (2.1) (2.3).
 - **Tiêu đề mục 2.2 đã đổi** thành "từ độ sáng và metadata tệp" vì phát hiện về định dạng RGB không nằm trong khái niệm cường độ sáng. Tiêu đề cũng được đổi ở `docs/report_standards.md` mục 3.2 và `report/README.md` mục 3, hàng 2.2, cả ba chỗ giờ khớp nhau. Tiêu đề mục 2.3 đổi từ "Lọc trùng lặp" thành "Gom nhóm ảnh trùng" vì bước này không loại bỏ ảnh nào.
 - **Nguồn số liệu:** số trong Bảng 2.2 và các số dẫn xuất (AUC, khoảng cách đến 0,5, 46,5%, 140 ảnh RGB) sinh bằng `python -m src.eda_brightness` từ `splits/manifest.csv`, ghi ra `results/eda/brightness_by_class.csv` và `results/eda/brightness_channels.json`. Kiểm thử `tests/test_eda_brightness.py` đối chiếu CSV với manifest. Bảng trong văn bản lấy từ `format_markdown_table` của script rồi dán sang, nên nếu sửa tay một ô thì phải đối chiếu lại CSV; test không bắt được lỗi gõ lại.
 - **Nguồn mục 2.1:** `docs/dataset_provenance.md` mục 2.1 (thành phần bốn lớp, số lượng từng nguồn), mục 2.2 (giấy phép, tệp `.metadata.xlsx`), mục 3.2 (kích thước ảnh 299 × 299, mask 256 × 256, `mask_match_size = False`) và mục 3.1 (nhãn kế thừa, thiếu `patient_id`, tuổi, thiết bị). Số đếm 21.165 / 10.192 / 6.012 / 3.616 / 1.345 đối chiếu lại bằng pandas trên `splits/split_v1.csv`. Chênh lệch 3.615 so với 3.616 của lớp COVID ghi ở `docs/dataset_provenance.md` mục 2.3 hàng 1.
-- **Chú thích chân trang:** `[^covid-src]` giữ chi tiết sáu kho và chênh lệch 3.615 so với 3.616 của lớp COVID ngoài thân bài. `[^mooney]` là nguồn của bộ dữ liệu Kaggle, được gọi ở mục 2.1 và dùng lại từ Chương 1. Cả hai không tính vào danh mục [1]–[6] nên không làm lệch số thứ tự.
+- **Chú thích chân trang:** `[^covid-src]` giữ chi tiết sáu kho và chênh lệch 3.615 so với 3.616 của lớp COVID ngoài thân bài. `[^mooney]` là nguồn của bộ dữ liệu Kaggle, được gọi ở mục 2.1 và dùng lại từ Chương 1. Cả hai không tính vào danh mục [1]–[13] nên không làm lệch số thứ tự.
 - **Tên tệp trong thân bài:** mỗi mục giữ một đường dẫn để chỉ nguồn số (`splits/manifest.csv` ở 2.2, `splits/split_v1.csv` ở 2.4, `results/final_test/UNLOCK_RECORD.json` và `results/final_test_protocol_record.md` ở 2.4). Các chi tiết kỹ thuật như `mask_match_size`, `group_id`, `allow_test`, `format_markdown_table` và tên bài kiểm thử đã rút khỏi thân bài, chuyển sang ghi chú này và Phụ lục B (cấu trúc kho mã nguồn).
 - **Nguồn mục 2.3:** `splits/README.md` mục 3 (phương pháp MD5 + pHash + Union-Find, 178 nhóm, 401 ảnh, 0 nhóm lệch nhãn ở $T = 0$) và phần định nghĩa pHash, so ngưỡng và chia tập của `notebooks/02_duplicates_and_split.ipynb`. Số 172 nhóm lệch nhãn ở $T = 4$ và 107 nhóm ở $T = 8$ lấy từ `outputs/split_check/duplicates_summary.json`, tệp do `notebooks/02_duplicates_and_split.ipynb` sinh. Số nhóm trùng cả MD5 (39 trên 178) và số nhóm chỉ trùng pHash (139) tính trực tiếp bằng pandas trên cột `file_hash` của `splits/split_v1.csv`. Lưu ý cách đọc số: `splits/README.md` ghi "20.764 ảnh duy nhất", nhưng đếm trên `splits/split_v1.csv` cho thấy 20.764 là số *nhóm chỉ có một ảnh*, còn tổng số nhóm là 20.942 (178 + 20.764); `duplicates_summary.json` cũng ghi `num_unique_images = 20764`. Báo cáo ghi theo cách thứ hai để không hiểu nhầm.
 - **Nguồn mục 2.4:** `splits/README.md` mục 2 (bảng phân bố theo lớp, lệch tối đa $\pm 0,1\%$) và mục 5 (khóa tập test, một lần mở duy nhất); chia 14/3/3 fold từ `notebooks/02_duplicates_and_split.ipynb`; SHA-256 từ `splits/split_v1.sha256`; lần mở khóa và macro-F1 0,9024 từ `results/final_test/UNLOCK_RECORD.json`; sáu bước kiểm soát G1–G6 từ `results/final_test_protocol_record.md` mục 2. Không đưa bất kỳ số liệu nào của tập test vào chương này.

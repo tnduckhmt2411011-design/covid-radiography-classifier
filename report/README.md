@@ -127,7 +127,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 1 | Tài liệu tham khảo (IEEE `[1]`–`[8]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); gộp từ danh mục cuối Chương 1 (`[1]`–`[6]`) và Chương 5 (`[7]`, `[8]`) |
+| 1 | Tài liệu tham khảo (IEEE `[1]`-`[13]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); gộp từ danh mục cuối Chương 1 (`[1]`-`[10]`), Chương 2 (`[11]`) và Chương 5 (`[12]`, `[13]`) |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục A; `demo/README.md`; `src/model_artifact.py` |
 | 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục B; `tests/`; 344 phép kiểm thử trong 28 module (đếm tại thời điểm nộp), sinh bởi `scripts/report_appendix_b.py` |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục C; `src/rq2_runner.py` (`PARAM_GRIDS`); `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
@@ -162,5 +162,5 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 - Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
 - Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59) và rà theo review senior của Chương 5–6 (PR #58, #59). Số liệu kiểm thử trong Chương 5 đo lại: 344 phép kiểm thử trong 28 module, 343 pass và 1 bỏ qua.
 - Còn thiếu: tóm tắt tiếng Việt và Abstract (viết sau cùng, khi mọi chương và phụ lục đóng băng); MSSV đã có đủ và đã ghi trên bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại, chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
-- Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`–`[8]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
+- Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`-`[13]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
 - Khung viền bìa: `report/figures/khung_trang_bia.png` (A4, 300 DPI) sinh bởi `python scripts/make_cover_border.py`.
