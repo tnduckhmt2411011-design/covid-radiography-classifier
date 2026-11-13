@@ -24,5 +24,25 @@
     "Lung_Opacity": 41,
     "Normal": 164,
     "Viral Pneumonia": 4
+  },
+  "bootstrap_ci": {
+    "n_boot": 2000,
+    "seed": 42,
+    "lo": -0.0462,
+    "hi": 0.0386,
+    "contains_zero": true,
+    "method": "percentile bootstrap, independent resampling within each subset"
+  },
+  "recall_subset": {
+    "COVID": 0.9531,
+    "Lung_Opacity": 0.7317,
+    "Normal": 0.9329,
+    "Viral Pneumonia": 1.0
+  },
+  "recall_complement": {
+    "COVID": 0.9577,
+    "Lung_Opacity": 0.855,
+    "Normal": 0.8778,
+    "Viral Pneumonia": 0.9397
   }
 }

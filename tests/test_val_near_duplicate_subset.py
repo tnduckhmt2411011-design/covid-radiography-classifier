@@ -92,3 +92,30 @@ def test_report_numbers_match_record() -> None:
 def test_no_test_data_used() -> None:
     preds = pd.read_csv(PREDS_VAL)
     assert len(preds) == 3174  # toàn bộ tập validation, không ảnh test
+
+
+def _load_script():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "val_near_duplicate_subset", REPO_ROOT / "scripts/val_near_duplicate_subset.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_bootstrap_ci_reproducible() -> None:
+    """Khoang tin cay bootstrap trong JSON phai tai lap duoc dung ham cua script."""
+    record = json.loads(RECORD.read_text(encoding="utf-8"))
+    ci = record["bootstrap_ci"]
+    assert ci["n_boot"] == 2000 and ci["seed"] == 42
+    mod = _load_script()
+    preds = pd.read_csv(PREDS_VAL)
+    hit_val = _hamming_pairs()
+    subset = preds["image_id"].isin(hit_val).to_numpy()
+    y_true = preds["y_true"].to_numpy()
+    y_pred = preds["y_pred"].to_numpy()
+    out = mod.bootstrap_ci_diff(y_true, y_pred, subset)
+    assert round(out["lo"], 4) == ci["lo"], f"{out['lo']} != {ci['lo']}"
+    assert round(out["hi"], 4) == ci["hi"], f"{out['hi']} != {ci['hi']}"
+    assert out["contains_zero"] == ci["contains_zero"]
