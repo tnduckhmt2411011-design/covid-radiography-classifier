@@ -96,3 +96,11 @@ def test_reference_list_contiguous_and_matches_ch5() -> None:
     ch5 = (REPORT / "05_ket_qua_test_va_trien_khai.md").read_text(encoding="utf-8")
     for n in (12, 13):
         assert numbered[n] in ch5, f"[{n}] khong khop danh muc Chuong 5"
+
+
+def test_abstract_mentions_inference_masking() -> None:
+    """Tom tat phai neu hai so macro-F1 khi chi con vung phoi / vung ngoai mat na."""
+    ab = (REPORT / "09_tom_tat_abstract.md").read_text(encoding="utf-8")
+    assert "0,0723" in ab and "0,2084" in ab, "tom tat thieu hai so RQ3 che mat na"
+    joined = " ".join(_rows("04_hoc_loi_tat_rq3.md", r"\*\*Bảng 4\.1"))
+    assert "0,0723" in joined and "0,2084" in joined, "Bang 4.1 thieu hai so nguon"
