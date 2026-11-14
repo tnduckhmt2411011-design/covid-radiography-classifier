@@ -108,8 +108,8 @@ def slide_02() -> k.Page:
 def slide_03() -> k.Page:
     split = D["split"]
     page = k.Page("03_dulieu.svg", layout="content", kicker=CH1, page_no=3,
-                  title=f"{fmt_int(split['total'])} ảnh, bốn lớp, lớp đông nhất gấp "
-                        f"{fmt(split['ratio'], 1)} lần lớp hiếm nhất",
+                  title=f"{fmt_int(split['total'])} ảnh, bốn lớp, lớp đông nhất\n"
+                        f"gấp {fmt(split['ratio'], 1)} lần lớp hiếm nhất",
                   source="Nguồn: splits/split_v1.csv · results/b0_majority/metrics.json")
     page.content(page.text("classes-label", 82, 210, "PHÂN BỐ BỐN LỚP", size=24,
                            color=k.TEAL, weight="bold"))
@@ -121,17 +121,17 @@ def slide_03() -> k.Page:
         zone = page.zone(f"cls{index}", 82, y, 700, 84)
         zone.add(page.text(f"cls{index}-name", 82, y + 24, CLASS_VI[name], size=24,
                            color=k.INK))
-        zone.add(page.rect(f"cls{index}-track", 258, y, 340, 26, fill="#E6DFCF", radius=13))
-        zone.add(page.rect(f"cls{index}-fill", 258, y, max(8, 340 * count / top), 26, fill=k.TEAL,
+        zone.add(page.rect(f"cls{index}-track", 266, y, 300, 26, fill="#E6DFCF", radius=13))
+        zone.add(page.rect(f"cls{index}-fill", 266, y, max(8, 300 * count / top), 26, fill=k.TEAL,
                            radius=13))
-        zone.add(page.text(f"cls{index}-num", 636, y + 24, fmt_int(count), size=24,
+        zone.add(page.text(f"cls{index}-num", 646, y + 24, fmt_int(count), size=24,
                            color=k.INK, weight="bold", anchor="end"))
-        zone.add(page.text(f"cls{index}-share", 258, y + 58,
+        zone.add(page.text(f"cls{index}-share", 266, y + 58,
                            f"{fmt_pct(count / split['total'], 1)} của toàn bộ", size=24,
                            color=k.INK_SOFT))
         page.content(zone.done())
 
-    zone = page.zone("sum-card", 830, 240, 368, 280)
+    zone = page.zone("sum-card", 830, 240, 368, 268)
     zone.card()
     zone.text("sum-num", 856, 306, fmt_int(split["total"]), size=52, color=k.TEAL,
               weight="bold")
@@ -143,7 +143,7 @@ def slide_03() -> k.Page:
               color=k.INK_SOFT, max_width=320, line_h=30)
     page.content(zone.done())
     page.content(
-        k.note_zone(page, "sum-note", 856, 542, 316,
+        k.note_zone(page, "sum-note", 856, 520, 316,
                     f"Đoán toàn bộ là Normal: {fmt(D['baselines']['b0'])} (B0).",
                     size=24, line_h=30),
     )
@@ -165,19 +165,19 @@ def slide_04() -> k.Page:
     ]
     for index, (name, question, detail) in enumerate(questions):
         x = 82 + index * 380
-        zone = page.zone(name, x, 204, 352, 312)
+        zone = page.zone(name, x, 204, 352, 292)
         zone.card()
         zone.text(f"{name}-tag", x + 20, 242, name, size=28, color=k.TEAL, weight="bold")
         zone.text(f"{name}-q", x + 20, 276, question, size=28, color=k.INK, max_width=312,
                   line_h=34)
-        zone.text(f"{name}-d", x + 20, 380, detail, size=24, color=k.INK_SOFT, max_width=312,
+        zone.text(f"{name}-d", x + 20, 386, detail, size=24, color=k.INK_SOFT, max_width=312,
                   line_h=30)
         page.content(zone.done())
 
-    zone = page.zone("h7-band", 82, 528, 1116, 96)
+    zone = page.zone("h7-band", 82, 508, 1116, 112)
     zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
-    zone.text("h7-tag", 102, 556, "RANH GIỚI H7", size=24, color=k.AMBER, weight="bold")
-    zone.text("h7-text", 102, 590,
+    zone.text("h7-tag", 102, 536, "RANH GIỚI H7", size=24, color=k.AMBER, weight="bold")
+    zone.text("h7-text", 102, 574,
               "Chỉ dùng học máy cổ điển với đặc trưng thủ công — không Deep Learning "
               "(mạng nơ-ron); ảnh gốc xám 299×299, không dữ liệu ngoài bộ đã công bố.",
               size=24, color=k.INK, max_width=1076, line_h=30)
@@ -204,7 +204,7 @@ def slide_05() -> k.Page:
     ]
     for index, (name, count, detail) in enumerate(blocks):
         x = 82 + index * 380
-        zone = page.zone(f"src{index}", x, 204, 352, 332)
+        zone = page.zone(f"src{index}", x, 204, 352, 318)
         zone.card()
         zone.text(f"src{index}-name", x + 20, 240, name, size=24, color=k.TEAL, weight="bold",
                   max_width=312, line_h=30)
@@ -213,7 +213,7 @@ def slide_05() -> k.Page:
                   max_width=312, line_h=30)
         page.content(zone.done())
     page.content(
-        k.note_zone(page, "src-note", 82, 544, 1116,
+        k.note_zone(page, "src-note", 82, 534, 1116,
                     f"{fmt_int(sources['total'])} ảnh ghép từ nhiều nguồn công bố; "
                     f"{fmt_int(sources['mooney_total'])} ảnh thuộc bộ Kaggle của Mooney. "
                     f"Cùng nhãn Normal, hai nguồn có thể khác thiết bị, dải sáng và "
@@ -233,9 +233,10 @@ def slide_06() -> k.Page:
                          "results/threshold_v3.md mục 3")
     zone = page.zone("chart", 82, 208, 748, 410)
     zone.card()
-    zone.image("brightness", "../images/fig_brightness.png", 96, 222, 720, 316)
-    zone.text("chart-cap", 96, 566, "Khoảng tứ phân vị và giá trị trung bình của bốn lớp.",
-              size=24, color=k.INK_SOFT, max_width=700, line_h=32)
+    zone.image("brightness", "../images/fig_brightness.png", 96, 222, 720, 300)
+    zone.text("chart-cap", 96, 552,
+              "Thanh: khoảng tứ phân vị · gạch: trung bình. Bốn lớp vẫn phủ lên nhau.",
+              size=24, color=k.INK_SOFT, max_width=700, line_h=30)
     page.content(zone.done())
 
     stats = [
@@ -276,37 +277,39 @@ def slide_07() -> k.Page:
             page.text(f"sp{index}-cap", x, 314, name, size=24, color=k.INK_SOFT),
         )
 
-    zone = page.zone("exact-card", 82, 340, 528, 168)
+    zone = page.zone("exact-card", 82, 336, 528, 196)
     zone.card()
-    zone.text("exact-num", 102, 388, fmt_int(dup["exact_groups"]), size=34, color=k.INK,
+    zone.text("exact-num", 102, 384, fmt_int(dup["exact_groups"]), size=34, color=k.INK,
               weight="bold")
-    zone.text("exact-num2", 268, 386, "nhóm trùng tuyệt đối", size=24, color=k.INK_SOFT)
-    zone.text("exact-note", 102, 424,
+    zone.text("exact-num2", 102 + k.measure(fmt_int(dup["exact_groups"]), 34, weight="bold") + 14,
+              384, "nhóm trùng tuyệt đối", size=24, color=k.INK_SOFT)
+    zone.text("exact-note", 102, 418,
               f"{fmt_int(dup['exact_images'])} ảnh nằm trong các nhóm này; nhóm trùng khác nhãn: "
               f"{dup['cross_class_groups']}.", size=24, color=k.INK, max_width=490, line_h=30)
-    zone.text("exact-note2", 102, 474,
+    zone.text("exact-note2", 102, 484,
               "Cùng một nhóm pHash tuyệt đối bị ép về một tập, nên không thể xuất hiện ở cả hai.",
               size=24, color=k.INK_SOFT, max_width=490, line_h=30)
     page.content(zone.done())
 
-    zone = page.zone("near-card", 640, 340, 558, 168)
+    zone = page.zone("near-card", 640, 336, 558, 196)
     zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
-    zone.text("near-num", 660, 388, fmt_int(pairs["total"]), size=34, color=k.AMBER, weight="bold")
-    zone.text("near-num2", 852, 386, "cặp gần trùng nằm khác tập", size=24, color=k.INK_SOFT)
-    zone.text("near-note", 660, 424,
+    zone.text("near-num", 660, 384, fmt_int(pairs["total"]), size=34, color=k.AMBER, weight="bold")
+    zone.text("near-num2", 660 + k.measure(fmt_int(pairs["total"]), 34, weight="bold") + 14, 384,
+              "cặp gần trùng nằm khác tập", size=24, color=k.INK_SOFT)
+    zone.text("near-note", 660, 418,
               "test–train 325 · train–val 335 · test–val 75; trong đó 229 cặp lệch nhãn.",
               size=24, color=k.INK, max_width=518, line_h=30)
-    zone.text("near-note2", 660, 474,
+    zone.text("near-note2", 660, 484,
               f"Cặp có khoảng cách Hamming ≤ 4 trong toàn bộ dữ liệu: "
               f"{fmt_int(D['pairs_detail']['total_d1_4'])}.",
               size=24, color=k.INK_SOFT, max_width=518, line_h=30)
     page.content(zone.done())
 
-    zone = page.zone("sha-card", 82, 516, 1116, 78)
+    zone = page.zone("sha-card", 82, 540, 1116, 78)
     zone.card(fill=k.PLATE, stroke=None)
-    zone.text("sha-key", 102, 552, "SHA-256", size=24, color=k.INK_SOFT, weight="bold")
-    zone.text("sha-val", 262, 552, f"{split['sha256'][:24]}…", size=24, color=k.INK)
-    zone.text("sha-note", 262, 578, "băm của splits/split_v1.csv, ghi trong biên bản mở "
+    zone.text("sha-key", 102, 576, "SHA-256", size=24, color=k.INK_SOFT, weight="bold")
+    zone.text("sha-val", 262, 576, f"{split['sha256'][:24]}…", size=24, color=k.INK)
+    zone.text("sha-note", 262, 602, "băm của splits/split_v1.csv, ghi trong biên bản mở "
               "khóa test.", size=24, color=k.INK_SOFT)
     page.content(zone.done())
     return page
@@ -324,7 +327,7 @@ def slide_08() -> k.Page:
                   source="Nguồn: src/features_*.py · report/02 mục 2.6–2.7 "
                          "· results/report_rq1/r1_summary.csv")
     stations = [
-        ("Ảnh gốc", "xám 299×299", "một kênh, không resize lại"),
+        ("Ảnh gốc", "299×299", "một kênh xám, không resize lại"),
         ("Histogram", f"{features['hist']} chiều", "phân bố mức xám"),
         ("GLCM + LBP", f"{features['glcm'] + features['lbp']} chiều", "texture hai vùng"),
         ("Ghép", f"{features['total']} chiều", "ba khối cùng một vectơ"),
@@ -337,16 +340,24 @@ def slide_08() -> k.Page:
         zone.card()
         zone.text(f"st{index}-name", x + 14, 244, name, size=24, color=k.TEAL, weight="bold",
                   max_width=142, line_h=30)
-        zone.text(f"st{index}-val", x + 14, 288, value, size=24, color=k.INK, weight="bold",
-                  max_width=142, line_h=30)
-        zone.text(f"st{index}-note", x + 14, 356, note, size=24, color=k.INK_SOFT,
+        zone.text(f"st{index}-val", x + 14, 312, value, size=24, color=k.INK, weight="bold",
+                  max_width=152, line_h=30)
+        zone.text(f"st{index}-note", x + 14, 380, note, size=24, color=k.INK_SOFT,
                   max_width=142, line_h=30)
         page.content(zone.done())
         if index < len(stations) - 1:
-            page.content(page.text(f"st{index}-arrow", x + 174, 350, "→", size=24,
-                                   color=k.TEAL_LIGHT))
+            ax = x + 173
+            ay = 344
+            page.content(
+                page.line(f"st{index}-arrow-shaft", ax, ay, ax + 12, ay,
+                          stroke=k.TEAL_LIGHT, width=2.0),
+                page.line(f"st{index}-arrow-head1", ax + 7, ay - 4.5, ax + 12, ay,
+                          stroke=k.TEAL_LIGHT, width=2.0),
+                page.line(f"st{index}-arrow-head2", ax + 7, ay + 4.5, ax + 12, ay,
+                          stroke=k.TEAL_LIGHT, width=2.0),
+            )
 
-    zone = page.zone("hog-band", 82, 472, 1116, 156)
+    zone = page.zone("hog-band", 82, 472, 1116, 148)
     zone.card(fill=k.TEAL_PALE, stroke=k.TEAL_LIGHT)
     zone.text("hog-tag", 102, 498, "HOG ĐO RIÊNG", size=24, color=k.TEAL, weight="bold")
     zone.text("hog-num", 102, 560, fmt_int(features["hog"]) + " chiều", size=34, color=k.INK,

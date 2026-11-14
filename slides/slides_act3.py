@@ -23,14 +23,15 @@ def slide_19() -> k.Page:
 def slide_20() -> k.Page:
     test = D["test"]
     page = k.Page("20_ket_qua_test.svg", layout="number", master="dark", page_no=20,
+                  kicker=CH5,
                   title=f"{fmt(test['macro_f1'])} trên {fmt_int(test['n'])} ảnh test",
                   title_size=38,
                   source="Nguồn: results/final_test/final_test_report.json, metrics.json")
     zone = page.zone("hero", 82, 220, 1116, 300)
     zone.card(fill=k.CARD_DARK, stroke=k.RULE_ON_DARK)
-    zone.text("hero-num", 82, 400, fmt(test["macro_f1"]), size=172, color=k.TEAL_LIGHT,
+    zone.text("hero-num", 106, 400, fmt(test["macro_f1"]), size=172, color=k.TEAL_LIGHT,
               weight="bold")
-    zone.text("hero-cap", 82, 482, "macro-F1 trên tập test", size=24, color=k.SOFT_ON_DARK)
+    zone.text("hero-cap", 106, 482, "macro-F1 trên tập test", size=24, color=k.SOFT_ON_DARK)
     zone.line("hero-rule", 700, 250, 700, 470, stroke=k.RULE_ON_DARK, width=1)
     zone.text("hero-ci-cap", 736, 300, "Khoảng tin cậy 95%", size=24, color=k.SOFT_ON_DARK)
     zone.text("hero-ci", 736, 344, fmt_ci(*D["test_ci"]), size=34, color=k.TEXT_ON_DARK,
@@ -51,13 +52,13 @@ def slide_20() -> k.Page:
 def slide_21() -> k.Page:
     report = D["rq3"]["scenarios"]["orig_to_orig"]["macro_f1"]
     page = k.Page("21_val_vs_test.svg", layout="content", kicker=CH5, page_no=21,
-                  title="Val 0,9024, test 0,8714: chênh 0,0310 — chỉ là quan sát",
+                  title="Val 0,9024, test 0,8714:\nchênh 0,0310 — chỉ là quan sát",
                   source="Nguồn: results/final_test/final_test_report.json · "
-                         "results/final_test/r5_gioi_han.md (D4)")
-    zone = page.zone("chart", 82, 214, 700, 310)
+                         "results/report_rq3/r3_shortcut_bootstrap.csv · D4 r5_gioi_han.md")
+    zone = page.zone("chart", 82, 214, 700, 302)
     zone.card()
     zone.image("figure", "../images/fig_test_gap.png", 104, 232, 656, 250)
-    zone.text("chart-cap", 104, 508, "Khoảng tin cậy 95% của macro-F1 test và giá trị điểm.",
+    zone.text("chart-cap", 104, 502, "CI 95% của val và test không giao nhau.",
               size=24, color=k.INK_SOFT)
     page.content(zone.done())
 
@@ -71,11 +72,11 @@ def slide_21() -> k.Page:
     zone.line("pair-rule", 836, 462, 1170, 462, stroke=k.LINE)
     zone.text("pair-diff", 836, 500,
               f"Chênh test − val = {fmt_delta(D['test']['macro_f1'] - report)}",
-              size=28, color=k.AMBER, weight="bold")
+              size=26, color=k.AMBER, weight="bold")
     page.content(zone.done())
 
     page.content(k.note_zone(page, "d4-note", 82, 528, 1116,
-                             "Quy tắc D4: " + D4, fill=k.AMBER_PALE, size=28, line_h=34))
+                             "Quy tắc D4: " + D4, fill=k.AMBER_PALE, size=28, line_h=30))
     return page
 
 
@@ -123,9 +124,9 @@ def slide_23() -> k.Page:
                          "slides/assets/screenshot_demo.png")
     note = (f"Trung vị {latency['n_images']} ảnh val, {latency['repeats']} "
             f"lượt đo; p95 {fmt_seconds(detail['total']['p95'])}.")
-    zone = page.zone("shot", 82, 200, 780, 428)
+    zone = page.zone("shot", 82, 200, 780, 416)
     zone.card()
-    zone.image("figure", "../images/screenshot_demo.png", 133, 212, 640, 365)
+    zone.image("figure", "../images/screenshot_demo.png", 152, 212, 640, 365)
     zone.text("lat-cap", 106, 598, note, size=24, color=k.INK_SOFT)
     page.content(zone.done())
 
@@ -205,11 +206,11 @@ def slide_25() -> k.Page:
          "đổi nguồn hoặc tiền xử lý thì chưa ai đo lại"),
     ]
     for index, (name, value, note) in enumerate(limits):
-        y = 208 + index * 80
-        zone = page.zone(f"lim{index}", 82, y, 1116, 74)
+        y = 208 + index * 82
+        zone = page.zone(f"lim{index}", 82, y, 1116, 78)
         zone.card()
         zone.text(f"lim{index}-name", 106, y + 30, name, size=28, color=k.INK, weight="bold")
-        zone.text(f"lim{index}-value", 106, y + 62, value, size=24, color=k.AMBER,
+        zone.text(f"lim{index}-value", 106, y + 66, value, size=24, color=k.AMBER,
                   weight="bold")
         zone.text(f"lim{index}-note", 600, y + 46, note, size=24, color=k.INK, max_width=580,
                   line_h=30)
@@ -223,7 +224,7 @@ def slide_26() -> k.Page:
                   title="Không dùng để chẩn đoán",
                   source="Nguồn: demo/streamlit_app.py (DISCLAIMER) · "
                          "results/final_test/r5_gioi_han.md (D4)")
-    zone = page.zone("warn", 82, 214, 1116, 226)
+    zone = page.zone("warn", 82, 214, 1116, 218)
     zone.card(fill=k.AMBER_PALE, stroke=k.AMBER)
     zone.text("warn-tag", 106, 262, "TUYÊN BỐ TRONG ỨNG DỤNG DEMO", size=24,
               color=k.AMBER, weight="bold")
@@ -231,14 +232,14 @@ def slide_26() -> k.Page:
               line_h=36)
     page.content(zone.done())
 
-    page.content(k.note_zone(page, "d4-note", 82, 452, 1116, "Quy tắc D4: " + D4,
+    page.content(k.note_zone(page, "d4-note", 82, 444, 1116, "Quy tắc D4: " + D4,
                              fill=k.TEAL_PALE, size=24, line_h=26))
-    zone = page.zone("scope", 82, 538, 1116, 90)
+    zone = page.zone("scope", 82, 538, 1116, 82)
     zone.card()
-    zone.text("scope-text", 106, 582,
+    zone.text("scope-text", 106, 570,
               "Các con số trong đề tài này chỉ được đánh giá trên chính bộ dữ liệu và bước "
               "tiền xử lý đã dùng; đổi nguồn ảnh, thiết bị hoặc tiền xử lý thì chưa được "
-              "đo lại.", size=28, color=k.INK, max_width=1068, line_h=32)
+              "đo lại.", size=28, color=k.INK, max_width=1068, line_h=30)
     page.content(zone.done())
     return page
 
@@ -258,8 +259,8 @@ def slide_27() -> k.Page:
               f"trên validation: B0 = {fmt(D['baselines']['b0'])}, "
               f"A0 = {fmt(D['baselines']['a0'])}.",
         "T2": f"Trên validation, mô hình chỉ nhìn ngoài phổi đạt "
-              f"{fmt(D['rq3']['scenarios']['out_to_out']['macro_f1'])}, chênh ảnh gốc "
-              f"{fmt_delta(D['rq3']['diffs'][('orig_to_orig', 'out_to_out')]['diff'])} nhưng "
+              f"{fmt(D['rq3']['scenarios']['out_to_out']['macro_f1'])}; ngoài phổi − gốc = "
+              f"{fmt(-D['rq3']['diffs'][('orig_to_orig', 'out_to_out')]['diff'])} nhưng "
               f"khoảng tin cậy của hiệu chứa 0.",
         "T3": TAKEAWAYS["T3"],
     }

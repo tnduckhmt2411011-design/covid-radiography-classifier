@@ -33,3 +33,36 @@ dùng sàn 14,25 pt kế thừa từ quy chuẩn văn bản .docx của báo cá
   ô ghép đúng tỷ lệ ảnh (hoặc đo tỷ lệ ảnh rồi tự tính ô).
 - Các cổng không phát hiện chữ đè lên chữ trong cùng một vùng: các lỗi kiểu này
   (slide 9, 20, 34) chỉ lộ ra khi duyệt PNG từng trang.
+
+## Vòng rà soát từng điểm ảnh (13–14/11/2026)
+
+Cùng nhánh, sau khi nâng sàn cỡ chữ; mục tiêu là soát từng trang ở mức điểm ảnh
+chứ không chỉ dựa vào khung vùng.
+
+- [x] **1.** Dựng lại 34 SVG, chạy lại `svg_quality_checker` (final,
+  `--quick-generate --canonical-authoring`): 0 lỗi chặn, 0% lỗi.
+- [x] **2.** Viết kiểm tra khe mực bằng PIL (`segoeui.ttf`/`seguibl.ttf`): hộp
+  mực thật của từng dòng, cờ khe < 6 px giữa hai khối khác nhau và chữ cách mép
+  thẻ < 3 px. Sửa hết: 0 lỗi.
+- [x] **3.** Sửa bố cục theo kết quả đo: bề dòng tiêu đề 45→50 px; ngắt tiêu đề
+  tường minh ở slide 3, 12, 21; slide 3 (thanh/số), 8 (ba mũi tên vector, ô
+  trạm 1), 11 (nhãn trùng), 12 (chú thích CI), 13 (tiêu đề theo dữ liệu), 15
+  (thứ tự số trước quy ước), 17 (dumbbell), 22 (nhãn trục ngắn), 23 (canh giữa
+  ảnh chụp), 27 (`ngoài phổi − gốc`), cùng B1–B6.
+- [x] **4.** Sửa hình: nền trắng, chừa 118 px đáy cho nhãn trục, dấu trừ
+  Unicode, `fig_test_gap` thành forest plot, `fig_brightness` bỏ chú thích trong
+  hình, `fig_rq3_scenarios` in B0/A0.
+- [x] **5.** Kiểm thẻ (đáy ≤ 622 px, trong khung 82..1198 / 197..720): 0 lỗi;
+  kiểm thanh: 0 lỗi; kiểm widow: còn 2 dòng đã chấp nhận (đường dẫn nguồn kết
+  thúc bằng `/`; nhãn `GLCM +`/`LBP` ngắt ở toán tử).
+- [x] **6.** Xuất lại PPTX/PDF/34 PNG, duyệt lại toàn bộ 34 trang; postflight
+  `passed-with-warnings`, 45 cảnh báo không chặn.
+- [x] **7.** Ghi lại phương pháp và danh sách sửa vào `slides/README.md`, cập nhật
+  handoff, commit.
+
+## Ghi chú kỹ thuật bổ sung
+
+- PIL `getbbox` trả tọa độ tính từ đỉnh ascender: `ink = y + b/4 − ascent/4`;
+  công thức cũ `− size` báo thiếu ~2 px và che mất va chạm.
+- `data-pptx-bounds` hẹp hơn mực chữ Việt thật; chấp nhận vượt 1–3 px (cổng
+  ppt-master cho phép 5%).

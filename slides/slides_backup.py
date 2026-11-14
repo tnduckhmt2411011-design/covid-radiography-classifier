@@ -30,25 +30,25 @@ def slide_b1() -> k.Page:
     for index, key in enumerate(order):
         values = seeds[key]
         summary = next(item for item in D["rq1"] if item["key"] == key)
-        y = 206 + index * 84
-        zone = page.zone(f"grp{key}", 82, y, 1116, 84)
+        y = 200 + index * 80
+        zone = page.zone(f"grp{key}", 82, y, 1116, 80)
         zone.card()
-        zone.text(f"grp{key}-name", 106, y + 34, names[key], size=28, color=k.TEAL,
+        zone.text(f"grp{key}-name", 106, y + 30, names[key], size=28, color=k.TEAL,
                   weight="bold")
-        zone.text(f"grp{key}-mean", 106, y + 70, f"{fmt(summary['macro_f1'])} ± "
+        zone.text(f"grp{key}-mean", 106, y + 66, f"{fmt(summary['macro_f1'])} ± "
                   f"{fmt(summary['std'])}", size=30, color=k.INK, weight="bold")
-        zone.text(f"grp{key}-seeds", 480, y + 34,
+        zone.text(f"grp{key}-seeds", 480, y + 30,
                   " · ".join(fmt(value) for value in values), size=28, color=k.INK_SOFT,
                   max_width=420, line_h=30)
-        zone.text(f"grp{key}-ci", 480, y + 70, f"CI 95% {fmt_ci(*summary['ci'])}", size=28,
+        zone.text(f"grp{key}-ci", 480, y + 66, f"CI 95% {fmt_ci(*summary['ci'])}", size=28,
                   color=k.INK_SOFT)
-        zone.text(f"grp{key}-seed-label", 950, y + 34, "seed 42 · 43 · 44", size=24,
+        zone.text(f"grp{key}-seed-label", 950, y + 30, "seed 42 · 43 · 44", size=24,
                   color=k.INK_SOFT)
         page.content(zone.done())
     note = ("Các seed của cùng một nhóm lệch nhau vài phần "
             "nghìn macro-F1; chênh lệch giữa các nhóm lớn hơn "
             "nhiều lần.")
-    page.content(k.note_zone(page, "note", 82, 546, 1116, note, size=24, line_h=28))
+    page.content(k.note_zone(page, "note", 82, 532, 1116, note, size=24, line_h=28))
     return page
 
 
@@ -60,7 +60,7 @@ def slide_b2() -> k.Page:
              "rf": "Random Forest", "gb": "Gradient Boosting", "svm": "SVM RBF"}
     for index, row in enumerate(D["rq2"]):
         x = 82 + index * 188
-        zone = page.zone(f"cls{index}", x, 250, 176, 210)
+        zone = page.zone(f"cls{index}", x, 250, 176, 226)
         zone.card()
         zone.text(f"cls{index}-name", x + 14, 286, names[row["key"]], size=24, color=k.TEAL,
                   weight="bold", max_width=148, line_h=28)
@@ -68,12 +68,15 @@ def slide_b2() -> k.Page:
                   weight="bold")
         zone.text(f"cls{index}-ci", x + 14, 396, fmt_ci(*row["ci"]), size=24, color=k.INK_SOFT,
                   max_width=150, line_h=28)
-        zone.text(f"cls{index}-seed", x + 14, 440, f"{row['n_seeds']} seed", size=24,
+        zone.text(f"cls{index}-seed", x + 14, 458, f"{row['n_seeds']} seed", size=24,
                   color=k.INK_SOFT)
         page.content(zone.done())
+    svm_row = next(row for row in D["rq2"] if row["key"] == "svm")
+    delta = svm_row["delta"]
+    verdict = "khoảng tin cậy không chứa 0" if not delta["contains_zero"] else "khoảng tin cậy chứa 0"
     page.content(k.note_zone(page, "note", 82, 490, 1116,
-                             "Thứ tự sáu bộ trong báo cáo; SVM có 0,0442 chênh so với Random Forest "
-                             "và khoảng tin cậy không chứa 0.", size=24))
+                             f"Sáu bộ xếp theo macro-F1 trên validation; SVM hơn Random Forest "
+                             f"{fmt(delta['diff'])}, {verdict}.", size=24))
     return page
 
 
@@ -87,13 +90,13 @@ def slide_b3() -> k.Page:
              "orig_to_out": "Gốc → ngoài phổi"}
     recalls = {row["scenario"]: row["recall"] for row in D["rq3_per_scenario"]}
     for index, key in enumerate(order):
-        x = 82 + index * 228
+        x = 82 + index * 225
         scenario = D["rq3"]["scenarios"][key]
-        zone = page.zone(f"sc{index}", x, 250, 216, 230)
+        zone = page.zone(f"sc{index}", x, 250, 216, 238)
         zone.card()
         zone.text(f"sc{index}-name", x + 16, 286, names[key], size=24, color=k.TEAL,
                   weight="bold", max_width=184, line_h=28)
-        zone.text(f"sc{index}-val", x + 16, 356, fmt(scenario["macro_f1"]), size=38,
+        zone.text(f"sc{index}-val", x + 16, 358, fmt(scenario["macro_f1"]), size=38,
                   color=k.INK, weight="bold")
         zone.text(f"sc{index}-ci", x + 16, 396, fmt_ci(*scenario["ci"]), size=24, color=k.INK_SOFT,
                   max_width=184, line_h=28)
@@ -104,8 +107,8 @@ def slide_b3() -> k.Page:
         page.content(zone.done())
     page.content(k.note_zone(page, "note", 82, 500, 1116,
                               "Hai kịch bản cuối học trên ảnh gốc nhưng đánh giá trên ảnh đã bị che; "
-                              "chúng cho thấy tập huần luyện và tập đánh giá là hai phân bố khác nhau. Quy ước A → B: huần luyện trên ảnh dạng A, đánh giá trên ảnh dạng B.",
-                             size=24))
+                              "chúng cho thấy tập huấn luyện và tập đánh giá là hai phân bố khác nhau. Quy ước A → B: huấn luyện trên ảnh dạng A, đánh giá trên ảnh dạng B.",
+                             size=24, line_h=28))
     return page
 
 
@@ -126,20 +129,18 @@ def slide_b4() -> k.Page:
         zone.text(f"sp{index}-cap", x + 20, 342, labels.get(key, key), size=24, color=k.INK_SOFT)
         page.content(zone.done())
     page_content = [
-        ("Khoảng cách 4", detail["by_distance"]["4"], "cặp có Hamming = 4"),
-        ("Khoảng cách 2", detail["by_distance"]["2"], "cặp có Hamming = 2"),
-        ("Lệch nhãn", detail["class_relation"]["Cross-Class_d4"] + detail["class_relation"]["Cross-Class_d2"],
-         "cặp gần trùng nhưng ghi nhãn khác nhau"),
+        ("Hamming = 4", detail["by_distance"]["4"]),
+        ("Hamming = 2", detail["by_distance"]["2"]),
+        ("Cặp khác nhãn",
+         detail["class_relation"]["Cross-Class_d4"] + detail["class_relation"]["Cross-Class_d2"]),
     ]
-    for index, (name, value, note) in enumerate(page_content):
+    for index, (name, value) in enumerate(page_content):
         x = 82 + index * 380
         zone = page.zone(f"d{index}", x, 392, 352, 132)
         zone.card()
-        zone.text(f"d{index}-name", x + 20, 428, name, size=24, color=k.INK_SOFT)
-        zone.text(f"d{index}-val", x + 20, 478, fmt_int(value), size=34, color=k.INK,
+        zone.text(f"d{index}-val", x + 20, 462, fmt_int(value), size=48, color=k.TEAL,
                   weight="bold")
-        zone.text(f"d{index}-note", x + 190, 436, note, size=24, color=k.INK, max_width=150,
-                  line_h=28)
+        zone.text(f"d{index}-name", x + 20, 494, name, size=24, color=k.INK_SOFT)
         page.content(zone.done())
     page.content(k.note_zone(page, "note", 82, 536, 1116,
                              f"Trong toàn bộ dữ liệu có {fmt_int(detail['total_d1_4'])} cặp có "
@@ -148,10 +149,12 @@ def slide_b4() -> k.Page:
 
 
 def slide_b5() -> k.Page:
-    page = _page("b5_loi_val.svg", "Ma trận nhầm lẫn validation",
+    errors = D["val_errors"]
+    page = _page("b5_loi_val.svg",
+                 f"{fmt_int(errors['n'])} lỗi validation, "
+                 f"{fmt_int(errors['high_confidence'])} lỗi tự tin ≥ 0,80",
                  "Nguồn: results/error_analysis/val_misclassified_cases.csv, "
                  "confusion_pairs_summary.csv", "CHƯƠNG 4 · DỰ PHÒNG")
-    errors = D["val_errors"]
     items = [
         ("Lỗi trên validation", fmt_int(errors["n"]), "ảnh dự đoán sai trên 3.174 ảnh"),
         ("Lỗi cặp Normal ↔ LO", fmt_int(errors["normal_lung_opacity"]),
@@ -162,7 +165,7 @@ def slide_b5() -> k.Page:
          f"{fmt_pct(errors['high_confidence_pct'], 1)} số lỗi tự tin ở mức cao"),
     ]
     for index, (name, value, note) in enumerate(items):
-        x = 82 + index * 284
+        x = 82 + index * 282
         zone = page.zone(f"item{index}", x, 250, 268, 212)
         zone.card()
         zone.text(f"item{index}-name", x + 16, 286, name, size=24, color=k.INK_SOFT,
@@ -172,9 +175,10 @@ def slide_b5() -> k.Page:
         zone.text(f"item{index}-note", x + 16, 392, note, size=24, color=k.INK, max_width=236,
                   line_h=28)
         page.content(zone.done())
-    page_content = ("138 lỗi trong tổng số 349 lỗi được mô hình dự đoán với xác suất từ 0,80 "
-                    "trở lên, nên nói “mô hình không biết mình sai” là không đúng trên toàn bộ "
-                    "tập lỗi.")
+    page_content = (f"{fmt_int(errors['high_confidence'])} lỗi tự tin ≥ 0,80 chiếm "
+                    f"{fmt_pct(errors['high_confidence_pct'], 1)}; "
+                    f"{fmt_int(errors['n'] - errors['high_confidence'])} lỗi còn lại nằm dưới "
+                    "ngưỡng này. Xác suất cao không đồng nghĩa dự đoán đúng.")
     page.content(k.note_zone(page, "note", 82, 474, 1116, page_content, size=28, line_h=34))
     return page
 
@@ -185,7 +189,7 @@ def slide_b6() -> k.Page:
                  "CHƯƠNG 5 · DỰ PHÒNG")
     detail = D["latency_detail"]["stages"]
     for index, (key, value) in enumerate(detail.items()):
-        zone = page.zone(f"st{index}", 82, 244 + index * 80, 658, 72)
+        zone = page.zone(f"st{index}", 82, 244 + index * 80, 658, 64)
         zone.card()
         zone.text(f"st{index}-name", 102, 280 + index * 80, _STAGES[key], size=28,
                   color=k.INK)
@@ -196,7 +200,7 @@ def slide_b6() -> k.Page:
         page.content(zone.done())
 
     artifact = D["latency"]
-    zone = page.zone("art", 762, 244, 436, 312)
+    zone = page.zone("art", 762, 244, 436, 304)
     zone.card()
     zone.text("art-tag", 784, 280, "ARTIFACT ĐÓNG BĂNG", size=24, color=k.TEAL,
               weight="bold")
@@ -214,7 +218,7 @@ def slide_b6() -> k.Page:
                   line_h=28)
     page.content(zone.done())
     note = (f"Đo trên {artifact['n_images']} ảnh validation, {artifact['repeats']} lượt, máy {artifact['cpu']}.")
-    page.content(k.note_zone(page, "note", 82, 570, 1116, note, size=24, line_h=28))
+    page.content(k.note_zone(page, "note", 82, 560, 1116, note, size=24, line_h=28))
     return page
 
 

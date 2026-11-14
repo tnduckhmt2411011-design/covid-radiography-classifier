@@ -231,15 +231,22 @@ class Page:
         if not self.title_text:
             return ""
         size = self.title_size
-        lines = wrap(self.title_text, size, CONTENT_W, weight="bold")
+        lines = self._title_lines(size)
         if len(lines) > 2 and size != SIZE_TITLE_SMALL:
             size = SIZE_TITLE_SMALL
-            lines = wrap(self.title_text, size, CONTENT_W, weight="bold")
+            lines = self._title_lines(size)
         if len(lines) > 2:
             raise ValueError(f"Tiêu đề quá 2 dòng: {self.title_text!r}")
-        baselines = [112] if len(lines) == 1 else [93, 93 + 45]
+        baselines = [112] if len(lines) == 1 else [93, 93 + 50]
         color = INK if not self.dark else TEXT_ON_DARK
-        return self.slot("title", MARGIN, baselines[0], lines, size=size, color=color, step=45)
+        return self.slot("title", MARGIN, baselines[0], lines, size=size, color=color, step=50)
+
+    def _title_lines(self, size: float) -> list[str]:
+        """Ngắt tiêu đề; ``\\n`` trong chuỗi là chỗ ngắt do người viết chọn."""
+        lines: list[str] = []
+        for part in self.title_text.split("\n"):
+            lines.extend(wrap(part, size, CONTENT_W, weight="bold"))
+        return lines
 
     def carrier(self, gid: str, x: float, first_baseline: float, lines: list[str], *,
                 size: float, color: str, step: float = 45, weight: bool = True) -> str:
@@ -411,12 +418,17 @@ def bullet_zone(page: Page, gid: str, x: float, y: float, w: float, items: list[
 def note_zone(page: Page, gid: str, x: float, y: float, w: float, text: str, *, dark: bool = False,
               fill: str | None = None, stroke: str | None = None, size: float = SIZE_SMALL,
               line_h: float = 26, color: str | None = None) -> str:
-    """Dải chú thích có nền: nguồn, cảnh báo hoặc phát biểu D4."""
+    """Dải chú thích có nền: nguồn, cảnh báo hoặc phát biểu D4.
+
+    Chữ đặt sát mép trên để dòng cuối (có dấu tiếng Việt chạm quá baseline) không
+    trôi khỏi đáy thẻ: biên mực thật của dòng cuối là
+    ``y + 14 + size + (n − 1)·line_h + 0,24·size``.
+    """
     lines = wrap(text, size, w - 44)
-    height = len(lines) * line_h + 26
+    height = len(lines) * line_h + 30
     zone = page.zone(gid, x, y, w, height)
     zone.card(fill=fill or (CARD_DARK if dark else PLATE), stroke=stroke, radius=6)
-    zone.add(page.text(f"{gid}-text", x + 22, y + 22 + size, text, size=size,
+    zone.add(page.text(f"{gid}-text", x + 22, y + 14 + size, text, size=size,
                        color=color or (TEXT_ON_DARK if dark else INK), max_width=w - 44,
                        line_h=line_h))
     return zone.done()

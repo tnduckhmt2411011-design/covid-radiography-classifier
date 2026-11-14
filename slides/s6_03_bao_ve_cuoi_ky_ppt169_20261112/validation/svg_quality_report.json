@@ -4,7 +4,7 @@
   "target": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112",
   "source_fingerprint": {
     "algorithm": "sha256",
-    "digest": "6bb3d9b62414c54846ec3b4723b8bdd7104cff96ce9f679e08b8f8e9ed245aea",
+    "digest": "dd51a1d7e5801759f58720d8ce5919489cb5ad4bfd92fd688869ed5c59a23ce8",
     "file_count": 34,
     "files": [
       {
@@ -17,31 +17,31 @@
       },
       {
         "file": "03_dulieu.svg",
-        "sha256": "a34363bbab5d24a7138b69c4f2de0643869e40f9304921628c9d2e8d441f6276"
+        "sha256": "25d98e030cee6d181689b85e9d564cf85f3bc7ddfbc9c9430c28674daf76ddb9"
       },
       {
         "file": "04_cauhoi.svg",
-        "sha256": "2278e99f85cb0042e5f673cc3fe26f7e4e0c38ad8dad7c5410b6d92686f13f39"
+        "sha256": "ccf4c1770617b656c6e1492b1177f415346f601889089ea6836a04220f2f4bc8"
       },
       {
         "file": "05_nguon.svg",
-        "sha256": "d550a8855a3e15ec10dec99c643504d3c483c5f12ad2d954083230e9986638d1"
+        "sha256": "bdb4dea8b72c528ecbf20535bf266f4f74bc865f675514d305ea6fce35181e35"
       },
       {
         "file": "06_dosang.svg",
-        "sha256": "6f3248b78f2992f2a783c5535dcbebc9ecfbbd9c18fdc862f744c53adc8f6ffd"
+        "sha256": "424e14c8cb9de3a1b1112e790f55d4640a9477929b8a049aba9c5bb844977c52"
       },
       {
         "file": "07_trunglap.svg",
-        "sha256": "4d69f71f84a2f29554298d7efd285af25bf74c8b12b15b56aca652679e51dc2a"
+        "sha256": "af3f0e7fa15d5d47519d1d45cceb6e07e1e2bb7fcca152ec91080e0f31f7b9e9"
       },
       {
         "file": "08_dactrung.svg",
-        "sha256": "7d07e007c80c04191085b43b190a5c965e0daf0a6ac8785b59f9651de36d86a7"
+        "sha256": "1630407cf8e5d679465313d2afbd18a987e8214926d5863fd3b49689fba26a77"
       },
       {
         "file": "09_giaithuat.svg",
-        "sha256": "b201a328028495d77f2eb5be6fb631af2f3f578ef4ad44065901f5b594072a5c"
+        "sha256": "0afa2448cb51c56329cb98fd732a6d8e3635c803c640619820ef686633f2a222"
       },
       {
         "file": "10_mo_chuong3.svg",
@@ -49,35 +49,35 @@
       },
       {
         "file": "11_rq1.svg",
-        "sha256": "eb7d3f04e6d3b0af60f66e761229a79eaf2bc8056ce702a9fa35a7d0097aae39"
+        "sha256": "2060096c36992dd0f43ddac35e981cc3c242a604d425ad0eb707a2723efca9c3"
       },
       {
         "file": "12_rq1_delta.svg",
-        "sha256": "9cbe10a2827a5ebcab410209b79642faf0fcac51044ad591e58b8a713c8448cc"
+        "sha256": "723465449dcee5c7485a8d36a9bdf71d6560ae0e0acb3398e52167bb4b634bf8"
       },
       {
         "file": "13_rq2.svg",
-        "sha256": "0da1193fd118c8b0d7dec8f2c6b213a246a0676bd57e50dd88b554e7a03a9956"
+        "sha256": "37db65abe27143e9d1fdf8538657fd94f3f8c04b886860416d92476b7b4c9e2d"
       },
       {
         "file": "14_mo_chuong4.svg",
-        "sha256": "1ed2bbdef78ae9efc3a2e18215ed8b951d8c1c7c279650bd5ae66b623e82f8a2"
+        "sha256": "e70e7cfdb2660dd87676873df08c36ecaebc35bf7e399e76b718163278eea84c"
       },
       {
         "file": "15_rq3.svg",
-        "sha256": "9d78b0ef37dbacd5bcfa6201f708acad07fe01f6e732d95344ec9d45ebb75cbf"
+        "sha256": "c08df084eceb615de0b53028a15fac031611a8b36c84c364b0fa6bf681f97616"
       },
       {
         "file": "16_rq3_ngoai_phoi.svg",
-        "sha256": "a0f830234468a61873e73cc64ec3f58a3d8f0b1c4808be78722543fad99b4b7b"
+        "sha256": "3bf243210a42b6c0bb636de63d0a85ebfa6e7163d2441b9caa88442b3343fc29"
       },
       {
         "file": "17_rq3_perm.svg",
-        "sha256": "dcdd23df4ca6c2fbac9d2eeed70f4293b92b2db65cf26063a5420ce6ac3a794b"
+        "sha256": "5318cd0ab0dd2722747ae2ee0ac1c88a0023b893cd61fd15d4fba8746953640a"
       },
       {
         "file": "18_phan_chung.svg",
-        "sha256": "e111598d4be2d6950f28ea2708bc9cf105f86f1104ba1eaed1eb67c854ca17fb"
+        "sha256": "130b5ac2c6bc676834482f99c7351799789c69f9c5e8d09410b892b5e5b46347"
       },
       {
         "file": "19_mo_chuong5.svg",
@@ -85,11 +85,11 @@
       },
       {
         "file": "20_ket_qua_test.svg",
-        "sha256": "8169173cfc4353036decddd5b0d515f9b24ab6cd56de4a88cf91e73460370c7a"
+        "sha256": "4d1d33f38893e1f24073a683b7d31d5f86592b5905d5f026832eca55041dd120"
       },
       {
         "file": "21_val_vs_test.svg",
-        "sha256": "2e89a49746fda49b26546e84832ad7c17d3c436e0a142fcf11b32f98d388eb5e"
+        "sha256": "3ab994785d3b69cbd27d8dc1c9deaaaee3ee8bb0bcff8b05b67847111db8ed59"
       },
       {
         "file": "22_loi_test.svg",
@@ -97,23 +97,23 @@
       },
       {
         "file": "23_demo.svg",
-        "sha256": "07c4602f4b2868df7c68c3d93a8d5feac833fb6a9ef39270948f263cb0f1af43"
+        "sha256": "e21ff760cb7bd1b6302fdb24c30e02937f07baefbc7c4bc8d898c25d7a5219a8"
       },
       {
         "file": "24_vi_du.svg",
-        "sha256": "db45f33f813aef189a1662673fc57de808dcf488afe6a6d1ced1fdd3231e04d4"
+        "sha256": "f8fd663cea92acf1d8b86c4660d1d9dc649f94dd9e2d9fa9af16fb45741fe25e"
       },
       {
         "file": "25_gioi_han.svg",
-        "sha256": "d3fef96188b98f790f5b2d0b540982491509ccfef353f59c577535b3e1c8ae04"
+        "sha256": "1d213b87bff2e64ac27a4d50c42e1d90bd761d3ae984cbce23b88d2218cb06f1"
       },
       {
         "file": "26_khong_chan_doan.svg",
-        "sha256": "03342d22577cc589fa7da34f7faf01a636e1a4ac73c7c2e49c28b7b0ce1c70de"
+        "sha256": "e1f34263921a04cd8c47a3a962f001d1c223f637d987f45bbf6d38cf8218858e"
       },
       {
         "file": "27_ket_luan.svg",
-        "sha256": "250fabca50ecfe4f49c442b42481c6995857d51119c84565faad3b31100f84b7"
+        "sha256": "ea2f8f7846723e229711ab72b4727381e90d2380240ef834f0031ad2b0ab90ac"
       },
       {
         "file": "28_cam_on.svg",
@@ -121,27 +121,27 @@
       },
       {
         "file": "b1_rq1_per_seed.svg",
-        "sha256": "aba6593cb15fc5d4f6e4ca7c89eb2010da5b74893b93dde5b4ac54a98cadd947"
+        "sha256": "18c13ad771be6615734bbeaff47382b77eab17795894da4db65c99cddba5ff6b"
       },
       {
         "file": "b2_rq2_day_du.svg",
-        "sha256": "ee05c3b1df585feb8f28a0cfb98ec6ff07ad3ce8d914552152017cbee55e9326"
+        "sha256": "88db953faba50ab58b006b1a14a31482ff0929a9af654ca29f022e0986e75c8c"
       },
       {
         "file": "b3_rq3_day_du.svg",
-        "sha256": "3773e82d56b9c08541c7fed7d22a6cd2c48d94309ca74e8abb439af453631f05"
+        "sha256": "c4c095b2d0b93c17c32c1e80f9e0d54eb5dbf469b4047f79e9ec3e36c4b79c99"
       },
       {
         "file": "b4_cap_gan_trung.svg",
-        "sha256": "7266d683168ac497c8fd232e48b7c110ad6060eb1e66ac8ca932bdc04a125987"
+        "sha256": "97df9b0d1f2cdd3624ef08ce15c42acd796aa8c699af624ced50e159ae0f862c"
       },
       {
         "file": "b5_loi_val.svg",
-        "sha256": "5ef7ae3615574514404b1763b436ad8a7383c8f57dbdae3bd57bf60df7f21434"
+        "sha256": "c578a4766bf403f2d15c19c6c85870385368fc542cd3bebaca33e4388458c00e"
       },
       {
         "file": "b6_latency.svg",
-        "sha256": "a8b0e3836ba02c02e364f50ce0ecfb81b5c5459d1a1a1b7cc70d735b14bae8af"
+        "sha256": "6706ae6b4d5981f52935bf3b4bec388e1e8d2991b587adfead6baaa64ac82cbd"
       }
     ]
   },
@@ -158,7 +158,7 @@
       "issues": []
     },
     "introduced": {
-      "count": 53,
+      "count": 45,
       "issues": [
         {
           "file": "01_cover.svg",
@@ -177,12 +177,12 @@
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[14]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
-          "file": "04_cauhoi.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (58 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "file": "03_dulieu.svg",
+          "message": "<text id=\"03-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(818.6, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
         },
         {
           "file": "04_cauhoi.svg",
-          "message": "<text id=\"04-h7-text-text\"> exceeds <g id=\"04-h7-band\"> data-pptx-bounds on the vertical axis: content (102.0, 569.6)-(1167.2, 628.4), container (82.0, 528.0)-(1198.0, 624.0), overflow horizontal 0.0%, vertical 4.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (58 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "05_nguon.svg",
@@ -190,23 +190,19 @@
         },
         {
           "file": "06_dosang.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "07_trunglap.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (50 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
-          "file": "07_trunglap.svg",
-          "message": "<text id=\"07-exact-note2-text\"> exceeds <g id=\"07-exact-card\"> data-pptx-bounds on the vertical axis: content (102.0, 453.6)-(576.5, 512.4), container (82.0, 340.0)-(610.0, 508.0), overflow horizontal 0.0%, vertical 2.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
-        },
-        {
-          "file": "07_trunglap.svg",
-          "message": "<text id=\"07-near-note2-text\"> exceeds <g id=\"07-near-card\"> data-pptx-bounds on the vertical axis: content (660.0, 453.6)-(1173.7, 512.4), container (640.0, 340.0)-(1198.0, 508.0), overflow horizontal 0.0%, vertical 2.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+          "file": "08_dactrung.svg",
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (72 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "08_dactrung.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (88 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "15 ungrouped top-level Slide-local element(s) in svg_output (<line id=\"08-st0-arrow-shaft\">, <line id=\"08-st0-arrow-head1\">, <line id=\"08-st0-arrow-head2\">, ...); group only logical content units in a top-level <g id=\"...\">. Keep genuine static page framing as a root primitive and declare a supported data-pptx-role such as \"background\" or \"decoration\""
         },
         {
           "file": "09_giaithuat.svg",
@@ -233,6 +229,10 @@
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[18]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
+          "file": "12_rq1_delta.svg",
+          "message": "<text id=\"12-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(840.4, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
+        },
+        {
           "file": "13_rq2.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
@@ -253,20 +253,12 @@
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
-          "file": "16_rq3_ngoai_phoi.svg",
-          "message": "<text id=\"16-trio-cap2-text\"> exceeds <g id=\"16-trio\"> data-pptx-bounds on the vertical axis: content (98.0, 459.6)-(658.4, 552.4), container (82.0, 204.0)-(706.0, 544.0), overflow horizontal 0.0%, vertical 2.5% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
-        },
-        {
           "file": "17_rq3_perm.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "18_phan_chung.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "18_phan_chung.svg",
-          "message": "<text id=\"18-d4-note-text-text\"> exceeds <g id=\"18-d4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 573.6)-(1095.5, 628.4), container (82.0, 548.0)-(1198.0, 626.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
         },
         {
           "file": "19_mo_chuong5.svg",
@@ -278,11 +270,7 @@
         },
         {
           "file": "20_ket_qua_test.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[10]:fill '#7FBFB6' -> None; tspan[10]:font-size '172' -> None; tspan[13]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "20_ket_qua_test.svg",
-          "message": "<text id=\"20-hero-note-text-text\"> exceeds <g id=\"20-hero-note\"> data-pptx-bounds on the vertical axis: content (104.0, 553.6)-(1091.4, 608.4), container (82.0, 528.0)-(1198.0, 606.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '24' -> None; tspan[13]:fill '#7FBFB6' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "21_val_vs_test.svg",
@@ -290,7 +278,7 @@
         },
         {
           "file": "21_val_vs_test.svg",
-          "message": "<text id=\"21-pair-diff-text\"> exceeds <g id=\"21-pair\"> data-pptx-bounds on the horizontal axis: content (836.0, 476.2)-(1208.3, 509.8), container (810.0, 214.0)-(1198.0, 514.0), overflow horizontal 2.7%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈17.7 px per mixed char at 28px incl. headroom; ≈21 chars fit in 388 px"
+          "message": "<text id=\"21-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(730.0, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
         },
         {
           "file": "22_loi_test.svg",
@@ -311,10 +299,6 @@
         {
           "file": "26_khong_chan_doan.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#B45309' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "26_khong_chan_doan.svg",
-          "message": "<text id=\"26-d4-note-text-text\"> exceeds <g id=\"26-d4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 477.6)-(1095.5, 532.4), container (82.0, 452.0)-(1198.0, 530.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
         },
         {
           "file": "27_ket_luan.svg",
@@ -341,28 +325,12 @@
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (76 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
-          "file": "b2_rq2_day_du.svg",
-          "message": "<text id=\"b2-note-text-text\"> exceeds <g id=\"b2-note\"> data-pptx-bounds on the vertical axis: content (104.0, 515.6)-(1136.8, 570.4), container (82.0, 490.0)-(1198.0, 568.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
-        },
-        {
           "file": "b3_rq3_day_du.svg",
           "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (66 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
-          "file": "b3_rq3_day_du.svg",
-          "message": "<text id=\"b3-note-text-text\"> exceeds <g id=\"b3-note\"> data-pptx-bounds on the vertical axis: content (104.0, 525.6)-(1173.1, 606.4), container (82.0, 500.0)-(1198.0, 604.0), overflow horizontal 0.0%, vertical 2.3% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
-        },
-        {
           "file": "b4_cap_gan_trung.svg",
-          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
-        },
-        {
-          "file": "b4_cap_gan_trung.svg",
-          "message": "<text id=\"b4-d2-note-text\"> exceeds <g id=\"b4-d2\"> data-pptx-bounds on the vertical axis: content (1032.0, 415.6)-(1172.8, 528.4), container (842.0, 392.0)-(1194.0, 524.0), overflow horizontal 0.0%, vertical 3.3% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
-        },
-        {
-          "file": "b4_cap_gan_trung.svg",
-          "message": "<text id=\"b4-note-text-text\"> exceeds <g id=\"b4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 561.6)-(1146.6, 616.4), container (82.0, 536.0)-(1198.0, 614.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+          "message": "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (34 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
         },
         {
           "file": "b5_loi_val.svg",
@@ -395,10 +363,10 @@
     "scope": "informational-not-a-quota",
     "pages": 34,
     "totals": {
-      "text_elements": 544,
+      "text_elements": 549,
       "image_placements": 14,
       "icons": 0,
-      "svg_geometry_elements": 238,
+      "svg_geometry_elements": 253,
       "preset_shapes": 0,
       "page_frame_elements": 0,
       "marker_uses": 0,
@@ -423,7 +391,7 @@
     "geometry_elements": {
       "circle": 0,
       "ellipse": 0,
-      "line": 65,
+      "line": 80,
       "path": 0,
       "polygon": 0,
       "polyline": 0,
@@ -452,7 +420,7 @@
   "files": [
     {
       "file": "01_cover.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\01_cover.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\01_cover.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -515,7 +483,7 @@
     },
     {
       "file": "02_lotrinh.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\02_lotrinh.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\02_lotrinh.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -575,11 +543,12 @@
     },
     {
       "file": "03_dulieu.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\03_dulieu.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\03_dulieu.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[14]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (46 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[14]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "<text id=\"03-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(818.6, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -631,16 +600,15 @@
         "tspan_elements": 25
       },
       "passed": true,
-      "source_sha256": "a34363bbab5d24a7138b69c4f2de0643869e40f9304921628c9d2e8d441f6276"
+      "source_sha256": "25d98e030cee6d181689b85e9d564cf85f3bc7ddfbc9c9430c28674daf76ddb9"
     },
     {
       "file": "04_cauhoi.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\04_cauhoi.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\04_cauhoi.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (58 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"04-h7-text-text\"> exceeds <g id=\"04-h7-band\"> data-pptx-bounds on the vertical axis: content (102.0, 569.6)-(1167.2, 628.4), container (82.0, 528.0)-(1198.0, 624.0), overflow horizontal 0.0%, vertical 4.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (58 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -692,11 +660,11 @@
         "tspan_elements": 30
       },
       "passed": true,
-      "source_sha256": "2278e99f85cb0042e5f673cc3fe26f7e4e0c38ad8dad7c5410b6d92686f13f39"
+      "source_sha256": "ccf4c1770617b656c6e1492b1177f415346f601889089ea6836a04220f2f4bc8"
     },
     {
       "file": "05_nguon.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\05_nguon.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\05_nguon.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -752,15 +720,15 @@
         "tspan_elements": 23
       },
       "passed": true,
-      "source_sha256": "d550a8855a3e15ec10dec99c643504d3c483c5f12ad2d954083230e9986638d1"
+      "source_sha256": "bdb4dea8b72c528ecbf20535bf266f4f74bc865f675514d305ea6fce35181e35"
     },
     {
       "file": "06_dosang.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\06_dosang.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\06_dosang.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -771,7 +739,7 @@
             "files": [
               "fig_brightness.png"
             ],
-            "max_frame_share": 0.2469
+            "max_frame_share": 0.2344
           },
           "icons": 0,
           "effects": {
@@ -811,20 +779,18 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 14
+        "tspan_elements": 15
       },
       "passed": true,
-      "source_sha256": "6f3248b78f2992f2a783c5535dcbebc9ecfbbd9c18fdc862f744c53adc8f6ffd"
+      "source_sha256": "424e14c8cb9de3a1b1112e790f55d4640a9477929b8a049aba9c5bb844977c52"
     },
     {
       "file": "07_trunglap.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\07_trunglap.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\07_trunglap.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (50 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"07-exact-note2-text\"> exceeds <g id=\"07-exact-card\"> data-pptx-bounds on the vertical axis: content (102.0, 453.6)-(576.5, 512.4), container (82.0, 340.0)-(610.0, 508.0), overflow horizontal 0.0%, vertical 2.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text",
-        "<text id=\"07-near-note2-text\"> exceeds <g id=\"07-near-card\"> data-pptx-bounds on the vertical axis: content (660.0, 453.6)-(1173.7, 512.4), container (640.0, 340.0)-(1198.0, 508.0), overflow horizontal 0.0%, vertical 2.6% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (50 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -876,20 +842,21 @@
         "tspan_elements": 26
       },
       "passed": true,
-      "source_sha256": "4d69f71f84a2f29554298d7efd285af25bf74c8b12b15b56aca652679e51dc2a"
+      "source_sha256": "af3f0e7fa15d5d47519d1d45cceb6e07e1e2bb7fcca152ec91080e0f31f7b9e9"
     },
     {
       "file": "08_dactrung.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\08_dactrung.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\08_dactrung.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (88 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (72 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "15 ungrouped top-level Slide-local element(s) in svg_output (<line id=\"08-st0-arrow-shaft\">, <line id=\"08-st0-arrow-head1\">, <line id=\"08-st0-arrow-head2\">, ...); group only logical content units in a top-level <g id=\"...\">. Keep genuine static page framing as a root primitive and declare a supported data-pptx-role such as \"background\" or \"decoration\""
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 30,
+          "text_elements": 25,
           "images": {
             "placements": 0,
             "files": [],
@@ -907,7 +874,7 @@
               "rect": 8,
               "circle": 0,
               "ellipse": 0,
-              "line": 2,
+              "line": 17,
               "polyline": 0,
               "polygon": 0,
               "path": 0
@@ -932,15 +899,15 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 30,
-        "tspan_elements": 45
+        "text_elements": 25,
+        "tspan_elements": 37
       },
       "passed": true,
-      "source_sha256": "7d07e007c80c04191085b43b190a5c965e0daf0a6ac8785b59f9651de36d86a7"
+      "source_sha256": "1630407cf8e5d679465313d2afbd18a987e8214926d5863fd3b49689fba26a77"
     },
     {
       "file": "09_giaithuat.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\09_giaithuat.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\09_giaithuat.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -997,11 +964,11 @@
         "tspan_elements": 30
       },
       "passed": true,
-      "source_sha256": "b201a328028495d77f2eb5be6fb631af2f3f578ef4ad44065901f5b594072a5c"
+      "source_sha256": "0afa2448cb51c56329cb98fd732a6d8e3635c803c640619820ef686633f2a222"
     },
     {
       "file": "10_mo_chuong3.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\10_mo_chuong3.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\10_mo_chuong3.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1062,7 +1029,7 @@
     },
     {
       "file": "11_rq1.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\11_rq1.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\11_rq1.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1071,7 +1038,7 @@
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 11,
+          "text_elements": 14,
           "images": {
             "placements": 1,
             "files": [
@@ -1116,24 +1083,25 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 11,
+        "text_elements": 14,
         "tspan_elements": 16
       },
       "passed": true,
-      "source_sha256": "eb7d3f04e6d3b0af60f66e761229a79eaf2bc8056ce702a9fa35a7d0097aae39"
+      "source_sha256": "2060096c36992dd0f43ddac35e981cc3c242a604d425ad0eb707a2723efca9c3"
     },
     {
       "file": "12_rq1_delta.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\12_rq1_delta.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\12_rq1_delta.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[18]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (30 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[18]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
+        "<text id=\"12-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(840.4, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 11,
+          "text_elements": 14,
           "images": {
             "placements": 1,
             "files": [
@@ -1178,15 +1146,15 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 11,
+        "text_elements": 14,
         "tspan_elements": 17
       },
       "passed": true,
-      "source_sha256": "9cbe10a2827a5ebcab410209b79642faf0fcac51044ad591e58b8a713c8448cc"
+      "source_sha256": "723465449dcee5c7485a8d36a9bdf71d6560ae0e0acb3398e52167bb4b634bf8"
     },
     {
       "file": "13_rq2.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\13_rq2.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\13_rq2.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1195,7 +1163,7 @@
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 11,
+          "text_elements": 14,
           "images": {
             "placements": 1,
             "files": [
@@ -1240,15 +1208,15 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 11,
+        "text_elements": 14,
         "tspan_elements": 16
       },
       "passed": true,
-      "source_sha256": "0da1193fd118c8b0d7dec8f2c6b213a246a0676bd57e50dd88b554e7a03a9956"
+      "source_sha256": "37db65abe27143e9d1fdf8538657fd94f3f8c04b886860416d92476b7b4c9e2d"
     },
     {
       "file": "14_mo_chuong4.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\14_mo_chuong4.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\14_mo_chuong4.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1305,11 +1273,11 @@
         "tspan_elements": 8
       },
       "passed": true,
-      "source_sha256": "1ed2bbdef78ae9efc3a2e18215ed8b951d8c1c7c279650bd5ae66b623e82f8a2"
+      "source_sha256": "e70e7cfdb2660dd87676873df08c36ecaebc35bf7e399e76b718163278eea84c"
     },
     {
       "file": "15_rq3.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\15_rq3.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\15_rq3.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1318,7 +1286,7 @@
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 11,
+          "text_elements": 14,
           "images": {
             "placements": 1,
             "files": [
@@ -1363,20 +1331,19 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 11,
+        "text_elements": 14,
         "tspan_elements": 16
       },
       "passed": true,
-      "source_sha256": "9d78b0ef37dbacd5bcfa6201f708acad07fe01f6e732d95344ec9d45ebb75cbf"
+      "source_sha256": "c08df084eceb615de0b53028a15fac031611a8b36c84c364b0fa6bf681f97616"
     },
     {
       "file": "16_rq3_ngoai_phoi.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\16_rq3_ngoai_phoi.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\16_rq3_ngoai_phoi.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"16-trio-cap2-text\"> exceeds <g id=\"16-trio\"> data-pptx-bounds on the vertical axis: content (98.0, 459.6)-(658.4, 552.4), container (82.0, 204.0)-(706.0, 544.0), overflow horizontal 0.0%, vertical 2.5% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (28 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1430,15 +1397,15 @@
         "tspan_elements": 15
       },
       "passed": true,
-      "source_sha256": "a0f830234468a61873e73cc64ec3f58a3d8f0b1c4808be78722543fad99b4b7b"
+      "source_sha256": "3bf243210a42b6c0bb636de63d0a85ebfa6e7163d2441b9caa88442b3343fc29"
     },
     {
       "file": "17_rq3_perm.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\17_rq3_perm.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\17_rq3_perm.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (26 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (24 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[17]:fill '#161D26' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1489,19 +1456,18 @@
           "Segoe UI, Arial, sans-serif"
         ],
         "text_elements": 11,
-        "tspan_elements": 14
+        "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "dcdd23df4ca6c2fbac9d2eeed70f4293b92b2db65cf26063a5420ce6ac3a794b"
+      "source_sha256": "5318cd0ab0dd2722747ae2ee0ac1c88a0023b893cd61fd15d4fba8746953640a"
     },
     {
       "file": "18_phan_chung.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\18_phan_chung.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\18_phan_chung.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"18-d4-note-text-text\"> exceeds <g id=\"18-d4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 573.6)-(1095.5, 628.4), container (82.0, 548.0)-(1198.0, 626.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1553,11 +1519,11 @@
         "tspan_elements": 28
       },
       "passed": true,
-      "source_sha256": "e111598d4be2d6950f28ea2708bc9cf105f86f1104ba1eaed1eb67c854ca17fb"
+      "source_sha256": "130b5ac2c6bc676834482f99c7351799789c69f9c5e8d09410b892b5e5b46347"
     },
     {
       "file": "19_mo_chuong5.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\19_mo_chuong5.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\19_mo_chuong5.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1618,17 +1584,16 @@
     },
     {
       "file": "20_ket_qua_test.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\20_ket_qua_test.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\20_ket_qua_test.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (20 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[10]:fill '#7FBFB6' -> None; tspan[10]:font-size '172' -> None; tspan[13]:fill '#9AA6B4' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"20-hero-note-text-text\"> exceeds <g id=\"20-hero-note\"> data-pptx-bounds on the vertical axis: content (104.0, 553.6)-(1091.4, 608.4), container (82.0, 528.0)-(1198.0, 606.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[5]:fill '#7FBFB6' -> None; tspan[5]:font-size '24' -> None; tspan[13]:fill '#7FBFB6' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 10,
+          "text_elements": 11,
           "images": {
             "placements": 0,
             "files": [],
@@ -1671,20 +1636,20 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 10,
-        "tspan_elements": 11
+        "text_elements": 11,
+        "tspan_elements": 12
       },
       "passed": true,
-      "source_sha256": "8169173cfc4353036decddd5b0d515f9b24ab6cd56de4a88cf91e73460370c7a"
+      "source_sha256": "4d1d33f38893e1f24073a683b7d31d5f86592b5905d5f026832eca55041dd120"
     },
     {
       "file": "21_val_vs_test.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\21_val_vs_test.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\21_val_vs_test.svg",
       "exists": true,
       "errors": [],
       "warnings": [
         "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[18]:fill '#4A5560' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"21-pair-diff-text\"> exceeds <g id=\"21-pair\"> data-pptx-bounds on the horizontal axis: content (836.0, 476.2)-(1208.3, 509.8), container (810.0, 214.0)-(1198.0, 514.0), overflow horizontal 2.7%, vertical 0.0% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text; ≈17.7 px per mixed char at 28px incl. headroom; ≈21 chars fit in 388 px"
+        "<text id=\"21-title-slot-carrier\"> exceeds <g id=\"title-slot\"> data-pptx-bounds on the vertical axis: content (82.0, 57.3)-(730.0, 157.7), container (82.0, 57.0)-(1198.0, 154.0), overflow horizontal 0.0%, vertical 3.8% (error above 5%); reflow the text, or map the page to a Layout whose slot is larger; slot bounds stay as the prototype declares them"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -1738,11 +1703,11 @@
         "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "2e89a49746fda49b26546e84832ad7c17d3c436e0a142fcf11b32f98d388eb5e"
+      "source_sha256": "3ab994785d3b69cbd27d8dc1c9deaaaee3ee8bb0bcff8b05b67847111db8ed59"
     },
     {
       "file": "22_loi_test.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\22_loi_test.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\22_loi_test.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1804,7 +1769,7 @@
     },
     {
       "file": "23_demo.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\23_demo.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\23_demo.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1862,11 +1827,11 @@
         "tspan_elements": 13
       },
       "passed": true,
-      "source_sha256": "07c4602f4b2868df7c68c3d93a8d5feac833fb6a9ef39270948f263cb0f1af43"
+      "source_sha256": "e21ff760cb7bd1b6302fdb24c30e02937f07baefbc7c4bc8d898c25d7a5219a8"
     },
     {
       "file": "24_vi_du.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\24_vi_du.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\24_vi_du.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1925,11 +1890,11 @@
         "tspan_elements": 16
       },
       "passed": true,
-      "source_sha256": "db45f33f813aef189a1662673fc57de808dcf488afe6a6d1ced1fdd3231e04d4"
+      "source_sha256": "f8fd663cea92acf1d8b86c4660d1d9dc649f94dd9e2d9fa9af16fb45741fe25e"
     },
     {
       "file": "25_gioi_han.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\25_gioi_han.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\25_gioi_han.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -1985,16 +1950,15 @@
         "tspan_elements": 19
       },
       "passed": true,
-      "source_sha256": "d3fef96188b98f790f5b2d0b540982491509ccfef353f59c577535b3e1c8ae04"
+      "source_sha256": "1d213b87bff2e64ac27a4d50c42e1d90bd761d3ae984cbce23b88d2218cb06f1"
     },
     {
       "file": "26_khong_chan_doan.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\26_khong_chan_doan.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\26_khong_chan_doan.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#B45309' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"26-d4-note-text-text\"> exceeds <g id=\"26-d4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 477.6)-(1095.5, 532.4), container (82.0, 452.0)-(1198.0, 530.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (22 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#B45309' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2046,11 +2010,11 @@
         "tspan_elements": 12
       },
       "passed": true,
-      "source_sha256": "03342d22577cc589fa7da34f7faf01a636e1a4ac73c7c2e49c28b7b0ce1c70de"
+      "source_sha256": "e1f34263921a04cd8c47a3a962f001d1c223f637d987f45bbf6d38cf8218858e"
     },
     {
       "file": "27_ket_luan.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\27_ket_luan.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\27_ket_luan.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -2106,11 +2070,11 @@
         "tspan_elements": 25
       },
       "passed": true,
-      "source_sha256": "250fabca50ecfe4f49c442b42481c6995857d51119c84565faad3b31100f84b7"
+      "source_sha256": "ea2f8f7846723e229711ab72b4727381e90d2380240ef834f0031ad2b0ab90ac"
     },
     {
       "file": "28_cam_on.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\28_cam_on.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\28_cam_on.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -2174,7 +2138,7 @@
     },
     {
       "file": "b1_rq1_per_seed.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b1_rq1_per_seed.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b1_rq1_per_seed.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -2230,16 +2194,15 @@
         "tspan_elements": 25
       },
       "passed": true,
-      "source_sha256": "aba6593cb15fc5d4f6e4ca7c89eb2010da5b74893b93dde5b4ac54a98cadd947"
+      "source_sha256": "18c13ad771be6615734bbeaff47382b77eab17795894da4db65c99cddba5ff6b"
     },
     {
       "file": "b2_rq2_day_du.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b2_rq2_day_du.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b2_rq2_day_du.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (76 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"b2-note-text-text\"> exceeds <g id=\"b2-note\"> data-pptx-bounds on the vertical axis: content (104.0, 515.6)-(1136.8, 570.4), container (82.0, 490.0)-(1198.0, 568.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (76 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2291,16 +2254,15 @@
         "tspan_elements": 39
       },
       "passed": true,
-      "source_sha256": "ee05c3b1df585feb8f28a0cfb98ec6ff07ad3ce8d914552152017cbee55e9326"
+      "source_sha256": "88db953faba50ab58b006b1a14a31482ff0929a9af654ca29f022e0986e75c8c"
     },
     {
       "file": "b3_rq3_day_du.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b3_rq3_day_du.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b3_rq3_day_du.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (66 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"b3-note-text-text\"> exceeds <g id=\"b3-note\"> data-pptx-bounds on the vertical axis: content (104.0, 525.6)-(1173.1, 606.4), container (82.0, 500.0)-(1198.0, 604.0), overflow horizontal 0.0%, vertical 2.3% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (66 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[15]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
@@ -2352,22 +2314,20 @@
         "tspan_elements": 34
       },
       "passed": true,
-      "source_sha256": "3773e82d56b9c08541c7fed7d22a6cd2c48d94309ca74e8abb439af453631f05"
+      "source_sha256": "c4c095b2d0b93c17c32c1e80f9e0d54eb5dbf469b4047f79e9ec3e36c4b79c99"
     },
     {
       "file": "b4_cap_gan_trung.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b4_cap_gan_trung.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b4_cap_gan_trung.svg",
       "exists": true,
       "errors": [],
       "warnings": [
-        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (54 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)",
-        "<text id=\"b4-d2-note-text\"> exceeds <g id=\"b4-d2\"> data-pptx-bounds on the vertical axis: content (1032.0, 415.6)-(1172.8, 528.4), container (842.0, 392.0)-(1194.0, 524.0), overflow horizontal 0.0%, vertical 3.3% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text",
-        "<text id=\"b4-note-text-text\"> exceeds <g id=\"b4-note\"> data-pptx-bounds on the vertical axis: content (104.0, 561.6)-(1146.6, 616.4), container (82.0, 536.0)-(1198.0, 614.0), overflow horizontal 0.0%, vertical 3.1% (error above 5%); expand the root module bounds into available non-overlapping space; otherwise reflow the text"
+        "Noncanonical compact authoring: Authoring SVG contains noncanonical or redundant inherited style declarations (34 change(s)); examples (group:attr None -> value hoists the shared value onto that group; child:attr value -> None drops the copy the child now inherits): tspan[7]:fill '#0F766E' -> None; tspan[7]:font-size '24' -> None; tspan[13]:fill '#0F766E' -> None (advisory; normalize with `python3 scripts/compact_svg_styles.py <svg_output> --inplace`, re-stamp pages that carry Chart/Table fallbacks, and rerun the final gate, or leave the explicit form)"
       ],
       "info": {
         "viewbox": "0 0 1280 720",
         "carrier_receipt": {
-          "text_elements": 20,
+          "text_elements": 17,
           "images": {
             "placements": 0,
             "files": [],
@@ -2410,15 +2370,15 @@
         "fonts": [
           "Segoe UI, Arial, sans-serif"
         ],
-        "text_elements": 20,
-        "tspan_elements": 28
+        "text_elements": 17,
+        "tspan_elements": 18
       },
       "passed": true,
-      "source_sha256": "7266d683168ac497c8fd232e48b7c110ad6060eb1e66ac8ca932bdc04a125987"
+      "source_sha256": "97df9b0d1f2cdd3624ef08ce15c42acd796aa8c699af624ced50e159ae0f862c"
     },
     {
       "file": "b5_loi_val.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b5_loi_val.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b5_loi_val.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -2474,11 +2434,11 @@
         "tspan_elements": 22
       },
       "passed": true,
-      "source_sha256": "5ef7ae3615574514404b1763b436ad8a7383c8f57dbdae3bd57bf60df7f21434"
+      "source_sha256": "c578a4766bf403f2d15c19c6c85870385368fc542cd3bebaca33e4388458c00e"
     },
     {
       "file": "b6_latency.svg",
-      "path": "slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b6_latency.svg",
+      "path": "D:\\Use Antigravity\\Medical Vision\\slides\\s6_03_bao_ve_cuoi_ky_ppt169_20261112\\svg_output\\b6_latency.svg",
       "exists": true,
       "errors": [],
       "warnings": [
@@ -2534,7 +2494,7 @@
         "tspan_elements": 28
       },
       "passed": true,
-      "source_sha256": "a8b0e3836ba02c02e364f50ce0ecfb81b5c5459d1a1a1b7cc70d735b14bae8af"
+      "source_sha256": "6706ae6b4d5981f52935bf3b4bec388e1e8d2991b587adfead6baaa64ac82cbd"
     }
   ]
 }

@@ -61,8 +61,17 @@ def chart_page(filename: str, *, kicker: str, title: str, source: str, page_no: 
         y = 190 + index * 140
         zone = page.zone(f"card-{key}", x, y, width, 140)
         zone.card()
-        zone.text(f"card-{key}-cap", x + 16, y + 30, caption_text, size=24, color=k.INK_SOFT,
-                  max_width=width - 32, line_h=28)
+        label, sep, rest = caption_text.rpartition(" · CI ")
+        if sep:
+            # Nhãn và khoảng tin cậy xuống hai dòng riêng: chuỗi "CI [a; b]" dài hơn
+            # bề rộng thẻ nên nếu để tự ngắt, dấu "[" hoặc số thứ hai sẽ rơi xuống
+            # dòng dưới và đọc thành một con số khác.
+            zone.text(f"card-{key}-cap", x + 16, y + 30, label, size=24, color=k.INK_SOFT,
+                      max_width=width - 32, line_h=28)
+            zone.text(f"card-{key}-ci", x + 16, y + 60, "CI " + rest, size=24, color=k.INK_SOFT)
+        else:
+            zone.text(f"card-{key}-cap", x + 16, y + 30, caption_text, size=24, color=k.INK_SOFT,
+                      max_width=width - 32, line_h=28)
         zone.text(f"card-{key}-val", x + 16, y + 116, value, size=38, color=k.TEAL,
                   weight="bold")
         page.content(zone.done())
@@ -81,14 +90,12 @@ def slide_10() -> k.Page:
 def slide_11() -> k.Page:
     ghep = next(row for row in D["rq1"] if row["key"] == "ghep")
     rules = D["rules"]
-    ghep = next(row for row in D["rq1"] if row["key"] == "ghep")
-    rules = D["rules"]
     rows = sorted(D["rq1"], key=lambda row: row["macro_f1"], reverse=True)
     cards = [(row["key"], fmt(row["macro_f1"]), f"{_NAME_RQ1[row['key']]} · CI {fmt_ci(*row['ci'])}")
              for row in rows]
     return chart_page(
         "11_rq1.svg", kicker=CH3, page_no=11,
-        title=f"Nhóm ghép dẩn đầu với {fmt(ghep['macro_f1'])} ± {fmt(ghep['std'], 4)}",
+        title=f"Nhóm ghép dẫn đầu với {fmt(ghep['macro_f1'])} ± {fmt(ghep['std'], 4)}",
         source="Nguồn: results/report_rq1/r1_summary.csv · "
                "results/b0_majority, a0_shortcut/metrics.json",
         image="../images/fig_rq1_ci.png", image_w=736, image_h=270,
@@ -110,15 +117,15 @@ def slide_12() -> k.Page:
     glcmlbp = next(row for row in D["rq1"] if row["key"] == "glcmlbp")
     cards = [
         ("ghép", fmt_delta(ghep["delta"]["diff"]),
-         f"Ghép − Histogram · {fmt_ci(*ghep['delta']['ci'])}"),
+         f"Ghép − Histogram · CI {fmt_ci(*ghep['delta']['ci'])}"),
         ("glcm", fmt_delta(glcmlbp["delta"]["diff"]),
-         f"GLCM + LBP − Histogram · {fmt_ci(*glcmlbp['delta']['ci'])}"),
+         f"GLCM + LBP − Histogram · CI {fmt_ci(*glcmlbp['delta']['ci'])}"),
         ("hog", fmt_delta(hog["delta"]["diff"]),
-         f"HOG − Histogram · {fmt_ci(*hog['delta']['ci'])}"),
+         f"HOG − Histogram · CI {fmt_ci(*hog['delta']['ci'])}"),
     ]
     page = chart_page(
         "12_rq1_delta.svg", kicker=CH3, page_no=12,
-        title=f"Chỉ ghi nhận “tốt hơn” khi Δ ≥ {fmt(rules['delta_threshold'], 3)} và CI không chứa 0",
+        title=f"Chỉ ghi nhận “tốt hơn” khi Δ ≥ {fmt(rules['delta_threshold'], 3)}\nvà CI không chứa 0",
         source="Nguồn: results/report_rq1/r1_bootstrap_vs_reference.csv · "
                "results/rq1_cost_rank_record.md",
         image="../images/fig_rq1_delta.png", image_w=736, image_h=260,
@@ -145,7 +152,7 @@ def slide_13() -> k.Page:
     ]
     return chart_page(
         "13_rq2.svg", kicker=CH3, page_no=13,
-        title="SVM RBF 0,9024, hơn Random Forest 0,0442",
+        title=f"SVM RBF {fmt(svm['macro_f1'])}, hơn Random Forest {fmt(delta['diff'])}",
         source="Nguồn: results/report_rq2/r1_summary.csv · "
                "results/report_rq2/r1_bootstrap_vs_reference.csv",
         image="../images/fig_rq2_ci.png", image_w=736, image_h=272,
@@ -164,7 +171,7 @@ def slide_14() -> k.Page:
     return divider("14_mo_chuong4.svg", chapter="CHƯƠNG 4", page_no=14,
                    title="Nếu che mất vùng phổi thì sao?",
                    body="Câu hỏi 3: che và cắt theo mask phổi có làm "
-                        "đổi macro-F1 không. Năm kịch bản: huần luyện "
+                        "đổi macro-F1 không. Năm kịch bản: huấn luyện "
                         "và đánh giá cùng một chế độ ảnh, "
                         "rồi đo lại trên cùng 3.174 ảnh validation. "
                         "Kịch bản cho biết vùng đó có đủ tín "
@@ -196,12 +203,12 @@ def slide_15() -> k.Page:
                "results/report_rq3/r3_shortcut_bootstrap.csv",
         image="../images/fig_rq3_scenarios.png", image_w=736, image_h=270,
         cards=cards,
-        note=(f"Quy ước A → B: huần luyện trên ảnh dạng A, "
-              f"đánh giá trên ảnh dạng B. Chỉ phổi thua gốc "
+        note=(f"Chỉ phổi − gốc = "
               f"{fmt_delta(D['rq3']['diffs'][('lung_to_lung', 'orig_to_orig')]['diff'])}; "
-              f"chỉ ngoài phổi thua chỉ phổi "
+              f"chỉ phổi − chỉ ngoài phổi = "
               f"{fmt_delta(gap_lung_out['diff'])} "
-              f"{fmt_ci(*gap_lung_out['ci'])} — không chứa 0.",
+              f"{fmt_ci(*gap_lung_out['ci'])}, không chứa 0. "
+              "Quy ước A → B: huấn luyện trên ảnh dạng A, đánh giá trên ảnh dạng B.",
               k.AMBER_PALE),
     )
 
@@ -216,7 +223,7 @@ def slide_16() -> k.Page:
                   title=f"Che sạch phổi vẫn còn {fmt(outside)} macro-F1",
                   source="Nguồn: results/report_rq3/r3_shortcut_bootstrap.csv · "
                          "results/rq3_mask_check/ · slides/assets/mask_trio.png")
-    zone = page.zone("trio", 82, 204, 624, 340)
+    zone = page.zone("trio", 82, 204, 624, 352)
     zone.card()
     zone.image("trio-image", "../images/mask_trio.png", 98, 218, 592, 197)
     zone.text("trio-cap", 98, 448, "Ba chế độ của một ảnh validation", size=24,
@@ -224,10 +231,10 @@ def slide_16() -> k.Page:
     zone.text("trio-cap2", 98, 480,
               "Ảnh gốc · chỉ giữ vùng phổi · chỉ giữ vùng ngoài phổi. Cả ba đều là ảnh "
               "split val; chưa đủ căn cứ để nói vùng phổi là nguồn tín hiệu duy nhất.",
-              size=24, color=k.INK, max_width=592, line_h=32)
+              size=24, color=k.INK, max_width=592, line_h=30)
     page.content(zone.done())
 
-    zone = page.zone("pair", 730, 204, 468, 420)
+    zone = page.zone("pair", 730, 204, 468, 416)
     zone.card()
     zone.text("pair-full-cap", 756, 248, "Ảnh gốc (gốc → gốc)", size=24, color=k.INK_SOFT)
     zone.text("pair-full", 756, 330, fmt(full), size=72, color=k.TEAL, weight="bold")
@@ -253,9 +260,9 @@ def slide_17() -> k.Page:
     gap = abs(glcm_out["importance"] - lbp_out["importance"])
     noise = max(glcm_out["std"], lbp_out["std"])
     cards = [
-        ("glcm", fmt(lung["glcm_60"]["importance"]), "Chỉ phổi · GLCM 60 chiều"),
-        ("lbp", fmt(blocks["lbp_28"]["importance"]), "Ngoài phổi · LBP 28 chiều"),
-        ("hist", fmt(blocks["hist_64"]["importance"]), "Ngoài phổi · Histogram 64 chiều"),
+        ("glcm", fmt(lung["glcm_60"]["importance"]), "Chỉ phổi · GLCM 60"),
+        ("lbp", fmt(blocks["lbp_28"]["importance"]), "Ngoài phổi · LBP 28"),
+        ("hist", fmt(blocks["hist_64"]["importance"]), "Ngoài phổi · Histogram 64"),
     ]
     return chart_page(
         "17_rq3_perm.svg", kicker=CH4, page_no=17,
@@ -264,7 +271,7 @@ def slide_17() -> k.Page:
         image="../images/fig_rq3_perm.png", image_w=736, image_h=270,
         cards=cards,
         note=(f"GLCM ngoài phổi {fmt(glcm_out['importance'])} và LBP "
-              f"{fmt(lbp_out['importance'])}: chênh {fmt(gap, 4)}, nhỏ hơn độ lịch "
+              f"{fmt(lbp_out['importance'])}: chênh {fmt(gap, 4)}, nhỏ hơn độ lệch "
               f"{fmt(noise, 4)} của 10 lần xáo trộn. Mức giảm chưa chuẩn hóa theo cỡ "
               f"khối (60 chiều so với 28).", k.AMBER_PALE),
     )
@@ -303,8 +310,8 @@ def slide_18() -> k.Page:
         "Xáo trộn không đổi điểm",
     ]
     for index, item in enumerate(conditions):
-        x = 82 + index * 284
-        zone = page.zone(f"cond{index}", x, 448, 268, 88)
+        x = 82 + index * 282
+        zone = page.zone(f"cond{index}", x, 448, 268, 80)
         zone.card()
         zone.text(f"cond{index}-num", x + 16, 472, f"{index + 1}", size=24,
                   color=k.TEAL_LIGHT, weight="bold")
@@ -312,7 +319,7 @@ def slide_18() -> k.Page:
                   max_width=204, line_h=30)
         page.content(zone.done())
 
-    page.content(k.note_zone(page, "d4-note", 82, 548, 1116, "Quy tắc D4: " + D4,
+    page.content(k.note_zone(page, "d4-note", 82, 540, 1116, "Quy tắc D4: " + D4,
                              fill=k.TEAL_PALE, size=24, line_h=26))
     return page
 
