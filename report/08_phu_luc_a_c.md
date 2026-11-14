@@ -6,7 +6,7 @@ Ba phụ lục này thuộc phần ghi chú kỹ thuật của quyển, nên đ�
 
 ### A.1. Môi trường và cài đặt
 
-Ứng dụng demo (`demo/streamlit_app.py`) chạy trên Python 3.12 — cùng phiên bản mặc định của Streamlit Community Cloud và môi trường đã chạy toàn bộ kiểm thử của đề tài. Các bước:
+Ứng dụng demo (`demo/streamlit_app.py`) chạy trên Python 3.12, cùng phiên bản của môi trường đã chạy toàn bộ kiểm thử của đề tài. Các bước:
 
 ```bash
 python -m venv .venv-demo
@@ -14,13 +14,13 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 344 phép kiểm thử trong 28 module đã chạy được trên môi trường này (343 pass, 1 bỏ qua; mục 5.4 của Chương 5).
+Toàn bộ 351 phép kiểm thử trong 28 module đã chạy được trên môi trường này (350 pass, 1 bỏ qua; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
-Artifact `cxr_inference_model_cache.joblib` (kernel v3) không nằm trong git; ứng dụng tải từ kho Hugging Face công khai `duc16/cxr-svm-demo`. Kho đã được kiểm tra tải ẩn danh: HTTP 200, đúng 7.842.399 byte và băm SHA-256 khớp giá trị công bố.
+Artifact `cxr_inference_model_cache.joblib` không nằm trong git; ứng dụng tải từ kho Hugging Face công khai `duc16/cxr-svm-demo`. Artifact sinh ở bước S5-06 bởi kernel huấn luyện `ductrannguyen/cxr-inference-demo` phiên bản 3. Kho đã được kiểm tra tải ẩn danh tại thời điểm nộp: HTTP 200, đúng 7.842.399 byte và băm SHA-256 khớp giá trị công bố.
 
-**Bảng A.2: Thông số mô hình đóng băng**
+**Bảng A.1: Thông số mô hình đóng băng**
 
 | Thành phần | Giá trị |
 | :--- | :--- |
@@ -32,11 +32,11 @@ Artifact `cxr_inference_model_cache.joblib` (kernel v3) không nằm trong git; 
 | Kích thước tệp | 7.842.399 byte |
 | SHA-256 | `3e14bd570c734d9d8f39a2d340b176a40a41c9559cc2da0ef67bbd8e15735058` |
 
-Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau đó kiểm thêm băm của tệp split, phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm của mã trích đặc trưng. Trong đó khớp một điều kiện thì ứng dụng dừng và báo lỗi, không nạp mô hình.
+Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau đó kiểm thêm băm của tệp split, phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm của mã trích đặc trưng. Trong đó một điều kiện không khớp thì ứng dụng dừng và báo lỗi, không nạp mô hình.
 
 ### A.3. Biến môi trường
 
-**Bảng A.1: Biến môi trường của ứng dụng demo**
+**Bảng A.2: Biến môi trường của ứng dụng demo**
 
 | Biến | Bắt buộc | Ý nghĩa |
 | :--- | :---: | :--- |
@@ -44,7 +44,7 @@ Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau �
 | `CXR_MODEL_REPO` | Không | Kho Hugging Face dạng `tai-khoan/ten-kho`; mặc định `duc16/cxr-svm-demo` |
 | `CXR_MODEL_FILE` | Không | Tên tệp trong kho; mặc định `cxr_inference_model_cache.joblib` |
 | `CXR_MODEL_REVISION` | Không | Nhánh/tag/commit của kho; mặc định nhánh mặc định |
-| `CXR_MODEL_SHA256` | Không | Băm kỳ vọng; mặc định băm ở Bảng A.2 |
+| `CXR_MODEL_SHA256` | Không | Băm kỳ vọng; mặc định băm ở Bảng A.1 |
 | `HF_TOKEN` | Không | Chỉ cần khi kho mô hình là private |
 
 Với Streamlit Community Cloud, không bắt buộc khai báo secrets vì ứng dụng mặc định dùng kho công khai của dự án; secrets (`.streamlit/secrets.toml`, đã bị `.gitignore` chặn) chỉ cần khi trỏ sang kho khác.
@@ -75,7 +75,7 @@ Hai bộ test gắn với ứng dụng: `tests/test_model_artifact.py` (21 phép
 - Ứng dụng là demo học thuật, không phải thiết bị y tế và chưa kiểm định lâm sàng; kết quả suy luận không được dùng cho quyết định y khoa.
 - Chỉ tải ảnh X-quang đã ẩn danh; ảnh tải lên chỉ nằm trong bộ nhớ của phiên, không ghi xuống đĩa và không ghi vào nhật ký.
 - Ảnh khác 299 × 299 được đổi cỡ kèm cảnh báo; mô hình chỉ được kiểm chứng trên ảnh 299 × 299 của bộ dữ liệu COVID-19 Radiography.
-- Chênh lệch validation – test chỉ được nêu như quan sát, không nêu nguyên nhân (quy ước D4).
+- Chênh lệch validation – test chỉ được nêu như quan sát, không nêu nguyên nhân.
 
 **Ghi chú nguồn Phụ lục A:** `demo/README.md` (toàn văn), `src/model_artifact.py`, `demo/streamlit_app.py`, `demo/verify_model_equivalence.py`, `demo/requirements.txt`.
 
@@ -99,17 +99,19 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `results/` | 188 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
-| `docs/` | 14 | Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
+| `docs/` | 17 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
-| `slides/` | 1 | Chỗ để slide thuyết trình (chưa có nội dung) |
+| `slides/` | 1 | Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
+| **Tổng cộng** | **327** |
 
 ### B.2. Danh sách bài kiểm thử
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (344 phép)**
+**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (351 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
@@ -126,7 +128,7 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_inference_latency.py` | 18 |
 | `test_metrics.py` | 4 |
 | `test_model_artifact.py` | 21 |
-| `test_report_consistency.py` | 3 |
+| `test_report_consistency.py` | 9 |
 | `test_report_figures.py` | 5 |
 | `test_report_figures_final_test.py` | 10 |
 | `test_report_figures_rq3.py` | 6 |
@@ -140,10 +142,10 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_source_labels.py` | 5 |
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
-| `test_val_near_duplicate_subset.py` | 3 |
-| **Tổng cộng** | **344** |
+| `test_val_near_duplicate_subset.py` | 4 |
+| **Tổng cộng** | **351** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 343 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 344 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 350 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 351 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py
@@ -170,7 +172,9 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 | `svm` | `C` ∈ {1,0; 10,0} × `gamma` ∈ {scale; auto} (4) |
 | `gb` | `n_estimators` ∈ {100; 200} × `learning_rate` = 0,1 × `max_depth` ∈ {3; 5} (4) |
 
-Trọng số lớp (`class_weight='balanced'`) là thành phần cố định của bộ phân loại, không nằm trong lưới; `knn` không hỗ trợ trọng số lớp nên dùng cân bằng bằng `weights='distance'`. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
+Trọng số lớp là thành phần cố định, không nằm trong lưới: Logistic Regression, Decision Tree và SVM dùng cân bằng lớp (`class_weight='balanced'`); Random Forest dùng cân bằng theo mẫu (`class_weight='balanced_subsample'`); Gradient Boosting dùng trọng số mẫu cân bằng truyền vào bước fit; k-NN không có cơ chế cân bằng lớp, và trọng số `weights='distance'` trong lưới của `knn` là trọng số theo khoảng cách tới láng giềng chứ không cân bằng lớp. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
+
+Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 (nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
 
 ### C.2. Tham số chọn và kết quả trên tập validation
 
@@ -185,7 +189,7 @@ Trọng số lớp (`class_weight='balanced'`) là thành phần cố định c�
 | 5 | `knn` | `n_neighbors=5, weights='distance'` | 1 | 0,8242 | [0,8075; 0,8397] |
 | 6 | `dt` | `max_depth=10, min_samples_leaf=1` | 3 | 0,7271 ± 0,0017 | [0,7090; 0,7449] |
 
-Ba bộ tất định không có độ lệch chuẩn (cổng H3 của đề tài). Bộ phân loại tham chiếu của RQ2 là `rf` (cấu hình dùng ở RQ1); ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
+Ba bộ tất định về nhãn dự đoán chạy mỗi bộ một lần nên không có độ lệch chuẩn. Bộ phân loại tham chiếu của RQ2 là `rf`, với cấu hình chọn bằng kiểm định chéo (300 cây, độ sâu không giới hạn), khác cấu hình 500 cây cố định dùng ở RQ1; ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
 
 ### C.3. Thứ hạng chi phí huấn luyện
 
@@ -200,6 +204,6 @@ Ba bộ tất định không có độ lệch chuẩn (cổng H3 của đề tà
 | 5 | `gb` | 1.765,091 | 132,789 | 2.163,459 |
 | 6 | `rf` | 3.086,971 | 151,621 | 3.541,833 |
 
-Chi phí của một bộ phân loại là tổng giây CPU huấn luyện (5-fold CV cộng fit trên toàn bộ tập train của các seed tương ứng), không gồm trích đặc trưng: bước trích nhóm `ghep` dùng chung cho cả sáu bộ tốn 1.402,867 giây CPU (1.155,273 giây cho train và 247,594 giây cho validation, tức 0,077985 giây CPU một ảnh). Biên bản thứ hạng chi phí được ghi và commit trước khi mở điểm số của lô chạy.
+Chi phí của một bộ phân loại là tổng giây CPU huấn luyện (5-fold CV cộng fit trên toàn bộ tập train của các seed tương ứng), không gồm trích đặc trưng: bước trích nhóm `ghep` dùng chung cho cả sáu bộ tốn 1.402,867 giây CPU (1.155,273 giây cho train và 247,594 giây cho validation, tức 0,077985 giây CPU một ảnh). Con số này đo ở lần chạy RQ2 (kernel `cxr-rq2-classifiers` phiên bản 3); con số 0,056773 giây CPU một ảnh ở Chương 3 đo ở lần chạy RQ1 (kernel `cxr-rq1-rf` phiên bản 5). Cùng môi trường Kaggle CPU nhưng khác phiên chạy nên hai số không so trực tiếp được. Biên bản thứ hạng chi phí được ghi và commit trước khi mở điểm số của lô chạy.
 
 **Ghi chú nguồn Phụ lục C:** `src/rq2_runner.py` (`PARAM_GRIDS`, `CLASSIFIERS`), `results/rq2_classifier_selection_record.md`, `results/rq2_cost_rank_record.md`, `results/summary_rq2_full.json`.

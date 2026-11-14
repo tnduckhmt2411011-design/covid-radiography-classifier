@@ -25,15 +25,16 @@ DESCRIPTIONS = {
     "notebooks/": "Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận",
     "demo/": "Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện",
     "tests/": "Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2)",
-    "scripts/": "Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa",
+    "scripts/": "Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa, phép đo tập validation có ảnh gần trùng",
     "results/": "Tệp kết quả và biên bản của các bước S1–S6",
     "kaggle/": "Mã và biên bản chạy thực nghiệm trên kernel Kaggle",
     "splits/": "Manifest, tệp phân chia và báo cáo kiểm tra sau chia",
-    "docs/": "Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc",
+    "outputs/": "Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2",
+    "docs/": "Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc",
     "report/": "Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn",
-    "slides/": "Chỗ để slide thuyết trình",
+    "slides/": "Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ",
 }
-ROOT_FILES = "README.md, requirements.txt, pytest.ini, .gitignore, .gitattributes"
+ROOT_FILES = ["README.md", "requirements.txt", "pytest.ini", ".gitignore", ".gitattributes"]
 
 
 def count_structure() -> dict[str, int]:
@@ -83,16 +84,22 @@ def main() -> int:
     others = struct.get("configs", 0) + struct.get(".github", 0) + struct.get(".streamlit", 0)
 
     # ----- Bảng B.1 -----
-    print("| Thu muc / tep | So tep | Noi dung |")
+    print("| Thư mục / tệp | Số tệp | Nội dung |")
     print("| :--- | ---: | :--- |")
-    for d in ["src", "notebooks", "demo", "tests", "scripts", "results", "kaggle", "splits", "docs", "report", "slides"]:
+    b1_total = 0
+    for d in ["src", "notebooks", "demo", "tests", "scripts", "results", "kaggle", "splits", "outputs", "docs", "report", "slides"]:
         n = struct.get(d, 0)
+        b1_total += n
         print(f"| `{d}/` | {n} | {DESCRIPTIONS.get(d + '/', '')} |")
-    print(f"| `configs/`, `.github/`, `.streamlit/` | {others} | Cau hinh co so, mau pull request, cau hinh Streamlit |")
-    print(f"| Tep goc (`{ROOT_FILES}`) | {struct.get('<root>', 0)} | Dieu khien du an va moi truong |")
+    b1_total += others
+    print(f"| `configs/`, `.github/`, `.streamlit/` | {others} | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |")
+    b1_total += struct.get("<root>", 0)
+    root_label = ", ".join(f"`{f}`" for f in ROOT_FILES)
+    print(f"| Tệp gốc ({root_label}) | {struct.get('<root>', 0)} | Điều khiển dự án và môi trường |")
+    print(f"| **Tổng cộng** | **{b1_total}** |")
     print()
     # ----- Bảng B.2 -----
-    print("| Module | So phep kiem thu |")
+    print("| Module | Số phép kiểm thử |")
     print("| :--- | ---: |")
     total = 0
     for m in modules:
@@ -100,7 +107,7 @@ def main() -> int:
         n = counts.get(key, 0)
         total += n
         print(f"| `{m.name}` | {n} |")
-    print(f"| **Tong cong** | **{total}** |")
+    print(f"| **Tổng cộng** | **{total}** |")
     print()
     print(f"# so module: {len(modules)}")
     print(f"# tong theo collect: {total}")
