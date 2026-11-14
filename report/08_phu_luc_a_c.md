@@ -14,7 +14,7 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 349 phép kiểm thử trong 28 module đã chạy được trên môi trường này (348 pass, 1 bỏ qua; mục 5.4 của Chương 5).
+Toàn bộ 351 phép kiểm thử trong 28 module đã chạy được trên môi trường này (350 pass, 1 bỏ qua; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
@@ -100,7 +100,7 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
 | `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
-| `docs/` | 17 | Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `docs/` | 17 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
 | `slides/` | 1 | Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
@@ -111,7 +111,7 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (349 phép)**
+**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (351 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
@@ -128,7 +128,7 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_inference_latency.py` | 18 |
 | `test_metrics.py` | 4 |
 | `test_model_artifact.py` | 21 |
-| `test_report_consistency.py` | 7 |
+| `test_report_consistency.py` | 9 |
 | `test_report_figures.py` | 5 |
 | `test_report_figures_final_test.py` | 10 |
 | `test_report_figures_rq3.py` | 6 |
@@ -143,9 +143,9 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
 | `test_val_near_duplicate_subset.py` | 4 |
-| **Tổng cộng** | **349** |
+| **Tổng cộng** | **351** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 348 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 349 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 350 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 351 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py

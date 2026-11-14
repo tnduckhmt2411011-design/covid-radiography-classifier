@@ -30,7 +30,7 @@ DESCRIPTIONS = {
     "kaggle/": "Mã và biên bản chạy thực nghiệm trên kernel Kaggle",
     "splits/": "Manifest, tệp phân chia và báo cáo kiểm tra sau chia",
     "outputs/": "Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2",
-    "docs/": "Quy chuẩn báo cáo, cẩn nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc",
+    "docs/": "Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc",
     "report/": "Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn",
     "slides/": "Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ",
 }

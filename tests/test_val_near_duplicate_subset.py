@@ -119,3 +119,4 @@ def test_bootstrap_ci_reproducible() -> None:
     assert round(out["lo"], 4) == ci["lo"], f"{out['lo']} != {ci['lo']}"
     assert round(out["hi"], 4) == ci["hi"], f"{out['hi']} != {ci['hi']}"
     assert out["contains_zero"] == ci["contains_zero"]
+    assert out["boot_mean"] == ci["boot_mean"] and out["boot_median"] == ci["boot_median"]

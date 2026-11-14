@@ -75,7 +75,7 @@ Chương 5 công bố kết quả trên 3.176 ảnh test, phân tích ma trận 
 
 ## Tài liệu tham khảo phát sinh trong chương
 
-Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; tài liệu xuất hiện sau Chương 1 đánh số tiếp nối (mục 1.2 và 1.3 của chương này, mục 2.7 của Chương 2, mục 5.5.1 và 5.5.2 của Chương 5).
+Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; các mục còn lại của chương này (1.2, 1.3) và tài liệu của các chương sau đánh số tiếp nối (2.7; 5.5.1; 5.5.2).
 
 [1] M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. Al-Emadi, M. B. I. Reaz, and M. T. Islam, "Can AI help in screening viral and COVID-19 pneumonia?," *IEEE Access*, vol. 8, pp. 132665–132676, 2020, doi: 10.1109/ACCESS.2020.3010287.
 

@@ -85,7 +85,9 @@ def bootstrap_ci_diff(
 
     Lay mau lai doc lap trong tung tap con (giu nguyen so anh cua tung tap con),
     seed 42 cung voi bootstrap ghep cap cua RQ2. Khong huan luyen lai; day la
-    do thi bien tren du doan co san nen khoang tin cay mang tinh xap xi.
+    do thi bien tren du doan co san nen khoang tin cay mang tinh xap xi. Lop
+    vang mat trong mot lan lay mau lai nhan F1 = 0 (quy uoc chung cua repo),
+    nen khoang tin cay hoi rong; boot_mean va boot_median giup kiem do lech.
     """
     rng = np.random.default_rng(seed)
     idx_sub = np.flatnonzero(subset_mask)
@@ -101,6 +103,8 @@ def bootstrap_ci_diff(
         "seed": seed,
         "lo": round(float(lo), 4),
         "hi": round(float(hi), 4),
+        "boot_mean": round(float(diffs.mean()), 4),
+        "boot_median": round(float(np.median(diffs)), 4),
         "contains_zero": bool(lo <= 0.0 <= hi),
         "method": "percentile bootstrap, independent resampling within each subset",
     }

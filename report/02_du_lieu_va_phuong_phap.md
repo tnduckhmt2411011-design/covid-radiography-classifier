@@ -111,7 +111,7 @@ Phép gom nhóm theo pHash chỉ xử lý được các ảnh trùng pHash. Trê
 
 Cả 735 cặp đều có khoảng cách chẵn: 665 cặp ở mức 4 và 70 cặp ở mức 2, không cặp nào ở mức 1 hay 3. Lý do là cả 21.165 mã pHash 64-bit, sau khi lấy ngưỡng theo trung vị, đều chứa đúng 32 bit 1; hai mã có cùng số bit 1 thì khoảng cách Hamming luôn chẵn.
 
-Số cặp chưa nói lên mức ảnh hưởng, vì một ảnh có thể nằm trong nhiều cặp. Nếu đếm theo ảnh, 273 trong 3.174 ảnh validation (8,6%) và 243 trong 3.176 ảnh test (7,7%) có ít nhất một ảnh gần trùng ở tập khác. Với khoảng 8% ảnh đánh giá, mô hình có thể đã gặp một bản gần giống lúc huấn luyện, nên macro-F1 có thể cao hơn mức thực trên ảnh chưa từng thấy. Đề tài chưa đo mức chênh này.
+Số cặp chưa nói lên mức ảnh hưởng, vì một ảnh có thể nằm trong nhiều cặp. Nếu đếm theo ảnh, 273 trong 3.174 ảnh validation (8,6%) và 243 trong 3.176 ảnh test (7,7%) có ít nhất một ảnh gần trùng ở tập khác. Với khoảng 8% ảnh đánh giá, mô hình có thể đã gặp một bản gần giống lúc huấn luyện, nên macro-F1 có thể cao hơn mức thực trên ảnh chưa từng thấy. Phép đo bổ sung ở trên chỉ so macro-F1 giữa hai tập con trên dự đoán có sẵn nên chưa tách được ảnh hưởng của bản gần trùng lúc huấn luyện.
 
 Trong 735 cặp, 229 cặp (31,2%) mang nhãn khác nhau. Hai ảnh gần giống về pHash mà khác nhãn có thể là nhiễu nhãn, hoặc là hai ảnh có hình thái lồng ngực tương tự nhưng thật sự khác nhau; muốn phân biệt phải xem lại ảnh gốc, việc này nằm ngoài phạm vi đề tài. Kết quả này cùng chiều với mục 2.3, nơi ngưỡng T = 4 tạo ra 172 nhóm lệch nhãn.
 

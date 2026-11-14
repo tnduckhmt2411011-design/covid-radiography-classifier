@@ -30,6 +30,8 @@
     "seed": 42,
     "lo": -0.0462,
     "hi": 0.0386,
+    "boot_mean": -0.0002,
+    "boot_median": 0.0047,
     "contains_zero": true,
     "method": "percentile bootstrap, independent resampling within each subset"
   },

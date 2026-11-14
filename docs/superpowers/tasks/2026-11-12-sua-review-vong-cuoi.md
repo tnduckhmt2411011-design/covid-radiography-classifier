@@ -26,12 +26,12 @@ Sửa toàn bộ điểm review senior vòng cuối trên sáu chương, tài li
 
 ## Số đo mới (sinh bằng script)
 
-- `python scripts/val_near_duplicate_subset.py` ghi thêm vào `results/val_near_duplicate_subset/val_near_duplicate_subset.json`: `bootstrap_ci` (n_boot 2000, seed 42, lo −0,0462, hi 0,0386, chứa 0), `recall_subset`, `recall_complement`.
-- Bộ kiểm thử track: 349 phép / 28 module; `pytest -q` cho 348 pass + 1 bỏ qua (skip `nbformat` như trước).
+- `python scripts/val_near_duplicate_subset.py` ghi thêm vào `results/val_near_duplicate_subset/val_near_duplicate_subset.json`: `bootstrap_ci` (n_boot 2000, seed 42, lo −0,0462, hi 0,0386, boot_mean −0,0002, boot_median 0,0047, chứa 0), `recall_subset`, `recall_complement`.
+- Bộ kiểm thử track: 351 phép / 28 module; `pytest -q` cho 350 pass + 1 bỏ qua (skip `nbformat` như trước).
 
 ## Hàng rào mới
 
-- `tests/test_report_consistency.py`: +4 (thứ tự bảng A; câu trọng số lớp C.1; tóm tắt có 0,0723/0,2084; danh mục [1]–[13] liên tục và khớp Ch5).
+- `tests/test_report_consistency.py`: +6 (thứ tự bảng A; câu trọng số lớp C.1 đối chiếu `CLASSIFIER_SPECS`; tóm tắt có 0,0723/0,2084; danh mục [1]–[13] liên tục, khớp Ch5 và câu dẫn đúng số; Ch2 không còn "chưa đo mức chênh"; README đếm đúng số hạng mục Ch6).
 - `tests/test_val_near_duplicate_subset.py`: +1 (tái lập CI từ JSON).
 - `tests/test_report_tables_match_sources.py`: mở rộng B.1 (hàng tổng, tính đầy đủ).
 
@@ -43,8 +43,22 @@ Sửa toàn bộ điểm review senior vòng cuối trên sáu chương, tài li
 
 ## Xác minh (2026-11-13)
 
-- `pytest` toàn bộ module track (kèm artifact cục bộ trong worktree, không commit): **349 collected, 348 passed, 1 skipped** (`test_inference_demo_notebook` thiếu `nbformat`).
-- Script đối chiếu 68 mốc (N1–N7, chênh số liệu, mục nhỏ, trích dẫn, số 349/327): **TẤT CA PASS**.
+- `pytest` toàn bộ module track (kèm artifact cục bộ trong worktree, không commit): **351 collected, 350 passed, 1 skipped** (`test_inference_demo_notebook` thiếu `nbformat`).
+- Script đối chiếu 74 mốc (N1–N7, chênh số liệu, mục nhỏ, trích dẫn, số 351/327): **TẤT CA PASS**.
 - Idempotent: chạy lại `scripts/report_appendix_b.py` và `scripts/report_frontmatter.py` → `git diff` sạch.
-- Quy ước chữ: không có dấu gạch dài (U+2014) trong `report/`; câu mới dùng phẩy thập phân, chấm hàng nghìn.
+- Quy ước chữ: câu mới không có dấu gạch dài (U+2014); các chỗ còn lại trong `report/` đều là câu cũ, ngoài phạm vi đợt này. Câu mới dùng phẩy thập phân, chấm hàng nghìn.
 - Không stage `results/report_rq*/bootstrap_config.json` (pytest ghi lại phiên bản thư viện vào các tệp này; đã khôi phục nguyên trạng).
+
+## Vòng sửa sau review độc lập (2026-11-13)
+
+Reviewer độc lập đọc toàn nhánh, chạy lại pytest và generator, nêu 2 lỗi Important và 5 Minor; đã sửa hết:
+
+1. `05` câu dẫn danh mục ghi "đánh tiếp từ [9]" cạnh `[12]`/`[13]` → sửa thành `[12]`; hàng rào `test_reference_list_contiguous_and_matches_ch5` nay đọc cả câu dẫn và so với số bắt đầu của danh mục Chương 5.
+2. `02` mục 2.5 còn câu "Đề tài chưa đo mức chênh này" mâu thuẫn với CI vừa công bố → thay bằng giới hạn thật ("chưa tách được ảnh hưởng của bản gần trùng lúc huấn luyện"); hàng rào mới `test_ch2_near_duplicate_claim_matches_json`.
+3. `README` hàng 6.2 ghi "Gồm 11 hạng mục" → "Gồm 12 hạng mục", bổ sung hạng 12; hàng rào mới `test_readme_limit_count_matches_ch6`.
+4. Typo "cẩn nang viết" trong `scripts/report_appendix_b.py` và Bảng B.1 → "cẩm nang viết"; sinh lại bảng.
+5. Khối `bootstrap_ci` thêm `boot_mean` (−0,0002) và `boot_median` (0,0047) để kiểm độ lệch của phân phối bootstrap; docstring ghi quy ước lớp vắng mặt nhận F1 = 0; phép kiểm tái lập kiểm thêm hai khóa.
+6. Bỏ dòng trống giữa hạng 11 và 12 của Chương 6 để danh sách đánh số liền mạch.
+7. Câu dẫn danh mục Chương 1 viết lại cho rõ ("các mục còn lại của chương này (1.2, 1.3) và tài liệu của các chương sau…").
+
+Do thêm 2 phép kiểm thử, số bộ kiểm thử đồng bộ lại thành **351 phép / 28 module / 350 pass + 1 bỏ qua** ở Ch5, Phụ lục A/B, tóm tắt, `docs/report_standards.md`, `report/README.md` và mục lục.

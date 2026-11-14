@@ -46,7 +46,6 @@ Các giới hạn dưới đây đã được đăng ký trước khi chạy tro
 9. **Độ trễ đo ở máy cá nhân.** Số ở mục 5.5.4 ghi nhận trên một máy Windows với môi trường pin của ứng dụng, không phải trên máy chủ triển khai thật; chênh lệch phần cứng làm con số chỉ mang tính minh hoạ cho môi trường đã ghi.
 10. **Lớp nhỏ làm rộng khoảng tin cậy theo lớp.** Lớp Viral Pneumonia có 203 ảnh validation và 200 ảnh test. Theo công thức xấp xỉ đã đăng ký, sai số chuẩn của recall là 0,007 cho toàn bộ tập (n = 3.174) nhưng 0,028 cho riêng lớp đó (n = 203); nếu đặt recall thật của lớp vào công thức (191/203 trên validation và 177/200 trên tập test), sai số lần lượt là 0,017 và 0,023, nên chỉ số của lớp nhỏ kém chắc hơn chỉ số toàn cục.
 11. **Phạm vi ngoại suy.** Toàn bộ số liệu của đề tài thu được trên một bộ dữ liệu ghép nhiều nguồn; hiệu năng trên ảnh từ cơ sở y tế hoặc thiết bị khác chưa được kiểm, còn nghiên cứu [5] cho thấy hiệu năng có thể giảm khi chuyển sang cơ sở khác. Hạng mục này nằm ngoài biên bản đã đăng ký, được nêu thêm trong quá trình viết báo cáo.
-
 12. **Siêu tham số chọn nằm ở biên lưới.** Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn ở biên lưới (`lr` và `svm` ở `C=10,0`; `gb` ở 200 cây và độ sâu 5; `dt` ở độ sâu 10; `rf` ở 300 cây). Lưới vì vậy có thể chưa bao hết vùng tối ưu, và thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới. Hạng mục này suy ra từ Bảng C.1 và C.2 của Phụ lục C, không phải từ phép đo mới.
 
 ## 6.3. Cảnh báo y khoa và đạo đức nghiên cứu

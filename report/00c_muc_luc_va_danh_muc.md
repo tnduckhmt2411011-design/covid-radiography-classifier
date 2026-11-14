@@ -121,7 +121,7 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
 - **Bảng A.1:** Thông số mô hình đóng băng
 - **Bảng A.2:** Biến môi trường của ứng dụng demo
 - **Bảng B.1:** Cấu trúc thư mục cấp một của kho
-- **Bảng B.2:** 28 module kiểm thử và số phép kiểm thử (349 phép)
+- **Bảng B.2:** 28 module kiểm thử và số phép kiểm thử (351 phép)
 - **Bảng C.1:** Lưới siêu tham số của sáu bộ phân loại
 - **Bảng C.2:** Siêu tham số chọn qua 5-fold CV và Macro-F1 validation của sáu bộ phân loại
 - **Bảng C.3:** Chi phí huấn luyện của sáu bộ phân loại (giây CPU)
