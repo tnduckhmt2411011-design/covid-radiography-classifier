@@ -5,23 +5,18 @@ from pathlib import Path
 
 import pytest
 
-docx = pytest.importorskip("docx")
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.oxml.ns import qn
-from docx.shared import Pt
 
-from scripts.build_report_docx import (
-    add_cover,
-    add_section_break,
-    add_toc_field,
-    build_docx,
-    new_document,
-    render_markdown,
-    strip_technical_notes,
-)
+def _deps():
+    docx = pytest.importorskip("docx")
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml.ns import qn
+    from docx.shared import Pt
+    from scripts import build_report_docx as brd
+
+    return docx, WD_ALIGN_PARAGRAPH, qn, Pt, brd
 
 
-def _rfonts_dict(style) -> dict[str, str]:
+def _rfonts_dict(style, qn) -> dict[str, str]:
     rpr = style.element.get_or_add_rPr()
     rfonts = rpr.find(qn("w:rFonts"))
     assert rfonts is not None, f"Style {style.name} thiếu w:rFonts"
@@ -33,7 +28,8 @@ def _rfonts_dict(style) -> dict[str, str]:
 
 
 def test_page_setup_a4_margins() -> None:
-    doc = new_document()
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
     sec = doc.sections[0]
     assert sec.page_width.cm == pytest.approx(21.0, abs=0.05)
     assert sec.page_height.cm == pytest.approx(29.7, abs=0.05)
@@ -44,7 +40,8 @@ def test_page_setup_a4_margins() -> None:
 
 
 def test_normal_style_font() -> None:
-    doc = new_document()
+    _, WD_ALIGN_PARAGRAPH, qn, Pt, brd = _deps()
+    doc = brd.new_document()
     normal = doc.styles["Normal"]
     assert normal.font.name == "Times New Roman"
     assert normal.font.size == Pt(13)
@@ -53,14 +50,15 @@ def test_normal_style_font() -> None:
     assert normal.paragraph_format.first_line_indent.cm == pytest.approx(1.0, abs=0.05)
     assert normal.paragraph_format.space_before == Pt(4)
     assert normal.paragraph_format.space_after == Pt(4)
-    fonts = _rfonts_dict(normal)
+    fonts = _rfonts_dict(normal, qn)
     assert fonts["ascii"] == "Times New Roman"
     assert fonts["hAnsi"] == "Times New Roman"
     assert fonts["eastAsia"] == "Times New Roman"
 
 
 def test_heading_styles() -> None:
-    doc = new_document()
+    _, _, qn, Pt, brd = _deps()
+    doc = brd.new_document()
     h1 = doc.styles["Heading 1"]
     h2 = doc.styles["Heading 2"]
     h3 = doc.styles["Heading 3"]
@@ -75,7 +73,7 @@ def test_heading_styles() -> None:
     assert h3.font.size == Pt(13)
 
     for st in (h1, h2, h3):
-        fonts = _rfonts_dict(st)
+        fonts = _rfonts_dict(st, qn)
         assert fonts == {
             "ascii": "Times New Roman",
             "hAnsi": "Times New Roman",
@@ -84,6 +82,7 @@ def test_heading_styles() -> None:
 
 
 def test_strip_technical_notes() -> None:
+    _, _, _, _, brd = _deps()
     sample = (
         "# CHƯƠNG 1. GIỚI THIỆU\n\n"
         "Đoạn văn hợp lệ.\n\n"
@@ -91,23 +90,24 @@ def test_strip_technical_notes() -> None:
         "## Ghi chú kỹ thuật (không thuộc nội dung báo cáo)\n\n"
         "- Nguồn: `results/foo.csv`\n"
     )
-    cleaned = strip_technical_notes(sample)
+    cleaned = brd.strip_technical_notes(sample)
     assert "Đoạn văn hợp lệ." in cleaned
     assert "Ghi chú kỹ thuật" not in cleaned
     assert "results/foo.csv" not in cleaned
     assert not cleaned.rstrip().endswith("---")
-    assert callable(build_docx)
+    assert callable(brd.build_docx)
 
 
 def test_table_booktabs() -> None:
-    doc = new_document()
+    _, WD_ALIGN_PARAGRAPH, qn, Pt, brd = _deps()
+    doc = brd.new_document()
     md = (
         "| Lớp | Số ảnh | Macro-F1 |\n"
         "| :--- | ---: | :---: |\n"
         "| COVID | 543 | 0,9214 |\n"
         "| Normal | 1.529 | 0,8751 |\n"
     )
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     assert len(doc.tables) == 1
     tbl = doc.tables[0]
     assert len(tbl.rows) == 3
@@ -135,7 +135,8 @@ def test_table_booktabs() -> None:
 
 
 def test_caption_placement() -> None:
-    doc = new_document()
+    _, WD_ALIGN_PARAGRAPH, _, _, brd = _deps()
+    doc = brd.new_document()
     md = (
         "Xem Bảng 3.1 và Hình 3.1.\n\n"
         "**Bảng 3.1: Kết quả kiểm thử**\n\n"
@@ -143,7 +144,7 @@ def test_caption_placement() -> None:
         "![Ma trận nhầm lẫn](../figures/03_ma_tran_nham_lon_svm_val.png)\n\n"
         "**Hình 3.1: Ma trận nhầm lẫn**\n"
     )
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     styles = [p.style.name for p in doc.paragraphs]
     assert "Caption Table" in styles
     assert "Caption Figure" in styles
@@ -155,9 +156,10 @@ def test_caption_placement() -> None:
 
 
 def test_image_fits_margins() -> None:
-    doc = new_document()
+    _, WD_ALIGN_PARAGRAPH, _, _, brd = _deps()
+    doc = brd.new_document()
     md = "![Ma trận](../figures/03_ma_tran_nham_lon_svm_val.png)\n"
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     assert len(doc.inline_shapes) == 1
     shape = doc.inline_shapes[0]
     assert shape.width.cm <= 15.5
@@ -166,9 +168,10 @@ def test_image_fits_margins() -> None:
 
 
 def test_inline_math() -> None:
-    doc = new_document()
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
     md = "$u$ và $D = 0$, độ lệch $\\pm$ và tập $\\{-1, 1\\}$."
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     p = doc.paragraphs[0]
     txt = p.text
     assert "$" not in txt
@@ -179,9 +182,10 @@ def test_inline_math() -> None:
 
 
 def test_display_equation() -> None:
-    doc = new_document()
+    _, _, qn, _, brd = _deps()
+    doc = brd.new_document()
     md = "$$D = \\frac{64 - u \\cdot v}{2} \\qquad (2.1)$$\n"
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     omath_paras = [p for p in doc.paragraphs if p._p.findall(qn("m:oMathPara"))]
     assert len(omath_paras) == 1
     p = omath_paras[0]
@@ -192,7 +196,8 @@ def test_display_equation() -> None:
 
 
 def test_no_raw_markdown_leaks() -> None:
-    doc = new_document()
+    _, _, _, Pt, brd = _deps()
+    doc = brd.new_document()
     md = (
         "Đoạn có **in đậm**, *in nghiêng*, mã `StandardScaler`, "
         "liên kết [`README`](README.md), $T = 0$ và $\\pm$.\n\n"
@@ -201,7 +206,7 @@ def test_no_raw_markdown_leaks() -> None:
         "> Trích dẫn **quan trọng**\n\n"
         "$$D = \\frac{64 - u \\cdot v}{2} \\qquad (2.1)$$\n"
     )
-    render_markdown(doc, md, Path("report"))
+    brd.render_markdown(doc, md, Path("report"))
     for p in doc.paragraphs:
         for bad in ("**", "`", "](", "$$", "\\frac"):
             assert bad not in p.text, (bad, p.text)
@@ -209,7 +214,7 @@ def test_no_raw_markdown_leaks() -> None:
     assert code_runs and code_runs[0].font.size == Pt(11)
 
 
-def _all_instr_texts(doc) -> list[str]:
+def _all_instr_texts(doc, qn) -> list[str]:
     out = [el.text or "" for el in doc.element.iter(qn("w:instrText"))]
     for sec in doc.sections:
         for hdr_ftr in (sec.header, sec.footer):
@@ -218,18 +223,20 @@ def _all_instr_texts(doc) -> list[str]:
 
 
 def test_cover_has_no_page_number() -> None:
-    doc = new_document()
-    add_section_break(doc, "none", None)
+    _, _, qn, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
     sec0 = doc.sections[0]
     assert "".join(p.text for p in sec0.footer.paragraphs).strip() == ""
     assert not list(sec0.footer._element.iter(qn("w:instrText")))
 
 
 def test_front_matter_roman_numbering() -> None:
-    doc = new_document()
-    add_section_break(doc, "none", None)
+    _, WD_ALIGN_PARAGRAPH, qn, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
     doc.add_paragraph("Cover")
-    add_section_break(doc, "lowerRoman", 1)
+    brd.add_section_break(doc, "lowerRoman", 1)
     sec1 = doc.sections[1]
     pg_type = sec1._sectPr.find(qn("w:pgNumType"))
     assert pg_type is not None
@@ -241,12 +248,13 @@ def test_front_matter_roman_numbering() -> None:
 
 
 def test_body_arabic_restart() -> None:
-    doc = new_document()
-    add_section_break(doc, "none", None)
+    _, _, qn, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
     doc.add_paragraph("Cover")
-    add_section_break(doc, "lowerRoman", 1)
+    brd.add_section_break(doc, "lowerRoman", 1)
     doc.add_paragraph("Front")
-    add_section_break(doc, "decimal", 1)
+    brd.add_section_break(doc, "decimal", 1)
     sec2 = doc.sections[2]
     pg_type = sec2._sectPr.find(qn("w:pgNumType"))
     assert pg_type is not None
@@ -255,8 +263,9 @@ def test_body_arabic_restart() -> None:
 
 
 def test_each_chapter_starts_new_page() -> None:
-    doc = new_document()
-    render_markdown(doc, "# CHƯƠNG 1. MỞ ĐẦU\n\nNội dung.\n\n# CHƯƠNG 2. PHƯƠNG PHÁP\n\nNội dung 2.\n", Path("report"))
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
+    brd.render_markdown(doc, "# CHƯƠNG 1. MỞ ĐẦU\n\nNội dung.\n\n# CHƯƠNG 2. PHƯƠNG PHÁP\n\nNội dung 2.\n", Path("report"))
     h1s = [p for p in doc.paragraphs if p.style.name == "Heading 1"]
     assert len(h1s) == 2
     for h1 in h1s:
@@ -264,11 +273,12 @@ def test_each_chapter_starts_new_page() -> None:
 
 
 def test_toc_fields_present() -> None:
-    doc = new_document()
-    add_toc_field(doc, r'TOC \o "1-3" \h \z \u')
-    add_toc_field(doc, r'TOC \h \z \t "Caption Table,1"')
-    add_toc_field(doc, r'TOC \h \z \t "Caption Figure,1"')
-    instrs = [s.strip() for s in _all_instr_texts(doc)]
+    _, _, qn, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_toc_field(doc, r'TOC \o "1-3" \h \z \u')
+    brd.add_toc_field(doc, r'TOC \h \z \t "Caption Table,1"')
+    brd.add_toc_field(doc, r'TOC \h \z \t "Caption Figure,1"')
+    instrs = [s.strip() for s in _all_instr_texts(doc, qn)]
     assert instrs.count(r'TOC \o "1-3" \h \z \u') == 1
     assert instrs.count(r'TOC \h \z \t "Caption Table,1"') == 1
     assert instrs.count(r'TOC \h \z \t "Caption Figure,1"') == 1
@@ -277,13 +287,14 @@ def test_toc_fields_present() -> None:
 
 
 def test_cover_content() -> None:
-    doc = new_document()
-    add_section_break(doc, "none", None)
+    _, _, qn, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
     cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
     border_png = Path("report/figures/khung_trang_bia.png")
-    add_cover(doc, cover_md, border_png, subtitle=False)
+    brd.add_cover(doc, cover_md, border_png, subtitle=False)
     doc.add_page_break()
-    add_cover(doc, cover_md, border_png, subtitle=True)
+    brd.add_cover(doc, cover_md, border_png, subtitle=True)
 
     full_txt = "\n".join(p.text for p in doc.paragraphs)
     assert "TRƯỜNG ĐẠI HỌC KỸ THUẬT" in full_txt
@@ -298,7 +309,8 @@ def test_cover_content() -> None:
 
 
 def test_full_build_order(tmp_path: Path) -> None:
-    out = build_docx(Path("report"), tmp_path / "out.docx")
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
     assert out.exists() and out.stat().st_size > 200_000
     doc = docx.Document(str(out))
     h1_titles = [p.text.strip() for p in doc.paragraphs if p.style.name == "Heading 1"]
@@ -310,7 +322,8 @@ def test_full_build_order(tmp_path: Path) -> None:
 
 
 def test_counts(tmp_path: Path) -> None:
-    out = build_docx(Path("report"), tmp_path / "out.docx")
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
     doc = docx.Document(str(out))
     cap_tables = [p for p in doc.paragraphs if p.style.name == "Caption Table"]
     cap_figs = [p for p in doc.paragraphs if p.style.name == "Caption Figure"]
@@ -322,7 +335,8 @@ def test_counts(tmp_path: Path) -> None:
 
 
 def test_no_technical_notes_and_no_paths(tmp_path: Path) -> None:
-    out = build_docx(Path("report"), tmp_path / "out.docx")
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
     doc = docx.Document(str(out))
     paras = doc.paragraphs
     ch1_idx = next(i for i, p in enumerate(paras) if p.style.name == "Heading 1" and p.text.startswith("CHƯƠNG 1."))
@@ -339,7 +353,8 @@ def test_no_technical_notes_and_no_paths(tmp_path: Path) -> None:
 
 
 def test_fonts_all_times_new_roman(tmp_path: Path) -> None:
-    out = build_docx(Path("report"), tmp_path / "out.docx")
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
     doc = docx.Document(str(out))
     all_runs = [r for p in doc.paragraphs for r in p.runs]
     all_runs.extend(r for tbl in doc.tables for row in tbl.rows for c in row.cells for p in c.paragraphs for r in p.runs)
@@ -350,10 +365,11 @@ def test_fonts_all_times_new_roman(tmp_path: Path) -> None:
 
 
 def test_numbers_survive_conversion(tmp_path: Path) -> None:
-    out = build_docx(Path("report"), tmp_path / "out.docx")
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
     doc = docx.Document(str(out))
     all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
         c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
     )
-    for num in ("3.174", "0,8714", "71,19%", "351"):
+    for num in ("3.174", "0,8714", "71,19%", "380"):
         assert num in all_txt, num

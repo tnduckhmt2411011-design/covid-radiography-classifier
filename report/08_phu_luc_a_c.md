@@ -14,7 +14,7 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 351 phép kiểm thử trong 28 module đã chạy được trên môi trường này (350 pass, 1 bỏ qua; mục 5.4 của Chương 5).
+Toàn bộ 380 phép kiểm thử trong 30 module đã thu thập và kiểm chứng (357 pass trên môi trường `.venv-demo` của ứng dụng, 21/21 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
@@ -96,28 +96,30 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `src/` | 15 | Mã nguồn: nạp dữ liệu, trích đặc trưng, bộ chạy RQ1–RQ3, metrics, bootstrap, suy luận, đo độ trễ, kiểm artifact |
 | `notebooks/` | 9 | Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận |
 | `demo/` | 6 | Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện |
-| `tests/` | 28 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
-| `scripts/` | 7 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa, phép đo tập validation có ảnh gần trùng |
+| `tests/` | 30 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
+| `scripts/` | 9 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa, phép đo tập validation có ảnh gần trùng, kiểm tra tự động và xuất tệp Word báo cáo |
 | `results/` | 188 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
 | `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
-| `docs/` | 17 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `docs/` | 19 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, bảng rà soát, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
 | `slides/` | 1 | Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
-| **Tổng cộng** | **327** |
+| **Tổng cộng** | **333** |
 
 ### B.2. Danh sách bài kiểm thử
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (351 phép)**
+**Bảng B.2: 30 module kiểm thử và số phép kiểm thử (380 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
+| `test_audit_report.py` | 8 |
 | `test_bootstrap.py` | 13 |
+| `test_build_report_docx.py` | 21 |
 | `test_dataset_grayscale.py` | 1 |
 | `test_eda_brightness.py` | 11 |
 | `test_error_analysis.py` | 2 |
@@ -145,9 +147,9 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
 | `test_val_near_duplicate_subset.py` | 4 |
-| **Tổng cộng** | **351** |
+| **Tổng cộng** | **380** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 350 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 351 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 357 pass và 23 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 21 phép dựng tệp Word cần `python-docx`); 21/21 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 380 phép kiểm thử trong 30 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py
