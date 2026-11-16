@@ -22,7 +22,7 @@ from markdown_it import MarkdownIt
 from PIL import Image
 
 FONT_NAME = "Times New Roman"
-CODE_FONT = "Consolas"
+CODE_FONT = FONT_NAME
 MATH_NS = "http://schemas.openxmlformats.org/officeDocument/2006/math"
 if "m" not in nsmap:
     nsmap["m"] = MATH_NS
@@ -458,7 +458,7 @@ def _render_inline_tokens(
             r.add_break()
         elif t == "code_inline":
             r = para.add_run(tok.content)
-            _set_run_font(r, CODE_FONT, size_pt=size_pt if size_pt is not None else 11.0)
+            _set_run_font(r, CODE_FONT, size_pt=size_pt)
             if bold:
                 r.bold = True
         elif t == "strong_open":
@@ -676,7 +676,7 @@ def render_markdown(
             shd.set(qn("w:fill"), "F5F5F5")
             pPr.append(shd)
             r = p.add_run(tok.content.rstrip("\n"))
-            _set_run_font(r, CODE_FONT, size_pt=10.0)
+            _set_run_font(r, CODE_FONT, size_pt=10.5)
             i += 1
             continue
 

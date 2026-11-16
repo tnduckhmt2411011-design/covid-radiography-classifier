@@ -210,8 +210,9 @@ def test_no_raw_markdown_leaks() -> None:
     for p in doc.paragraphs:
         for bad in ("**", "`", "](", "$$", "\\frac"):
             assert bad not in p.text, (bad, p.text)
-    code_runs = [r for p in doc.paragraphs for r in p.runs if r.font.name == "Consolas"]
-    assert code_runs and code_runs[0].font.size == Pt(11)
+    code_runs = [r for p in doc.paragraphs for r in p.runs if "StandardScaler" in r.text]
+    assert code_runs and code_runs[0].font.name == "Times New Roman"
+    assert code_runs[0].font.size is None or code_runs[0].font.size == Pt(13)
 
 
 def _all_instr_texts(doc, qn) -> list[str]:
@@ -362,7 +363,28 @@ def test_fonts_all_times_new_roman(tmp_path: Path) -> None:
     for r in all_runs:
         if r.font.name is None:
             continue
-        assert r.font.name in ("Times New Roman", "Consolas"), r.font.name
+        assert r.font.name == "Times New Roman", r.font.name
+
+
+def test_no_monospace_font_anywhere(tmp_path: Path) -> None:
+    docx, _, qn, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    math_r_tag = f"{{{brd.MATH_NS}}}r"
+    roots = [doc.element.body]
+    for sec in doc.sections:
+        roots.extend((sec.header._element, sec.footer._element))
+    font_names: set[str] = set()
+    for root in roots:
+        for rfonts in root.iter(qn("w:rFonts")):
+            parent_r = rfonts.getparent()
+            if parent_r is not None and parent_r.getparent() is not None and parent_r.getparent().tag == math_r_tag:
+                continue
+            for attr in ("w:ascii", "w:hAnsi", "w:eastAsia", "w:cs"):
+                val = rfonts.get(qn(attr))
+                if val:
+                    font_names.add(val)
+    assert font_names == {"Times New Roman"}, font_names
 
 
 def test_no_intermediate_chapter_refs(tmp_path: Path) -> None:
