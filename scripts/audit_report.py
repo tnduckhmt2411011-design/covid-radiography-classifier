@@ -454,14 +454,16 @@ def check_section_counts(chapters: dict[str, str]) -> list[Finding]:
     return findings
 
 
+_PATH_RE = re.compile(
+    r"(?:results/|src/|splits/|notebooks/|demo/|scripts/|docs/|outputs/|\b[a-zA-Z0-9_]+\.(?:py|csv|json|yaml|ipynb|joblib)\b)"
+)
+
+
 def check_h7_and_paths(chapters: dict[str, str]) -> list[Finding]:
     """Kiểm cổng H7 (cấm học sâu) và đường dẫn tệp trong thân bài Chương 1–6."""
     findings: list[Finding] = []
     dl_re = re.compile(r"\b(torch|torchvision|tensorflow|keras|timm|pytorch)\b", re.IGNORECASE)
     allow_dl_re = re.compile(r"(cấm|chặn|không\s+dùng|không\s+sử\s+dụng|gỡ|bỏ|ngoài\s+phạm\s+vi)", re.IGNORECASE)
-    path_re = re.compile(
-        r"(?:results/|src/|splits/|notebooks/|demo/|scripts/|docs/|outputs/|\b[a-zA-Z0-9_]+\.(?:py|csv|json|yaml|ipynb|joblib)\b)"
-    )
 
     for fname, content in chapters.items():
         in_code = False
@@ -477,9 +479,31 @@ def check_h7_and_paths(chapters: dict[str, str]) -> list[Finding]:
                 findings.append(
                     Finding("critical", fname, idx, "H7", f"Nhắc framework học sâu: {s[:110]}")
                 )
-            if not is_appendix and not s.startswith("![") and path_re.search(line):
+            if not is_appendix and not s.startswith("![") and _PATH_RE.search(line):
                 findings.append(
                     Finding("minor", fname, idx, "in-text-path", s[:120])
+                )
+    return findings
+
+
+def check_footnote_paths(report_dir: Path | None = None) -> list[Finding]:
+    """Kiểm đường dẫn tệp nội bộ trong mọi định nghĩa chú thích chân trang `[^khóa]:` của các chương."""
+    base = report_dir or REPORT_DIR
+    files = [base / name for name in CHAPTER_FILES if (base / name).exists()]
+    if not files:
+        files = [
+            p
+            for p in sorted(base.glob("*.md"))
+            if not p.name.startswith("08_") and p.name != "README.md"
+        ]
+    findings: list[Finding] = []
+    fn_def_re = re.compile(r"^\[\^[^\]]+\]:")
+    for path in files:
+        for idx, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+            s = line.strip()
+            if fn_def_re.match(s) and _PATH_RE.search(s):
+                findings.append(
+                    Finding("minor", path.name, idx, "footnote-path", s[:120])
                 )
     return findings
 
@@ -508,6 +532,7 @@ def run_all_checks(report_dir: Path | None = None) -> list[Finding]:
     findings.extend(check_citations(chapters, refs_text))
     findings.extend(check_section_counts(chapters))
     findings.extend(check_h7_and_paths(chapters))
+    findings.extend(check_footnote_paths(base))
     return findings
 
 

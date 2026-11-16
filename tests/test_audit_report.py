@@ -9,6 +9,7 @@ from scripts.audit_report import (
     check_captions_and_refs,
     check_citations,
     check_fixed_numbers,
+    check_footnote_paths,
     check_h7_and_paths,
     check_section_counts,
     load_chapters,
@@ -122,3 +123,20 @@ def test_check_h7_and_paths() -> None:
     findings = check_h7_and_paths(chapters)
     assert any(f.severity == "critical" and f.rule == "H7" for f in findings)
     assert any(f.severity == "minor" and f.rule == "in-text-path" for f in findings)
+
+
+def test_check_footnote_paths_flags_path(tmp_path: Path) -> None:
+    (tmp_path / "01_gioi_thieu.md").write_text(
+        "# CHƯƠNG 1. MỞ ĐẦU\n\n## Ghi chú kỹ thuật\n\n[^a]: xem docs/x.md\n[^b]: nguồn Kaggle 2020.\n",
+        encoding="utf-8",
+    )
+    findings = check_footnote_paths(tmp_path)
+    assert len(findings) == 1
+    assert findings[0].rule == "footnote-path"
+    assert findings[0].severity == "minor"
+
+    (tmp_path / "01_gioi_thieu.md").write_text(
+        "# CHƯƠNG 1. MỞ ĐẦU\n\n## Ghi chú kỹ thuật\n\n[^b]: nguồn Kaggle 2020.\n",
+        encoding="utf-8",
+    )
+    assert check_footnote_paths(tmp_path) == []

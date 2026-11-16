@@ -348,6 +348,7 @@ def test_no_technical_notes_and_no_paths(tmp_path: Path) -> None:
     assert "Ghi chú kỹ thuật" not in all_txt
     assert "results/" not in body_txt
     assert "src/" not in body_txt
+    assert "docs/" not in body_txt
     for bad in ("**", "`", "](", "$$", "\\frac", "[^"):
         assert bad not in all_txt, bad
 
