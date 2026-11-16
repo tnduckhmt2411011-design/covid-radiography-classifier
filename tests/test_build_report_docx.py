@@ -1,6 +1,8 @@
 """Kiểm thử dựng bản Word (.docx) từ các tệp markdown trong `report/`."""
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 docx = pytest.importorskip("docx")
@@ -8,7 +10,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.shared import Pt
 
-from scripts.build_report_docx import build_docx, new_document, strip_technical_notes
+from scripts.build_report_docx import build_docx, new_document, render_markdown, strip_technical_notes
 
 
 def _rfonts_dict(style) -> dict[str, str]:
@@ -87,3 +89,113 @@ def test_strip_technical_notes() -> None:
     assert "results/foo.csv" not in cleaned
     assert not cleaned.rstrip().endswith("---")
     assert callable(build_docx)
+
+
+def test_table_booktabs() -> None:
+    doc = new_document()
+    md = (
+        "| Lớp | Số ảnh | Macro-F1 |\n"
+        "| :--- | ---: | :---: |\n"
+        "| COVID | 543 | 0,9214 |\n"
+        "| Normal | 1.529 | 0,8751 |\n"
+    )
+    render_markdown(doc, md, Path("report"))
+    assert len(doc.tables) == 1
+    tbl = doc.tables[0]
+    assert len(tbl.rows) == 3
+    assert len(tbl.columns) == 3
+
+    tbl_borders = tbl._tbl.tblPr.find(qn("w:tblBorders"))
+    assert tbl_borders is not None
+    assert tbl_borders.find(qn("w:top")).get(qn("w:val")) == "single"
+    assert int(tbl_borders.find(qn("w:top")).get(qn("w:sz"))) >= 12
+    assert tbl_borders.find(qn("w:bottom")).get(qn("w:val")) == "single"
+    assert int(tbl_borders.find(qn("w:bottom")).get(qn("w:sz"))) >= 12
+    assert tbl_borders.find(qn("w:insideV")).get(qn("w:val")) == "none"
+    assert tbl_borders.find(qn("w:left")).get(qn("w:val")) == "none"
+    assert tbl_borders.find(qn("w:right")).get(qn("w:val")) == "none"
+
+    hdr_cell = tbl.rows[0].cells[0]
+    shd = hdr_cell._tc.tcPr.find(qn("w:shd"))
+    assert shd is not None and shd.get(qn("w:fill")).upper() == "D9D9D9"
+    hdr_borders = hdr_cell._tc.tcPr.find(qn("w:tcBorders"))
+    assert hdr_borders is not None and hdr_borders.find(qn("w:bottom")).get(qn("w:val")) == "single"
+
+    assert tbl.rows[1].cells[0].paragraphs[0].runs[0].font.size == Pt(10.5)
+    assert tbl.rows[1].cells[1].paragraphs[0].alignment == WD_ALIGN_PARAGRAPH.RIGHT
+    assert tbl.rows[1].cells[2].paragraphs[0].alignment == WD_ALIGN_PARAGRAPH.CENTER
+
+
+def test_caption_placement() -> None:
+    doc = new_document()
+    md = (
+        "Xem Bảng 3.1 và Hình 3.1.\n\n"
+        "**Bảng 3.1: Kết quả kiểm thử**\n\n"
+        "| A | B |\n| :--- | ---: |\n| x | 1 |\n\n"
+        "![Ma trận nhầm lẫn](../figures/03_ma_tran_nham_lon_svm_val.png)\n\n"
+        "**Hình 3.1: Ma trận nhầm lẫn**\n"
+    )
+    render_markdown(doc, md, Path("report"))
+    styles = [p.style.name for p in doc.paragraphs]
+    assert "Caption Table" in styles
+    assert "Caption Figure" in styles
+    cap_tab = next(p for p in doc.paragraphs if p.style.name == "Caption Table")
+    cap_fig = next(p for p in doc.paragraphs if p.style.name == "Caption Figure")
+    assert cap_tab.text.startswith("Bảng 3.1:")
+    assert cap_fig.text.startswith("Hình 3.1:")
+    assert cap_fig.alignment == WD_ALIGN_PARAGRAPH.CENTER
+
+
+def test_image_fits_margins() -> None:
+    doc = new_document()
+    md = "![Ma trận](../figures/03_ma_tran_nham_lon_svm_val.png)\n"
+    render_markdown(doc, md, Path("report"))
+    assert len(doc.inline_shapes) == 1
+    shape = doc.inline_shapes[0]
+    assert shape.width.cm <= 15.5
+    img_para = next(p for p in doc.paragraphs if p._p.xpath(".//w:drawing"))
+    assert img_para.alignment == WD_ALIGN_PARAGRAPH.CENTER
+
+
+def test_inline_math() -> None:
+    doc = new_document()
+    md = "$u$ và $D = 0$, độ lệch $\\pm$ và tập $\\{-1, 1\\}$."
+    render_markdown(doc, md, Path("report"))
+    p = doc.paragraphs[0]
+    txt = p.text
+    assert "$" not in txt
+    assert "±" in txt
+    assert "{−1, 1}" in txt or "{-1, 1}" in txt
+    u_runs = [r for r in p.runs if r.text.strip() == "u"]
+    assert u_runs and u_runs[0].italic is True
+
+
+def test_display_equation() -> None:
+    doc = new_document()
+    md = "$$D = \\frac{64 - u \\cdot v}{2} \\qquad (2.1)$$\n"
+    render_markdown(doc, md, Path("report"))
+    omath_paras = [p for p in doc.paragraphs if p._p.findall(qn("m:oMathPara"))]
+    assert len(omath_paras) == 1
+    p = omath_paras[0]
+    assert "(2.1)" in "".join(t.text or "" for t in p._p.iter(qn("w:t")))
+    tabs = p._p.pPr.find(qn("w:tabs"))
+    assert tabs is not None
+    assert any(t.get(qn("w:val")) == "right" for t in tabs.findall(qn("w:tab")))
+
+
+def test_no_raw_markdown_leaks() -> None:
+    doc = new_document()
+    md = (
+        "Đoạn có **in đậm**, *in nghiêng*, mã `StandardScaler`, "
+        "liên kết [`README`](README.md), $T = 0$ và $\\pm$.\n\n"
+        "- Mục **một** với `code`\n"
+        "1. Mục đánh số\n\n"
+        "> Trích dẫn **quan trọng**\n\n"
+        "$$D = \\frac{64 - u \\cdot v}{2} \\qquad (2.1)$$\n"
+    )
+    render_markdown(doc, md, Path("report"))
+    for p in doc.paragraphs:
+        for bad in ("**", "`", "](", "$$", "\\frac"):
+            assert bad not in p.text, (bad, p.text)
+    code_runs = [r for p in doc.paragraphs for r in p.runs if r.font.name == "Consolas"]
+    assert code_runs and code_runs[0].font.size == Pt(11)
