@@ -32,3 +32,14 @@
   - Chương 6 đủ 12 giới hạn, không thêm số mới ở Kết luận 6.5, cảnh báo y khoa khớp `demo/streamlit_app.py`.
   - Tài liệu tham khảo `[1]`–`[13]` xuất hiện đúng thứ tự tăng dần; Phụ lục A–C khớp `src/rq2_runner.py`, `src/model_artifact.py`, `results/rq2_cost_rank_record.md`.
 - **Kiểm tra lại sau khi sửa:** `python -m scripts.audit_report` trả về `critical=0, major=0, minor=0`; `test_report_consistency.py`, `test_val_near_duplicate_subset.py`, `test_audit_report.py` (21 passed) và các phép đối chiếu bảng–nguồn + mục lục của `test_report_tables_match_sources.py` (5 passed) đều xanh. Ghi chú: ba phép đếm tệp/module trong `test_report_tables_match_sources.py` (`B.1`, `B.2`, `A.1`) sẽ được đồng bộ ở Giai đoạn B sau khi thêm xong `scripts/build_report_docx.py` và `tests/test_build_report_docx.py`.
+
+## Kiểm tra độc lập tệp `.docx` sau khi dựng (Giai đoạn B)
+
+Kiểm tra trực tiếp bằng `python-docx` (độc lập với `scripts/build_report_docx.py`) đối chiếu với số đếm từ `report/*.md` (trừ `README.md`, `00c` và phần `Ghi chú kỹ thuật`):
+
+- **Tệp đầu ra:** `report/dist/BaoCao_BTL_HocMay_Nhom10.docx` (`406.550` bytes).
+- **Số đoạn (`paragraphs`):** `424` đoạn.
+- **Số bảng (`tables`):** `35` bảng trong `.docx` = `35` bảng pipe trong các tệp `.md` (`32` bảng có chú thích `Bảng X.Y`, `2` bảng ký hiệu trong `00b`, `1` bảng ánh xạ kịch bản trong Chương 4).
+- **Số hình nội dung (`inline_shapes`):** `4` hình trong `.docx` = `4` ảnh trong các tệp `.md` (`Hình 2.1`, `3.1`, `4.1`, `5.1`), kèm `1` ảnh khung viền trang bìa `wp:anchor` đặt lớp *Behind Text* trong header section 0.
+- **Số section (`sections`):** `3` section — section 0 (bìa chính & bìa phụ): không đánh số; section 1 (mở đầu quyển): `lowerRoman`, `start="1"`; section 2 (Chương 1–6, Tài liệu tham khảo, Phụ lục): `decimal`, `start="1"`.
+

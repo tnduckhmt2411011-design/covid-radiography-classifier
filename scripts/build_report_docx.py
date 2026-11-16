@@ -4,7 +4,9 @@ Chạy: python -m scripts.build_report_docx --out report/dist/BaoCao_BTL_HocMay_
 """
 from __future__ import annotations
 
+import argparse
 import re
+import sys
 from pathlib import Path
 from typing import Literal, Mapping
 
@@ -119,6 +121,32 @@ def new_document() -> Document:
         cap.paragraph_format.space_before = Pt(6)
         cap.paragraph_format.space_after = Pt(4)
         cap.paragraph_format.keep_with_next = keep_next
+
+    front_h1 = doc.styles.add_style("Front Title", WD_STYLE_TYPE.PARAGRAPH)
+    front_h1.base_style = normal
+    _set_style_fonts(front_h1)
+    front_h1.font.size = Pt(15)
+    front_h1.font.bold = True
+    front_h1.font.all_caps = True
+    front_h1.font.color.rgb = RGBColor(0, 0, 0)
+    front_h1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    front_h1.paragraph_format.first_line_indent = Cm(0)
+    front_h1.paragraph_format.space_before = Pt(12)
+    front_h1.paragraph_format.space_after = Pt(8)
+    front_h1.paragraph_format.keep_with_next = True
+    front_h1.paragraph_format.page_break_before = True
+
+    front_h2 = doc.styles.add_style("Front Heading 2", WD_STYLE_TYPE.PARAGRAPH)
+    front_h2.base_style = normal
+    _set_style_fonts(front_h2)
+    front_h2.font.size = Pt(13.5)
+    front_h2.font.bold = True
+    front_h2.font.color.rgb = RGBColor(0, 0, 0)
+    front_h2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    front_h2.paragraph_format.first_line_indent = Cm(0)
+    front_h2.paragraph_format.space_before = Pt(10)
+    front_h2.paragraph_format.space_after = Pt(4)
+    front_h2.paragraph_format.keep_with_next = True
 
     return doc
 
@@ -427,6 +455,12 @@ def _style_booktabs_table(table, col_aligns: list[int]) -> None:
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.autofit = True
     tbl_pr = table._tbl.tblPr
+    tbl_w = tbl_pr.find(qn("w:tblW"))
+    if tbl_w is None:
+        tbl_w = OxmlElement("w:tblW")
+        tbl_pr.append(tbl_w)
+    tbl_w.set(qn("w:w"), "9072")
+    tbl_w.set(qn("w:type"), "dxa")
     tbl_borders = tbl_pr.find(qn("w:tblBorders"))
     if tbl_borders is None:
         tbl_borders = OxmlElement("w:tblBorders")
@@ -556,6 +590,10 @@ def render_markdown(
                 footnote_map=fn_map,
                 keep_urls=keep_urls,
             )
+            if level == 1:
+                for r in p.runs:
+                    if r.text:
+                        r.text = r.text.upper()
             i += 3
             continue
 
@@ -645,6 +683,7 @@ def render_markdown(
 
             if rows_data:
                 ncols = max(len(r[1]) for r in rows_data)
+                cell_pt = 10.0 if ncols >= 6 else 10.5
                 tbl = doc.add_table(rows=len(rows_data), cols=ncols)
                 for r_idx, (is_hdr, row_cells) in enumerate(rows_data):
                     for c_idx, (_, cell_inline) in enumerate(row_cells):
@@ -655,7 +694,7 @@ def render_markdown(
                             inline_math=inline_math,
                             footnote_map=fn_map,
                             keep_urls=keep_urls,
-                            size_pt=10.5,
+                            size_pt=cell_pt,
                             force_bold=is_hdr,
                         )
                 _style_booktabs_table(tbl, col_aligns)
@@ -765,8 +804,19 @@ def render_markdown(
             r_num = p.add_run(f"[{num}] ")
             _set_run_font(r_num, FONT_NAME, size_pt=10.5)
             r_num.bold = True
-            r_txt = p.add_run(local_defs[key])
-            _set_run_font(r_txt, FONT_NAME, size_pt=10.5)
+            fn_tokens = parser.parseInline(local_defs[key], {})
+            if fn_tokens and fn_tokens[0].children:
+                _render_inline_tokens(
+                    p,
+                    fn_tokens[0].children,
+                    inline_math=inline_math,
+                    footnote_map=fn_map,
+                    keep_urls=keep_urls,
+                    size_pt=10.5,
+                )
+            else:
+                r_txt = p.add_run(local_defs[key])
+                _set_run_font(r_txt, FONT_NAME, size_pt=10.5)
 
 
 def _add_word_field(para, instruction: str, placeholder: str = "", size_pt: float = 13.0) -> None:
@@ -988,6 +1038,145 @@ def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) 
         _add_cover_line(doc, "**Cần Thơ – Tháng 11/2026**", size_pt=13.0, space_after=0.0)
 
 
+def _extract_h2_section(md: str, heading_prefix: str) -> str:
+    """Lấy phần nội dung dưới tiêu đề `## <heading_prefix>` đến trước `## ` tiếp theo."""
+    out: list[str] = []
+    in_sec = False
+    for line in md.splitlines():
+        s = line.strip()
+        if s.startswith("## "):
+            if in_sec:
+                break
+            in_sec = s.startswith(f"## {heading_prefix}")
+            continue
+        if in_sec:
+            out.append(line)
+    return "\n".join(out).strip() + "\n"
+
+
+def _add_front_title(doc: Document, title: str) -> None:
+    p = doc.add_paragraph(style=doc.styles["Front Title"])
+    r = p.add_run(title.upper())
+    _set_run_font(r, FONT_NAME)
+
+
+def _strip_intro_before_h2(md: str, first_h2: str, keep_h1: str | None = None) -> str:
+    """Giữ từ `## <first_h2>` trở đi (loại đoạn giải thích đầu tệp thảo), tùy chọn giữ H1."""
+    lines = md.splitlines()
+    idx = next((i for i, l in enumerate(lines) if l.strip().startswith(f"## {first_h2}")), 0)
+    body = "\n".join(lines[idx:])
+    if keep_h1:
+        return f"# {keep_h1}\n\n{body}\n"
+    return body + "\n"
+
+
 def build_docx(report_dir: Path, out_path: Path) -> Path:
-    """Dựng tệp .docx hoàn chỉnh từ thư mục `report/`."""
-    raise NotImplementedError("Implemented in Task B4")
+    """Dựng tệp `.docx` hoàn chỉnh đúng quy chuẩn CTUT từ thư mục `report/`."""
+    report_dir = Path(report_dir)
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    chapter_files = [
+        "01_gioi_thieu.md",
+        "02_du_lieu_va_phuong_phap.md",
+        "03_ket_qua_rq1_rq2.md",
+        "04_hoc_loi_tat_rq3.md",
+        "05_ket_qua_test_va_trien_khai.md",
+        "06_thao_luan_gioi_han_huong_phat_trien.md",
+    ]
+    raw_00a = (report_dir / "00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    raw_00b = (report_dir / "00b_danh_muc_ky_hieu.md").read_text(encoding="utf-8")
+    raw_09 = (report_dir / "09_tom_tat_abstract.md").read_text(encoding="utf-8")
+    raw_07 = (report_dir / "07_tai_lieu_tham_khao.md").read_text(encoding="utf-8")
+    raw_08 = (report_dir / "08_phu_luc_a_c.md").read_text(encoding="utf-8")
+
+    raw_chapters = {f: (report_dir / f).read_text(encoding="utf-8") for f in chapter_files}
+    all_footnotes: dict[str, str] = {}
+    for txt in raw_chapters.values():
+        all_footnotes.update(extract_footnote_defs(txt))
+
+    doc = new_document()
+
+    # 1–2. Trang bìa chính & trang bìa phụ (không đánh số trang)
+    add_section_break(doc, "none", None)
+    border_png = report_dir / "figures" / "khung_trang_bia.png"
+    add_cover(doc, raw_00a, border_png, subtitle=False)
+    doc.add_page_break()
+    add_cover(doc, raw_00a, border_png, subtitle=True)
+
+    # 3–9. Phần mở đầu (đánh số La Mã thường i, ii, iii...)
+    add_section_break(doc, "lowerRoman", 1)
+    clean_00a = strip_technical_notes(raw_00a)
+    _add_front_title(doc, "LỜI CẢM ƠN")
+    render_markdown(doc, _extract_h2_section(clean_00a, "3. Lời cảm ơn"), report_dir)
+    _add_front_title(doc, "LỜI CAM ĐOAN")
+    render_markdown(doc, _extract_h2_section(clean_00a, "4. Lời cam đoan"), report_dir)
+
+    clean_09 = strip_technical_notes(raw_09)
+    _add_front_title(doc, "TÓM TẮT")
+    render_markdown(doc, _extract_h2_section(clean_09, "1. Tóm tắt tiếng Việt"), report_dir)
+    _add_front_title(doc, "ABSTRACT")
+    render_markdown(doc, _extract_h2_section(clean_09, "2. Abstract"), report_dir)
+
+    _add_front_title(doc, "MỤC LỤC")
+    add_toc_field(doc, r'TOC \o "1-3" \h \z \u')
+
+    _add_front_title(doc, "DANH MỤC KÝ HIỆU VÀ CHỮ VIẾT TẮT")
+    clean_00b = strip_technical_notes(raw_00b)
+    for sec_title in ("1. Chữ viết tắt", "2. Ký hiệu toán học"):
+        p_h2 = doc.add_paragraph(style=doc.styles["Front Heading 2"])
+        r_h2 = p_h2.add_run(sec_title)
+        _set_run_font(r_h2, FONT_NAME)
+        render_markdown(doc, _extract_h2_section(clean_00b, sec_title), report_dir)
+
+    _add_front_title(doc, "DANH MỤC BẢNG BIỂU")
+    add_toc_field(doc, r'TOC \h \z \t "Caption Table,1"')
+
+    _add_front_title(doc, "DANH MỤC HÌNH ẢNH")
+    add_toc_field(doc, r'TOC \h \z \t "Caption Figure,1"')
+
+    # Chương 1–6, Tài liệu tham khảo, Phụ lục A–C (đánh số Ả Rập bắt đầu lại từ 1)
+    add_section_break(doc, "decimal", 1)
+    fn_state: dict[str, int] = {}
+    for fname in chapter_files:
+        clean = strip_technical_notes(raw_chapters[fname])
+        render_markdown(
+            doc,
+            clean,
+            report_dir,
+            footnote_defs=all_footnotes,
+            footnote_state=fn_state,
+        )
+
+    ref_lines = [l for l in strip_technical_notes(raw_07).splitlines() if re.match(r"^\[\d+\]\s+", l.strip())]
+    render_markdown(doc, "# TÀI LIỆU THAM KHẢO\n\n" + "\n\n".join(ref_lines) + "\n", report_dir, keep_urls=True)
+
+    clean_08 = strip_technical_notes(_strip_intro_before_h2(raw_08, "Phụ lục A", keep_h1="PHỤ LỤC"))
+    render_markdown(doc, clean_08, report_dir)
+
+    doc.save(str(out_path))
+    return out_path
+
+
+def main(argv: list[str] | None = None) -> int:
+    for stream in (sys.stdout, sys.stderr):
+        fn = getattr(stream, "reconfigure", None)
+        if fn:
+            fn(encoding="utf-8", errors="replace")
+
+    parser = argparse.ArgumentParser(description="Chuyển đổi báo cáo markdown sang .docx chuẩn CTUT.")
+    parser.add_argument("--report-dir", type=Path, default=Path("report"), help="Thư mục chứa tệp báo cáo .md")
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path("report/dist/BaoCao_BTL_HocMay_Nhom10.docx"),
+        help="Đường dẫn tệp .docx đầu ra",
+    )
+    args = parser.parse_args(argv)
+    out = build_docx(args.report_dir, args.out)
+    print(f"Da xuat bao cao Word: {out} ({out.stat().st_size:,} bytes)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

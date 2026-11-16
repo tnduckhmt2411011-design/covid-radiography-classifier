@@ -295,3 +295,65 @@ def test_cover_content() -> None:
 
     anchors = list(doc.sections[0].header._element.iter(qn("wp:anchor")))
     assert anchors and anchors[0].get("behindDoc") == "1"
+
+
+def test_full_build_order(tmp_path: Path) -> None:
+    out = build_docx(Path("report"), tmp_path / "out.docx")
+    assert out.exists() and out.stat().st_size > 200_000
+    doc = docx.Document(str(out))
+    h1_titles = [p.text.strip() for p in doc.paragraphs if p.style.name == "Heading 1"]
+    assert len(h1_titles) == 8
+    for i in range(1, 7):
+        assert h1_titles[i - 1].startswith(f"CHƯƠNG {i}.")
+    assert h1_titles[6] == "TÀI LIỆU THAM KHẢO"
+    assert h1_titles[7] == "PHỤ LỤC"
+
+
+def test_counts(tmp_path: Path) -> None:
+    out = build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    cap_tables = [p for p in doc.paragraphs if p.style.name == "Caption Table"]
+    cap_figs = [p for p in doc.paragraphs if p.style.name == "Caption Figure"]
+    assert len(cap_tables) == 32
+    assert len(cap_figs) == 4
+    full_txt = "\n".join(p.text for p in doc.paragraphs)
+    for idx in range(1, 14):
+        assert f"[{idx}] " in full_txt
+
+
+def test_no_technical_notes_and_no_paths(tmp_path: Path) -> None:
+    out = build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    paras = doc.paragraphs
+    ch1_idx = next(i for i, p in enumerate(paras) if p.style.name == "Heading 1" and p.text.startswith("CHƯƠNG 1."))
+    refs_idx = next(i for i, p in enumerate(paras) if p.style.name == "Heading 1" and p.text == "TÀI LIỆU THAM KHẢO")
+    body_txt = "\n".join(p.text for p in paras[ch1_idx:refs_idx])
+    all_txt = "\n".join(p.text for p in paras) + "\n" + "\n".join(
+        c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
+    )
+    assert "Ghi chú kỹ thuật" not in all_txt
+    assert "results/" not in body_txt
+    assert "src/" not in body_txt
+    for bad in ("**", "`", "](", "$$", "\\frac", "[^"):
+        assert bad not in all_txt, bad
+
+
+def test_fonts_all_times_new_roman(tmp_path: Path) -> None:
+    out = build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    all_runs = [r for p in doc.paragraphs for r in p.runs]
+    all_runs.extend(r for tbl in doc.tables for row in tbl.rows for c in row.cells for p in c.paragraphs for r in p.runs)
+    for r in all_runs:
+        if r.font.name is None:
+            continue
+        assert r.font.name in ("Times New Roman", "Consolas"), r.font.name
+
+
+def test_numbers_survive_conversion(tmp_path: Path) -> None:
+    out = build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
+        c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
+    )
+    for num in ("3.174", "0,8714", "71,19%", "351"):
+        assert num in all_txt, num
