@@ -1033,6 +1033,100 @@ def _add_cover_line(
         _set_run_font(r, FONT_NAME, size_pt=size_pt)
 
 
+def _add_cover_student_table(doc: Document, students: list[tuple[str, str]]) -> None:
+    """Chèn bảng 2 cột không viền cho danh sách sinh viên thực hiện, cân giữa khung bìa."""
+    table = doc.add_table(rows=len(students), cols=2)
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+    table.autofit = False
+
+    col_widths_dxa = (3742, 1984)  # 6,6 cm + 3,5 cm = 10,1 cm (5726 dxa)
+    total_w_dxa = sum(col_widths_dxa)
+    tbl_pr = table._tbl.tblPr
+    for tag, attrs in (
+        ("w:tblW", {"w:w": str(total_w_dxa), "w:type": "dxa"}),
+        ("w:tblInd", {"w:w": "1389", "w:type": "dxa"}),
+        ("w:tblLayout", {"w:type": "fixed"}),
+    ):
+        old = tbl_pr.find(qn(tag))
+        if old is not None:
+            tbl_pr.remove(old)
+        el = OxmlElement(tag)
+        for k, v in attrs.items():
+            el.set(qn(k), v)
+        tbl_pr.append(el)
+
+    tbl_borders = tbl_pr.find(qn("w:tblBorders"))
+    if tbl_borders is None:
+        tbl_borders = OxmlElement("w:tblBorders")
+        tbl_pr.append(tbl_borders)
+    for edge in ("top", "bottom", "left", "right", "insideH", "insideV"):
+        old = tbl_borders.find(qn(f"w:{edge}"))
+        if old is not None:
+            tbl_borders.remove(old)
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "none")
+        tbl_borders.append(el)
+
+    tbl_cell_mar = tbl_pr.find(qn("w:tblCellMar"))
+    if tbl_cell_mar is None:
+        tbl_cell_mar = OxmlElement("w:tblCellMar")
+        tbl_pr.append(tbl_cell_mar)
+    for side, w in (("top", "20"), ("bottom", "20"), ("left", "40"), ("right", "40")):
+        old = tbl_cell_mar.find(qn(f"w:{side}"))
+        if old is not None:
+            tbl_cell_mar.remove(old)
+        el = OxmlElement(f"w:{side}")
+        el.set(qn("w:w"), w)
+        el.set(qn("w:type"), "dxa")
+        tbl_cell_mar.append(el)
+
+    col_specs = (
+        (Cm(6.6), col_widths_dxa[0], WD_ALIGN_PARAGRAPH.LEFT),
+        (Cm(3.5), col_widths_dxa[1], WD_ALIGN_PARAGRAPH.RIGHT),
+    )
+    tbl_grid = table._tbl.find(qn("w:tblGrid"))
+    if tbl_grid is not None:
+        for gc, w_dxa in zip(tbl_grid.findall(qn("w:gridCol")), col_widths_dxa):
+            gc.set(qn("w:w"), str(w_dxa))
+    for col, (col_cm, _, _) in zip(table.columns, col_specs):
+        col.width = col_cm
+
+    for row, (name, code) in zip(table.rows, students):
+        row._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
+        for cell, val, (width_cm, width_dxa, align) in zip(row.cells, (name, code), col_specs):
+            cell.width = width_cm
+            tc_pr = cell._tc.get_or_add_tcPr()
+            old_tc_w = tc_pr.find(qn("w:tcW"))
+            if old_tc_w is not None:
+                tc_pr.remove(old_tc_w)
+            tc_w = OxmlElement("w:tcW")
+            tc_w.set(qn("w:w"), str(width_dxa))
+            tc_w.set(qn("w:type"), "dxa")
+            tc_pr.insert(0, tc_w)
+            p = cell.paragraphs[0]
+            p.alignment = align
+            p.paragraph_format.first_line_indent = Cm(0)
+            p.paragraph_format.space_before = Pt(1.0)
+            p.paragraph_format.space_after = Pt(1.0)
+            p.paragraph_format.line_spacing = 1.15
+            r = p.add_run(val)
+            _set_run_font(r, FONT_NAME, size_pt=13.0)
+
+
+def _split_student_rows(lines: list[str], start_idx: int) -> tuple[list[tuple[str, str]], int]:
+    """Đọc các dòng `Họ tên — MSSV` liên tiếp bắt đầu tại `start_idx`."""
+    pat = re.compile(r"^(.*?)\s+—\s+([A-Z0-9]+)\s*$")
+    rows: list[tuple[str, str]] = []
+    pos = start_idx
+    while pos < len(lines):
+        m = pat.match(lines[pos].strip())
+        if not m:
+            break
+        rows.append((m.group(1).strip(), m.group(2).strip()))
+        pos += 1
+    return rows, pos
+
+
 def add_cover(
     doc: Document,
     md: str,
@@ -1074,8 +1168,25 @@ def add_cover(
                     sz = 16.0 if j > 0 else 14.0
                     _add_cover_line(doc, line, size_pt=sz, space_after=18.0 if j == len(blk) - 1 else 6.0)
             elif idx == 3:
-                for j, line in enumerate(blk):
-                    _add_cover_line(doc, line, size_pt=13.0, space_after=20.0 if j == len(blk) - 1 else 3.0)
+                j = 0
+                while j < len(blk):
+                    line = blk[j]
+                    if line.strip() == "**SV Thực hiện:**":
+                        _add_cover_line(doc, line, size_pt=13.0, space_after=6.0)
+                        students, next_j = _split_student_rows(blk, j + 1)
+                        if students:
+                            _add_cover_student_table(doc, students)
+                            j = next_j
+                            continue
+                    is_class_line = line.strip().startswith("**LỚP:")
+                    _add_cover_line(
+                        doc,
+                        line,
+                        size_pt=13.0,
+                        space_after=18.0 if j == len(blk) - 1 else 3.0,
+                        space_before=10.0 if is_class_line else 0.0,
+                    )
+                    j += 1
             else:
                 for line in blk:
                     _add_cover_line(doc, line, size_pt=13.0, space_after=4.0)
@@ -1092,7 +1203,16 @@ def add_cover(
         r_top = p_top.add_run("\u00a0")
         _set_run_font(r_top, FONT_NAME, size_pt=1.0)
         for blk in blocks:
-            for j, line in enumerate(blk):
+            j = 0
+            while j < len(blk):
+                line = blk[j]
+                if line.strip() == "**SV Thực hiện:**":
+                    _add_cover_line(doc, line, size_pt=13.0, space_after=6.0)
+                    students, next_j = _split_student_rows(blk, j + 1)
+                    if students:
+                        _add_cover_student_table(doc, students)
+                        j = next_j
+                        continue
                 sz = 16.0 if j == 1 else (14.0 if j == 0 else 13.0)
                 _add_cover_line(
                     doc,
@@ -1100,6 +1220,7 @@ def add_cover(
                     size_pt=sz,
                     space_after=14.0 if j == 1 else 4.0,
                 )
+                j += 1
         _add_cover_line(doc, "", size_pt=13.0, space_after=24.0)
         _add_cover_line(doc, "**Cần Thơ – Tháng 11/2026**", size_pt=13.0, space_after=0.0)
 

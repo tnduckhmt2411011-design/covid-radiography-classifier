@@ -297,7 +297,9 @@ def test_cover_content() -> None:
     doc.add_page_break()
     brd.add_cover(doc, cover_md, border_png, subtitle=True)
 
-    full_txt = "\n".join(p.text for p in doc.paragraphs)
+    full_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
+        c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
+    )
     assert "TRƯỜNG ĐẠI HỌC KỸ THUẬT" in full_txt
     assert "TS. Lê Anh Nhã Uyên" in full_txt
     for suffix in ("011", "021", "003", "022", "014", "046"):
@@ -307,6 +309,52 @@ def test_cover_content() -> None:
 
     anchors = list(doc.sections[0].header._element.iter(qn("wp:anchor")))
     assert anchors and anchors[0].get("behindDoc") == "1"
+
+
+def test_cover_student_table_is_borderless() -> None:
+    _, _, qn, Pt, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
+    cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    border_png = Path("report/figures/khung_trang_bia.png")
+    brd.add_cover(doc, cover_md, border_png, subtitle=False)
+    doc.add_page_break()
+    brd.add_cover(doc, cover_md, border_png, subtitle=True)
+
+    assert len(doc.tables) == 2
+    left_margin_dxa = round(doc.sections[-1].left_margin.twips)
+    for tbl in doc.tables:
+        assert len(tbl.rows) == 6
+        assert len(tbl.columns) == 2
+        borders = tbl._tbl.tblPr.find(qn("w:tblBorders"))
+        assert borders is not None
+        for edge in ("top", "bottom", "left", "right", "insideH", "insideV"):
+            el = borders.find(qn(f"w:{edge}"))
+            assert el is not None and el.get(qn("w:val")) == "none"
+        grid = tbl._tbl.find(qn("w:tblGrid"))
+        assert grid is not None
+        grid_widths = [int(gc.get(qn("w:w"))) for gc in grid.findall(qn("w:gridCol"))]
+        assert len(grid_widths) == 2
+        assert sum(grid_widths) <= 5800, f"gridCol sum too wide: {grid_widths}"
+        tbl_ind_el = tbl._tbl.tblPr.find(qn("w:tblInd"))
+        tbl_ind_dxa = int(tbl_ind_el.get(qn("w:w"))) if tbl_ind_el is not None else 0
+        assert left_margin_dxa + tbl_ind_dxa + sum(grid_widths) <= 10200
+        names = [r.cells[0].text.strip() for r in tbl.rows]
+        ids = [r.cells[1].text.strip() for r in tbl.rows]
+        assert names[0] == "Trần Nguyễn Đức (Nhóm trưởng)"
+        assert names[-1] == "Hàng Thái Tú"
+        assert ids == ["KHMT2411011", "KHMT2411021", "KHMT2411003", "KHMT2411022", "KHMT2411014", "KHMT2411046"]
+        for row in tbl.rows:
+            tc_widths = [
+                int(cell._tc.tcPr.find(qn("w:tcW")).get(qn("w:w")))
+                for cell in row.cells
+            ]
+            assert tc_widths == grid_widths
+            for cell in row.cells:
+                for p in cell.paragraphs:
+                    for run in p.runs:
+                        assert run.font.name == "Times New Roman"
+                        assert run.font.size == Pt(13)
 
 
 def test_cover_embeds_logo_when_available() -> None:
@@ -515,5 +563,5 @@ def test_numbers_survive_conversion(tmp_path: Path) -> None:
     all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
         c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
     )
-    for num in ("3.174", "0,8714", "71,19%", "404"):
+    for num in ("3.174", "0,8714", "71,19%", "405"):
         assert num in all_txt, num
