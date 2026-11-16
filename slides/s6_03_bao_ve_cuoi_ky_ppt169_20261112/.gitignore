@@ -1,0 +1,5 @@
+# Thư mục làm việc do ppt-master sinh trong dự án deck S6-03.
+# svg_output/, images/, exports/ (bản xuất cuối) và validation/svg_quality_report.json
+# vẫn được theo dõi; các mục dưới đây là rác của từng lần chạy.
+backup/
+validation/*.report.json
