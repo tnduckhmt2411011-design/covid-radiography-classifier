@@ -16,7 +16,7 @@
 | F05 | Minor | `report/00c_muc_luc_va_danh_muc.md:3`, `scripts/report_frontmatter.py:71` | Chính tả | Gõ nhầm `"Tệp này gộm ba mục"` | `scripts/report_frontmatter.py:71` | Đã sửa thành `"gồm"` và sinh lại `00c` |
 | F06 | Minor | `report/06_thao_luan_gioi_han_huong_phat_trien.md:84` | Chính tả | Gõ nhầm `"cánh báo"` trong Ghi chú kỹ thuật | `demo/streamlit_app.py` / ngữ cảnh cảnh báo y khoa | Đã sửa thành `"cảnh báo"` |
 | F07 | Minor | `report/01_gioi_thieu.md:78`, `report/07_tai_lieu_tham_khao.md:3,38` | Trích dẫn | Ghi `[10]` xuất hiện ở mục `1.3`, nhưng thực tế `[10]` nằm ở dòng 37 thuộc mục `1.2` (mục `1.3` bắt đầu ở dòng 41) | `report/01_gioi_thieu.md:37,41` | Đã chỉnh mô tả vị trí `[10]` về mục `1.2` ở `01` và `07` |
-| F08 | Minor | `report/04_hoc_loi_tat_rq3.md:13-19` | Định dạng | Bảng ánh xạ tên 5 kịch bản đặt trước Bảng 4.1 không đánh số `Bảng X.Y` | `docs/report_standards.md` mục 4.1; tuy nhiên `tests/test_report_tables_match_sources.py:209` khóa đúng 32 bảng | Giữ nguyên dạng bảng tóm tắt nội tuyến để không làm lệch 32 bảng đã khóa |
+| F08 | Minor | `report/04_hoc_loi_tat_rq3.md:13-19` | Định dạng | Bảng ánh xạ tên 5 kịch bản đặt trước Bảng 4.1 không đánh số `Bảng X.Y` | `docs/report_standards.md` mục 4.1; giữ đúng 32 bảng đánh số khóa bởi `tests/test_report_tables_match_sources.py:209` | Đã chuyển thành danh sách gạch đầu dòng (16/11/2026) |
 | F09 | Minor | `report/README.md:81,165`, `docs/report_standards.md:142` | Tài liệu phụ trợ | (1) Dòng 81 dính hai hàng `2.6.3` và `2.6.4` (`\|\|`); (2) mục 5 còn ghi thiếu tóm tắt dù `09` đã có; (3) `report_standards.md` mô tả Phụ lục C lệch tên thực tế | `report/README.md`, `report/09_tom_tat_abstract.md`, `report/08_phu_luc_a_c.md` | Đã tách dòng 81, cập nhật mục 5 README và đồng bộ mô tả Phụ lục C ở `report_standards.md` |
 | F10 | Minor | `report/01_gioi_thieu.md`, `02`, `06`, `08_phu_luc_a_c.md:181` | Văn phong / chi tiết | Lẫn `tỉ lệ` (2 chỗ) với `tỷ lệ` (13 chỗ), thanh điệu cũ `hoá`/`hoạ` (6 chỗ) với `hóa`/`họa` (32 chỗ); mục `C.1` mới nêu 1 tham số biên của `dt` | Kiểm tra tần suất trên `01`–`06` và `PARAM_GRIDS` trong `src/rq2_runner.py` (`dt` có cả `max_depth=10` và `min_samples_leaf=1` ở biên dưới) | Đã thống nhất `tỷ lệ`, `hóa`/`họa` và bổ sung `min_samples_leaf=1` tại `08:181` |
 
@@ -39,7 +39,7 @@ Kiểm tra trực tiếp bằng `python-docx` (độc lập với `scripts/build
 
 - **Tệp đầu ra:** `report/dist/BaoCao_BTL_HocMay_Nhom10.docx` (`406.550` bytes).
 - **Số đoạn (`paragraphs`):** `424` đoạn.
-- **Số bảng (`tables`):** `35` bảng trong `.docx` = `35` bảng pipe trong các tệp `.md` (`32` bảng có chú thích `Bảng X.Y`, `2` bảng ký hiệu trong `00b`, `1` bảng ánh xạ kịch bản trong Chương 4).
+- **Số bảng (`tables`):** `34` bảng trong `.docx` = `34` bảng pipe trong các tệp `.md` (`32` bảng có chú thích `Bảng X.Y`, `2` bảng ký hiệu trong `00b`).
 - **Số hình nội dung (`inline_shapes`):** `4` hình trong `.docx` = `4` ảnh trong các tệp `.md` (`Hình 2.1`, `3.1`, `4.1`, `5.1`), kèm `1` ảnh khung viền trang bìa `wp:anchor` đặt lớp *Behind Text* trong header section 0.
 - **Số section (`sections`):** `3` section — section 0 (bìa chính & bìa phụ): không đánh số; section 1 (mở đầu quyển): `lowerRoman`, `start="1"`; section 2 (Chương 1–6, Tài liệu tham khảo, Phụ lục): `decimal`, `start="1"`.
 

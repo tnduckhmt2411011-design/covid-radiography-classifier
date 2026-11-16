@@ -10,13 +10,11 @@ Mặt nạ phổi đi kèm bộ dữ liệu có kích thước 256 × 256, nên 
 
 Để gọn, từ đây ba kịch bản dùng cùng một chế độ ở cả hai tập được gọi là "ảnh gốc", "chỉ phổi" và "chỉ ngoài phổi". Hai kịch bản còn lại giữ tên như ở Hình 4.1.
 
-| Kịch bản | Ảnh train | Ảnh validation | Vai trò | Mã trong kho mã nguồn |
-| :--- | :--- | :--- | :--- | :--- |
-| Ảnh gốc cả hai tập | Gốc | Gốc | Tham chiếu: cấu hình chuẩn đã khóa ở RQ2, ảnh không che | `orig_to_orig` |
-| Chỉ phổi cả hai tập | Chỉ phổi | Chỉ phổi | Ứng viên thay thế cấu hình chính thức: chỉ còn vùng phổi ở cả hai tập | `lung_to_lung` |
-| Chỉ ngoài phổi cả hai tập | Chỉ ngoài phổi | Chỉ ngoài phổi | Đối chứng lối tắt: chỉ còn vùng ngoài mặt nạ phổi ở cả hai tập | `out_to_out` |
-| Gốc học, phổi đánh giá | Gốc | Chỉ phổi | Nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng phổi lúc đánh giá | `orig_to_lung` |
-| Gốc học, ngoài phổi đánh giá | Gốc | Chỉ ngoài phổi | Nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng ngoài mặt nạ phổi lúc đánh giá | `orig_to_out` |
+- **Ảnh gốc cả hai tập** (`orig_to_orig`): train gốc, validation gốc — tham chiếu: cấu hình chuẩn đã khóa ở RQ2, ảnh không che.
+- **Chỉ phổi cả hai tập** (`lung_to_lung`): train chỉ phổi, validation chỉ phổi — ứng viên thay thế cấu hình chính thức: chỉ còn vùng phổi ở cả hai tập.
+- **Chỉ ngoài phổi cả hai tập** (`out_to_out`): train chỉ ngoài phổi, validation chỉ ngoài phổi — đối chứng lối tắt: chỉ còn vùng ngoài mặt nạ phổi ở cả hai tập.
+- **Gốc học, phổi đánh giá** (`orig_to_lung`): train gốc, validation chỉ phổi — nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng phổi lúc đánh giá.
+- **Gốc học, ngoài phổi đánh giá** (`orig_to_out`): train gốc, validation chỉ ngoài phổi — nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng ngoài mặt nạ phổi lúc đánh giá.
 
 **Bảng 4.1: Macro-F1, khoảng tin cậy và accuracy của năm kịch bản trên 3.174 ảnh validation**
 

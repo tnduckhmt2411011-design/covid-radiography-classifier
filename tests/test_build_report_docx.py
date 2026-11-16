@@ -386,6 +386,44 @@ def test_footnote_markers_distinct_from_ieee(tmp_path: Path) -> None:
     assert not any(t.startswith("[") for t in super_texts), super_texts
 
 
+def test_body_tables_have_caption_above(tmp_path: Path) -> None:
+    docx, _, qn, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    p_by_el = {p._p: p for p in doc.paragraphs}
+    body_children = list(doc.element.body.iterchildren())
+    ch1_idx = next(i for i, p in enumerate(doc.paragraphs) if p.style.name == "Heading 1" and p.text.startswith("CHƯƠNG 1."))
+    ch1_el = doc.paragraphs[ch1_idx]._p
+    in_body = False
+    for idx, el in enumerate(body_children):
+        if el is ch1_el:
+            in_body = True
+        if in_body and el.tag == qn("w:tbl"):
+            j = idx - 1
+            while j >= 0 and (body_children[j] not in p_by_el or not p_by_el[body_children[j]].text.strip()):
+                j -= 1
+            assert j >= 0
+            cap_p = p_by_el[body_children[j]]
+            assert cap_p.style.name == "Caption Table", f"Bang khong co chu thich phia tren: sau '{cap_p.text[:60]}'"
+
+    ch4_idx = next(i for i, p in enumerate(doc.paragraphs) if p.style.name == "Heading 1" and p.text.startswith("CHƯƠNG 4."))
+    ch5_idx = next(i for i, p in enumerate(doc.paragraphs) if p.style.name == "Heading 1" and p.text.startswith("CHƯƠNG 5."))
+    ch4_txt = "\n".join(p.text for p in doc.paragraphs[ch4_idx:ch5_idx])
+    for phrase in (
+        "Ảnh gốc cả hai tập",
+        "Chỉ phổi cả hai tập",
+        "Chỉ ngoài phổi cả hai tập",
+        "Gốc học, phổi đánh giá",
+        "Gốc học, ngoài phổi đánh giá",
+        "orig_to_orig",
+        "lung_to_lung",
+        "out_to_out",
+        "orig_to_lung",
+        "orig_to_out",
+    ):
+        assert phrase in ch4_txt, phrase
+
+
 def test_numbers_survive_conversion(tmp_path: Path) -> None:
     docx, _, _, _, brd = _deps()
     out = brd.build_docx(Path("report"), tmp_path / "out.docx")
