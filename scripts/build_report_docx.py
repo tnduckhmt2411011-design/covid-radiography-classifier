@@ -550,6 +550,8 @@ def _style_booktabs_table(table, col_aligns: list[int]) -> None:
                 p.paragraph_format.space_before = Pt(1)
                 p.paragraph_format.space_after = Pt(1)
                 p.paragraph_format.line_spacing = 1.15
+                if r_idx == 0 and len(table.rows) > 1:
+                    p.paragraph_format.keep_with_next = True
 
 
 def _parse_align(attr_style: str | None) -> int:
@@ -1001,12 +1003,21 @@ def _extract_cover_quote_blocks(md: str, section_heading: str) -> list[list[str]
     return blocks
 
 
-def _add_cover_line(doc: Document, raw_line: str, size_pt: float = 13.0, space_after: float = 4.0) -> None:
+def _add_cover_line(
+    doc: Document,
+    raw_line: str,
+    size_pt: float = 13.0,
+    space_after: float = 4.0,
+    space_before: float = 0.0,
+) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.first_line_indent = Cm(0)
+    # Bù chênh lệch lề trái 3,0 cm / phải 2,0 cm để vùng chữ bìa cân đúng tâm khung viền A4
+    p.paragraph_format.left_indent = Cm(0)
+    p.paragraph_format.right_indent = Cm(1.0)
     p.paragraph_format.line_spacing = 1.25
-    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_before = Pt(space_before)
     p.paragraph_format.space_after = Pt(space_after)
     if not raw_line:
         return
@@ -1034,34 +1045,42 @@ def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) 
         # Khối 1: trường + khoa -> Logo placeholder -> Khối 3: đầu đề -> Khối 4: đề tài -> Khối 5: GVHD & SV -> Khối 6: Cần Thơ
         for idx, blk in enumerate(blocks):
             if idx == 0:
-                for line in blk:
-                    _add_cover_line(doc, line, size_pt=14.0, space_after=4.0)
+                for j, line in enumerate(blk):
+                    _add_cover_line(doc, line, size_pt=14.0, space_after=4.0, space_before=56.0 if j == 0 else 0.0)
                 p_logo = doc.add_paragraph()
                 p_logo.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 p_logo.paragraph_format.first_line_indent = Cm(0)
-                p_logo.paragraph_format.space_before = Pt(18)
-                p_logo.paragraph_format.space_after = Pt(18)
+                p_logo.paragraph_format.left_indent = Cm(0)
+                p_logo.paragraph_format.right_indent = Cm(1.0)
+                p_logo.paragraph_format.space_before = Pt(12)
+                p_logo.paragraph_format.space_after = Pt(12)
                 r_logo = p_logo.add_run("[Chèn logo CTUT]")
                 _set_run_font(r_logo, FONT_NAME, size_pt=11.0)
                 r_logo.font.color.rgb = RGBColor(200, 0, 0)
             elif idx == 1:
                 for j, line in enumerate(blk):
-                    _add_cover_line(doc, line, size_pt=15.0, space_after=14.0 if j == len(blk) - 1 else 4.0)
+                    _add_cover_line(doc, line, size_pt=15.0, space_after=12.0 if j == len(blk) - 1 else 4.0)
             elif idx == 2:
                 for j, line in enumerate(blk):
                     sz = 16.0 if j > 0 else 14.0
-                    _add_cover_line(doc, line, size_pt=sz, space_after=24.0 if j == len(blk) - 1 else 6.0)
+                    _add_cover_line(doc, line, size_pt=sz, space_after=18.0 if j == len(blk) - 1 else 6.0)
             elif idx == 3:
                 for j, line in enumerate(blk):
-                    _add_cover_line(doc, line, size_pt=13.0, space_after=28.0 if j == len(blk) - 1 else 3.0)
+                    _add_cover_line(doc, line, size_pt=13.0, space_after=20.0 if j == len(blk) - 1 else 3.0)
             else:
                 for line in blk:
                     _add_cover_line(doc, line, size_pt=13.0, space_after=4.0)
     else:
-        for blk in blocks:
+        for b_idx, blk in enumerate(blocks):
             for j, line in enumerate(blk):
                 sz = 16.0 if j == 1 else (14.0 if j == 0 else 13.0)
-                _add_cover_line(doc, line, size_pt=sz, space_after=14.0 if j == 1 else 4.0)
+                _add_cover_line(
+                    doc,
+                    line,
+                    size_pt=sz,
+                    space_after=14.0 if j == 1 else 4.0,
+                    space_before=56.0 if (b_idx == 0 and j == 0) else 0.0,
+                )
         _add_cover_line(doc, "", size_pt=13.0, space_after=24.0)
         _add_cover_line(doc, "**Cần Thơ – Tháng 11/2026**", size_pt=13.0, space_after=0.0)
 

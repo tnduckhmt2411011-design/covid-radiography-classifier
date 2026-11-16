@@ -309,6 +309,34 @@ def test_cover_content() -> None:
     assert anchors and anchors[0].get("behindDoc") == "1"
 
 
+def test_table_header_keep_with_next() -> None:
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
+    md = "| Col A | Col B |\n| :--- | ---: |\n| r1 | 1 |\n| r2 | 2 |\n"
+    brd.render_markdown(doc, md, Path("report"))
+    tbl = doc.tables[0]
+    for cell in tbl.rows[0].cells:
+        assert all(p.paragraph_format.keep_with_next is True for p in cell.paragraphs)
+
+
+def test_cover_margins_clear_border() -> None:
+    _, _, _, Pt, brd = _deps()
+    cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    border_png = Path("report/figures/khung_trang_bia.png")
+    for is_sub in (False, True):
+        doc = brd.new_document()
+        brd.add_section_break(doc, "none", None)
+        brd.add_cover(doc, cover_md, border_png, subtitle=is_sub)
+        sec = doc.sections[0]
+        first_p = doc.paragraphs[0]
+        assert first_p.paragraph_format.space_before is not None and first_p.paragraph_format.space_before >= Pt(48)
+        for p in doc.paragraphs:
+            left_cm = sec.left_margin.cm + (p.paragraph_format.left_indent.cm if p.paragraph_format.left_indent else 0.0)
+            right_cm = sec.right_margin.cm + (p.paragraph_format.right_indent.cm if p.paragraph_format.right_indent else 0.0)
+            assert abs(left_cm - right_cm) < 0.05
+            assert left_cm >= 2.8 and right_cm >= 2.8
+
+
 def test_full_build_order(tmp_path: Path) -> None:
     docx, _, _, _, brd = _deps()
     out = brd.build_docx(Path("report"), tmp_path / "out.docx")
