@@ -1,0 +1,93 @@
+{
+  "total_pairs_d1_4": 1570,
+  "cross_split_pairs_count": 735,
+  "dist_distribution": {
+    "4": 665,
+    "2": 70
+  },
+  "split_pairs_distribution": {
+    "test-train": 325,
+    "train-val": 335,
+    "test-val": 75
+  },
+  "class_relation": {
+    "Same_d4": 450,
+    "Cross-Class_d4": 215,
+    "Same_d2": 56,
+    "Cross-Class_d2": 14
+  },
+  "sample_cross_split_pairs": [
+    {
+      "idx1": 5,
+      "idx2": 2468,
+      "id1": "COVID-1002.png",
+      "id2": "COVID-322.png",
+      "label1": "COVID",
+      "label2": "COVID",
+      "split1": "train",
+      "split2": "test",
+      "hamming_dist": 4,
+      "same_label": true
+    },
+    {
+      "idx1": 15,
+      "idx2": 169,
+      "id1": "COVID-1011.png",
+      "id2": "COVID-1150.png",
+      "label1": "COVID",
+      "label2": "COVID",
+      "split1": "val",
+      "split2": "train",
+      "hamming_dist": 2,
+      "same_label": true
+    },
+    {
+      "idx1": 20,
+      "idx2": 1935,
+      "id1": "COVID-1016.png",
+      "id2": "COVID-2740.png",
+      "label1": "COVID",
+      "label2": "COVID",
+      "split1": "train",
+      "split2": "val",
+      "hamming_dist": 4,
+      "same_label": true
+    },
+    {
+      "idx1": 9,
+      "idx2": 17650,
+      "id1": "COVID-1006.png",
+      "id2": "Normal-8045.png",
+      "label1": "COVID",
+      "label2": "Normal",
+      "split1": "val",
+      "split2": "train",
+      "hamming_dist": 4,
+      "same_label": false
+    },
+    {
+      "idx1": 55,
+      "idx2": 6149,
+      "id1": "COVID-1048.png",
+      "id2": "Lung_Opacity-3279.png",
+      "label1": "COVID",
+      "label2": "Lung_Opacity",
+      "split1": "val",
+      "split2": "test",
+      "hamming_dist": 4,
+      "same_label": false
+    },
+    {
+      "idx1": 97,
+      "idx2": 15114,
+      "id1": "COVID-1086.png",
+      "id2": "Normal-5763.png",
+      "label1": "COVID",
+      "label2": "Normal",
+      "split1": "train",
+      "split2": "val",
+      "hamming_dist": 4,
+      "same_label": false
+    }
+  ]
+}

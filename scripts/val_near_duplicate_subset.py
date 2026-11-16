@@ -67,6 +67,49 @@ def macro_f1(y_true: np.ndarray, y_pred: np.ndarray, n_classes: int = 4) -> floa
     return float(np.mean(f1s))
 
 
+def per_class_recall(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
+    """Recall tung lop: tp / (tp + fn); lop khong co mau nao tra 0."""
+    out: dict[str, float] = {}
+    for c, name in enumerate(CLASSES):
+        tp = int(((y_pred == c) & (y_true == c)).sum())
+        fn = int(((y_pred != c) & (y_true == c)).sum())
+        out[name] = round(tp / (tp + fn), 4) if (tp + fn) else 0.0
+    return out
+
+
+def bootstrap_ci_diff(
+    y_true: np.ndarray, y_pred: np.ndarray, subset_mask: np.ndarray,
+    n_boot: int = 2000, seed: int = 42,
+) -> dict:
+    """Khoang tin cay 95% cho hieu macro-F1 (tap con tru phan con lai).
+
+    Lay mau lai doc lap trong tung tap con (giu nguyen so anh cua tung tap con),
+    seed 42 cung voi bootstrap ghep cap cua RQ2. Khong huan luyen lai; day la
+    do thi bien tren du doan co san nen khoang tin cay mang tinh xap xi. Lop
+    vang mat trong mot lan lay mau lai nhan F1 = 0 (quy uoc chung cua repo),
+    nen khoang tin cay hoi rong; boot_mean va boot_median giup kiem do lech.
+    """
+    rng = np.random.default_rng(seed)
+    idx_sub = np.flatnonzero(subset_mask)
+    idx_rest = np.flatnonzero(~subset_mask)
+    diffs = np.empty(n_boot, dtype=float)
+    for i in range(n_boot):
+        s = rng.choice(idx_sub, size=idx_sub.size, replace=True)
+        r = rng.choice(idx_rest, size=idx_rest.size, replace=True)
+        diffs[i] = macro_f1(y_true[s], y_pred[s]) - macro_f1(y_true[r], y_pred[r])
+    lo, hi = np.percentile(diffs, [2.5, 97.5])
+    return {
+        "n_boot": n_boot,
+        "seed": seed,
+        "lo": round(float(lo), 4),
+        "hi": round(float(hi), 4),
+        "boot_mean": round(float(diffs.mean()), 4),
+        "boot_median": round(float(np.median(diffs)), 4),
+        "contains_zero": bool(lo <= 0.0 <= hi),
+        "method": "percentile bootstrap, independent resampling within each subset",
+    }
+
+
 def main() -> int:
     reconfigure()
     df = pd.read_csv(SPLIT_CSV, dtype={"phash": str})
@@ -132,6 +175,9 @@ def main() -> int:
         "macro_f1_complement": round(f1_rest, 4),
         "subset_share_percent": round(100 * n_sub / len(preds), 2),
         "subset_per_class": per_class_sub,
+        "bootstrap_ci": bootstrap_ci_diff(y_true, y_pred, val_with_pair.to_numpy()),
+        "recall_subset": per_class_recall(y_true[val_with_pair.to_numpy()], y_pred[val_with_pair.to_numpy()]),
+        "recall_complement": per_class_recall(y_true[~val_with_pair.to_numpy()], y_pred[~val_with_pair.to_numpy()]),
     }
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     OUT_JSON.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -142,10 +188,16 @@ def main() -> int:
         f"| Ty le trong 3.174 anh validation | {result['subset_share_percent']}% |\n"
         f"| Macro-F1 toan bo validation | {round(f1_all, 4):.4f} |\n"
         f"| Macro-F1 tren {n_sub} anh co anh gan trung | {round(f1_sub, 4):.4f} |\n"
-        f"| Macro-F1 tren {n_rest} anh con lai | {round(f1_rest, 4):.4f} |\n\n"
+        f"| Macro-F1 tren {n_rest} anh con lai | {round(f1_rest, 4):.4f} |\n"
+        f"| Khoang tin cay 95% cho hieu macro-F1 (tap con tru phan con lai) | "
+        f"[{result['bootstrap_ci']['lo']:.4f}; {result['bootstrap_ci']['hi']:.4f}] |\n"
+        f"| Bootstrap (n_boot / seed) | {result['bootstrap_ci']['n_boot']} / {result['bootstrap_ci']['seed']} |\n"
+        f"| Recall tung lop tren tap con | {result['recall_subset']} |\n"
+        f"| Recall tung lop tren phan con lai | {result['recall_complement']} |\n\n"
         "Dem lai tu `splits/split_v1.csv` (cot `phash`), khoang cach Hamming 2 hoac 4 giua cac tap; "
         "ket qua khop so da cong bo: 735 cap, 325/335/75 theo cap tap, 229 cap lech nhan, "
-        "273 anh validation va 243 anh test.\n",
+        "273 anh validation va 243 anh test. Khoang tin cay lay mau lai doc lap trong tung tap con "
+        "(2000 lan, seed 42), chi dung du doan co san, khong huan luyen lai.\n",
         encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0

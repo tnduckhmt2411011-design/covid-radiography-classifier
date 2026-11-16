@@ -1,0 +1,29 @@
+[
+  {
+    "threshold": 0,
+    "meaning": "Exact pHash",
+    "num_duplicate_groups": 178,
+    "num_grouped_images": 401,
+    "num_unique_images": 20764,
+    "cross_class_groups": 0,
+    "sample_pairs_count": 6
+  },
+  {
+    "threshold": 4,
+    "meaning": "Very Similar (Hamming <= 4)",
+    "num_duplicate_groups": 666,
+    "num_grouped_images": 2195,
+    "num_unique_images": 18970,
+    "cross_class_groups": 172,
+    "sample_pairs_count": 6
+  },
+  {
+    "threshold": 8,
+    "meaning": "Similar / Slight Shift (Hamming <= 8)",
+    "num_duplicate_groups": 355,
+    "num_grouped_images": 14758,
+    "num_unique_images": 6407,
+    "cross_class_groups": 107,
+    "sample_pairs_count": 6
+  }
+]

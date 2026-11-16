@@ -143,6 +143,23 @@ def test_appendix_b1_counts_match_git_ls_files() -> None:
             assert got[1] == str(counts.get(m.group(1), 0)), f"{label}: ghi {got[1]}, thuc te {counts.get(m.group(1), 0)}"
         elif label.startswith("Tệp gốc"):
             assert got[1] == str(counts.get("<root>", 0)), f"{label}: ghi {got[1]}, thuc te {counts.get('<root>', 0)}"
+    # Hang tong cong phai bang so tep thuc te va bang tong cac hang.
+    total_row = next((r for r in table if cells(r)[0].startswith("**Tổng cộng**")), None)
+    assert total_row is not None, "Bang B.1 thieu dong **Tong cong**"
+    assert cells(total_row)[1].strip("*") == str(len(files)), (
+        f"Hang tong B.1 ghi {cells(total_row)[1]}, thuc te {len(files)} tep")
+    row_sum = 0
+    for row in table:
+        got = cells(row)
+        if got[0].startswith("**Tổng cộng**") or not got[1].isdigit():
+            continue
+        row_sum += int(got[1])
+    assert row_sum == len(files), f"Tong cac dong B.1 ({row_sum}) khac so tep thuc te ({len(files)})"
+    # Moi thu muc cap mot trong git ls-files phai xuat hien trong bang.
+    top_dirs = {line.split("/")[0] for line in files if "/" in line}
+    labels = [cells(r)[0] for r in table]
+    for d in sorted(top_dirs):
+        assert any(d in lab for lab in labels), f"Bang B.1 thieu thu muc cap mot: {d}/"
 
 
 # ---------- Phụ lục B.2: số phép kiểm thử thực tế ----------

@@ -43,6 +43,7 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
   - 2.7. Chuẩn hóa dữ liệu, StandardScaler chỉ fit trên train
   - 2.8. Sáu thuật toán phân loại và không gian siêu tham số
   - 2.9. Phương pháp đánh giá thống kê và bootstrap ghép cặp
+  - Tài liệu tham khảo phát sinh trong chương
 - CHƯƠNG 3. KẾT QUẢ RQ1 VÀ RQ2 TRÊN TẬP VALIDATION
   - 3.1. RQ1: bốn nhóm đặc trưng trên Random Forest
   - 3.2. Kiểm định thống kê và quyết định chọn nhóm ghép
@@ -117,10 +118,10 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
 - **Bảng 5.4:** Ma trận nhầm lẫn trên 3.176 ảnh tập test
 - **Bảng 5.5:** Độ trễ đầu-cuối và theo từng chặng, thống kê trên trung vị ba lượt của 200 ảnh (seed 42)
 - **Bảng 6.1:** Tóm tắt macro-F1 của các cấu hình chính và khoảng tin cậy 95%
-- **Bảng A.1:** Biến môi trường của ứng dụng demo
-- **Bảng A.2:** Thông số mô hình đóng băng
+- **Bảng A.1:** Thông số mô hình đóng băng
+- **Bảng A.2:** Biến môi trường của ứng dụng demo
 - **Bảng B.1:** Cấu trúc thư mục cấp một của kho
-- **Bảng B.2:** 28 module kiểm thử và số phép kiểm thử (344 phép)
+- **Bảng B.2:** 28 module kiểm thử và số phép kiểm thử (351 phép)
 - **Bảng C.1:** Lưới siêu tham số của sáu bộ phân loại
 - **Bảng C.2:** Siêu tham số chọn qua 5-fold CV và Macro-F1 validation của sáu bộ phân loại
 - **Bảng C.3:** Chi phí huấn luyện của sáu bộ phân loại (giây CPU)
