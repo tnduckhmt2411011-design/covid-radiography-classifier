@@ -10,7 +10,15 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.shared import Pt
 
-from scripts.build_report_docx import build_docx, new_document, render_markdown, strip_technical_notes
+from scripts.build_report_docx import (
+    add_cover,
+    add_section_break,
+    add_toc_field,
+    build_docx,
+    new_document,
+    render_markdown,
+    strip_technical_notes,
+)
 
 
 def _rfonts_dict(style) -> dict[str, str]:
@@ -199,3 +207,91 @@ def test_no_raw_markdown_leaks() -> None:
             assert bad not in p.text, (bad, p.text)
     code_runs = [r for p in doc.paragraphs for r in p.runs if r.font.name == "Consolas"]
     assert code_runs and code_runs[0].font.size == Pt(11)
+
+
+def _all_instr_texts(doc) -> list[str]:
+    out = [el.text or "" for el in doc.element.iter(qn("w:instrText"))]
+    for sec in doc.sections:
+        for hdr_ftr in (sec.header, sec.footer):
+            out.extend(el.text or "" for el in hdr_ftr._element.iter(qn("w:instrText")))
+    return out
+
+
+def test_cover_has_no_page_number() -> None:
+    doc = new_document()
+    add_section_break(doc, "none", None)
+    sec0 = doc.sections[0]
+    assert "".join(p.text for p in sec0.footer.paragraphs).strip() == ""
+    assert not list(sec0.footer._element.iter(qn("w:instrText")))
+
+
+def test_front_matter_roman_numbering() -> None:
+    doc = new_document()
+    add_section_break(doc, "none", None)
+    doc.add_paragraph("Cover")
+    add_section_break(doc, "lowerRoman", 1)
+    sec1 = doc.sections[1]
+    pg_type = sec1._sectPr.find(qn("w:pgNumType"))
+    assert pg_type is not None
+    assert pg_type.get(qn("w:fmt")) == "lowerRoman"
+    assert pg_type.get(qn("w:start")) == "1"
+    instrs = [el.text or "" for el in sec1.footer._element.iter(qn("w:instrText"))]
+    assert any("PAGE" in ins for ins in instrs)
+    assert sec1.footer.paragraphs[0].alignment == WD_ALIGN_PARAGRAPH.CENTER
+
+
+def test_body_arabic_restart() -> None:
+    doc = new_document()
+    add_section_break(doc, "none", None)
+    doc.add_paragraph("Cover")
+    add_section_break(doc, "lowerRoman", 1)
+    doc.add_paragraph("Front")
+    add_section_break(doc, "decimal", 1)
+    sec2 = doc.sections[2]
+    pg_type = sec2._sectPr.find(qn("w:pgNumType"))
+    assert pg_type is not None
+    assert pg_type.get(qn("w:fmt")) == "decimal"
+    assert pg_type.get(qn("w:start")) == "1"
+
+
+def test_each_chapter_starts_new_page() -> None:
+    doc = new_document()
+    render_markdown(doc, "# CHƯƠNG 1. MỞ ĐẦU\n\nNội dung.\n\n# CHƯƠNG 2. PHƯƠNG PHÁP\n\nNội dung 2.\n", Path("report"))
+    h1s = [p for p in doc.paragraphs if p.style.name == "Heading 1"]
+    assert len(h1s) == 2
+    for h1 in h1s:
+        assert h1.paragraph_format.page_break_before is True or h1.style.paragraph_format.page_break_before is True
+
+
+def test_toc_fields_present() -> None:
+    doc = new_document()
+    add_toc_field(doc, r'TOC \o "1-3" \h \z \u')
+    add_toc_field(doc, r'TOC \h \z \t "Caption Table,1"')
+    add_toc_field(doc, r'TOC \h \z \t "Caption Figure,1"')
+    instrs = [s.strip() for s in _all_instr_texts(doc)]
+    assert instrs.count(r'TOC \o "1-3" \h \z \u') == 1
+    assert instrs.count(r'TOC \h \z \t "Caption Table,1"') == 1
+    assert instrs.count(r'TOC \h \z \t "Caption Figure,1"') == 1
+    upd = doc.settings.element.find(qn("w:updateFields"))
+    assert upd is not None and upd.get(qn("w:val")) == "true"
+
+
+def test_cover_content() -> None:
+    doc = new_document()
+    add_section_break(doc, "none", None)
+    cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    border_png = Path("report/figures/khung_trang_bia.png")
+    add_cover(doc, cover_md, border_png, subtitle=False)
+    doc.add_page_break()
+    add_cover(doc, cover_md, border_png, subtitle=True)
+
+    full_txt = "\n".join(p.text for p in doc.paragraphs)
+    assert "TRƯỜNG ĐẠI HỌC KỸ THUẬT" in full_txt
+    assert "TS. Lê Anh Nhã Uyên" in full_txt
+    for suffix in ("011", "021", "003", "022", "014", "046"):
+        assert f"KHMT2411{suffix}" in full_txt
+    assert "Cần Thơ – Tháng 11/2026" in full_txt
+    assert "[Chèn logo CTUT]" in full_txt
+
+    anchors = list(doc.sections[0].header._element.iter(qn("wp:anchor")))
+    assert anchors and anchors[0].get("behindDoc") == "1"

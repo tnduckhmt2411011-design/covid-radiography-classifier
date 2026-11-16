@@ -6,14 +6,15 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Mapping
+from typing import Literal, Mapping
 
 from docx import Document
+from docx.enum.section import WD_SECTION
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.oxml import OxmlElement
-from docx.oxml.ns import nsmap, qn
+from docx.oxml import OxmlElement, parse_xml
+from docx.oxml.ns import nsdecls, nsmap, qn
 from docx.shared import Cm, Pt, RGBColor
 from markdown_it import MarkdownIt
 from PIL import Image
@@ -78,6 +79,7 @@ def new_document() -> Document:
     h1.paragraph_format.space_before = Pt(12)
     h1.paragraph_format.space_after = Pt(8)
     h1.paragraph_format.keep_with_next = True
+    h1.paragraph_format.page_break_before = True
 
     h2 = doc.styles["Heading 2"]
     _set_style_fonts(h2)
@@ -765,6 +767,225 @@ def render_markdown(
             r_num.bold = True
             r_txt = p.add_run(local_defs[key])
             _set_run_font(r_txt, FONT_NAME, size_pt=10.5)
+
+
+def _add_word_field(para, instruction: str, placeholder: str = "", size_pt: float = 13.0) -> None:
+    """Chèn trường Word phức (`begin` / `instrText` / `separate` / text / `end`)."""
+    def _fld(fld_type: str) -> None:
+        r = para.add_run()
+        _set_run_font(r, FONT_NAME, size_pt=size_pt)
+        el = OxmlElement("w:fldChar")
+        el.set(qn("w:fldCharType"), fld_type)
+        r._r.append(el)
+
+    _fld("begin")
+    r_instr = para.add_run()
+    _set_run_font(r_instr, FONT_NAME, size_pt=size_pt)
+    instr = OxmlElement("w:instrText")
+    instr.set(qn("xml:space"), "preserve")
+    instr.text = f" {instruction} "
+    r_instr._r.append(instr)
+    _fld("separate")
+    if placeholder:
+        r_ph = para.add_run(placeholder)
+        _set_run_font(r_ph, FONT_NAME, size_pt=size_pt)
+    _fld("end")
+
+
+def add_section_break(
+    doc: Document,
+    page_format: Literal["none", "lowerRoman", "decimal"],
+    restart_at: int | None = None,
+) -> None:
+    """Tạo (hoặc cấu hình section đầu tiên) kèm kiểu đánh số trang."""
+    is_fresh_doc = (
+        len(doc.sections) == 1
+        and len(doc.paragraphs) == 0
+        and len(doc.tables) == 0
+        and not getattr(doc, "_sec0_configured", False)
+    )
+    if is_fresh_doc:
+        sec = doc.sections[0]
+        doc._sec0_configured = True
+    else:
+        sec = doc.add_section(WD_SECTION.NEW_PAGE)
+        configure_a4_section(sec)
+        sec.header.is_linked_to_previous = False
+        sec.footer.is_linked_to_previous = False
+
+    # Xóa sạch nội dung header/footer nếu vừa tách link
+    for hdr_ftr in (sec.header, sec.footer):
+        for p in list(hdr_ftr.paragraphs):
+            p.clear()
+
+    sect_pr = sec._sectPr
+    for old_pg in sect_pr.findall(qn("w:pgNumType")):
+        sect_pr.remove(old_pg)
+
+    if page_format != "none":
+        pg_num = OxmlElement("w:pgNumType")
+        pg_num.set(qn("w:fmt"), page_format)
+        if restart_at is not None:
+            pg_num.set(qn("w:start"), str(restart_at))
+        sect_pr.append(pg_num)
+
+        fp = sec.footer.paragraphs[0]
+        fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        fp.paragraph_format.first_line_indent = Cm(0)
+        fp.paragraph_format.space_before = Pt(0)
+        fp.paragraph_format.space_after = Pt(0)
+        _add_word_field(fp, "PAGE", placeholder="", size_pt=11.0)
+
+
+def add_toc_field(doc: Document, instruction: str) -> None:
+    """Chèn trường Mục lục / Danh mục tự cập nhật của Word và bật `w:updateFields`."""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.space_before = Pt(4)
+    p.paragraph_format.space_after = Pt(4)
+    _add_word_field(
+        p,
+        instruction,
+        placeholder="(Mở bằng Word, nhấn Ctrl+A rồi F9 để cập nhật mục lục và số trang)",
+        size_pt=12.0,
+    )
+    settings_el = doc.settings.element
+    upd = settings_el.find(qn("w:updateFields"))
+    if upd is None:
+        upd = OxmlElement("w:updateFields")
+        settings_el.append(upd)
+    upd.set(qn("w:val"), "true")
+
+
+def _install_cover_border_behind_text(section, border_png: Path) -> None:
+    """Chèn ảnh khung viền A4 toàn trang vào header của section bìa, lớp Behind Text."""
+    if section.header._element.findall(f".//{qn('wp:anchor')}"):
+        return
+    hp = section.header.paragraphs[0]
+    hp.paragraph_format.first_line_indent = Cm(0)
+    hp.paragraph_format.space_before = Pt(0)
+    hp.paragraph_format.space_after = Pt(0)
+    run = hp.add_run()
+    shape = run.add_picture(str(border_png), width=Cm(21.0), height=Cm(29.7))
+    inline = shape._inline
+    extent = inline.find(qn("wp:extent"))
+    doc_pr = inline.find(qn("wp:docPr"))
+    graphic = inline.find(qn("a:graphic"))
+    cx = extent.get("cx") if extent is not None else str(int(Cm(21.0)))
+    cy = extent.get("cy") if extent is not None else str(int(Cm(29.7)))
+    doc_id = doc_pr.get("id") if doc_pr is not None else "1"
+    doc_name = doc_pr.get("name") if doc_pr is not None else "CoverBorder"
+
+    anchor_xml = (
+        f'<wp:anchor {nsdecls("wp", "a", "r")} '
+        'distT="0" distB="0" distL="0" distR="0" simplePos="0" '
+        'relativeHeight="0" behindDoc="1" locked="0" layoutInCell="1" allowOverlap="1">'
+        '<wp:simplePos x="0" y="0"/>'
+        '<wp:positionH relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionH>'
+        '<wp:positionV relativeFrom="page"><wp:posOffset>0</wp:posOffset></wp:positionV>'
+        f'<wp:extent cx="{cx}" cy="{cy}"/>'
+        '<wp:effectExtent l="0" t="0" r="0" b="0"/>'
+        '<wp:wrapNone/>'
+        f'<wp:docPr id="{doc_id}" name="{doc_name}"/>'
+        '<wp:cNvGraphicFramePr/>'
+        '</wp:anchor>'
+    )
+    anchor = parse_xml(anchor_xml)
+    if graphic is not None:
+        anchor.append(graphic)
+    parent = inline.getparent()
+    parent.replace(inline, anchor)
+
+
+def _extract_cover_quote_blocks(md: str, section_heading: str) -> list[list[str]]:
+    """Tách từng khối trích dẫn `>` trong mục bìa tương ứng của `00a_trang_bia_va_loi.md`."""
+    lines = md.splitlines()
+    in_sec = False
+    blocks: list[list[str]] = []
+    cur: list[str] = []
+    for line in lines:
+        s = line.strip()
+        if s.startswith("## "):
+            if in_sec:
+                break
+            in_sec = s.startswith(section_heading)
+            continue
+        if not in_sec:
+            continue
+        if s.startswith(">"):
+            cur.append(s.lstrip(">").strip())
+        elif cur:
+            blocks.append(cur)
+            cur = []
+    if cur:
+        blocks.append(cur)
+    return blocks
+
+
+def _add_cover_line(doc: Document, raw_line: str, size_pt: float = 13.0, space_after: float = 4.0) -> None:
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.first_line_indent = Cm(0)
+    p.paragraph_format.line_spacing = 1.25
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(space_after)
+    if not raw_line:
+        return
+    # Xử lý **bold** inline trong từng dòng trích dẫn bìa
+    for part in re.split(r"(\*\*[^*]+\*\*)", raw_line):
+        if not part:
+            continue
+        if part.startswith("**") and part.endswith("**"):
+            r = p.add_run(part[2:-2])
+            r.bold = True
+        else:
+            r = p.add_run(part)
+        _set_run_font(r, FONT_NAME, size_pt=size_pt)
+
+
+def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) -> None:
+    """Dựng trang bìa chính (`subtitle=False`) hoặc trang bìa phụ (`subtitle=True`)."""
+    if border_png.exists():
+        _install_cover_border_behind_text(doc.sections[0], border_png)
+
+    heading = "## 2. Trang bìa phụ" if subtitle else "## 1. Trang bìa chính"
+    blocks = _extract_cover_quote_blocks(md, heading)
+
+    if not subtitle:
+        # Khối 1: trường + khoa -> Logo placeholder -> Khối 3: đầu đề -> Khối 4: đề tài -> Khối 5: GVHD & SV -> Khối 6: Cần Thơ
+        for idx, blk in enumerate(blocks):
+            if idx == 0:
+                for line in blk:
+                    _add_cover_line(doc, line, size_pt=14.0, space_after=4.0)
+                p_logo = doc.add_paragraph()
+                p_logo.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p_logo.paragraph_format.first_line_indent = Cm(0)
+                p_logo.paragraph_format.space_before = Pt(18)
+                p_logo.paragraph_format.space_after = Pt(18)
+                r_logo = p_logo.add_run("[Chèn logo CTUT]")
+                _set_run_font(r_logo, FONT_NAME, size_pt=11.0)
+                r_logo.font.color.rgb = RGBColor(200, 0, 0)
+            elif idx == 1:
+                for j, line in enumerate(blk):
+                    _add_cover_line(doc, line, size_pt=15.0, space_after=14.0 if j == len(blk) - 1 else 4.0)
+            elif idx == 2:
+                for j, line in enumerate(blk):
+                    sz = 16.0 if j > 0 else 14.0
+                    _add_cover_line(doc, line, size_pt=sz, space_after=24.0 if j == len(blk) - 1 else 6.0)
+            elif idx == 3:
+                for j, line in enumerate(blk):
+                    _add_cover_line(doc, line, size_pt=13.0, space_after=28.0 if j == len(blk) - 1 else 3.0)
+            else:
+                for line in blk:
+                    _add_cover_line(doc, line, size_pt=13.0, space_after=4.0)
+    else:
+        for blk in blocks:
+            for j, line in enumerate(blk):
+                sz = 16.0 if j == 1 else (14.0 if j == 0 else 13.0)
+                _add_cover_line(doc, line, size_pt=sz, space_after=14.0 if j == 1 else 4.0)
+        _add_cover_line(doc, "", size_pt=13.0, space_after=24.0)
+        _add_cover_line(doc, "**Cần Thơ – Tháng 11/2026**", size_pt=13.0, space_after=0.0)
 
 
 def build_docx(report_dir: Path, out_path: Path) -> Path:
