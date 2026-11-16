@@ -32,7 +32,7 @@ DESCRIPTIONS = {
     "outputs/": "Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2",
     "docs/": "Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, bảng rà soát, nhật ký công việc",
     "report/": "Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn",
-    "slides/": "Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ",
+    "slides/": "Bộ slide thuyết trình bảo vệ cuối kỳ (`.pptx`/`.pdf`), mã nguồn dựng slide, hình ảnh và kết xuất SVG/PNG",
 }
 ROOT_FILES = ["README.md", "requirements.txt", "pytest.ini", ".gitignore", ".gitattributes"]
 

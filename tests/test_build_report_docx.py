@@ -393,5 +393,5 @@ def test_numbers_survive_conversion(tmp_path: Path) -> None:
     all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
         c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
     )
-    for num in ("3.174", "0,8714", "71,19%", "382"):
+    for num in ("3.174", "0,8714", "71,19%", "397"):
         assert num in all_txt, num

@@ -138,7 +138,7 @@ Số liệu tập test chỉ trình bày từ Chương 5 trở đi; Chương 1 �
 * **Tài liệu tham khảo (References):** Trình bày theo chuẩn IEEE hoặc APA.
 * **Phụ lục (Appendices):**
   * Phụ lục A: Hướng dẫn cài đặt, tải mô hình từ Hugging Face Hub (kiểm tra SHA-256) và vận hành ứng dụng Streamlit (`demo/`).
-  * Phụ lục B: Cấu trúc kho mã nguồn và danh sách bài kiểm thử tự động pytest (382 phép kiểm thử trong 30 module, đếm tại thời điểm nộp).
+  * Phụ lục B: Cấu trúc kho mã nguồn và danh sách bài kiểm thử tự động pytest (397 phép kiểm thử trong 31 module, đếm tại thời điểm nộp).
   * Phụ lục C: Lưới siêu tham số, tham số chọn, kết quả validation và chi phí huấn luyện của sáu bộ phân loại.
 
 ---
