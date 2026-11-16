@@ -14,7 +14,7 @@ Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn
 
 ## 1.2. Mục tiêu và ba câu hỏi nghiên cứu
 
-Mục tiêu của đề tài là xây dựng pipeline phân loại bốn lớp ảnh CXR chỉ bằng học máy cổ điển, đánh giá pipeline trên tập validation theo một giao thức cố định, rồi kiểm tra một lần trên tập test độc lập. Mục tiêu này được cụ thể hoá thành ba câu hỏi nghiên cứu (research question, viết tắt RQ).
+Mục tiêu của đề tài là xây dựng pipeline phân loại bốn lớp ảnh CXR chỉ bằng học máy cổ điển, đánh giá pipeline trên tập validation theo một giao thức cố định, rồi kiểm tra một lần trên tập test độc lập. Mục tiêu này được cụ thể hóa thành ba câu hỏi nghiên cứu (research question, viết tắt RQ).
 
 Bốn nhóm đặc trưng thủ công gồm histogram độ xám 64 chiều, GLCM (Gray-Level Co-occurrence Matrix) [7] kết hợp LBP (Local Binary Pattern) [8] 88 chiều, HOG (Histogram of Oriented Gradients) [9] 10.404 chiều và nhóm ghép 152 chiều. Sáu bộ phân loại ứng viên gồm Logistic Regression, k-NN, Decision Tree, Random Forest, SVM (Support Vector Machine) và Gradient Boosting.
 
@@ -40,7 +40,7 @@ Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số 
 
 ## 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
 
-Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỉ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm trùng pHash không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
+Phạm vi dữ liệu gồm toàn bộ 21.165 ảnh của bộ COVID-19 Radiography Database, chia thành 14.815 ảnh train, 3.174 ảnh validation và 3.176 ảnh test theo tỷ lệ 70/15/15. Phép chia phân tầng theo nhãn và gom nhóm theo pHash, để ảnh trong cùng một nhóm trùng pHash không xuất hiện đồng thời ở hai tập. Tệp split được băm SHA-256 và giữ nguyên trong suốt quá trình thực nghiệm.
 
 Đề tài không dùng học sâu: một bài kiểm thử tự động quét mọi lệnh import trong mã nguồn và notebook, chặn `torch`, `torchvision`, `tensorflow`, `keras` và `timm`; vi phạm làm bộ kiểm thử thất bại. Ba ràng buộc còn lại liên quan đến cách đọc dữ liệu được tóm tắt trong Bảng 1.2.
 
@@ -63,7 +63,7 @@ Nằm ngoài phạm vi của đề tài: chẩn đoán lâm sàng, phân đoạn
 
 4. **Đo mức phụ thuộc vào vùng ngoài mặt nạ phổi (RQ3).** Năm kịch bản che mặt nạ phổi và phép hoán vị 10 khối đặc trưng đo mức thay đổi hiệu năng khi vùng phổi bị che, trên 3.174 ảnh validation. Chương 4 trình bày số đo; mọi diễn giải về chênh lệch đều ghi là giả thuyết chưa kiểm chứng.
 
-5. **Ứng dụng minh hoạ.** Ứng dụng Streamlit nhận một ảnh CXR, trả về xác suất bốn lớp và dùng lại đúng hàm trích đặc trưng đã đánh giá.
+5. **Ứng dụng minh họa.** Ứng dụng Streamlit nhận một ảnh CXR, trả về xác suất bốn lớp và dùng lại đúng hàm trích đặc trưng đã đánh giá.
 
 ## 1.5. Cấu trúc báo cáo
 
@@ -75,7 +75,7 @@ Chương 5 công bố kết quả trên 3.176 ảnh test, phân tích ma trận 
 
 ## Tài liệu tham khảo phát sinh trong chương
 
-Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; các mục còn lại của chương này (1.2, 1.3) và tài liệu của các chương sau đánh số tiếp nối (2.7; 5.5.1; 5.5.2).
+Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; mục còn lại của chương này (1.2) và tài liệu của các chương sau đánh số tiếp nối (2.7; 5.5.1; 5.5.2).
 
 [1] M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. Al-Emadi, M. B. I. Reaz, and M. T. Islam, "Can AI help in screening viral and COVID-19 pneumonia?," *IEEE Access*, vol. 8, pp. 132665–132676, 2020, doi: 10.1109/ACCESS.2020.3010287.
 

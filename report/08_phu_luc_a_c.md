@@ -36,6 +36,8 @@ Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau �
 
 ### A.3. Biến môi trường
 
+Các biến môi trường tùy chọn để ghi đè nguồn tải và giá trị kiểm băm được liệt kê trong Bảng A.2.
+
 **Bảng A.2: Biến môi trường của ứng dụng demo**
 
 | Biến | Bắt buộc | Ý nghĩa |
@@ -161,6 +163,8 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 
 ### C.1. Lưới siêu tham số
 
+Không gian tìm kiếm cho cả sáu bộ phân loại được tóm tắt tại Bảng C.1.
+
 **Bảng C.1: Lưới siêu tham số của sáu bộ phân loại**
 
 | Bộ phân loại | Lưới siêu tham số (số lượng cụm) |
@@ -174,9 +178,11 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 
 Trọng số lớp là thành phần cố định, không nằm trong lưới: Logistic Regression, Decision Tree và SVM dùng cân bằng lớp (`class_weight='balanced'`); Random Forest dùng cân bằng theo mẫu (`class_weight='balanced_subsample'`); Gradient Boosting dùng trọng số mẫu cân bằng truyền vào bước fit; k-NN không có cơ chế cân bằng lớp, và trọng số `weights='distance'` trong lưới của `knn` là trọng số theo khoảng cách tới láng giềng chứ không cân bằng lớp. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
 
-Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 (nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
+Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 và `min_samples_leaf=1` (đều nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
 
 ### C.2. Tham số chọn và kết quả trên tập validation
+
+Bảng C.2 trình bày cấu hình siêu tham số được chọn sau 5-fold cross-validation và hiệu năng tương ứng trên tập validation.
 
 **Bảng C.2: Siêu tham số chọn qua 5-fold CV và Macro-F1 validation của sáu bộ phân loại**
 
@@ -192,6 +198,8 @@ Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn n�
 Ba bộ tất định về nhãn dự đoán chạy mỗi bộ một lần nên không có độ lệch chuẩn. Bộ phân loại tham chiếu của RQ2 là `rf`, với cấu hình chọn bằng kiểm định chéo (300 cây, độ sâu không giới hạn), khác cấu hình 500 cây cố định dùng ở RQ1; ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
 
 ### C.3. Thứ hạng chi phí huấn luyện
+
+Thời gian huấn luyện đo bằng giây CPU của sáu bộ phân loại được xếp hạng tăng dần trong Bảng C.3.
 
 **Bảng C.3: Chi phí huấn luyện của sáu bộ phân loại (giây CPU)**
 

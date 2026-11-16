@@ -15,15 +15,15 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 REPORT = REPO_ROOT / "report"
 
 FRONT = [
-    ("i", "Trang bìa chính"),
-    ("ii", "Trang bìa phụ"),
-    ("iii", "Lời cảm ơn"),
-    ("iv", "Lời cam đoan"),
-    ("v", "Tóm tắt tiếng Việt và Abstract"),
-    ("vi", "Danh mục ký hiệu và chữ viết tắt"),
-    ("vii", "Mục lục"),
-    ("viii", "Danh mục bảng biểu"),
-    ("ix", "Danh mục hình ảnh"),
+    ("—", "Trang bìa chính (không đánh số)"),
+    ("—", "Trang bìa phụ (không đánh số)"),
+    ("i", "Lời cảm ơn"),
+    ("ii", "Lời cam đoan"),
+    ("iii", "Tóm tắt tiếng Việt và Abstract"),
+    ("iv", "Mục lục"),
+    ("v", "Danh mục ký hiệu và chữ viết tắt"),
+    ("vi", "Danh mục bảng biểu"),
+    ("vii", "Danh mục hình ảnh"),
 ]
 
 
@@ -68,7 +68,7 @@ def build() -> tuple[list[str], int, int]:
     lines: list[str] = []
     lines.append("# Mục lục và danh mục")
     lines.append("")
-    lines.append("Tệp này gộm ba mục đầu cuối của phần mở đầu quyển: mục lục, danh mục bảng biểu và")
+    lines.append("Tệp này gồm ba mục đầu cuối của phần mở đầu quyển: mục lục, danh mục bảng biểu và")
     lines.append("danh mục hình ảnh. Nội dung sinh tự động từ sáu chương, tài liệu tham khảo và phụ lục")
     lines.append("bằng `scripts/report_frontmatter.py`, nên không lệch khi chương thêm tiểu mục hoặc bảng mới.")
     lines.append("Số trang để trống; khi dựng bản Word, dùng *References → Table of Contents* của Word")
