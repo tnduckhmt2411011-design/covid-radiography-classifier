@@ -1052,7 +1052,7 @@ def add_cover(
         for idx, blk in enumerate(blocks):
             if idx == 0:
                 for j, line in enumerate(blk):
-                    _add_cover_line(doc, line, size_pt=14.0, space_after=4.0, space_before=56.0 if j == 0 else 0.0)
+                    _add_cover_line(doc, line, size_pt=14.0, space_after=4.0, space_before=66.0 if j == 0 else 0.0)
                 p_logo = doc.add_paragraph()
                 p_logo.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 p_logo.paragraph_format.first_line_indent = Cm(0)
@@ -1080,7 +1080,18 @@ def add_cover(
                 for line in blk:
                     _add_cover_line(doc, line, size_pt=13.0, space_after=4.0)
     else:
-        for b_idx, blk in enumerate(blocks):
+        # Word/WPS bỏ qua space_before ở đầu trang ngay sau ngắt trang, nên chèn dòng đệm cố định chiều cao dòng
+        p_top = doc.add_paragraph()
+        p_top.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_top.paragraph_format.first_line_indent = Cm(0)
+        p_top.paragraph_format.left_indent = Cm(0)
+        p_top.paragraph_format.right_indent = Cm(1.0)
+        p_top.paragraph_format.space_before = Pt(0)
+        p_top.paragraph_format.space_after = Pt(0)
+        p_top.paragraph_format.line_spacing = Pt(64)
+        r_top = p_top.add_run("\u00a0")
+        _set_run_font(r_top, FONT_NAME, size_pt=1.0)
+        for blk in blocks:
             for j, line in enumerate(blk):
                 sz = 16.0 if j == 1 else (14.0 if j == 0 else 13.0)
                 _add_cover_line(
@@ -1088,7 +1099,6 @@ def add_cover(
                     line,
                     size_pt=sz,
                     space_after=14.0 if j == 1 else 4.0,
-                    space_before=56.0 if (b_idx == 0 and j == 0) else 0.0,
                 )
         _add_cover_line(doc, "", size_pt=13.0, space_after=24.0)
         _add_cover_line(doc, "**Cần Thơ – Tháng 11/2026**", size_pt=13.0, space_after=0.0)

@@ -352,11 +352,18 @@ def test_cover_margins_clear_border() -> None:
     for is_sub in (False, True):
         doc = brd.new_document()
         brd.add_section_break(doc, "none", None)
+        if is_sub:
+            doc.add_page_break()
         brd.add_cover(doc, cover_md, border_png, subtitle=is_sub)
         sec = doc.sections[0]
-        first_p = doc.paragraphs[0]
-        assert first_p.paragraph_format.space_before is not None and first_p.paragraph_format.space_before >= Pt(48)
-        for p in doc.paragraphs:
+        cover_paras = doc.paragraphs[1:] if is_sub else doc.paragraphs
+        first_p = cover_paras[0]
+        if is_sub:
+            assert first_p.text == "\u00a0"
+            assert first_p.paragraph_format.line_spacing >= Pt(56)
+        else:
+            assert first_p.paragraph_format.space_before is not None and first_p.paragraph_format.space_before >= Pt(64)
+        for p in cover_paras:
             left_cm = sec.left_margin.cm + (p.paragraph_format.left_indent.cm if p.paragraph_format.left_indent else 0.0)
             right_cm = sec.right_margin.cm + (p.paragraph_format.right_indent.cm if p.paragraph_format.right_indent else 0.0)
             assert abs(left_cm - right_cm) < 0.05
