@@ -28,7 +28,6 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
   - 1.3. Phạm vi nghiên cứu và ranh giới kỹ thuật
   - 1.4. Đóng góp của đề tài
   - 1.5. Cấu trúc báo cáo
-  - Tài liệu tham khảo phát sinh trong chương
 - CHƯƠNG 2. DỮ LIỆU VÀ PHƯƠNG PHÁP NGHIÊN CỨU
   - 2.1. Nguồn gốc bộ dữ liệu và độ tin cậy thông tin
   - 2.2. Phân tích khám phá dữ liệu và nguy cơ học lối tắt từ độ sáng và metadata tệp
@@ -43,7 +42,6 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
   - 2.7. Chuẩn hóa dữ liệu, StandardScaler chỉ fit trên train
   - 2.8. Sáu thuật toán phân loại và không gian siêu tham số
   - 2.9. Phương pháp đánh giá thống kê và bootstrap ghép cặp
-  - Tài liệu tham khảo phát sinh trong chương
 - CHƯƠNG 3. KẾT QUẢ RQ1 VÀ RQ2 TRÊN TẬP VALIDATION
   - 3.1. RQ1: bốn nhóm đặc trưng trên Random Forest
   - 3.2. Kiểm định thống kê và quyết định chọn nhóm ghép
@@ -63,7 +61,6 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
     - 5.5.2. Giao diện Streamlit và các thành phần tương tác
     - 5.5.3. Cảnh báo y khoa tích hợp trong ứng dụng
     - 5.5.4. Độ trễ suy luận thực tế
-  - Tài liệu tham khảo phát sinh trong chương
 - CHƯƠNG 6. THẢO LUẬN, GIỚI HẠN VÀ HƯỚNG PHÁT TRIỂN
   - 6.1. Thảo luận kết quả đạt được
   - 6.2. Giới hạn nghiên cứu
@@ -121,7 +118,7 @@ Số trang để trống; khi dựng bản Word, dùng *References → Table of 
 - **Bảng A.1:** Thông số mô hình đóng băng
 - **Bảng A.2:** Biến môi trường của ứng dụng demo
 - **Bảng B.1:** Cấu trúc thư mục cấp một của kho
-- **Bảng B.2:** 30 module kiểm thử và số phép kiểm thử (380 phép)
+- **Bảng B.2:** 30 module kiểm thử và số phép kiểm thử (382 phép)
 - **Bảng C.1:** Lưới siêu tham số của sáu bộ phân loại
 - **Bảng C.2:** Siêu tham số chọn qua 5-fold CV và Macro-F1 validation của sáu bộ phân loại
 - **Bảng C.3:** Chi phí huấn luyện của sáu bộ phân loại (giây CPU)

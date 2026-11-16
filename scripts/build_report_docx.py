@@ -163,6 +163,34 @@ def strip_technical_notes(md: str) -> str:
     return "\n".join(out) + ("\n" if out else "")
 
 
+def strip_chapter_refs(md: str) -> str:
+    """Loại bỏ mục `## Tài liệu tham khảo phát sinh trong chương` (đã gộp về cuối quyển)."""
+    out: list[str] = []
+    in_refs = False
+    for line in md.splitlines():
+        s = line.strip()
+        if re.match(r"^##\s+Tài liệu tham khảo phát sinh\b", s, re.IGNORECASE):
+            in_refs = True
+            continue
+        if in_refs and re.match(r"^#{1,2}\s+", s):
+            in_refs = False
+        if not in_refs:
+            out.append(line)
+    while out and out[-1].strip() in ("", "---"):
+        out.pop()
+    return "\n".join(out) + ("\n" if out else "")
+
+
+_FOOTNOTE_SYMBOLS = ("†", "‡", "§", "¶")
+
+
+def _footnote_marker(num: int) -> str:
+    """Ký hiệu chú thích chân trang tách biệt hẳn với trích dẫn IEEE `[n]`."""
+    if 1 <= num <= len(_FOOTNOTE_SYMBOLS):
+        return _FOOTNOTE_SYMBOLS[num - 1]
+    return f"(ct{num})"
+
+
 def extract_footnote_defs(md: str) -> dict[str, str]:
     """Trích các định nghĩa chú thích chân trang dạng `[^key]: nội dung`."""
     defs: dict[str, str] = {}
@@ -408,7 +436,7 @@ def _render_inline_tokens(
             elif chunk.startswith("[^") and chunk.endswith("]"):
                 key = chunk[2:-1]
                 num = footnote_map.setdefault(key, len(footnote_map) + 1)
-                r = para.add_run(f"[{num}]")
+                r = para.add_run(_footnote_marker(num))
                 _set_run_font(r, FONT_NAME, size_pt=size_pt)
                 r.font.superscript = True
             else:
@@ -801,7 +829,7 @@ def render_markdown(
             p.paragraph_format.space_before = Pt(2)
             p.paragraph_format.space_after = Pt(2)
             p.paragraph_format.line_spacing = 1.15
-            r_num = p.add_run(f"[{num}] ")
+            r_num = p.add_run(f"{_footnote_marker(num)} ")
             _set_run_font(r_num, FONT_NAME, size_pt=10.5)
             r_num.bold = True
             fn_tokens = parser.parseInline(local_defs[key], {})
@@ -1139,7 +1167,7 @@ def build_docx(report_dir: Path, out_path: Path) -> Path:
     add_section_break(doc, "decimal", 1)
     fn_state: dict[str, int] = {}
     for fname in chapter_files:
-        clean = strip_technical_notes(raw_chapters[fname])
+        clean = strip_chapter_refs(strip_technical_notes(raw_chapters[fname]))
         render_markdown(
             doc,
             clean,

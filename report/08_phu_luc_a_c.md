@@ -14,7 +14,7 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 380 phép kiểm thử trong 30 module đã thu thập và kiểm chứng (357 pass trên môi trường `.venv-demo` của ứng dụng, 21/21 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
+Toàn bộ 382 phép kiểm thử trong 30 module đã thu thập và kiểm chứng (357 pass trên môi trường `.venv-demo` của ứng dụng, 23/23 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
@@ -113,13 +113,13 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 30 module kiểm thử và số phép kiểm thử (380 phép)**
+**Bảng B.2: 30 module kiểm thử và số phép kiểm thử (382 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
 | `test_audit_report.py` | 8 |
 | `test_bootstrap.py` | 13 |
-| `test_build_report_docx.py` | 21 |
+| `test_build_report_docx.py` | 23 |
 | `test_dataset_grayscale.py` | 1 |
 | `test_eda_brightness.py` | 11 |
 | `test_error_analysis.py` | 2 |
@@ -147,9 +147,9 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
 | `test_val_near_duplicate_subset.py` | 4 |
-| **Tổng cộng** | **380** |
+| **Tổng cộng** | **382** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 357 pass và 23 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 21 phép dựng tệp Word cần `python-docx`); 21/21 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 380 phép kiểm thử trong 30 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 357 pass và 25 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 23 phép dựng tệp Word cần `python-docx`); 23/23 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 382 phép kiểm thử trong 30 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py

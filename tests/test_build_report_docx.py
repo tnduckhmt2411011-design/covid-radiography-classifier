@@ -364,6 +364,28 @@ def test_fonts_all_times_new_roman(tmp_path: Path) -> None:
         assert r.font.name in ("Times New Roman", "Consolas"), r.font.name
 
 
+def test_no_intermediate_chapter_refs(tmp_path: Path) -> None:
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    all_txt = "\n".join(p.text for p in doc.paragraphs)
+    assert "Tài liệu tham khảo phát sinh" not in all_txt
+    h1_refs = [p for p in doc.paragraphs if p.style.name == "Heading 1" and p.text.strip() == "TÀI LIỆU THAM KHẢO"]
+    assert len(h1_refs) == 1
+
+
+def test_footnote_markers_distinct_from_ieee(tmp_path: Path) -> None:
+    docx, _, _, _, brd = _deps()
+    out = brd.build_docx(Path("report"), tmp_path / "out.docx")
+    doc = docx.Document(str(out))
+    refs_idx = next(i for i, p in enumerate(doc.paragraphs) if p.style.name == "Heading 1" and p.text.strip() == "TÀI LIỆU THAM KHẢO")
+    body_paras = doc.paragraphs[:refs_idx]
+    super_texts = [r.text for p in body_paras for r in p.runs if r.font.superscript]
+    assert "†" in super_texts
+    assert "‡" in super_texts
+    assert not any(t.startswith("[") for t in super_texts), super_texts
+
+
 def test_numbers_survive_conversion(tmp_path: Path) -> None:
     docx, _, _, _, brd = _deps()
     out = brd.build_docx(Path("report"), tmp_path / "out.docx")
@@ -371,5 +393,5 @@ def test_numbers_survive_conversion(tmp_path: Path) -> None:
     all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
         c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
     )
-    for num in ("3.174", "0,8714", "71,19%", "380"):
+    for num in ("3.174", "0,8714", "71,19%", "382"):
         assert num in all_txt, num

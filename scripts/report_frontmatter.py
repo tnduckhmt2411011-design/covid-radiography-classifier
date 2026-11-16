@@ -42,7 +42,7 @@ def chapter_structure(name: str) -> list[tuple[int, str]]:
         if not m:
             continue
         level, title = len(m.group(1)), m.group(2).strip()
-        if title.startswith("Ghi chú kỹ thuật"):
+        if title.startswith(("Ghi chú kỹ thuật", "Tài liệu tham khảo phát sinh")):
             continue
         out.append((level, title))
     return out
