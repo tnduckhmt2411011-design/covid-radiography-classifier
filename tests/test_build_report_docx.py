@@ -309,6 +309,32 @@ def test_cover_content() -> None:
     assert anchors and anchors[0].get("behindDoc") == "1"
 
 
+def test_cover_embeds_logo_when_available() -> None:
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
+    cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    border_png = Path("report/figures/khung_trang_bia.png")
+    logo_png = Path("slides/assets/logo_ctut.png")
+    brd.add_cover(doc, cover_md, border_png, subtitle=False, logo_png=logo_png)
+    assert len(doc.inline_shapes) == 1
+    assert abs(doc.inline_shapes[0].width.cm - 3.0) < 0.05
+    full_txt = "\n".join(p.text for p in doc.paragraphs)
+    assert "[Chèn logo CTUT]" not in full_txt
+
+
+def test_cover_placeholder_when_logo_missing(tmp_path: Path) -> None:
+    _, _, _, _, brd = _deps()
+    doc = brd.new_document()
+    brd.add_section_break(doc, "none", None)
+    cover_md = Path("report/00a_trang_bia_va_loi.md").read_text(encoding="utf-8")
+    border_png = Path("report/figures/khung_trang_bia.png")
+    brd.add_cover(doc, cover_md, border_png, subtitle=False, logo_png=tmp_path / "missing.png")
+    assert len(doc.inline_shapes) == 0
+    full_txt = "\n".join(p.text for p in doc.paragraphs)
+    assert "[Chèn logo CTUT]" in full_txt
+
+
 def test_table_header_keep_with_next() -> None:
     _, _, _, _, brd = _deps()
     doc = brd.new_document()
@@ -482,5 +508,5 @@ def test_numbers_survive_conversion(tmp_path: Path) -> None:
     all_txt = "\n".join(p.text for p in doc.paragraphs) + "\n" + "\n".join(
         c.text for tbl in doc.tables for row in tbl.rows for c in row.cells
     )
-    for num in ("3.174", "0,8714", "71,19%", "397"):
+    for num in ("3.174", "0,8714", "71,19%", "404"):
         assert num in all_txt, num

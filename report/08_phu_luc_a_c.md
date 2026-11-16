@@ -14,7 +14,7 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 397 phép kiểm thử trong 31 module đã thu thập và kiểm chứng (372 pass trên môi trường `.venv-demo` của ứng dụng, 23/23 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
+Toàn bộ 404 phép kiểm thử trong 31 module đã thu thập và kiểm chứng (373 pass trên môi trường `.venv-demo` của ứng dụng, 29/29 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
@@ -102,24 +102,24 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
 | `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
-| `docs/` | 24 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, bảng rà soát, nhật ký công việc |
+| `docs/` | 26 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, bảng rà soát, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
 | `slides/` | 124 | Bộ slide thuyết trình bảo vệ cuối kỳ (`.pptx`/`.pdf`), mã nguồn dựng slide, hình ảnh và kết xuất SVG/PNG |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
-| **Tổng cộng** | **462** |
+| **Tổng cộng** | **464** |
 
 ### B.2. Danh sách bài kiểm thử
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 31 module kiểm thử và số phép kiểm thử (397 phép)**
+**Bảng B.2: 31 module kiểm thử và số phép kiểm thử (404 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
-| `test_audit_report.py` | 8 |
+| `test_audit_report.py` | 9 |
 | `test_bootstrap.py` | 13 |
-| `test_build_report_docx.py` | 23 |
+| `test_build_report_docx.py` | 29 |
 | `test_dataset_grayscale.py` | 1 |
 | `test_eda_brightness.py` | 11 |
 | `test_error_analysis.py` | 2 |
@@ -148,9 +148,9 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
 | `test_val_near_duplicate_subset.py` | 4 |
-| **Tổng cộng** | **397** |
+| **Tổng cộng** | **404** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 372 pass và 25 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 23 phép dựng tệp Word cần `python-docx`); 23/23 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 397 phép kiểm thử trong 31 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 373 pass và 31 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 29 phép dựng tệp Word cần `python-docx`); 29/29 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 404 phép kiểm thử trong 31 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py

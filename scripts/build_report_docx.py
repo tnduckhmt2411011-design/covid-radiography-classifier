@@ -1033,7 +1033,13 @@ def _add_cover_line(
         _set_run_font(r, FONT_NAME, size_pt=size_pt)
 
 
-def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) -> None:
+def add_cover(
+    doc: Document,
+    md: str,
+    border_png: Path,
+    subtitle: bool = False,
+    logo_png: Path | None = None,
+) -> None:
     """Dựng trang bìa chính (`subtitle=False`) hoặc trang bìa phụ (`subtitle=True`)."""
     if border_png.exists():
         _install_cover_border_behind_text(doc.sections[0], border_png)
@@ -1042,7 +1048,7 @@ def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) 
     blocks = _extract_cover_quote_blocks(md, heading)
 
     if not subtitle:
-        # Khối 1: trường + khoa -> Logo placeholder -> Khối 3: đầu đề -> Khối 4: đề tài -> Khối 5: GVHD & SV -> Khối 6: Cần Thơ
+        # Khối 1: trường + khoa -> Logo -> Khối 3: đầu đề -> Khối 4: đề tài -> Khối 5: GVHD & SV -> Khối 6: Cần Thơ
         for idx, blk in enumerate(blocks):
             if idx == 0:
                 for j, line in enumerate(blk):
@@ -1054,9 +1060,12 @@ def add_cover(doc: Document, md: str, border_png: Path, subtitle: bool = False) 
                 p_logo.paragraph_format.right_indent = Cm(1.0)
                 p_logo.paragraph_format.space_before = Pt(12)
                 p_logo.paragraph_format.space_after = Pt(12)
-                r_logo = p_logo.add_run("[Chèn logo CTUT]")
-                _set_run_font(r_logo, FONT_NAME, size_pt=11.0)
-                r_logo.font.color.rgb = RGBColor(200, 0, 0)
+                if logo_png is not None and logo_png.exists():
+                    p_logo.add_run().add_picture(str(logo_png), width=Cm(3.0))
+                else:
+                    r_logo = p_logo.add_run("[Chèn logo CTUT]")
+                    _set_run_font(r_logo, FONT_NAME, size_pt=11.0)
+                    r_logo.font.color.rgb = RGBColor(200, 0, 0)
             elif idx == 1:
                 for j, line in enumerate(blk):
                     _add_cover_line(doc, line, size_pt=15.0, space_after=12.0 if j == len(blk) - 1 else 4.0)
@@ -1147,7 +1156,8 @@ def build_docx(report_dir: Path, out_path: Path) -> Path:
     # 1–2. Trang bìa chính & trang bìa phụ (không đánh số trang)
     add_section_break(doc, "none", None)
     border_png = report_dir / "figures" / "khung_trang_bia.png"
-    add_cover(doc, raw_00a, border_png, subtitle=False)
+    logo_png = report_dir.resolve().parent / "slides" / "assets" / "logo_ctut.png"
+    add_cover(doc, raw_00a, border_png, subtitle=False, logo_png=logo_png)
     doc.add_page_break()
     add_cover(doc, raw_00a, border_png, subtitle=True)
 
