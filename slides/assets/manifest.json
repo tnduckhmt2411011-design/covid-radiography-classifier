@@ -1,0 +1,67 @@
+{
+  "logo_ctut.png": {
+    "source": "C:\\Users\\LENOVO\\AppData\\Local\\Temp\\opencode\\ctut_logo_clean.png",
+    "sha256": "540e2d1d3e9692adc4ab1cc7e9683ee6d7adcdf698d166fa4aab0e901406df82",
+    "kind": "logo"
+  },
+  "case_correct.png": {
+    "source": "D:\\cxr_data\\COVID-19_Radiography_Dataset\\COVID\\images\\COVID-1006.png",
+    "split": "val",
+    "image_id": "COVID-1006.png",
+    "sha256": "a458174a759540db1b8b5af557728fd89862f85f57ab930881cf60ca9338b7d7",
+    "kind": "xray",
+    "probability": 0.9979,
+    "predicted": "COVID"
+  },
+  "case_error.png": {
+    "source": "D:\\cxr_data\\COVID-19_Radiography_Dataset\\Normal\\images\\Normal-9540.png",
+    "split": "val",
+    "image_id": "Normal-9540.png",
+    "sha256": "e5d093638380f67044fa3c185416dfe1f6017beba1755d728dd0d14c74f6a5d8",
+    "kind": "xray",
+    "probability": 0.97,
+    "predicted": "Lung_Opacity"
+  },
+  "screenshot_demo.png": {
+    "source": "slides/capture_demo.py (Streamlit chạy thật trên 127.0.0.1:8501)",
+    "image_id": "COVID-1006.png",
+    "split": "val",
+    "sha256": "737d79b22fb1a729aa1731f1b82c6400e2984b5d6e435889bb562a490fe4b92b",
+    "kind": "screenshot"
+  },
+  "mask_trio.png": {
+    "source": "D:\\cxr_data\\COVID-19_Radiography_Dataset\\COVID\\images\\COVID-1006.png + D:\\cxr_data\\COVID-19_Radiography_Dataset\\COVID\\masks\\COVID-1006.png",
+    "split": "val",
+    "image_id": "COVID-1006.png",
+    "sha256": "039de4b3ca4e88900ab1d88be1a99664e33bd2f17775a2acc59ed2cfc1250f86",
+    "kind": "mask-trio"
+  },
+  "mask_strip_COVID.png": {
+    "source": "D:\\Use Antigravity\\Medical Vision\\results\\rq3_mask_check\\mask_visual_check_COVID.png",
+    "split": "val",
+    "samples": 20,
+    "sha256": "7d2e9ca4142df93775ad3ee326d624dbeede07e49e779ae2358f2b1a45bbaac9",
+    "kind": "mask"
+  },
+  "mask_strip_Lung_Opacity.png": {
+    "source": "D:\\Use Antigravity\\Medical Vision\\results\\rq3_mask_check\\mask_visual_check_Lung_Opacity.png",
+    "split": "val",
+    "samples": 0,
+    "sha256": "d0afbb5d93d64873a5550c19a9f913803eb59b9cc9145609da98716eec6a2731",
+    "kind": "mask"
+  },
+  "mask_strip_Normal.png": {
+    "source": "D:\\Use Antigravity\\Medical Vision\\results\\rq3_mask_check\\mask_visual_check_Normal.png",
+    "split": "val",
+    "samples": 20,
+    "sha256": "d42069a756004dc35ce65863060d2a834dee328e40db3e74114aedba64baa21a",
+    "kind": "mask"
+  },
+  "mask_strip_Viral_Pneumonia.png": {
+    "source": "D:\\Use Antigravity\\Medical Vision\\results\\rq3_mask_check\\mask_visual_check_Viral_Pneumonia.png",
+    "split": "val",
+    "samples": 20,
+    "sha256": "36b7ca8a1c664eee004eba56d32437e4f793554e91a3bb8840feaefc3d67a6f1",
+    "kind": "mask"
+  }
+}
