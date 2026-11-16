@@ -440,8 +440,9 @@ def test_counts(tmp_path: Path) -> None:
     assert len(cap_tables) == 32
     assert len(cap_figs) == 4
     full_txt = "\n".join(p.text for p in doc.paragraphs)
-    for idx in range(1, 14):
+    for idx in range(1, 6):
         assert f"[{idx}] " in full_txt
+    assert "[6] " not in full_txt
 
 
 def test_no_technical_notes_and_no_paths(tmp_path: Path) -> None:

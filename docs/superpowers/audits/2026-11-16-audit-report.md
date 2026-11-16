@@ -37,8 +37,8 @@
 
 Kiểm tra trực tiếp bằng `python-docx` (độc lập với `scripts/build_report_docx.py`) đối chiếu với số đếm từ `report/*.md` (trừ `README.md`, `00c` và phần `Ghi chú kỹ thuật`):
 
-- **Tệp đầu ra:** `report/dist/BaoCao_BTL_HocMay_Nhom10.docx` (`537.174` bytes).
-- **Số đoạn (`paragraphs`):** `400` đoạn (sau khi chuyển `2 × 6` dòng `SV Thực hiện:` ở bìa chính và bìa phụ vào 2 bảng không viền).
+- **Tệp đầu ra:** `report/dist/BaoCao_BTL_HocMay_Nhom10.docx` (`536.323` bytes).
+- **Số đoạn (`paragraphs`):** `392` đoạn (sau khi chuyển `2 × 6` dòng `SV Thực hiện:` ở bìa chính và bìa phụ vào 2 bảng không viền và rút gọn Tài liệu tham khảo từ 13 mục còn 5 mục cốt lõi `[1]`–`[5]`).
 - **Số bảng (`tables`):** `36` bảng trong `.docx` = `34` bảng pipe trong các tệp `.md` (`32` bảng có chú thích `Bảng X.Y`, `2` bảng ký hiệu trong `00b`) + `2` bảng không viền `6 hàng × 2 cột` cho danh sách `SV Thực hiện:` ở hai trang bìa.
 - **Số hình (`inline_shapes`):** `5` hình trong `.docx` — gồm `4` hình nội dung (`Hình 2.1`, `3.1`, `4.1`, `5.1`) và `1` logo CTUT trên bìa chính (`slides/assets/logo_ctut.png`, rộng `3,0 cm`), kèm `1` ảnh khung viền trang bìa `wp:anchor` đặt lớp *Behind Text* trong header section 0.
 - **Số section (`sections`):** `3` section — section 0 (bìa chính & bìa phụ): không đánh số; section 1 (mở đầu quyển): `lowerRoman`, `start="1"`; section 2 (Chương 1–6, Tài liệu tham khảo, Phụ lục): `decimal`, `start="1"`.

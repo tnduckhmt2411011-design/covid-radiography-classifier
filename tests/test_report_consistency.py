@@ -96,25 +96,22 @@ def test_appendix_c1_class_weight_sentence() -> None:
 
 
 def test_reference_list_contiguous_and_matches_ch5() -> None:
-    """Danh muc 07 phai co [1]..[13] lien tuc; hai muc cuoi khop danh muc Chuong 5."""
+    """Danh muc 07 phai co [1]..[5] lien tuc, khop Chuong 1, va Chuong 2/5 khong phat sinh muc moi."""
     ref = (REPORT / "07_tai_lieu_tham_khao.md").read_text(encoding="utf-8")
     numbered: dict[int, str] = {}
     for line in ref.splitlines():
         m = re.match(r"\[(\d+)\] ", line)
         if m:
             numbered[int(m.group(1))] = line
-    assert sorted(numbered) == list(range(1, 14)), sorted(numbered)
-    ch5 = (REPORT / "05_ket_qua_test_va_trien_khai.md").read_text(encoding="utf-8")
-    for n in (12, 13):
-        assert numbered[n] in ch5, f"[{n}] khong khop danh muc Chuong 5"
-    # Cau dan danh muc Chuong 5 phai tro dung so bat dau cua danh muc do.
-    ch5_numbers = [int(m.group(1)) for line in ch5.splitlines()
-                   if (m := re.match(r"\[(\d+)\] ", line))]
-    assert ch5_numbers, "danh muc Chuong 5 rong"
-    lead = re.search(r"đánh tiếp từ \[(\d+)\]", ch5)
-    assert lead, "thieu cau dan 'danh tiep tu [n]' o Chuong 5"
-    assert int(lead.group(1)) == min(ch5_numbers), (
-        f"cau dan ghi [{lead.group(1)}], danh muc bat dau [{min(ch5_numbers)}]")
+    assert sorted(numbered) == list(range(1, 6)), sorted(numbered)
+    ch1 = (REPORT / "01_gioi_thieu.md").read_text(encoding="utf-8")
+    for n in range(1, 6):
+        assert numbered[n] in ch1, f"[{n}] khong khop danh muc Chuong 1"
+    for extra_chap in ("02_du_lieu_va_phuong_phap.md", "05_ket_qua_test_va_trien_khai.md"):
+        txt = (REPORT / extra_chap).read_text(encoding="utf-8")
+        extra_nums = [int(m.group(1)) for line in txt.splitlines()
+                      if (m := re.match(r"\[(\d+)\] ", line))]
+        assert extra_nums == [], f"{extra_chap} van con muc tham khao phat sinh: {extra_nums}"
 
 
 def test_ch2_near_duplicate_claim_matches_json() -> None:

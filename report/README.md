@@ -61,7 +61,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 1.1 | Bối cảnh và lý do chọn đề tài | Nguồn ngoài: Chowdhury et al. (2020), Kermany et al. (2018). Số liệu dịch tễ phải có trích dẫn, không dùng số không nguồn |
+| 1.1 | Bối cảnh và lý do chọn đề tài | Nguồn ngoài: Chowdhury et al. (2020), Rahman et al. (2021), Geirhos et al. (2020), Zech et al. (2018). Số liệu dịch tễ phải có trích dẫn, không dùng số không nguồn |
 | 1.2 | Mục tiêu và ba câu hỏi nghiên cứu RQ1–RQ3 | `results/threshold_v3.md` Mục 1 |
 | 1.3 | Phạm vi nghiên cứu và ranh giới kỹ thuật (Cổng H7) | `results/threshold_v3.md` Mục 4 (H7); `tests/` kiểm tra cấm import học sâu |
 | 1.4 | Đóng góp của đề tài | Tổng hợp từ Chương 3–5 |
@@ -128,7 +128,7 @@ Bố cục 6 chương theo [`docs/report_standards.md`](../docs/report_standards
 
 | # | Mục | Nguồn |
 | :-: | :--- | :--- |
-| 1 | Tài liệu tham khảo (IEEE `[1]`-`[13]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); gộp từ danh mục cuối Chương 1 (`[1]`-`[10]`), Chương 2 (`[11]`) và Chương 5 (`[12]`, `[13]`) |
+| 1 | Tài liệu tham khảo (IEEE `[1]`-`[5]`) | [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md); giữ năm tài liệu cốt lõi từ Chương 1 (`[1]`-`[5]`) |
 | 2 | Phụ lục A: cài đặt, tải mô hình từ Hugging Face và vận hành demo | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục A; `demo/README.md`; `src/model_artifact.py` |
 | 3 | Phụ lục B: cấu trúc kho mã nguồn và danh sách bài kiểm thử | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục B; `tests/`; 405 phép kiểm thử trong 31 module (đếm tại thời điểm nộp), sinh bởi `scripts/report_appendix_b.py` |
 | 4 | Phụ lục C: lưới siêu tham số và tham số chọn của sáu bộ phân loại | [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md) mục C; `src/rq2_runner.py` (`PARAM_GRIDS`); `results/rq2_classifier_selection_record.md`; `results/rq2_cost_rank_record.md` |
@@ -163,10 +163,10 @@ Không dùng: `results/rq3_shortcut_learning_conclusion.md` như nguồn số li
 - Chương 2 đủ 12 tiểu mục; Chương 3 đủ 4 tiểu mục; Chương 4 đủ 3 tiểu mục; Chương 5 đủ 8 tiểu mục kèm Hình 5.1; Chương 6 đủ 5 tiểu mục kèm Bảng 6.1.
 - Hai đợt rà soát đã xong và đã sửa: rà số liệu toàn bộ 6 chương (PR #59), rà theo review senior của Chương 5–6 (PR #58, #59) và đợt rà toàn quyển ngày 16/11/2026 (`docs/superpowers/audits/2026-11-16-audit-report.md`). Số liệu kiểm thử trong Chương 5 đo lại: 405 phép kiểm thử trong 31 module.
 - Tóm tắt tiếng Việt và Abstract đã hoàn chỉnh tại [`09_tom_tat_abstract.md`](09_tom_tat_abstract.md); MSSV đã có đủ và đã ghi trên bìa. Chương 3 chưa đưa vào: thời gian huấn luyện của từng bộ phân loại (đã có ở Phụ lục C.3), chỉ số theo từng seed riêng lẻ, phân tích lỗi theo mức độ tin cậy chi tiết hơn.
-- Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo gộp `[1]`-`[13]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
+- Mở đầu quyển đã viết: [`00a_trang_bia_va_loi.md`](00a_trang_bia_va_loi.md) (bìa chính, bìa phụ, lời cảm ơn, lời cam đoan), [`00b_danh_muc_ky_hieu.md`](00b_danh_muc_ky_hieu.md), [`00c_muc_luc_va_danh_muc.md`](00c_muc_luc_va_danh_muc.md) (mục lục, 32 bảng, 4 hình — sinh bởi `scripts/report_frontmatter.py`). Phần cuối quyển đã viết: tài liệu tham khảo rút gọn năm mục cốt lõi `[1]`-`[5]` tại [`07_tai_lieu_tham_khao.md`](07_tai_lieu_tham_khao.md) và Phụ lục A–C tại [`08_phu_luc_a_c.md`](08_phu_luc_a_c.md).
 - Khung viền bìa: `report/figures/khung_trang_bia.png` (A4, 300 DPI) sinh bởi `python scripts/make_cover_border.py`.
 - Xuất bản Word ghép toàn quyển (bị `.gitignore` loại trừ khỏi git): chạy `python -m scripts.build_report_docx --out report/dist/BaoCao_BTL_HocMay_Nhom10.docx`. Khi mở tệp trong Microsoft Word để hoàn thiện trước nộp/in:
   1. Logo bìa chính hiện lấy tự động từ `slides/assets/logo_ctut.png` (rộng `3,0 cm`); thay tệp nếu cần bản khác hoặc kiểm lại bản chính thức của trường.
   2. Bấm `Ctrl+A` rồi `F9` (chọn *Update entire table*) để điền số trang thật cho **Mục lục**, **Danh mục bảng biểu** và **Danh mục hình ảnh** (mục lục mặc định bắt đầu từ `CHƯƠNG 1.` đến `PHỤ LỤC`; nếu hội đồng yêu cầu đưa các mục mở đầu có style `Front Title` vào mục lục, sửa switch field mục lục thành `TOC \o "1-3" \h \z \u \t "Front Title,1"` rồi `F9` lại).
-  3. Chú thích `[^mooney]` và `[^covid-src]` đã được tách ký hiệu thành `†` và `‡` ở cuối Chương 1 và Chương 2 để không trùng với trích dẫn `[1]–[13]`; nếu muốn đặt ở chân trang vật lý chuẩn Word, dùng *References → Insert Footnote* tại hai vị trí đó rồi xóa dòng chú thích cuối chương tương ứng.
+  3. Chú thích `[^mooney]` và `[^covid-src]` đã được tách ký hiệu thành `†` và `‡` ở cuối Chương 1 và Chương 2 để không trùng với trích dẫn `[1]–[5]`; nếu muốn đặt ở chân trang vật lý chuẩn Word, dùng *References → Insert Footnote* tại hai vị trí đó rồi xóa dòng chú thích cuối chương tương ứng.
   4. Rà mắt ngắt trang và độ xuống dòng của các bảng rộng (như Bảng 4.2, Bảng 6.1 và Phụ lục C), sau đó kiểm tra trùng lặp bằng Turnitin theo quy chế.

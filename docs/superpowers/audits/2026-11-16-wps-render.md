@@ -41,15 +41,15 @@
 
 ---
 
-## Sau khi sửa (Task 6 & bảng bìa không viền — `report/dist/BaoCao_BTL_HocMay_Nhom10.docx`, `537.174` bytes)
+## Sau khi sửa (Task 6, bảng bìa không viền & rút gọn tài liệu tham khảo — `report/dist/BaoCao_BTL_HocMay_Nhom10.docx`, `536.323` bytes)
 
-- **Tệp PDF xuất lại qua WPS Office:** `63` trang (`2.409.238` bytes), xuất sạch không lỗi hay hộp thoại.
+- **Tệp PDF xuất lại qua WPS Office:** `62` trang (`2.404.266` bytes), xuất sạch không lỗi hay hộp thoại.
 - **Đối chiếu từng hạng mục sau sửa:**
   - **Bìa chính (`P01`):** **1 trang** (`y = [4,27; 26,38] cm`, `x = [3,00; 18,02] cm`); logo CTUT (`slides/assets/logo_ctut.png`, rộng `3,0 cm`) hiển thị sắc nét ngay dưới tên khoa; khối `SV Thực hiện:` dùng bảng 2 cột không viền (`6,6 cm + 3,5 cm`, `tblInd = 2,45 cm`, cân giữa trang), cột trái căn trái họ tên và cột phải căn phải MSSV tới `x = 15,4 cm` hoàn toàn trong khung viền, không còn điểm nào chạm họa tiết hoa góc trên/dưới.
   - **Bìa phụ (`P02`):** **1 trang** (`y = [4,19; 20,53] cm`, `x = [3,37; 17,63] cm`); nhờ dòng đệm cố định `line_spacing = 64 pt` đầu trang 2 (tránh bị Word/WPS bỏ `space_before` ngay sau `w:br`), toàn bộ tiêu đề bìa phụ nằm hoàn toàn trong lòng trắng khung viền; bảng `SV Thực hiện:` 2 cột không viền hiển thị trọn 6 dòng tới `x = 15,4 cm` gọn trên một trang.
   - **TÓM TẮT (`P05`, `iii`) và ABSTRACT (`P06`, `iv`):** mỗi bản nằm trọn **1 trang**.
   - **Công thức `(2.1)` (`P21`, tr. 9):** phân số hiển thị căn giữa kèm số `(2.1)` sát lề phải.
   - **Chương 4 (`P34–P35`, tr. 22–23):** bảng ánh xạ 5 kịch bản đã chuyển thành danh sách gạch đầu dòng gọn trên trang `P34`; Bảng 4.1 (`P35`) và Bảng 4.2 không bị cắt ngang (`max_x ≤ 19,00 cm`).
-  - **Bảng 6.1 (`P48`, tr. 36) và Phụ lục (`P56–P63`, tr. 44–51):** mã và bảng `Bảng A.1` (kể cả chuỗi SHA-256 dài 64 ký tự) hiển thị bằng `Times New Roman`, vừa gọn một dòng trong cột `Giá trị`; **`Bảng B.2` (`P59`, tr. 47) đã giữ hàng tiêu đề đi cùng hai hàng dữ liệu đầu**, hết tình trạng tiêu đề đứng trơ ở đáy trang.
+  - **Bảng 6.1 (`P48`, tr. 36), Tài liệu tham khảo (`P54`, tr. 42) và Phụ lục (`P55–P62`, tr. 43–50):** danh mục 5 tài liệu tham khảo cốt lõi `[1]`–`[5]` nằm gọn trên **1 trang** (`P54`); mã và bảng `Bảng A.1` (kể cả chuỗi SHA-256 dài 64 ký tự) hiển thị bằng `Times New Roman`, vừa gọn một dòng trong cột `Giá trị`; **`Bảng B.2` (`P57–P58`) giữ hàng tiêu đề đi cùng hàng dữ liệu đầu**, hết tình trạng tiêu đề đứng trơ ở đáy trang.
   - **Mục lục / Danh mục bảng / Danh mục hình (`P07`, `P11`, `P12`):** vẫn cần mở bằng Word (hoặc WPS Writer) và cập nhật trường (`Ctrl+A` → `F9`) để điền số trang thật; hành vi trường động này vẫn là **"chưa kết luận"** trên Microsoft Word cho tới khi bạn mở và nhấn `F9` trước lúc in.
   - **Độ xuống dòng cột hẹp (`Bảng 4.1`, `Bảng C.2`):** cột `95% CI` xuống 2 dòng tại dấu `;`, không mất chữ (`chưa kết luận` so với autofit trên Microsoft Word).

@@ -78,11 +78,11 @@ Bản ghi mở khóa lưu mốc thời gian, mã commit, băm SHA-256 của tệ
 
 ### 5.5.1. Pipeline suy luận từ ảnh xám 299×299 đến xác suất dự đoán
 
-Pipeline gồm năm bước. Tên tệp bị từ chối trước khi giải mã nếu trùng với một ảnh thuộc tập test; cổng này đối chiếu theo tên tệp chứ không theo nội dung ảnh, nên đổi tên tệp là qua được, và nó chống nhầm lẫn chứ không chống cố ý. Ảnh tải lên được giải mã thành ảnh xám và đổi cỡ về 299 × 299 nếu cần, kèm cảnh báo khi ảnh bị đổi cỡ. Từ ảnh xám, pipeline trích 152 đặc trưng (histogram 64, GLCM 60, LBP 28), chuẩn hóa bằng StandardScaler đã fit trên tập train, rồi dự đoán bằng SVC kernel RBF đã đóng băng; đầu ra là xác suất của bốn lớp. Bộ chuẩn hóa và bộ phân loại được nạp từ một artifact duy nhất, kiểm tra băm SHA-256 trước khi nạp; artifact được đăng công khai trên Hugging Face Hub [12]. Cổng tương đương chạy 200 ảnh validation (seed 42) cho khớp nhãn 200/200 với kết quả của pipeline huấn luyện. Toàn bộ pipeline chỉ dùng thư viện học máy cổ điển (mục 1.3).
+Pipeline gồm năm bước. Tên tệp bị từ chối trước khi giải mã nếu trùng với một ảnh thuộc tập test; cổng này đối chiếu theo tên tệp chứ không theo nội dung ảnh, nên đổi tên tệp là qua được, và nó chống nhầm lẫn chứ không chống cố ý. Ảnh tải lên được giải mã thành ảnh xám và đổi cỡ về 299 × 299 nếu cần, kèm cảnh báo khi ảnh bị đổi cỡ. Từ ảnh xám, pipeline trích 152 đặc trưng (histogram 64, GLCM 60, LBP 28), chuẩn hóa bằng StandardScaler đã fit trên tập train, rồi dự đoán bằng SVC kernel RBF đã đóng băng; đầu ra là xác suất của bốn lớp. Bộ chuẩn hóa và bộ phân loại được nạp từ một artifact duy nhất, kiểm tra băm SHA-256 trước khi nạp; artifact được đăng công khai trên Hugging Face Hub (kho `duc16/cxr-svm-demo`, chi tiết ở Phụ lục A). Cổng tương đương chạy 200 ảnh validation (seed 42) cho khớp nhãn 200/200 với kết quả của pipeline huấn luyện. Toàn bộ pipeline chỉ dùng thư viện học máy cổ điển (mục 1.3).
 
 ### 5.5.2. Giao diện Streamlit và các thành phần tương tác
 
-Giao diện viết bằng Streamlit [13]. Khu tải ảnh nhận PNG/JPG tối đa 10 MB. Khu kết quả hiển thị nhãn dự đoán, biểu đồ cột xác suất bốn lớp và bảng xác suất; khu ảnh hiển thị ảnh sau tiền xử lý kèm nút tải về dạng PNG. Thanh bên hiển thị ba số đo đã công bố – macro-F1 validation 0,9024, macro-F1 test 0,8714 và chênh lệch −0,0310 – đọc trực tiếp từ tệp kết quả, không ghi cứng trong mã. Ảnh tải lên chỉ nằm trong bộ nhớ của phiên; ứng dụng không ghi ảnh xuống đĩa và không ghi nội dung ảnh vào nhật ký.
+Giao diện viết bằng thư viện Streamlit. Khu tải ảnh nhận PNG/JPG tối đa 10 MB. Khu kết quả hiển thị nhãn dự đoán, biểu đồ cột xác suất bốn lớp và bảng xác suất; khu ảnh hiển thị ảnh sau tiền xử lý kèm nút tải về dạng PNG. Thanh bên hiển thị ba số đo đã công bố – macro-F1 validation 0,9024, macro-F1 test 0,8714 và chênh lệch −0,0310 – đọc trực tiếp từ tệp kết quả, không ghi cứng trong mã. Ảnh tải lên chỉ nằm trong bộ nhớ của phiên; ứng dụng không ghi ảnh xuống đĩa và không ghi nội dung ảnh vào nhật ký.
 
 ### 5.5.3. Cảnh báo y khoa tích hợp trong ứng dụng
 
@@ -108,16 +108,6 @@ Bảng 5.5 lấy từ bản ghi thứ hai. Mỗi ảnh có ba giá trị, và ph
 Chi phí trích đặc trưng chiếm khoảng 90% thời gian đầu-cuối (Bảng 5.5). Suy luận của riêng bộ phân loại tốn 9,2 ms ở mức trung vị; mô hình có 6.180 vector hỗ trợ. Thời gian nạp artifact từ đĩa, sau khi kiểm băm, là 5,2 ms.
 
 Ba giới hạn của số đo này: (1) độ trễ phụ thuộc phần cứng, nên con số trên mang tính minh họa cho môi trường đã ghi, không phải của máy chủ Streamlit Community Cloud; (2) chỉ đo trên ảnh 299×299 của bộ dữ liệu, nhánh đổi cỡ của ứng dụng chưa được đo; (3) tải artifact 7,8 MB từ Hugging Face ở lần khởi động lạnh không tính vào độ trễ suy luận vì phụ thuộc mạng. Làm mốc đối chiếu, bản ghi chi phí của RQ1 đo trích đặc trưng nhóm ghép trên Kaggle CPU ở mức 0,056773 giây CPU mỗi ảnh (17.989 ảnh); phép đó dùng đồng hồ CPU time trên máy khác nên hai con số không so trực tiếp được.
-
----
-
-## Tài liệu tham khảo phát sinh trong chương
-
-Các mục dưới đây đánh số tiếp theo cơ chế của Chương 1 (tài liệu của các chương sau đánh tiếp từ [12]).
-
-[12] Nhóm 10, Lớp Khoa học máy tính 2024, "cxr-svm-demo: artifact bộ phân loại CXR bốn lớp," Hugging Face Hub, 2026. [Online]. Available: https://huggingface.co/duc16/cxr-svm-demo. [Accessed: 12-11-2026].
-
-[13] Streamlit, "Streamlit documentation," 2026. [Online]. Available: https://docs.streamlit.io/. [Accessed: 12-11-2026].
 
 ---
 

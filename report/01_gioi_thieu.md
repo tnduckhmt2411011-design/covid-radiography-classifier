@@ -6,9 +6,9 @@
 
 Bộ dữ liệu COVID-19 Radiography Database tập hợp 21.165 ảnh CXR thuộc bốn lớp: Normal 10.192 ảnh, Lung_Opacity 6.012 ảnh, COVID 3.616 ảnh và Viral Pneumonia 1.345 ảnh [1], [2]. Lớp lớn nhất nhiều gấp 7,6 lần lớp nhỏ nhất. Với phân bố lệch như vậy, một bộ phân loại luôn dự đoán Normal vẫn đạt accuracy xấp xỉ 48% nhưng chỉ đạt macro-F1 0,1627. Đề tài vì thế lấy macro-F1 làm thước đo chính và ghi mốc B0 = 0,1627 làm ngưỡng tầm thường mà mọi cấu hình phải vượt.
 
-Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney[^mooney]; 1.341 trong số 10.192 ảnh Normal cũng từ nguồn này, còn 18.479 ảnh do Chowdhury và cộng sự tập hợp [1], [2]. Nhiều khả năng các ảnh của Mooney là X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Nhãn Viral Pneumonia trùng với một nguồn duy nhất, nên mô hình có thể đạt điểm cao trên lớp này nhờ nhận ra khung viền, độ sáng nền hoặc cách xử lý hậu kỳ đặc trưng của nguồn đó, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [4]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [5]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế. Đề tài kiểm tra khả năng đó bằng phép che vùng ảnh ở RQ3, không tách riêng từng loại dấu vết.
+Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn thu thập. Toàn bộ 1.345 ảnh Viral Pneumonia lấy từ một bộ dữ liệu Kaggle riêng của P. Mooney[^mooney]; 1.341 trong số 10.192 ảnh Normal cũng từ nguồn này, còn 18.479 ảnh do Chowdhury và cộng sự tập hợp [1], [2]. Nhiều khả năng các ảnh của Mooney là X-quang nhi khoa. Nhãn Viral Pneumonia trùng với một nguồn duy nhất, nên mô hình có thể đạt điểm cao trên lớp này nhờ nhận ra khung viền, độ sáng nền hoặc cách xử lý hậu kỳ đặc trưng của nguồn đó, trong khi không hề định vị tổn thương phổi. Geirhos và cộng sự gọi hiện tượng này là học lối tắt (shortcut learning) [3]. Zech và cộng sự ghi nhận mô hình phát hiện viêm phổi từ CXR giảm hiệu năng khi chuyển sang bệnh viện khác, kèm bằng chứng mô hình khai thác dấu hiệu đặc thù của cơ sở dữ liệu huấn luyện [4]. Bộ dữ liệu ghép từ nhiều nguồn nên nguy cơ trên là thực tế. Đề tài kiểm tra khả năng đó bằng phép che vùng ảnh ở RQ3, không tách riêng từng loại dấu vết.
 
-Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng scikit-learn [6] chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng cho biết vai trò của vùng đó.
+Đề tài dùng học máy cổ điển vì học phần quy định như vậy. Cách làm này cũng thuận cho việc đo đóng góp của từng nhóm đặc trưng: mỗi chiều đặc trưng ứng với một phép đo xác định trên ảnh nên so sánh thực nghiệm tách riêng được phần đóng góp của histogram, GLCM kết hợp LBP hay HOG. Toàn bộ pipeline trích đặc trưng thủ công rồi phân loại bằng thư viện scikit-learn chạy trên CPU, không cần GPU, tái lập được từ một tệp cấu hình. Khi thay vùng ảnh đưa vào trích đặc trưng, mức thay đổi hiệu năng cho biết vai trò của vùng đó.
 
 Đề tài đặt ba câu hỏi nối tiếp trên cùng một tập validation 3.174 ảnh: nhóm đặc trưng nào hiệu quả nhất, bộ phân loại nào phù hợp nhất với nhóm đặc trưng đó, và mô hình còn giữ được hiệu năng bao nhiêu khi vùng phổi bị che hoặc khi chỉ còn vùng ngoài mặt nạ phổi. Câu hỏi thứ ba khảo sát bằng phép che: nếu mô hình vẫn đạt macro-F1 cao khi chỉ còn vùng ngoài mặt nạ phổi thì vùng này đủ thông tin để phân loại; thông tin đó có phải tín hiệu của nguồn ảnh hay là thông tin giải phẫu thì phép đo không tự phân biệt được.
 
@@ -16,7 +16,7 @@ Nhãn lớp trong bộ dữ liệu không độc lập hoàn toàn với nguồn
 
 Mục tiêu của đề tài là xây dựng pipeline phân loại bốn lớp ảnh CXR chỉ bằng học máy cổ điển, đánh giá pipeline trên tập validation theo một giao thức cố định, rồi kiểm tra một lần trên tập test độc lập. Mục tiêu này được cụ thể hóa thành ba câu hỏi nghiên cứu (research question, viết tắt RQ).
 
-Bốn nhóm đặc trưng thủ công gồm histogram độ xám 64 chiều, GLCM (Gray-Level Co-occurrence Matrix) [7] kết hợp LBP (Local Binary Pattern) [8] 88 chiều, HOG (Histogram of Oriented Gradients) [9] 10.404 chiều và nhóm ghép 152 chiều. Sáu bộ phân loại ứng viên gồm Logistic Regression, k-NN, Decision Tree, Random Forest, SVM (Support Vector Machine) và Gradient Boosting.
+Bốn nhóm đặc trưng thủ công gồm histogram độ xám 64 chiều, GLCM (Gray-Level Co-occurrence Matrix) kết hợp LBP (Local Binary Pattern) 88 chiều, HOG (Histogram of Oriented Gradients) 10.404 chiều và nhóm ghép 152 chiều. Sáu bộ phân loại ứng viên gồm Logistic Regression, k-NN, Decision Tree, Random Forest, SVM (Support Vector Machine) và Gradient Boosting.
 
 **RQ1.** Nhóm đặc trưng nào trong bốn nhóm trên cho macro-F1 cao nhất trên tập validation khi dùng một bộ phân loại cố định chọn trước (Random Forest, 500 cây)?
 
@@ -34,7 +34,7 @@ Ba câu hỏi dùng chung một giao thức đọc ảnh: ảnh xám 8-bit kích
 | RQ2 | Bộ phân loại, 6 mức | Macro-F1 trên validation, Random Forest làm mốc tham chiếu | Chọn bộ cao nhất nếu khoảng tin cậy 95% của chênh lệch so với mốc không chứa 0 |
 | RQ3 | Chế độ mặt nạ, 3 mức tạo 5 kịch bản | Macro-F1 trên validation, so sánh từng cặp kịch bản | Báo cáo toàn bộ 5 kịch bản, không loại kịch bản nào; phép so chính (ảnh gốc − chỉ phổi, chênh tối thiểu +0,005 và khoảng tin cậy 95% không chứa 0) và phép so bắt buộc (chỉ ngoài phổi − chỉ phổi) đã chốt trước khi xem điểm |
 
-Khoảng tin cậy trong Bảng 1.1 tính bằng bootstrap ghép cặp [10] 2.000 lần trên cùng chỉ số ảnh, seed 42. Quy tắc này chỉ dùng để chọn cấu hình đi tiếp; các cấu hình còn lại vẫn được báo cáo đầy đủ. Mọi cấu hình phải vượt thêm mốc nền thứ hai là A0 = 0,2397, tức Random Forest chỉ dùng hai đại lượng đơn giản của tệp ảnh là độ sáng trung bình và định dạng màu, không dùng đặc trưng cấu trúc. Nếu đặc trưng ảnh không vượt được mô hình đó thì kết quả phải được nêu rõ trong báo cáo.
+Khoảng tin cậy trong Bảng 1.1 tính bằng bootstrap ghép cặp [5] 2.000 lần trên cùng chỉ số ảnh, seed 42. Quy tắc này chỉ dùng để chọn cấu hình đi tiếp; các cấu hình còn lại vẫn được báo cáo đầy đủ. Mọi cấu hình phải vượt thêm mốc nền thứ hai là A0 = 0,2397, tức Random Forest chỉ dùng hai đại lượng đơn giản của tệp ảnh là độ sáng trung bình và định dạng màu, không dùng đặc trưng cấu trúc. Nếu đặc trưng ảnh không vượt được mô hình đó thì kết quả phải được nêu rõ trong báo cáo.
 
 Random Forest ở RQ2 không dùng chung cấu hình với RQ1: siêu tham số được chọn bằng kiểm định chéo 5 fold trên lưới gồm 300 và 500 cây, mỗi giá trị kết hợp với độ sâu 20 hoặc không giới hạn, kết quả chọn 300 cây không giới hạn độ sâu. Hai lần chạy cho 0,8599 và 0,8582, chênh nhau xấp xỉ 0,002, nhỏ hơn độ lệch chuẩn giữa các seed của từng phép đo (mục 3.3).
 
@@ -75,27 +75,17 @@ Chương 5 công bố kết quả trên 3.176 ảnh test, phân tích ma trận 
 
 ## Tài liệu tham khảo phát sinh trong chương
 
-Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; mục còn lại của chương này (1.2) và tài liệu của các chương sau đánh số tiếp nối (2.7; 5.5.1; 5.5.2).
+Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chương 1 và giữ nguyên số khi ghép vào danh mục tài liệu tham khảo cuối quyển; các chương sau chỉ trích dẫn lại từ năm tài liệu cốt lõi này.
 
 [1] M. E. H. Chowdhury, T. Rahman, A. Khandakar, R. Mazhar, M. A. Kadir, Z. B. Mahbub, K. R. Islam, M. S. Khan, A. Iqbal, N. Al-Emadi, M. B. I. Reaz, and M. T. Islam, "Can AI help in screening viral and COVID-19 pneumonia?," *IEEE Access*, vol. 8, pp. 132665–132676, 2020, doi: 10.1109/ACCESS.2020.3010287.
 
 [2] T. Rahman, A. Khandakar, Y. Qiblawey, A. Tahir, S. Kiranyaz, S. B. A. Kashem, M. T. Islam, S. Al Maadeed, S. M. Zughaier, M. S. Khan, and M. E. H. Chowdhury, "Exploring the effect of image enhancement techniques on COVID-19 detection using chest X-ray images," *Computers in Biology and Medicine*, vol. 132, p. 104319, 2021, doi: 10.1016/j.compbiomed.2021.104319.
 
-[3] D. S. Kermany, M. Goldbaum, W. Cai, et al., "Identifying medical diagnoses and treatable diseases by image-based deep learning," *Cell*, vol. 172, no. 5, pp. 1122–1131.e9, 2018.
+[3] R. Geirhos, J.-H. Jacobsen, C. Michaelis, R. Zemel, W. Brendel, M. Bethge, and F. A. Wichmann, "Shortcut learning in deep neural networks," *Nature Machine Intelligence*, vol. 2, no. 11, pp. 665–673, 2020, doi: 10.1038/s42256-020-00257-z.
 
-[4] R. Geirhos, J.-H. Jacobsen, C. Michaelis, R. Zemel, W. Brendel, M. Bethge, and F. A. Wichmann, "Shortcut learning in deep neural networks," *Nature Machine Intelligence*, vol. 2, no. 11, pp. 665–673, 2020, doi: 10.1038/s42256-020-00257-z.
+[4] J. R. Zech, M. A. Badgeley, M. Liu, A. B. Costa, J. J. Titano, and E. K. Oermann, "Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: A cross-sectional study," *PLOS Medicine*, vol. 15, no. 11, e1002683, 2018, doi: 10.1371/journal.pmed.1002683.
 
-[5] J. R. Zech, M. A. Badgeley, M. Liu, A. B. Costa, J. J. Titano, and E. K. Oermann, "Variable generalization performance of a deep learning model to detect pneumonia in chest radiographs: A cross-sectional study," *PLOS Medicine*, vol. 15, no. 11, e1002683, 2018, doi: 10.1371/journal.pmed.1002683.
-
-[6] F. Pedregosa, G. Varoquaux, A. Gramfort, et al., "Scikit-learn: Machine learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
-
-[7] R. M. Haralick, K. Shanmugam, and I. Dinstein, "Textural features for image classification," *IEEE Trans. Syst., Man, Cybern.*, vol. SMC-3, no. 6, pp. 610–621, 1973.
-
-[8] T. Ojala, M. Pietikäinen, and D. Harwood, "A comparative study of texture measures with classification based on featured distributions," *Pattern Recognit.*, vol. 29, no. 1, pp. 51–59, 1996.
-
-[9] N. Dalal and B. Triggs, "Histograms of oriented gradients for human detection," in *Proc. IEEE Comput. Soc. Conf. Comput. Vis. Pattern Recognit. (CVPR)*, 2005, pp. 886–893.
-
-[10] B. Efron, "Bootstrap methods: Another look at the jackknife," *Ann. Statist.*, vol. 7, no. 1, pp. 1–26, 1979.
+[5] B. Efron, "Bootstrap methods: Another look at the jackknife," *Ann. Statist.*, vol. 7, no. 1, pp. 1–26, 1979.
 
 ---
 
@@ -104,8 +94,8 @@ Các mục dưới đây đánh số theo thứ tự xuất hiện trong Chươn
 - **Chuyển sang Word:** Heading 1 = 14–16 pt Times New Roman, in hoa, in đậm; Heading 2 = 13–14 pt in đậm; thân bài 13 pt, canh đều hai bên, thụt đầu dòng 1,0–1,27 cm, giãn dòng 1,3.
 - **Bảng:** tiêu đề đặt phía trên, cỡ 10–11 pt, in đậm; bảng theo kiểu Booktabs, không kẻ đường dọc.
 - **Mã hiệu nội bộ:** các ràng buộc trong chương diễn giải bằng lời, không dùng mã hiệu; mã H2, H6, H7 trong `results/threshold_v3.md` chỉ để tra cứu chéo. `UNLOCK_RECORD.json` là biên bản ghi lần mở khóa tập test duy nhất, có commit và thời điểm.
-- **Trích dẫn:** số thứ tự [1]–[10] theo thứ tự xuất hiện. Nếu chèn thêm tài liệu vào chương này, phải đánh lại toàn bộ số về sau.
-- **Chú thích chân trang:** `[^mooney]` là nguồn của bộ dữ liệu Kaggle, không tính vào danh mục [1]–[10] nên không làm lệch số thứ tự; khi chuyển sang Word thì chèn thành footnote tại chỗ.
+- **Trích dẫn:** số thứ tự [1]–[5] theo thứ tự xuất hiện. Nếu chèn thêm tài liệu vào chương này, phải đánh lại toàn bộ số về sau.
+- **Chú thích chân trang:** `[^mooney]` là nguồn của bộ dữ liệu Kaggle, không tính vào danh mục [1]–[5] nên không làm lệch số thứ tự; khi chuyển sang Word thì chèn thành footnote tại chỗ.
 - **Nguồn số liệu:** 21.165 ảnh và phân bố bốn lớp đếm từ `splits/split_v1.csv`; B0, A0 từ `results/threshold_v3.md` mục 3; macro-F1 của RQ1 và RQ2 từ `results/report_rq1/r1_summary.csv` và `results/report_rq2/r1_summary.csv`; khoảng tin cậy từ `results/report_rq1/r1_bootstrap_vs_reference.csv` và `results/report_rq2/r1_bootstrap_vs_reference.csv`; SHA-256 tệp split từ `splits/`; 178 nhóm và 401 ảnh từ `docs/roadmap.md`.
 - **Chưa đưa vào chương:** số liệu tập test, để dành cho Chương 5.
 
