@@ -1,7 +1,7 @@
 # Mục 1–4: Trang bìa, lời cảm ơn và lời cam đoan
 
-Bốn mục đầu của phần mở đầu quyển, đánh số La Mã (i–iv). Khi dựng bản Word, mỗi mục là một
-trang riêng; bìa không đánh số trang, các trang còn lại đánh số i, ii, iii… theo
+Bốn mục đầu của quyển báo cáo: hai trang bìa không đánh số trang; Lời cảm ơn và Lời cam đoan
+đánh số La Mã (i–ii). Khi dựng bản Word, mỗi mục là một trang riêng theo
 [`docs/report_standards.md`](../docs/report_standards.md) mục 2.4.
 
 ## 1. Trang bìa chính
@@ -51,7 +51,7 @@ Học kỳ và năm học ghi trong phần phụ bìa và ở trang bìa phụ: 
 
 ## 2. Trang bìa phụ
 
-Trang đầu của phần mở đầu sau trang bìa chính; nội dung căn giữa, cùng khung viền với bìa chính:
+Trang phụ bìa đặt ngay sau trang bìa chính, không đánh số trang; nội dung căn giữa, cùng khung viền với bìa chính:
 
 > **BÁO CÁO BÀI TẬP LỚN – MÔN HỌC MÁY**
 > **PHÂN LOẠI ẢNH X-QUANG LỒNG NGỰC BẰNG HỌC MÁY CỔ ĐIỂN VÀ ĐÁNH GIÁ NGUY CƠ SHORTCUT LEARNING TRÊN BỘ DỮ LIỆU COVID-19 RADIOGRAPHY**

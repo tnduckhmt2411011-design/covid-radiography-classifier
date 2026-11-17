@@ -26,3 +26,6 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 *.log
+
+# Generated report artifacts
+report/dist/

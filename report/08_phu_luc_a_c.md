@@ -14,7 +14,7 @@ python -m venv .venv-demo
 pip install -r demo/requirements.txt
 ```
 
-Toàn bộ 351 phép kiểm thử trong 28 module đã chạy được trên môi trường này (350 pass, 1 bỏ qua; mục 5.4 của Chương 5).
+Toàn bộ 405 phép kiểm thử trong 31 module đã thu thập và kiểm chứng (373 pass trên môi trường `.venv-demo` của ứng dụng, 30/30 phép dựng tệp Word pass trên môi trường Python dựng báo cáo; mục 5.4 của Chương 5).
 
 ### A.2. Mô hình đóng băng và kiểm tra tính toàn vẹn
 
@@ -35,6 +35,8 @@ Artifact `cxr_inference_model_cache.joblib` không nằm trong git; ứng dụng
 Trước khi nạp, ứng dụng kiểm băm SHA-256 của tệp artifact, sau đó kiểm thêm băm của tệp split, phiên bản scikit-learn, số mẫu train, siêu tham số SVM và băm của mã trích đặc trưng. Trong đó một điều kiện không khớp thì ứng dụng dừng và báo lỗi, không nạp mô hình.
 
 ### A.3. Biến môi trường
+
+Các biến môi trường tùy chọn để ghi đè nguồn tải và giá trị kiểm băm được liệt kê trong Bảng A.2.
 
 **Bảng A.2: Biến môi trường của ứng dụng demo**
 
@@ -94,28 +96,30 @@ Số tệp dưới đây là số tệp được git theo dõi (`git ls-files`),
 | `src/` | 15 | Mã nguồn: nạp dữ liệu, trích đặc trưng, bộ chạy RQ1–RQ3, metrics, bootstrap, suy luận, đo độ trễ, kiểm artifact |
 | `notebooks/` | 9 | Notebook theo trình tự: kiểm môi trường, EDA, trùng lặp và chia tập, RQ1, RQ2, RQ3, phân tích lỗi, đánh giá test một lần, suy luận |
 | `demo/` | 6 | Ứng dụng Streamlit, kiểm tra tải/kiểm băm artifact, cổng tương đương, yêu cầu thư viện |
-| `tests/` | 28 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
-| `scripts/` | 7 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa, phép đo tập validation có ảnh gần trùng |
+| `tests/` | 31 | Bộ kiểm thử tự động pytest (danh sách ở Bảng B.2) |
+| `scripts/` | 9 | Sinh hình cho báo cáo, bảng Phụ lục B, mục lục và danh mục, khung viền bìa, phép đo tập validation có ảnh gần trùng, kiểm tra tự động và xuất tệp Word báo cáo |
 | `results/` | 188 | Tệp kết quả và biên bản của các bước S1–S6 |
 | `kaggle/` | 23 | Mã và biên bản chạy thực nghiệm trên kernel Kaggle |
 | `splits/` | 5 | Manifest, tệp phân chia và báo cáo kiểm tra sau chia |
 | `outputs/` | 2 | Tệp kiểm tra trùng và gần trùng của notebook 02, được track làm nguồn cho ghi chú Chương 2 |
-| `docs/` | 17 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, nhật ký công việc |
+| `docs/` | 26 | Quy chuẩn báo cáo, cẩm nang viết, phân công thành viên, kế hoạch, nguồn dữ liệu, bảng rà soát, nhật ký công việc |
 | `report/` | 18 | Sáu chương, mở đầu quyển, tài liệu tham khảo, phụ lục, tóm tắt, hình vẽ, bản đồ nguồn |
-| `slides/` | 1 | Chỗ để slide thuyết trình, mới có `.gitkeep` giữ chỗ |
+| `slides/` | 124 | Bộ slide thuyết trình bảo vệ cuối kỳ (`.pptx`/`.pdf`), mã nguồn dựng slide, hình ảnh và kết xuất SVG/PNG |
 | `configs/`, `.github/`, `.streamlit/` | 3 | Cấu hình cơ sở, mẫu pull request, cấu hình Streamlit |
 | Tệp gốc (`README.md`, `requirements.txt`, `pytest.ini`, `.gitignore`, `.gitattributes`) | 5 | Điều khiển dự án và môi trường |
-| **Tổng cộng** | **327** |
+| **Tổng cộng** | **464** |
 
 ### B.2. Danh sách bài kiểm thử
 
 Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --collect-only -q`, tức một test tham số hóa được đếm theo từng bộ tham số — cùng cách đo với số liệu ở mục 5.4 của Chương 5.
 
-**Bảng B.2: 28 module kiểm thử và số phép kiểm thử (351 phép)**
+**Bảng B.2: 31 module kiểm thử và số phép kiểm thử (405 phép)**
 
 | Module | Số phép kiểm thử |
 | :--- | ---: |
+| `test_audit_report.py` | 9 |
 | `test_bootstrap.py` | 13 |
+| `test_build_report_docx.py` | 30 |
 | `test_dataset_grayscale.py` | 1 |
 | `test_eda_brightness.py` | 11 |
 | `test_error_analysis.py` | 2 |
@@ -139,13 +143,14 @@ Số phép kiểm thử của mỗi module đếm theo đầu ra `pytest --colle
 | `test_rq2_runner.py` | 10 |
 | `test_rq3_report_and_selection.py` | 9 |
 | `test_rq3_runner.py` | 7 |
+| `test_slides_data.py` | 15 |
 | `test_source_labels.py` | 5 |
 | `test_split.py` | 5 |
 | `test_streamlit_app.py` | 22 |
 | `test_val_near_duplicate_subset.py` | 4 |
-| **Tổng cộng** | **351** |
+| **Tổng cộng** | **405** |
 
-Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) cho 350 pass và 1 bỏ qua; phần bỏ qua là `tests/test_inference_demo_notebook.py::test_notebook_is_valid_nbformat` khi môi trường không có `nbformat` (không thuộc `requirements.txt`). Tổng cộng 351 phép kiểm thử trong 28 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
+Chạy trên môi trường pin của ứng dụng (`.venv-demo`, cùng `demo/requirements.txt`) trong worktree cho 373 pass và 32 bỏ qua (`nbformat` chưa cài, thiếu artifact cục bộ trong worktree và 30 phép dựng tệp Word cần `python-docx`); 30/30 phép dựng tệp Word chạy pass trên môi trường Python dựng báo cáo. Tổng cộng 405 phép kiểm thử trong 31 module, khớp số ghi ở mục 5.4 của Chương 5. Bảng này được sinh bằng:
 
 ```bash
 python scripts/report_appendix_b.py
@@ -161,6 +166,8 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 
 ### C.1. Lưới siêu tham số
 
+Không gian tìm kiếm cho cả sáu bộ phân loại được tóm tắt tại Bảng C.1.
+
 **Bảng C.1: Lưới siêu tham số của sáu bộ phân loại**
 
 | Bộ phân loại | Lưới siêu tham số (số lượng cụm) |
@@ -174,9 +181,11 @@ Sáu bộ phân loại của RQ2 chạy trên nhóm đặc trưng cố định `
 
 Trọng số lớp là thành phần cố định, không nằm trong lưới: Logistic Regression, Decision Tree và SVM dùng cân bằng lớp (`class_weight='balanced'`); Random Forest dùng cân bằng theo mẫu (`class_weight='balanced_subsample'`); Gradient Boosting dùng trọng số mẫu cân bằng truyền vào bước fit; k-NN không có cơ chế cân bằng lớp, và trọng số `weights='distance'` trong lưới của `knn` là trọng số theo khoảng cách tới láng giềng chứ không cân bằng lớp. Lưới trên đọc trực tiếp từ `PARAM_GRIDS` trong `src/rq2_runner.py`.
 
-Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 (nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
+Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn nằm ở biên lưới: `lr` chọn `C=10,0` (lớn nhất trong lưới), `svm` chọn `C=10,0` (lớn nhất), `gb` chọn 200 cây và độ sâu 5 (đều lớn nhất), `dt` chọn độ sâu 10 và `min_samples_leaf=1` (đều nhỏ nhất), `rf` chọn 300 cây (nhỏ nhất). Lưới vì vậy có thể chưa bao hết vùng tối ưu, thứ hạng giữa các bộ có thể thay đổi nếu mở rộng lưới; hệ quả với kết luận về bộ phân loại đứng đầu được ghi ở mục 6.2 của Chương 6.
 
 ### C.2. Tham số chọn và kết quả trên tập validation
+
+Bảng C.2 trình bày cấu hình siêu tham số được chọn sau 5-fold cross-validation và hiệu năng tương ứng trên tập validation.
 
 **Bảng C.2: Siêu tham số chọn qua 5-fold CV và Macro-F1 validation của sáu bộ phân loại**
 
@@ -192,6 +201,8 @@ Năm trong sáu bộ phân loại có ít nhất một siêu tham số chọn n�
 Ba bộ tất định về nhãn dự đoán chạy mỗi bộ một lần nên không có độ lệch chuẩn. Bộ phân loại tham chiếu của RQ2 là `rf`, với cấu hình chọn bằng kiểm định chéo (300 cây, độ sâu không giới hạn), khác cấu hình 500 cây cố định dùng ở RQ1; ứng viên `svm` vượt tham chiếu 0,0442 điểm macro-F1 với khoảng tin cậy 95% của hiệu số `[+0,031983; +0,058032]` không chứa 0.
 
 ### C.3. Thứ hạng chi phí huấn luyện
+
+Thời gian huấn luyện đo bằng giây CPU của sáu bộ phân loại được xếp hạng tăng dần trong Bảng C.3.
 
 **Bảng C.3: Chi phí huấn luyện của sáu bộ phân loại (giây CPU)**
 

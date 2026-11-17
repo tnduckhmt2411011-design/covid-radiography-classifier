@@ -10,13 +10,11 @@ Mặt nạ phổi đi kèm bộ dữ liệu có kích thước 256 × 256, nên 
 
 Để gọn, từ đây ba kịch bản dùng cùng một chế độ ở cả hai tập được gọi là "ảnh gốc", "chỉ phổi" và "chỉ ngoài phổi". Hai kịch bản còn lại giữ tên như ở Hình 4.1.
 
-| Kịch bản | Ảnh train | Ảnh validation | Vai trò | Mã trong kho mã nguồn |
-| :--- | :--- | :--- | :--- | :--- |
-| Ảnh gốc cả hai tập | Gốc | Gốc | Tham chiếu: cấu hình chuẩn đã khóa ở RQ2, ảnh không che | `orig_to_orig` |
-| Chỉ phổi cả hai tập | Chỉ phổi | Chỉ phổi | Ứng viên thay thế cấu hình chính thức: chỉ còn vùng phổi ở cả hai tập | `lung_to_lung` |
-| Chỉ ngoài phổi cả hai tập | Chỉ ngoài phổi | Chỉ ngoài phổi | Đối chứng lối tắt: chỉ còn vùng ngoài mặt nạ phổi ở cả hai tập | `out_to_out` |
-| Gốc học, phổi đánh giá | Gốc | Chỉ phổi | Nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng phổi lúc đánh giá | `orig_to_lung` |
-| Gốc học, ngoài phổi đánh giá | Gốc | Chỉ ngoài phổi | Nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng ngoài mặt nạ phổi lúc đánh giá | `orig_to_out` |
+- **Ảnh gốc cả hai tập** (`orig_to_orig`): train gốc, validation gốc — tham chiếu: cấu hình chuẩn đã khóa ở RQ2, ảnh không che.
+- **Chỉ phổi cả hai tập** (`lung_to_lung`): train chỉ phổi, validation chỉ phổi — ứng viên thay thế cấu hình chính thức: chỉ còn vùng phổi ở cả hai tập.
+- **Chỉ ngoài phổi cả hai tập** (`out_to_out`): train chỉ ngoài phổi, validation chỉ ngoài phổi — đối chứng lối tắt: chỉ còn vùng ngoài mặt nạ phổi ở cả hai tập.
+- **Gốc học, phổi đánh giá** (`orig_to_lung`): train gốc, validation chỉ phổi — nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng phổi lúc đánh giá.
+- **Gốc học, ngoài phổi đánh giá** (`orig_to_out`): train gốc, validation chỉ ngoài phổi — nhiễu suy luận: bộ học trên ảnh gốc gặp ảnh chỉ còn vùng ngoài mặt nạ phổi lúc đánh giá.
 
 **Bảng 4.1: Macro-F1, khoảng tin cậy và accuracy của năm kịch bản trên 3.174 ảnh validation**
 
@@ -123,7 +121,7 @@ Cần lưu ý thêm rằng baseline của ba chế độ khác nhau (0,9024, 0,8
 
 Các nhận định trong mục này là giả thuyết. Chúng không được kiểm chứng riêng trong đề tài, và được nêu ra để phân định rõ phần đo được với phần diễn giải, đúng cam kết ở mục 1.4.
 
-**Đặc điểm giải phẫu lồng ngực trẻ nhỏ ở lớp Viral Pneumonia.** Khi toàn bộ vùng phổi bị che đen, mô hình vẫn phân loại đúng 94,58% ảnh lớp này, recall cao hơn ảnh gốc 0,49 điểm. Precision lại thấp hơn (89,72% so với 91,39%), nên F1 của lớp thấp hơn (0,9209 so với 0,9272). Cả 1.345 ảnh lớp đều thuộc nguồn Mooney, và Chương 1 đã nêu khả năng đây là X-quang nhi khoa từ nghiên cứu của Kermany và cộng sự [3]. Từ đó có giả thuyết rằng mô hình nhận ra lớp này nhờ đặc điểm giải phẫu lồng ngực trẻ nhỏ chứ không cần tổn thương phổi.
+**Đặc điểm giải phẫu lồng ngực trẻ nhỏ ở lớp Viral Pneumonia.** Khi toàn bộ vùng phổi bị che đen, mô hình vẫn phân loại đúng 94,58% ảnh lớp này, recall cao hơn ảnh gốc 0,49 điểm. Precision lại thấp hơn (89,72% so với 91,39%), nên F1 của lớp thấp hơn (0,9209 so với 0,9272). Cả 1.345 ảnh lớp đều thuộc nguồn Mooney, và Chương 1 đã nêu khả năng đây là X-quang nhi khoa. Từ đó có giả thuyết rằng mô hình nhận ra lớp này nhờ đặc điểm giải phẫu lồng ngực trẻ nhỏ chứ không cần tổn thương phổi.
 
 Giả thuyết này chưa được kiểm chứng, và bằng chứng hiện có còn đi ngược một phần. 197 ảnh Normal cùng nguồn Mooney, vì thế nhiều khả năng cùng lứa tuổi, không ảnh nào bị đoán thành Viral Pneumonia ở cả ba kịch bản, kể cả khi chỉ còn vùng ngoài mặt nạ phổi (Bảng 4.4). Nếu tín hiệu phân biệt chỉ là "ảnh nhi khoa" thì nhóm này đáng ra phải bị nhầm. Bộ dữ liệu không có thông tin tuổi, nên không thể xác nhận các ảnh đó là của trẻ em, cũng không tách được phần đóng góp của hình học lồng ngực (giới hạn tương tự đã nêu ở mục 2.5).
 
@@ -133,7 +131,7 @@ Giả thuyết này chưa được kiểm chứng, và bằng chứng hiện có
 
 Tổng hợp lại, chương này đo được ba điều. Thứ nhất, mô hình vẫn đạt macro-F1 0,8921 khi chỉ còn vùng ngoài mặt nạ phổi, tức vùng này đủ thông tin để phân biệt bốn lớp, và phép tách theo nguồn cho thấy nó còn tách được hai lớp cùng nguồn RSNA. Thứ hai, che nhất quán ở cả huấn luyện lẫn đánh giá chỉ làm macro-F1 giảm 0,0103 (che vùng trong phổi) hoặc 0,0535 (che vùng ngoài mặt nạ phổi). Thứ ba, che riêng lúc đánh giá khiến mô hình học trên ảnh gốc gần như mất khả năng phân loại.
 
-Điều chưa biết cũng rõ không kém. Chương này không xác định được mô hình dùng đặc điểm nào trong vùng ngoài mặt nạ phổi, và không xác định được đó có phải lối tắt theo nghĩa của Geirhos và cộng sự [4] hay không. Nghiên cứu [5] ghi nhận mô hình CXR có thể giảm hiệu năng khi sang cơ sở y tế khác. Vì vậy điểm validation cao trên bộ dữ liệu ghép nhiều nguồn này chưa bảo đảm mô hình hoạt động tương tự ở nơi khác (mục 6.3).
+Điều chưa biết cũng rõ không kém. Chương này không xác định được mô hình dùng đặc điểm nào trong vùng ngoài mặt nạ phổi, và không xác định được đó có phải lối tắt theo nghĩa của Geirhos và cộng sự [3] hay không. Nghiên cứu [4] ghi nhận mô hình CXR có thể giảm hiệu năng khi sang cơ sở y tế khác. Vì vậy điểm validation cao trên bộ dữ liệu ghép nhiều nguồn này chưa bảo đảm mô hình hoạt động tương tự ở nơi khác (mục 6.3).
 
 ---
 
